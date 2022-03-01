@@ -1,0 +1,37 @@
+; sample macro of Tera Term
+;
+; File: ssh2login.ttl
+; Description: auto login with SSH2 protocol
+
+
+; get password from file
+getpassword 'password.dat' 'mypassword' Password
+;;getpassword 'password.dat' 'newpassword' newPassword
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+username = 'a-kosuge'
+;;hostname = 'localhost'
+;;port     = '2222'
+;hostname = 'kosdebian'
+hostname = '192.168.76.3'
+port     = '22'
+
+msg = hostname
+strconcat msg ':'
+strconcat msg port
+strconcat msg ' /K=KOSMAX24-both.CNF /F=TERATERM.INI /ssh /auth=password /user='
+strconcat msg username
+strconcat msg ' /passwd='
+strconcat msg Password
+
+connect msg
+;;wait '$'
+;;sendln '. .sshadd'
+;;wait 'passphrase'
+;;sendln newPassword
+
+;;wait '$'
+;;sendln 'echo $SSH_AUTH_SOCK'
+
+;wait '$'
+;sendln '. .dirrc'

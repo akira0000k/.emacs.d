@@ -1,0 +1,257 @@
+; teraterm KOSMAX 設定  TERM=xterm 用
+;                       TERM=vt100 のときと、screenに入るときは pc-teraconf-screen.el のロードが必要。
+; 
+; 2015.6.30 A.Kosuge
+;
+[VT editor keypad]
+;Up arrow key
+Up=328
+;Down arrow key
+Down=336
+;Right arrow key
+Right=333
+;Left arrow key
+Left=331
+
+;Insert key
+Insert=338
+;PageUp key
+Prev=329
+
+;Delete key
+Remove=339
+;PageDown key
+Next=337
+
+[VT numeric keypad]
+
+[VT function keys]
+Hold=off
+Print=off
+Break=off
+
+;F5 key
+XF5=63
+;F6 key
+F6=64
+;F7 key
+F7=65
+;F8 key
+F8=66
+;F9 key
+F9=67
+;F10 key
+F10=68
+;F11 key
+F11=87
+;F12 key
+F12=88
+
+
+[Shortcut keys]
+; Ctrl + Insert
+;EditCopy=1362
+; Shift + Insert
+;EditPaste=850
+;EditPasteCR=off
+;EditCLS=off
+;EditCLB=off
+;ControlOpenTEK=off
+;ControlCloseTEK=off
+; Ctrl + up-arrow
+;LineUp=1352
+; Ctrl + down-arrow
+;LineDown=1360
+; Ctrl + PageUp
+;PageUp=1353
+; Ctrl + PageDown
+;PageDown=1361
+; Ctrl + Home
+;BuffTop=1351
+; Ctrl + End
+;BuffBottom=1359
+; Ctrl + Tab
+;NextWin=1039
+; Ctrl + Shift + Tab
+;PrevWin=1551
+LocalEcho=off
+
+[User keys]
+;;noneed ;             <home>
+;;noneed User1=327,1,$1BOH
+;;dame	;      NumLockOff_1:<end>  damedame NumLock on で 1 にならない
+;;dame	User2=79,1,$1BOF
+
+;                   <end>  not<select>
+User1=335,1,$1BOF
+;                   <C-insert> copy
+User2=1362,1,$1B[2;5~
+;                   <S-insert> paste
+User3=850,1,$1B[2;2~
+;                   <S-delete> cut
+User4=851,1,$1B[3;2~
+;                   [S-left]
+User5=843,1,$1BO2D
+;                   [S-right]
+User6=845,1,$1BO2C
+;                   [S-up]
+User7=840,1,$1BO2A
+;                   [S-down]
+User8=848,1,$1BO2B
+;                   [S-home]
+User9=839,1,$1BO2H
+;                   [S-end]
+User10=847,1,$1BO2F
+;                   [S-prior]
+User11=841,1,$1B[5;2~
+;                   [S-next]
+User12=849,1,$1B[6;2~
+;                   [S-C-home]
+User13=1863,1,$1B[1;6H
+;                   [S-C-end]
+User14=1871,1,$1B[1;6F
+;                   [C-left]
+User15=1355,1,$1BO5D
+;                   [C-right]
+User16=1357,1,$1BO5C
+;                   [C-up]
+User17=1352,1,$1BO5A
+;                   [C-down]
+User18=1360,1,$1BO5B
+;                   [C-home]
+User19=1351,1,$1BO5H
+;                   [C-end]
+User20=1359,1,$1BO5F
+;                   [C-prior]
+User21=1353,1,$1B[5;5~
+;                   [C-next]
+User22=1361,1,$1B[6;5~
+;                   [S-C-left]
+User23=1867,1,$1B[1;6D
+;                   [S-C-right]
+User24=1869,1,$1B[1;6C
+;        NumLockOff:[S-left]
+User25=587,1,$1BO2D
+;                   [S-right]
+User26=589,1,$1BO2C
+;                   [S-up]
+User27=584,1,$1BO2A
+;                   [S-down]
+User28=592,1,$1BO2B
+;                   [S-home]
+User29=583,1,$1BO2H
+;                   [S-end]
+User30=591,1,$1BO2F
+;                   [S-prior]
+User31=585,1,$1B[5;2~
+;                   [S-next]
+User32=593,1,$1B[6;2~
+;                   [S-C-home]
+User33=1607,1,$1B[1;6H
+;                   [S-C-end]
+User34=1615,1,$1B[1;6F
+;                   [C-left]
+User35=1099,1,$1BO5D
+;                   [C-right]
+User36=1101,1,$1BO5C
+;                   [C-up]
+User37=1096,1,$1BO5A
+;                   [C-down]
+User38=1104,1,$1BO5B
+;                   [C-home]
+User39=1095,1,$1BO5H
+;                   [C-end]
+User40=1103,1,$1BO5F
+;                   [C-prior]
+User41=1097,1,$1B[5;5~
+;                   [C-next]
+User42=1105,1,$1B[6;5~
+;                   [S-C-left]
+User43=1611,1,$1B[1;6D
+;                   [S-C-right]
+User44=1613,1,$1B[1;6C
+;                   [C-tab]
+User45=1039,1,$1B[27;5;9~
+;                   [C-S-tab]
+User46=1551,1,$1B[27;6;9~
+;                   C-,
+User47=1075,1,$1B[27;5;44~
+;                   C-.
+User48=1076,1,$1B[27;5;46~
+;                   <C-return>
+User49=1052,1,$1B[27;5;13~
+;                   <C-delete>
+User50=1363,1,$1B[3;5~
+;                   [f1]
+User51=59,1,$1BOP
+;                   [f2]
+User52=60,1,$1BOQ
+;                   [f3]
+User53=61,1,$1BOR
+;                   [f4]
+User54=62,1,$1BOS
+;                   [S-f1]  [f13]  dame
+User55=571,1,$1BO2P
+;User55=571,1,$1B[1;2P 
+;                   [S-f2]
+User56=572,1,$1BO2Q
+;                   [S-f3]
+User57=573,1,$1BO2R
+;                   [S-f4]
+User58=574,1,$1BO2S
+;                   [f17] => [S-f5]
+User59=575,1,$1B[15;2~
+;                   [f18] => [S-f6]
+User60=576,1,$1B[17;2~
+;                   [f19] => [S-f7]
+User61=577,1,$1B[18;2~
+;                   [f20] => [S-f8]
+User62=578,1,$1B[19;2~
+;                   [f21] => [S-f9]
+User63=579,1,$1B[20;2~
+;                   [f22] => [S-f10]
+User64=580,1,$1B[21;2~
+;                   [f23] => [S-f11]
+User65=599,1,$1B[23;2~
+;                   [f24] => [S-f12]
+User66=600,1,$1B[24;2~
+
+;;;;;;;;;;;;;;;;;;;;; .screenrc ;;;;;;;;;;;;;;;;;;;;;;;;;
+;                   [C-f1] => C-\ tab                    (next division)
+User67=1083,1,$1C$09
+;                   [S-C-f1] => C-\ n                    (next shell)
+User68=1595,1,$1Cn
+
+;                   [C-f2] => C-\ S C-\ tab C-\ n C-\ n (divide screen---and next shell x2)
+User69=1084,1,$1CS$1C$09$1Cn$1Cn
+;                   [S-C-f2] => C-\ S C-\ tab C-\ c        (divide screen---and create new shell)
+User70=1596,1,$1CS$1C$09$1Cc
+
+;                   [C-f3] => C-\ | C-\ tab C-\ n C-\ n (divide screen | and next shell x2)
+User71=1085,1,$1C|$1C$09$1Cn$1Cn
+;                   [S-C-f3] => C-\ | C-\ tab C-\ c        (divide screen | and create new shell)
+User72=1597,1,$1C|$1C$09$1Cc
+
+;                   [C-f4] => C-\ X                      (erase division)
+User73=1086,1,$1CX
+;                   [S-C-f4] => C-D C-\ X                (kill shell and erase division)
+User74=1598,1,$04$1CX
+
+;                   [C-f5] => C-\ [                      (copy mode)  (space:mark/copy)
+User75=1087,1,$1C[
+;                   [C-f6] => C-\ ]                      (paste)
+User76=1088,1,$1C]
+
+;;;;;;;;;;;;test
+;                   <home> => M-O H
+User77=327,1,$1BOH
+
+;	;                   [C-f7] => => C-\ c                    (create new shell)
+;	User77=1089,1,$1Cc
+;	;                 [S-C-f7] => C-\ S C-\ tab C-\ n       (divide screen---and next shell)
+;	User78=1601,1,$1CS$1C$09$1Cn
+;
+;	;                   [C-f8] => C-\ c C-\ n              (create new shell and next shell)
+;	User79=1090,1,$1Cc$1Cn
+;	;                 [S-C-f8] => C-\ | C-\ tab C-\ n       (divide screen | and next shell)
+;	User80=1602,1,$1C|$1C$09$1Cn

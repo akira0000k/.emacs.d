@@ -1,0 +1,485 @@
+簡単なEmacs 使用法   by A.Kosuge
+  emacs22対応   C-x(cut) C-c(copy) C-v(paste) は 0.01 秒以上時間を開けて
+  emacs23対応   TERM=xterm  KOSMAX-X
+
+○ 起動と終了
+
+101 /home/kosuge$ emacs .
+
+ . をパラメタとして指定、カレントディレクトリ 表示
+----------------------------------------------------------------------------------
+  /home/kosuge:
+  used 352 available 53380644
+  drwxr-xr-x   22 kosuge   users        4096 Mar  4 18:06 .
+  drwxrwsr-x    5 root     staff        4096 Feb 26 14:21 ..
+  -rw-r--r--    1 kosuge   users        2645 Mar  4 15:12 .emacs          ---not used
+  -rw-r--r--    1 kosuge   users       15210 Mar  4 18:06 .emacs-help.txt ---This file
+  drwxr-xr-x    3 kosuge   users        4096 Feb 26 11:37 .emacs.d        ---system
+  -rw-r--r--    1 kosuge   users        7171 Mar  4 17:07 .emacs.el       ---customize file
+  drwxr-xr--    4 kosuge   users        4096 Mar  4 11:30 .emacs.lisp     ---private package dir
+  -rw-r--r--    1 kosuge   users       14639 Mar  4 17:03 .emacs2.el      ---customize file 2
+-EEE:%%-F1  ~             6:27午後   (Dired by name)--L5--C58--Top----------------
+Reading directory /home/kosuge/...done
+
+
+C-x C-c     Ctrl を押したまま x c  で終了する
+
+
+○ キー表記方法
+
+    C-x    ....  Ctrl + x
+    M-x    ....  Esc + x
+    M-x    ....  Alt + x            (IME表示が 'あ' のときはだめ)
+    S-x    ....  Shift + x
+
+  例
+    C-g         ....  Ctrl + g  : 動作のキャンセル
+    C-x d       ....  Ctrl + x  (Ctrlを放して) d  :  ディレクトリリスト表示(dired)
+    C-x C-d     ....  Ctrlを押したまま x d  :  ディレクトリ簡易表示
+    M-x shell   ....  Alt + x (Altを放して) "shell"  : 内部shell を表示
+
+
+
+    keybind
+emacs       代替
+標準         キー
+ ↓          ↓
+
+○ 画面操作
+C-x 2       f2      : 画面分割 上下
+C-x 3               : 画面分割 左右
+C-x 1       f2      : 現画面だけにする
+C-x o       C-Tab   : 画面移動 (分割されているとき)
+C-x 0       S-f4    : カーソルのいる画面をひっこめる (分割されているとき)
+            C-next  : バッファ切り替え 奥へ
+            C-prior : バッファ切り替え 戻る
+            f7      : 画面縮小 (分割されているとき)  M-x shrink-window
+            f8      : 画面拡大 (分割されているとき)  M-x enlarge-window
+C-x C-b             : バッファリスト表示
+
+
+○ ファイルリストの表示 (dired)
+
+C-x d       f5      : ディレクトリリスト表示
+g           f5      : ディレクトリ表示更新
+p           up      : 前の行
+n           down    : 次の行
+f           right   : directory降下 または ファイルを開く
+^           left    : directory上昇
+            C-left  : directory上昇 (現在のdirectoryバッファを残さない)
+<           S-up    : 前のdirectory行
+>           S-down  : 次のdirectory行
+v                   : ファイルを見るだけ (read only)
+            h       : ~/       ホームディレクトリ表示
++                   : ディレクトリ作成
+
+          マークのついていないとき、単独ファイルに対して
+D                   : ファイル削除             Shift + d
+C                   : ファイルcopy                "    c
+R                   : リネーム、移動              "    r
+S                   : シンボリックリンク 作成     "    s
+H                   : ハードリンク 作成           "    h
+M                   : モード変更                  "    m
+
+          マークをつけて、複数ファイルに対して実行
+d d d x             : 削除選択し実行
+~     x             : (チルダx) ~付きバックアップファイルを全て選択し削除
+m m m D             : 複数選択し削除
+m m m C             : 複数選択し別directoryに copy
+m m m R             : 複数選択し別directoryに 移動
+m m m S             : 複数選択し別directoryに シンボリックリンクを作成
+m m m M             : 複数選択しモードを変更
+u                   : マークを消して下へ
+DEL                 : (Backspace) マークを消して上へ
+M-DEL               : (Alt + Backspace)  すべのマークを消す
+
+
+○ ファイルを開く
+C-x C-f             : ファイル名を指定して開く。なければ新ファイル作成
+C-x f               : 同上
+                 Find file: ~/ <--- ファイル名入力
+
+○ ファイル編集の終了
+C-x k       f4      : 保存せずに終了
+        Kill buffer: (default newfile.txt) <---enter
+        Buffer newfile.txt modified; kill anyway? (yes or no) <--yes:すてる no:終了しない
+C-x C-w             : 名前を付けて保存
+        Write file: ~/                     <----enter or ファイル名入力
+        File `~/tempfile.txt' exists; overwrite? (y or n)     <----y:上書き  n:やめる
+        Wrote /home/muji/tempfile.txt
+C-x C-s             : 上書き保存
+        Wrote /home/muji/tempfile.txt
+
+
+○ カーソル移動
+            → ← ↑ ↓ Home  End  PageUp  PageDown   Cntl+Home   Cntl+End
+            はWindowsと同じにしました
+            ←      : ファイルの先頭で 左に行こうとしたときは、編集の終了
+
+    emacs流    (bash,tcsh シェルと共通)
+C-n         down    : ↓
+C-p         up      : ↑
+C-f         right   : →
+C-b         left    : ←
+C-a         home    : Home
+C-e         end     : End
+*M-v   M-n  prior   : PageUp                (* M-v は cua-repeat-replace-region になっている)
+*C-v   M-p  next    : PageDown              (* C-v は cua-paste になっている)
+M-<    C-,  C-home  : バッファ先頭          (Shift + Alt + ,)
+M->    C-.  C-end   : バッファ末尾          (Shift + Alt + .)
+M-f         C-right : 一語右
+M-b         C-left  : 一語左
+      C-M-n C-down  : 一行下へスクロール
+      C-M-p C-up    : 一行上へスクロール
+
+○ 行の移動
+            M-g     : 行番号を入力してその行に移動
+
+
+○ 検索
+C-s 検索文字        : インクリメンタルサーチ
+C-s C-k             : ミニバッファで入力
+C-s C-r             : 逆方向インクリメンタルサーチ  emacs original=C-r でもいけた
+C-s C-s     f3      : 再検索            C-s C-s C-s ....
+C-s C-r     S-f3    : 逆方向に再検索    C-s C-r C-r ....
+            C-r     : 置換
+C-s M-r             : 正規表現検索
+
+  
+○ 書き込み
+    ふつうにタイプします。viのようにモード切替はありません。
+    テラタームの場合 日本語入力はWindows側のIMEで行うこともできます。 日本語モードだと
+    Altキーを使うコマンドが利かないことがあるので注意。
+
+Insert             : 上書きモードになります .. Ovwrt と表示
+C-\                : emacs の日本語入力on-off
+
+
+○ 削除
+    Delete  Backspace  C-z は Windowsとおなじにしました
+C-d         delete : Delete
+M-d                : 一語削除 (cut)
+C-h         DEL    : Backspace    (コンソール設定が必要かも)
+C-k                : カーソルより後を削除 (cut)
+C-/         C-z    : undo
+C-x u              : undo
+C-g                : undo の中断   次からのundo は逆方向   (emacs すべての場面でキャンセルの意味がある)
+
+
+○ 選択
+・ターミナルの機能
+    マウスで選択--> copy されている
+    右クリック  --> paste される
+     
+・Emacsの機能 (旧来)
+C-x h              : バッファ全選択
+C-space            : 選択開始  Mark Set と表示されます
+            このあと カーソル移動で 選択領域が拡大します
+
+・Shiftキーをつかった選択 (新しめ)    X-window か テラターム
+            S-left  S-right  S-C-left  S-C-right
+            S-up    S-down
+            S-Home  S-End    S-C-Home  S-C-End
+            S-PageUp    S-PageDown
+            Shiftキーを放してカーソル移動すると選択解除
+
+選択された状態で
+C-w         C-x    : cut
+M-w         C-c    : copy して選択解除
+C-d         delete : 選択領域の削除
+C-g                : 選択解除
+C-y         C-v    : 選択領域をpasteで置き換え
+    copy された状態で
+C-y         C-v    : paste
+
+
+○ 矩形選択  emacs22 emacs23
+
+C-RET       C-x C-j : 矩形選択の開始
+                      terminal からは  C-x C-RET  と同じ
+
+
+○ 文字コードの指定
+M-x universal-coding-system-argument
+            f6     : コーディングシステムの指定をしてコマンドを実行する
+    Coding system for following command (default, japanese-iso-8bit-unix): sjis-unix
+                                                                           euc-jp-unix
+    Command to execute with sjis-unix:    ここで C-x C-w などとコマンド実行
+
+M-x set-buffer-file-coding-system
+                   : 読み込みバッファ内コーディングシステムの変更
+    Coding system for visited file (default, nil): <---- sjis-unix  etc.
+
+  注    文字コード       unix                PC              JIS            UTF-8         改行表示
+        改行 lf        euc-jp-unix        sjis-unix        junet-unix      utf-8-unix        :
+             crlf      euc-jp-dos         sjis-dos         junet-dos       utf-8-dos       (DOS)
+             cr        euc-jp-mac         sjis-mac         junet-mac       utf-8-mac       (Mac)
+         状況依存      euc-jp             sjis             junet           utf-8
+        コード表示       EEE                 EES             EEJ             uuu
+
+  例
+[--]-EEE:---F1  main.cc        11:30AM 0.02 Mail   (C++)--L1--C0--Top-----
+[--]-EES:---F1  index.html     11:32AM 0.08 Mail   (HTML)--L1--C0--Top----
+
+  注意  通常はファイルを読み込むときは文字コードを自動認識します。
+        新規ファイルを保存するときに初めて全角文字が含まれていれば、euc でセーブされます
+        強制的に eucで読み込む (半角カナによる文字化け対策)
+            f6 euc Enter C-x C-f filename
+        EUC+cr で上書き保存
+            f6 euc-jp-unix Enter C-x C-s
+
+
+○ 再表示
+C-l                 : recenter  画面がくずれたとき、カーソル行が真ん中に来る
+
+
+○ いろいろなコマンド
+M-x diff            : ファイル比較
+M-x compile         : メークする
+M-x gdb             : デバッガの起動
+M-x grep            : ファイルから検索
+M-x grep-find       : ファイルから検索 - 下のディレクトリもふくめる
+M-x occur           : 表示中のファイル内を検索
+M-x shell           : シェルを起動。実行結果をファイルとして保存できる。
+M-x man             : Man page の表示。ファイルに保存できる。
+
+
+○ コマンドに与える数引数
+M-3 a               : aaa 入力
+C-u 3 a             : aaa 入力
+M-5 M-x occur       : 前後5行表示
+C-u 5 M-x occur     : 前後5行表示
+C-u -5 M-x occur    : 前5行表示
+C-u C-f             : 前へ4文字進む
+C-u C-u C-f         : 前へ16文字進む
+
+
+○ シェルの起動
+M-x shell      M-s  : シェル起動
+M-p            ↑   : history 前      シェルと違いアプリケーション入力中でも可
+M-n            ↓   : history 次      同上
+xx↑                : xx で始まる history 前
+C-p                 : カーソル上
+C-n                 : カーソル下
+C-d                 : EOF (promptのところで)
+C-c C-c             : シェル中断
+  
+
+○ 一時中断
+C-x C-z             : suspend         emacs original=C-z (undo)
+fg                  : (コマンド) シェルからEmacsに復帰する
+
+
+○ 終了
+C-x C-c             : emacs の終了
+
+  
+○ 現在の function key 設定一覧
+
+f1                  : help for help              M-x help
+            f2      : devide screen toggle
+C-s         f3      : re search forward
+C-s C-r     S-f3    : re search backward         emacs original=C-r (今は置換)
+C-x k       f4      : kill buffer
+C-x C-w     S-f4    : delete-window
+C-x d       f5      : dired  or  revert-buffer(in dired mode, view mode)
+M-x dirs    f5      : resync current directory stack (in shell mode)
+            S-f5    : dired
+C-x RET c   f6      : select coding system
+            S-f6    : toggle electric indent mode
+            f7      : shrink window
+            f8      : enlarge window
+            S-f7    : shrink window horizontally
+            S-f8    : enlarge window horizontally
+f1 k        f9      : describe key briefly
+            f10     : rotate divided screen
+            S-f10   : rotate divided screen reverse
+            f11     : wrap line toggle
+            f12     : line number toggle
+            S-f11   : scroll right
+            S-f12   : scroll left
+
+ ↑          ↑
+emacs       代替
+標準         キー
+    keybind
+
+
+○ help
+
+f1 a                : command-apropos    似たコマンド名表示
+f1 b                : describe-bindings
+f1 f                : describe-function
+f1 k<key>   f9<key> : describe-key       次に打つキーの説明 (よく使います)
+f1 m                : describe-mode
+f1 v                : describe-variable
+f1 w                : where-is
+   ....
+
+f1                  : ヘルプメニューで選択
+You have typed , the help character.  Type a Help option:
+(Use SPC or DEL to scroll through this text.  Type q to exit the Help command.)
+
+a  command-apropos.  Give a substring, and see a list of commands
+        (functions interactively callable) that contain
+        that substring.  See also the  apropos  command.
+b  describe-bindings.  Display table of all key bindings.
+c  describe-key-briefly.  Type a command key sequence;
+        it prints the function name that sequence runs.
+C  describe-coding-system.  This describes either a specific coding system
+        (if you type its name) or the coding systems currently in use
+        (if you type just RET).
+f  describe-function.  Type a function name and get documentation of it.
+C-f Info-goto-emacs-command-node.  Type a function name;
+        it takes you to the Info node for that command.
+i  info. The  info  documentation reader.
+I  describe-input-method.  Describe a specific input method (if you type
+        its name) or the current input method (if you type just RET).
+C-i  info-lookup-symbol.  Display the definition of a specific symbol
+        as found in the manual for the language this buffer is written in.
+k  describe-key.  Type a command key sequence;
+        it displays the full documentation.
+C-k Info-goto-emacs-key-command-node.  Type a command key sequence;
+        it takes you to the Info node for the command bound to that key.
+l  view-lossage.  Show last 100 characters you typed.
+L  describe-language-environment.  This describes either a
+        specific language environment (if you type its name)
+        or the current language environment (if you type just RET).
+        specific language environment (if you type its name)
+        or the current language environment (if you type just RET).
+m  describe-mode.  Print documentation of current minor modes,
+        and the current major mode, including their special commands.
+n  view-emacs-news.  Display news of recent Emacs changes.
+p  finder-by-keyword. Find packages matching a given topic keyword.
+s  describe-syntax.  Display contents of syntax table, plus explanations.
+t  help-with-tutorial.  Select the Emacs learn-by-doing tutorial.
+v  describe-variable.  Type name of a variable;
+        it displays the variable's documentation and value.
+w  where-is.  Type command name; it prints which keystrokes
+        invoke that command.
+
+F  Display the frequently asked questions file.
+h  Display the HELLO file which illustrates various scripts.
+C-c Display Emacs copying permission (General Public License).
+C-d Display Emacs ordering information.
+C-n Display news of recent Emacs changes.
+C-p Display information about the GNU project.
+C-w Display information on absence of warranty for GNU Emacs.
+
+
+f1 t
+--------------------Tutorial  画面の例---------------------------------
+Copyright (c) 1985 Free Software Foundation, Inc;  ファイル最後を参照のこと
+	   あなたが現在見ているのは Emacs 入門ガイドです。
+
+Emacs のコマンドを入力するには、一般にコントロールキー（キートップに 
+CTRL とか CTL と書いてある）やメタキー（キートップに META とか ALT と
+書いてある）を使います。そこで、CONTROL とか META とか書く代わりに、次
+のような記号を使うことにします。
+
+ C-<文字>   コントロールキーを押したまま、<文字>キーを押します。例えば、
+	    C-f はコントロールキーを押しながら f のキーを押すことです。
+
+ M-<文字>   メタキーを押したまま、<文字>キーを押します。もしメタキーがな
+	    い場合は、エスケープキーを押してから離し、それから<文字>キー
+	    を押します。以降エスケープキーのことを <ESC> と書きます。
+
+！重要！: Emacsを終了するには、C-x C-c をタイプします。
+
+">>" で始まる行は、その時何をすべきかを指示しています。例えば、
+........
+
+
+f1 i
+--------------------Info 画面の例--------------------------------------
+File: dir,	Node: Top	    This is the top of the INFO tree
+  This (the Directory node) gives a menu of major topics.  Typing "d"
+  returns here, "q" exits, "?" lists all INFO commands, "h"  gives a
+  primer for first-timers, "mTexinfo<Return>" visits Texinfo topic,
+  etc.
+  Or click mouse button 2 on a menu item or cross reference to select
+  it.
+  --- PLEASE ADD DOCUMENTATION TO THIS TREE. (See INFO topic first.) ---
+
+In Debian GNU/Linux, Info `dir' entries are added with the command
+`install-info'.  Please refer to install-info(8) for usage details.
+
+* Menu: The list of major topics begins on the next line.
+
+Miscellaneous
+* Rluserman: (rluserman).  GNU Readline Library API
+
+Miscellaneous:
+
+Development
+* CVS: (cvs).              Concurrent Versions System
+* CVS client/server: (cvsclient). Describes the client/server protocol used by
+                             CVS.
+* Gettext: (gettext).                           GNU gettext utilities.
+* gettextize: (gettext)gettextize Invocation.   Prepare a package for gettext.
+* msgfmt: (gettext)msgfmt Invocation.           Make MO files out of PO files.
+* msgmerge: (gettext)msgmerge Invocation.       Update two PO files into one.
+* xgettext: (gettext)xgettext Invocation.       Extract strings into a PO file.
+* Autoconf: (autoconf).    Create source code configuration scripts
+* Autoconf2.13: (autoconf2.13). Create source code configuration scripts
+.............
+---------------------------------------------------------------------
+
+○ 初期画面 オリジナル $ emacs -q
+
+File Edit Options Buffers Tools Help
+Welcome to GNU Emacs, one component of the GNU/Linux operating system.
+
+Get help           C-h  (Hold down CTRL and press h)
+Emacs manual       C-h r        Browse manuals     C-h i
+Emacs tutorial     C-h t        Undo changes       C-x u
+Buy manuals        C-h C-m      Exit Emacs         C-x C-c
+Activate menubar   M-`
+(`C-' means use the CTRL key.  `M-' means use the Meta (or Alt) key.
+If you have no Meta key, you may instead type ESC followed by the character.)
+Useful tasks:
+Visit New File                  Open Home Directory
+Customize Startup               Open *scratch* buffer
+
+GNU Emacs 23.1.1 (x86_64-pc-linux-gnu)
+ of 2009-10-19 on debian-build.int-office-er.priv, modified by Debian
+Copyright (C) 2009 Free Software Foundation, Inc.
+
+GNU Emacs comes with ABSOLUTELY NO WARRANTY; type C-h C-w for full details.
+Emacs is Free Software--Free as in Freedom--so you can redistribute copies
+of Emacs and modify it; type C-h C-c to see the conditions.
+Type C-h C-o for information on getting the latest version.
+
+If an Emacs session crashed recently, type Meta-x recover-session RET
+to recover the files you were editing.
+
+
+◎ テラターム設定
+  /home/kosuge/.emacs.lisp/KOSMAX-ON.CNF    (vt100用)  emacs21 22
+  /home/kosuge/.emacs.lisp/KOSMAX-X.CNF     (xterm用)  emacs21 23
+
+  自分のマシンのテラターム install directory にダウンロードし、
+       KEYBOARD.CNF のかわりに使う
+  注 Keyboard.cnf は SpeedDialアイコンで 'keyboard' という名前にみえます
+
+  テラターム設定 メニュー
+    Setup
+       Terminal
+          Kanji(receive)   EUC
+          Kanji(transmit)  EUC
+       Keyboard
+          Backspace Key    on       (Redhat では不要)
+          Delete Key       off
+          Send Meta Key    check    (Altで Meta-key)
+       Save Setup
+
+  テラターム iniファイル編集
+       TermType=xterm     色つきにしたいとき
+       TermType=vt100     色なし
+
+
+◎ 左Cntl キーの位置について
+    Emacsのキー定義では、'A' キーの左が Cntl キーであると操作しやすくなっています
+    AltIme などで Windows の Caps Lock キーと 左Cntl キーを入れ替えるのがおすすめ
+
+おわり
