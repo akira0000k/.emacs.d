@@ -18,23 +18,23 @@
 (define-key isearch-mode-map "\C-k" 'isearch-edit-string)
 (define-key isearch-mode-map "\C-h" 'isearch-delete-char)
 ;;   frequently used
-;;   C-k		isearch-edit-string       ex. C-s C-k
-;;   M-e		isearch-edit-string
-;;   C-r		isearch-repeat-backward   ex. C-s C-r
-;;   C-s		isearch-repeat-forward    ex. C-s C-s
+;;   C-k                isearch-edit-string       ex. C-s C-k
+;;   M-e                isearch-edit-string
+;;   C-r                isearch-repeat-backward   ex. C-s C-r
+;;   C-s                isearch-repeat-forward    ex. C-s C-s
 ;;   C-w                isearch-yank-word-or-char ex. C-s C-w
 ;;
 ;;   toggle
-;;   M-c		isearch-toggle-case-fold       ex. C-s M-c
-;;   M-r		isearch-toggle-regexp          ex. C-s M-r
-;;   M-s SPC		isearch-toggle-lax-whitespace  ex. C-s M-s SPC
+;;   M-c                isearch-toggle-case-fold       ex. C-s M-c
+;;   M-r                isearch-toggle-regexp          ex. C-s M-r
+;;   M-s SPC            isearch-toggle-lax-whitespace  ex. C-s M-s SPC
 ;;   toggle default
 (setq isearch-case-fold-search nil)  ;;ignore case (default)
 ;;(setq isearch-case-fold-search t)  ;;case sensitive
 (setq isearch-lax-whitespace nil)  ;;off
 ;;(setq isearch-lax-whitespace t)  ;;on (default)
 
-;;   M-%		isearch-query-replace  ex. C-s aaa M-% bbb
+;;   M-%                isearch-query-replace  ex. C-s aaa M-% bbb
 (global-set-key (kbd "C-r") 'query-replace) ;; M-% aaa bbb
 
 
@@ -102,10 +102,10 @@
 
 (global-set-key [f9]  'describe-key-briefly)
 (global-set-key [S-f9] '(lambda()(interactive)
-			  (if case-fold-search
-			      (progn (setq case-fold-search nil)(message "case sensitive Search mode"))
-			    (progn (setq case-fold-search t)(message "ignore case Search mode")))
-			  ))
+                          (if case-fold-search
+                              (progn (setq case-fold-search nil)(message "case sensitive Search mode"))
+                            (progn (setq case-fold-search t)(message "ignore case Search mode")))
+                          ))
 
 (global-set-key [f10] 'window-toggle-division)
 (global-set-key [S-f10] 'window-toggle-division-reverse)
@@ -120,7 +120,7 @@
 ;;;; MAC OSX command keys
 ;;====================================
 ;;;; MAC OSX command key + up down left right
-(global-set-key [s-up]	  'beginning-of-buffer)
+(global-set-key [s-up]    'beginning-of-buffer)
 (global-set-key [s-down]  'end-of-buffer)
 (global-set-key [s-left]  'move-beginning-of-line)
 (global-set-key [s-right] 'move-end-of-line)
@@ -136,16 +136,16 @@
 ;;;; [M-right]   ;; previous word
 ;;;; [M-left]    ;; next word
 (global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
-			    (if (eolp) (next-line))
-			    (end-of-line)))
+                            (if (eolp) (next-line))
+                            (end-of-line)))
 (global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
-			    (if (bolp) (previous-line))
-			    (beginning-of-line)))
+                            (if (bolp) (previous-line))
+                            (beginning-of-line)))
 
 (global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
-			    (next-line 2)))
+                            (next-line 2)))
 (global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
-			    (previous-line 2)))
+                            (previous-line 2)))
 
 ;;====================================
 ;;;; control keys
@@ -175,7 +175,7 @@
 ;;(global-set-key (kbd "M-.") 'end-of-buffer)
 
 ;;;誘惑の甘い罠
-;;; MAC OSX では　スーパー+xcv がつかえるのでそちらを使う。
+;;; MAC OSX ではスーパー+xcv がつかえるのでそちらを使う?
 (setq cua-prefix-override-inhibit-delay 0.01)
 (setq cua-enable-cua-keys t)
 ;(setq cua-enable-cua-keys nil)
@@ -206,15 +206,15 @@
   (if (= (point-min) (point))
       (message "Beginning of buffer@")
     (if (first-page-p)
-	(goto-char (point-min))
+        (goto-char (point-min))
       (if (not this-command-keys-shift-translated)
-	  (scroll-down )
-	;;else
-	(if (= (window-start) (point))
-	    (scroll-down ))
-	
-	(goto-char (window-start))
-	)
+          (scroll-down )
+        ;;else
+        (if (= (window-start) (point))
+            (scroll-down ))
+        
+        (goto-char (window-start))
+        )
       )
     )
   )
@@ -225,21 +225,21 @@
       (message "End of buffer@")
     ;;else
     (if (last-page-p)
-	(goto-char (point-max))
+        (goto-char (point-max))
       ;;else
       (if (not this-command-keys-shift-translated)
-	  (scroll-up )
-	;;else
-	(let ((po (point)))
-	  (move-to-window-line -1)      ;move cursor to window end
-	  (end-of-line)
-	  (if (= po (point))            ;cursor really moved?
-	      (progn
-		(scroll-up )        ;try again
-		(move-to-window-line -1)
-		(end-of-line)))
-	  )
-	)
+          (scroll-up )
+        ;;else
+        (let ((po (point)))
+          (move-to-window-line -1)      ;move cursor to window end
+          (end-of-line)
+          (if (= po (point))            ;cursor really moved?
+              (progn
+                (scroll-up )        ;try again
+                (move-to-window-line -1)
+                (end-of-line)))
+          )
+        )
       )
     )
   )
@@ -285,16 +285,16 @@
   (if (= (point-min) (point))
       (message "Beginning of buffer@")
     (if (= (window-start) (point))
-	(progn
-	  (scroll-down (- (window-body-height) 1))
-	  (message "scroll down")
-	  )
+        (progn
+          (scroll-down (- (window-body-height) 1))
+          (message "scroll down")
+          )
       (let ( (pos0 (current-line) ))
-	(move-to-window-line nil)
-	(if (>= (current-line) pos0)
-	    (move-to-window-line 0)
-       	  )
-	)
+        (move-to-window-line nil)
+        (if (>= (current-line) pos0)
+            (move-to-window-line 0)
+          )
+        )
       )
     )
   )
@@ -307,14 +307,14 @@
     (let ( (pos0 (current-line) ))
       (move-to-window-line nil)
       (if (> (current-line) pos0)
-	  nil ;; ok
-	(move-to-window-line -1)
-	(if (> (current-line) pos0)
-	    nil ;; ok
-	  (scroll-up (- (window-body-height) 1))
-	  (message "scroll up")
-	  )
-       	)
+          nil ;; ok
+        (move-to-window-line -1)
+        (if (> (current-line) pos0)
+            nil ;; ok
+          (scroll-up (- (window-body-height) 1))
+          (message "scroll up")
+          )
+        )
       )
     )
   )
@@ -328,9 +328,9 @@
   (interactive "^")
   (if(= (window-start) 1)
       (progn
-	(beginning-of-line)
-	(next-line (/ (window-body-height) -2))
-	)
+        (beginning-of-line)
+        (next-line (/ (window-body-height) -2))
+        )
     (let ( (a (current-line)) )
       (scroll-down (/ (window-body-height) 2))
       (move-to-window-line a)
@@ -367,10 +367,10 @@
     (beginning-of-line)
     (while (and (not (eolp))
                     (or (= (following-char) ?\t)
-			(= (following-char) ?\ )))
+                        (= (following-char) ?\ )))
       (forward-char))
     (if (eolp)
-	(beginning-of-line)))
+        (beginning-of-line)))
   )
 
 ;;====================================
@@ -379,8 +379,8 @@
 ;; edit filename in dired mode
 (require 'wdired)
 (require 'dired-x)
-;; S		dired-do-symlink
-;; Y		dired-do-relsymlink
+;; S            dired-do-symlink
+;; Y            dired-do-relsymlink
 
 (or (boundp 'a-directory) (setq a-directory "~"))
 (or (boundp 'b-directory) (setq b-directory "~"))
@@ -400,19 +400,19 @@
 (setq dired-default-directory default-directory)
 (setq dired-mode-hook
       '(lambda ()
-	 ;;(dired-omit-mode 1)
-	 (setq truncate-lines 1)
-	 (local-set-key [right]   'ak-dired-find-file)          ;; -> f
-	 (local-set-key [left]    'ak-dired-up-directory)       ;; <- ^
-	 (local-set-key [home]    'ak-dired-beginning-of-buffer)
-	 (local-set-key [end]     'ak-dired-end-of-buffer)
-	 (local-set-key [prior]   'ak-dired-scroll-down)
-	 (local-set-key [next]    'ak-dired-scroll-up)
-	 ;;(local-set-key [f5]      'revert-buffer)               ;; g
-	 (local-set-key [f5]      'dired-omit-mode)               ;; toggle omit mode
-	 (local-set-key "\M-s" 'shell)                          ;;emacs23  override M-s prefix
-	 (local-set-key "H"    'dired-find-file-hexl)           ;;originally make Hard link
-	 ))
+         ;;(dired-omit-mode 1)
+         (setq truncate-lines 1)
+         (local-set-key [right]   'ak-dired-find-file)          ;; -> f
+         (local-set-key [left]    'ak-dired-up-directory)       ;; <- ^
+         (local-set-key [home]    'ak-dired-beginning-of-buffer)
+         (local-set-key [end]     'ak-dired-end-of-buffer)
+         (local-set-key [prior]   'ak-dired-scroll-down)
+         (local-set-key [next]    'ak-dired-scroll-up)
+         ;;(local-set-key [f5]      'revert-buffer)               ;; g
+         (local-set-key [f5]      'dired-omit-mode)               ;; toggle omit mode
+         (local-set-key "\M-s" 'shell)                          ;;emacs23  override M-s prefix
+         (local-set-key "H"    'dired-find-file-hexl)           ;;originally make Hard link
+         ))
 (defun ak-dired-find-file (&optional arg)
   "find file or select char."
   (interactive "^p")
@@ -456,8 +456,8 @@
   (interactive "^")
   (if (first-page-p)
       (progn
-	(move-to-window-line 0)
-	(dired-next-line 4))
+        (move-to-window-line 0)
+        (dired-next-line 4))
     (scroll-down)
     (dired-previous-line 1))
   )
@@ -466,8 +466,8 @@
   (interactive "^")
   (if (last-page-p)
       (progn
-	(move-to-window-line -1)
-	(dired-previous-line 1))
+        (move-to-window-line -1)
+        (dired-previous-line 1))
     (scroll-up)
     (dired-next-line 1))
   )
@@ -557,7 +557,7 @@
   (interactive "p")
   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
         ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-	)
+        )
   )
 
 ;;====================================
@@ -604,8 +604,8 @@
 
 (defun get-last-buffer()
   (let ((lastbuf nil)
-	(blist (buffer-list))
-	(name nil))
+        (blist (buffer-list))
+        (name nil))
   (while blist
         (setq name (buffer-name (car blist)))
         (if (miscbufferp name)
@@ -617,9 +617,9 @@
 
 (defun get-first-buffer()
   (let ((firstbuf nil)
-	(blist (buffer-list))
-	(buffer nil)
-	(name nil))
+        (blist (buffer-list))
+        (buffer nil)
+        (name nil))
   (while blist
         (setq buffer (car blist))
         (setq name (buffer-name buffer))
@@ -703,7 +703,7 @@
 (setq shell-mode-hook
       '(lambda ()
          ;; comint 関係の設定
-	 (setq comint-process-echoes t)
+         (setq comint-process-echoes t)
          (setq comint-input-autoexpand nil)
                                         ;(setq comint-input-autoexpand 'input)
                                         ;(setq comint-input-autoexpand 'history)
@@ -749,16 +749,16 @@
   "insert // to region"
   (interactive)
   (setq quoting-marker
-		(read-string "Quoting marker: " quoting-marker)
-		)
+                (read-string "Quoting marker: " quoting-marker)
+                )
   
   (save-excursion
     (let 
-		(
-		  (e (max (region-end) (region-beginning)))
-		   (b (min (region-end) (region-beginning)))
-		    (len (length quoting-marker))
-			 )
+                (
+                  (e (max (region-end) (region-beginning)))
+                   (b (min (region-end) (region-beginning)))
+                    (len (length quoting-marker))
+                         )
       (goto-char b)
       (while (<= (+ (point) 1) e)
         ;;xx (insert-string quoting-marker)
