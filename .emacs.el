@@ -256,87 +256,94 @@
 ;;====================================
 ;;;; goto top, mid, bottom
 ;;====================================
-;;(global-set-key (kbd "<C-S-up>") 'ak-goto-top-screen)
-(global-set-key (kbd "<C-S-up>") 'ak-cursor-top)
-;;;;(global-set-key (kbd "s-m") 'ak-goto-mid-screen)
-;;(global-set-key (kbd "<C-S-down>") 'ak-goto-bottom-screen)
-(global-set-key (kbd "<C-S-down>") 'ak-cursor-bottom)
-(defun ak-goto-top-screen ()
-  "goto cursor top of screen"
-  (interactive "^")
-  ;;(goto-char (window-start))
-  (move-to-window-line 0)
-  )
-(defun ak-goto-mid-screen ()
-  "goto cursor mid of screen"
-  (interactive "^")
-  (move-to-window-line nil)
-  )
-(defun ak-goto-bottom-screen ()
-  "goto cursor bottom of screen"
-  (interactive "^")
-  (move-to-window-line -1)
-  )
+;; (global-set-key (kbd "s-t") 'ak-goto-top-screen)
+;; (global-set-key (kbd "s-m") 'ak-goto-mid-screen)
+;; (global-set-key (kbd "s-b") 'ak-goto-bottom-screen)
+;; (defun ak-goto-top-screen ()
+;;   "goto cursor top of screen"
+;;   (interactive "^")
+;;   ;;(goto-char (window-start))
+;;   (move-to-window-line 0)
+;;   )
+;; (defun ak-goto-mid-screen ()
+;;   "goto cursor mid of screen"
+;;   (interactive "^")
+;;   (move-to-window-line nil)
+;;   )
+;; (defun ak-goto-bottom-screen ()
+;;   "goto cursor bottom of screen"
+;;   (interactive "^")
+;;   (move-to-window-line -1)
+;;   )
 
+(global-set-key (kbd "<C-S-up>") 'ak-cursor-top)
+(global-set-key (kbd "<C-S-down>") 'ak-cursor-bottom)
 (defun ak-cursor-top ()
-  "scroll down = Page Up"
-  (interactive)
+  "move cursor to middle or top of screen or scroll down(Page Up)"
+  (interactive "^")
+  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-line))
   (if (= (point-min) (point))
       (message "Beginning of buffer@")
-    (if (first-page-p)
-	(goto-char (point-min))
-      (if (= (window-start) (point))
-	  (scroll-down ))
-      
-      (goto-char (window-start))
-      )
-    )
-  )
-(defun ak-cursor-bottom ()
-  "scroll up = Page Down"
-  (interactive "^")
-  (if (= (point-max) (point))
-      (message "End of buffer@")
-    ;;else
-    (if (last-page-p)
-	(goto-char (point-max))
-      ;;else
-      (let ((po (point)))
-	(move-to-window-line -1)      ;move cursor to window end
-	;;(end-of-line)
-	(if (= po (point))            ;cursor really moved?
-	    (progn
-	      (scroll-up )        ;try again
-	      (move-to-window-line -1)
-	      ;;(end-of-line)
-	      ))
+    (if (= (window-start) (point))
+	(progn
+	  (scroll-down (- (window-body-height) 1))
+	  (message "scroll down")
+	  )
+      (let ( (pos0 (current-line) ))
+	(move-to-window-line nil)
+	(if (>= (current-line) pos0)
+	    (move-to-window-line 0)
+       	  )
 	)
       )
     )
   )
+(defun ak-cursor-bottom ()
+  "move cursor to middle or bottom of screen or scroll up(Page Down)"
+  (interactive "^")
+  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-line))
+  (if (= (point-max) (point))
+      (message "End of buffer@")
+    (let ( (pos0 (current-line) ))
+      (move-to-window-line nil)
+      (if (> (current-line) pos0)
+	  nil ;; ok
+	(move-to-window-line -1)
+	(if (> (current-line) pos0)
+	    nil ;; ok
+	  (scroll-up (- (window-body-height) 1))
+	  (message "scroll up")
+	  )
+       	)
+      )
+    )
+  )
 ;;====================================
-;;;; scroll half screen でらうま倶楽部4
+;;;; scroll half screen でらうま倶楽部
 ;;====================================
 (global-set-key (kbd "M-p") 'half-page-down)
 (global-set-key (kbd "M-n") 'half-page-up)
-(defun half-page-up()
-  "カーソルは画面内固定で半画面 scroll-up。"
-  (interactive "^")
-  (if(= (window-end) (point-max))
-      (next-line (/ (window-height) 2))
-    (let ((a (current-line)))
-      (if(< a 1) (setq a 1))
-      (scroll-up (/ (window-height) 2))
-      (move-to-window-line a)
-      )))
-
 (defun half-page-down()
   "カーソルは画面内固定で半画面 scroll-down。"
   (interactive "^")
   (if(= (window-start) 1)
-      (next-line (/ (window-height) -2))
-    (let ((a (current-line)))
-      (scroll-down (/ (window-height) 2))
+      (progn
+	(beginning-of-line)
+	(next-line (/ (window-body-height) -2))
+	)
+    (let ( (a (current-line)) )
+      (scroll-down (/ (window-body-height) 2))
+      (move-to-window-line a)
+      )))
+
+(defun half-page-up()
+  "カーソルは画面内固定で半画面 scroll-up。"
+  (interactive "^")
+  (if(= (window-end) (point-max))
+      (next-line (/ (window-body-height) 2))
+    (let ( (a (current-line)) )
+      (if(< a 1) (setq a 1))
+      (scroll-up (/ (window-body-height) 2))
       (move-to-window-line a)
       )))
 
