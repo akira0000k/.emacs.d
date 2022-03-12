@@ -22,11 +22,13 @@
     M-x    ....  Esc + x
     M-x    ....  Alt + x            (IME表示が 'あ' のときはだめ)
     S-x    ....  Shift + x
+    s-x    ....  Command + x        (MAC)
     
     例
     C-g         ....  Ctrl + g  : 動作のキャンセル
     C-x d       ....  Ctrl + x  (Ctrlを放して) d  :  ディレクトリリスト表示(dired)
-    C-x C-d     ....  Ctrlを押したまま x d  :  ディレクトリ簡易表示
+    C-x C-b     ....  Ctrlを押したまま x b  :  バッファリスト表示
+    s-a         ....  全選択    (MAC)
     M-x shell   ....  Alt + x (Altを放して) "shell"  : 内部shell を表示
 
 ## 画面操作
@@ -34,10 +36,13 @@
         keybind
     標準        代替キー
      ↓           ↓
-    C-x 2       f2      : 画面分割 上下
+    C-x 2       f2, S-f2: 画面分割 上下 (一画面の時)
     C-x 3               : 画面分割 左右
-    C-x 1       f2      : 現画面だけにする
-    C-x o     f1, C-Tab : 画面移動 (分割されているとき)
+    C-x 1       f2      : 現画面だけにする (分割されている時)
+    C-x o       S-f1    : 画面移動
+                S-f2    : 画面移動 (逆回り) (分割されている時)
+    C-x o       C-Tab   : 画面移動
+                C-S-Tab : 画面移動 (逆回り)
     C-x 0       S-f4    : カーソルのいる画面をひっこめる (分割されているとき)
                 C-next  : バッファ切り替え 奥へ
                 C-prior : バッファ切り替え 戻る
@@ -305,14 +310,15 @@ Shiftキーを放してカーソル移動すると選択解除
 
 ## 現在の function key 設定一覧
 
-    C-x o       f1      : other screen         (標準は help)
-    M-x help    S-f1    : help
-                f2      : devide screen toggle
-                S-f2    : devide screen or other screen
+    M-x help    f1      : help
+    C-x o       S-f1    : other screen
+    C-x 2       f2      : devide screen toggle
+    C-x 1       f2      : devide screen toggle
+                S-f2    : devide screen or other screen(逆回り)
     C-s         f3      : re search forward
     C-s C-r     S-f3    : re search backward
     C-x k       f4      : kill buffer
-    C-x C-w     S-f4    : delete-window
+    C-x 0       S-f4    : delete-window
     g           f5      : revert-buffer in dired mode
                 f5      : revert-buffer in view mode
     M-x dirs    f5      : resync current directory stack (in shell mode)
@@ -338,16 +344,16 @@ Shiftキーを放してカーソル移動すると選択解除
 
 ## help
 
-    S-f1 a                : command-apropos    似たコマンド名表示
-    S-f1 b                : describe-bindings
-    S-f1 f                : describe-function
-    S-f1 k<key>   f9<key> : describe-key       次に打つキーの説明 (よく使います)
-    S-f1 m                : describe-mode
-    S-f1 v                : describe-variable
-    S-f1 w                : where-is
+    f1 a                : command-apropos    似たコマンド名表示
+    f1 b                : describe-bindings
+    f1 f                : describe-function
+    f1 k<key>   f9<key> : describe-key       次に打つキーの説明 (よく使います)
+    f1 m                : describe-mode
+    f1 v                : describe-variable
+    f1 w                : where-is
        ....
      
-    S-f1                  : ヘルプメニューで選択
+    f1                  : ヘルプメニューで選択
     You have typed , the help character.  Type a Help option:
     (Use SPC or DEL to scroll through this text.  Type q to exit the Help command.)
      
@@ -399,7 +405,7 @@ Shiftキーを放してカーソル移動すると選択解除
 
 
 
-    S-f1 t
+    f1 t
     --------------------Tutorial  画面の例---------------------------------
     Copyright (c) 1985 Free Software Foundation, Inc;  ファイル最後を参照のこと
      	   あなたが現在見ているのは Emacs 入門ガイドです。
@@ -423,7 +429,7 @@ Shiftキーを放してカーソル移動すると選択解除
 
 
 
-    S-f1 i
+    f1 i
     --------------------Info 画面の例--------------------------------------
     File: dir,	Node: Top	This is the top of the INFO tree
      
@@ -457,7 +463,7 @@ Shiftキーを放してカーソル移動すると選択解除
 
 
 ## 初期画面
-(C-h は S-f1 と読み替えてください)
+(C-h は f1 と読み替えてください)
 
 
     Welcome to GNU Emacs, a part of the GNU operating system.
@@ -495,6 +501,7 @@ Shiftキーを放してカーソル移動すると選択解除
     macの ¥ キーは \ に変更(キッパリ)
     C-up C-down などの Mission Controlキーとの競合問題。
     M-C- はmagnet で使うのでemacsでは使わず、s-up などを M-C-up に読み替えて戻している。
+    fn キーを押さなくても f1..f12が使えるようにする
 
 ## teraterm 設定 (Windows)
 
