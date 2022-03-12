@@ -63,6 +63,13 @@
 ;; lsを GNU coreutil gls に変える
 (setq insert-directory-program "/usr/local/bin/gls")
 
+;;;;;; ls をむりやり使う
+;;(setq dired-use-ls-dired t)
+;;;;(setq dired-use-ls-dired nil)
+
+;;;;; lsでなく lisp 版を使う
+;;;; (setq ls-lisp-use-insert-directory-program nil)
+;;;; (require 'ls-lisp)
 
 (load "~/.emacs.d/.emacs.el")
 
@@ -73,24 +80,32 @@
     (progn
       ;;(load-theme 'tango-dark t)  ;;background 111 nara warukunai ga...
       (custom-set-faces
-       '(font-lock-function-name-face ((t (:foreground "blue" :weight semi-bold)))) ;;;for xterm-256color
+       ;;'(font-lock-function-name-face ((t (:foreground "blue" :weight semi-bold)))) ;;;for xterm-256color
        '(link ((t (:foreground "cyan" :underline t))))
        '(minibuffer-prompt ((t (:foreground "cyan"))))
-       '(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
+       ;;'(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
        )
+      (menu-bar-mode -1)
       (message "emacs -nw"))
   ;;;else window emacs ;;;
-  (load-theme 'deeper-blue t)
+  (load-theme 'manoj-dark t)
   (custom-set-faces
-   '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
-   '(region ((t (:extend t :background "dark red"))))
+   '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
    )
+  ;; (load-theme 'deeper-blue t)
+  ;; (custom-set-faces
+  ;;  '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
+  ;;  '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
+  ;;  '(region ((t (:extend t :background "dark red"))))
+  ;;  )
+  
   ;; (load-theme 'tango-dark t)
   ;; (custom-set-faces
   ;;  '(default ((t (:inherit nil :extend nil :stipple nil :background "#010101" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Menlo"))))
   ;;  '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
   ;;  '(shadow ((t (:foreground "lime green"))))
   ;;  )
+  (menu-bar-mode 1)
   (message "emacs Xwindow"))
 
 
@@ -104,13 +119,9 @@
  ;; If there is more than one, they won't work right.
  '(ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
  '(ange-ftp-ftp-program-name "/usr/local/Cellar/inetutils/2.0_1/bin/ftp")
- '(case-fold-search t)
  '(comint-password-prompt-regexp
    "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'")
- '(comint-process-echoes t)
  '(default-input-method "japanese")
- '(dired-dwim-target nil)
- '(search-whitespace-regexp "\\s-+")
  '(split-width-threshold nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -1,6 +1,6 @@
 ;; Erase Menu bar
-(menu-bar-mode -1)
-;;(menu-bar-mode 1)
+;; (menu-bar-mode -1)
+;; ;;(menu-bar-mode 1)
 
 (display-time)
 (line-number-mode t)
@@ -71,9 +71,8 @@
 ;;====================================
 ;;;; function keys
 ;;====================================
-;; (global-set-key [f1] 'help-for-help)
-(global-set-key [f1] 'other-window)
-(global-set-key [S-f1] 'help-for-help)
+(global-set-key [f1] 'help-for-help)
+(global-set-key [S-f1] 'other-window)
 ;;(global-set-key [S-f1] 'delete-other-windows)
 
 (global-set-key [f2] 'ak-divide-screen-toggle)
@@ -125,11 +124,11 @@
 (global-set-key [s-left]  'move-beginning-of-line)
 (global-set-key [s-right] 'move-end-of-line)
 ;;     same as default
-;;(global-set-key (kbd "s-a") 'mark-whole-buffer)
-;;(global-set-key (kbd "s-x") 'kill-region)
-;;(global-set-key (kbd "s-c") 'kill-ring-save)
-;;(global-set-key (kbd "s-v") 'yank)
-;;(global-set-key (kbd "s-z") 'undo)
+(global-set-key (kbd "s-a") 'mark-whole-buffer)
+(global-set-key (kbd "s-x") 'kill-region)
+(global-set-key (kbd "s-c") 'kill-ring-save)
+(global-set-key (kbd "s-v") 'yank)
+(global-set-key (kbd "s-z") 'undo)
 
 
 ;; MAC OSX option key + up down left right
@@ -141,7 +140,7 @@
 (global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
                             (if (bolp) (previous-line))
                             (beginning-of-line)))
-
+;; fast cursor move
 (global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
                             (next-line 2)))
 (global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
@@ -289,7 +288,7 @@
           (scroll-down (- (window-body-height) 1))
           (message "scroll down")
           )
-      (let ( (pos0 (current-line) ))
+      (let ( (pos0 (current-line)) )
         (move-to-window-line nil)
         (if (>= (current-line) pos0)
             (move-to-window-line 0)
@@ -304,7 +303,7 @@
   ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-line))
   (if (= (point-max) (point))
       (message "End of buffer@")
-    (let ( (pos0 (current-line) ))
+    (let ( (pos0 (current-line)) )
       (move-to-window-line nil)
       (if (> (current-line) pos0)
           nil ;; ok
@@ -578,7 +577,7 @@
   (interactive)
         (if (one-window-p)
                 (split-window)
-          (other-window 1)))
+          (other-window -1)))
 
 ;;====================================
 ;;;;circular buffer change
