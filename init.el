@@ -59,17 +59,19 @@
 (or (setq c-directory (getenv "C_DIRECTORY")) (setq c-directory "~/Documents"))
 (or (setq e-directory (getenv "E_DIRECTORY")) (setq e-directory "~/Desktop"))
 
+;;;;;; C-x d  /ftp:user@host:
+;;;;(setq ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
+;;;;(setq ange-ftp-ftp-program-name "/usr/local/bin/ftp")
 
-;; lsを GNU coreutil gls に変える
-(setq insert-directory-program "/usr/local/bin/gls")
-
-;;;;;; ls をむりやり使う
-;;(setq dired-use-ls-dired t)
-;;;;(setq dired-use-ls-dired nil)
+;;;;;; lsを GNU coreutil gls に変える
+;;;;(setq insert-directory-program "/usr/local/bin/gls")
 
 ;;;;; lsでなく lisp 版を使う
 ;;;; (setq ls-lisp-use-insert-directory-program nil)
 ;;;; (require 'ls-lisp)
+
+;;;; (setq shell-file-name "/bin/bash")
+
 
 (load "~/.emacs.d/.emacs.el")
 
@@ -84,20 +86,17 @@
        '(link ((t (:foreground "cyan" :underline t))))
        '(minibuffer-prompt ((t (:foreground "cyan"))))
        ;;'(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
+       '(smerge-markers ((t (:extend t :background "blue"))))
        )
       (menu-bar-mode -1)
       (message "emacs -nw"))
   ;;;else window emacs ;;;
-  (load-theme 'manoj-dark t)
+  (load-theme 'deeper-blue t)
   (custom-set-faces
    '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
+   '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
+   '(region ((t (:extend t :background "dark red"))))
    )
-  ;; (load-theme 'deeper-blue t)
-  ;; (custom-set-faces
-  ;;  '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
-  ;;  '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
-  ;;  '(region ((t (:extend t :background "dark red"))))
-  ;;  )
   
   ;; (load-theme 'tango-dark t)
   ;; (custom-set-faces
@@ -117,8 +116,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
- '(ange-ftp-ftp-program-name "/usr/local/Cellar/inetutils/2.0_1/bin/ftp")
  '(comint-password-prompt-regexp
    "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'")
  '(default-input-method "japanese")
@@ -128,4 +125,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-)
+ )
