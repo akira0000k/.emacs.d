@@ -380,20 +380,14 @@
 (require 'dired-x)
 ;; S            dired-do-symlink
 ;; Y            dired-do-relsymlink
-
-(or (boundp 'a-directory) (setq a-directory "~"))
-(or (boundp 'b-directory) (setq b-directory "~"))
-(or (boundp 'c-directory) (setq c-directory "~"))
-(or (boundp 'e-directory) (setq e-directory "~"))
-
 (define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)
 (define-key dired-mode-map "h" '(lambda()(interactive)(dired "~")))
 (define-key dired-mode-map "r" '(lambda()(interactive)(dired "/")))
 (define-key dired-mode-map "z" '(lambda()(interactive)(dired dired-default-directory)))
-(define-key dired-mode-map "a" '(lambda()(interactive)(dired a-directory)))
-(define-key dired-mode-map "b" '(lambda()(interactive)(dired b-directory)))
-(define-key dired-mode-map "c" '(lambda()(interactive)(dired c-directory)))
-(define-key dired-mode-map "e" '(lambda()(interactive)(dired e-directory)))
+(and (boundp 'a-directory) (define-key dired-mode-map "a" '(lambda()(interactive)(dired a-directory))))
+(and (boundp 'b-directory) (define-key dired-mode-map "b" '(lambda()(interactive)(dired b-directory))))
+(and (boundp 'c-directory) (define-key dired-mode-map "c" '(lambda()(interactive)(dired c-directory))))
+(and (boundp 'e-directory) (define-key dired-mode-map "e" '(lambda()(interactive)(dired e-directory))))
 ;;                         ">" 'dired-next-dirline
 ;;                         "<" 'dired-previous-dirline
 (setq dired-default-directory default-directory)
