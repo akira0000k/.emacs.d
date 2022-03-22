@@ -3,6 +3,12 @@
 ;;       '(("gnu" . "http://elpa.gnu.org/packages/")
 ;;         ("melpa" . "http://melpa.org/packages/")
 ;;         ("org" . "http://orgmode.org/elpa/")))
+;;(require 'package)
+;;(add-to-list 'package-archives
+;; 	     '("melpa" . "http://melpa.org/packages/") t)
+;; M-x package-refresh-contents RET
+;; M-x package-list-package
+;; M-x package-install RET magit RET
 
 ;;  ;; 作成するファイルやdirectoryに　グループ書き込み権限をつけaる
 ;;  ;; for check
@@ -84,6 +90,7 @@
       (custom-set-faces
        ;;'(font-lock-function-name-face ((t (:foreground "blue" :weight semi-bold)))) ;;;for xterm-256color
        '(link ((t (:foreground "cyan" :underline t))))
+       '(magit-section-highlight ((t (:extend t :background "blue"))))
        '(minibuffer-prompt ((t (:foreground "cyan"))))
        ;;'(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
        '(smerge-markers ((t (:extend t :background "blue"))))
@@ -119,6 +126,7 @@
  '(comint-password-prompt-regexp
    "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'")
  '(default-input-method "japanese")
+ '(package-selected-packages '(magit))
  '(split-width-threshold nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
