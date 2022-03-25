@@ -384,10 +384,10 @@
 (define-key dired-mode-map "h" '(lambda()(interactive)(dired "~")))
 (define-key dired-mode-map "r" '(lambda()(interactive)(dired "/")))
 (define-key dired-mode-map "z" '(lambda()(interactive)(dired dired-default-directory)))
-(and (boundp 'a-directory) (define-key dired-mode-map "a" '(lambda()(interactive)(dired a-directory))))
-(and (boundp 'b-directory) (define-key dired-mode-map "b" '(lambda()(interactive)(dired b-directory))))
-(and (boundp 'c-directory) (define-key dired-mode-map "c" '(lambda()(interactive)(dired c-directory))))
-(and (boundp 'e-directory) (define-key dired-mode-map "e" '(lambda()(interactive)(dired e-directory))))
+(and (setq a-directory (getenv "A_DIRECTORY")) (define-key dired-mode-map "a" '(lambda()(interactive)(dired a-directory))))
+(and (setq b-directory (getenv "B_DIRECTORY")) (define-key dired-mode-map "b" '(lambda()(interactive)(dired b-directory))))
+(and (setq c-directory (getenv "C_DIRECTORY")) (define-key dired-mode-map "c" '(lambda()(interactive)(dired c-directory))))
+(and (setq e-directory (getenv "E_DIRECTORY")) (define-key dired-mode-map "e" '(lambda()(interactive)(dired e-directory))))
 ;;                         ">" 'dired-next-dirline
 ;;                         "<" 'dired-previous-dirline
 (setq dired-default-directory default-directory)

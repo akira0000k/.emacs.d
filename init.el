@@ -3,9 +3,9 @@
 ;;       '(("gnu" . "http://elpa.gnu.org/packages/")
 ;;         ("melpa" . "http://melpa.org/packages/")
 ;;         ("org" . "http://orgmode.org/elpa/")))
-;;(require 'package)
-;;(add-to-list 'package-archives
-;; 	     '("melpa" . "http://melpa.org/packages/") t)
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.org/packages/") t)
 ;; M-x package-refresh-contents RET
 ;; M-x package-list-package
 ;; M-x package-install RET magit RET
@@ -60,10 +60,10 @@
 ;;  (message "LANG was set to ja_JP.UTF-8"))
 
 
-(or (setq a-directory (getenv "A_DIRECTORY")) (setq a-directory "~/data"))
-(or (setq b-directory (getenv "B_DIRECTORY")) (setq b-directory "~/bin"))
-(or (setq c-directory (getenv "C_DIRECTORY")) (setq c-directory "~/Documents"))
-(or (setq e-directory (getenv "E_DIRECTORY")) (setq e-directory "~/Desktop"))
+(or (getenv "A_DIRECTORY") (setenv "A_DIRECTORY" "~/data"))
+(or (getenv "B_DIRECTORY") (setenv "B_DIRECTORY" "~/bin"))
+(or (getenv "C_DIRECTORY") (setenv "C_DIRECTORY" "~/Documents"))
+(or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" "~/Desktop"))
 
 ;;;;;; C-x d  /ftp:user@host:
 ;;;;(setq ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
