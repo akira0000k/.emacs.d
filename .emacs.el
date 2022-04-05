@@ -1,6 +1,8 @@
 ;; Erase Menu bar
 ;; (menu-bar-mode -1)
 ;; ;;(menu-bar-mode 1)
+;; ;;;; M-x tmm-menubar
+;; ;;;; ESC `
 
 (display-time)
 (line-number-mode t)
@@ -790,3 +792,28 @@
 ;;  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
 (require 'yaml-mode)
+
+;;====================================
+;;;;markdown-mode
+;;====================================
+;(require 'markdown-mode "markdown-mode.el" t)
+;; M-x markdown-live-preview-mode
+
+(setq markdown-mode-hook
+      '(lambda ()
+	 (setq markdown-command "github-markup")
+	 (setq markdown-command-needs-filename t)
+
+	 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+	 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+	 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
+	 ;; markdown preview mode
+	 ;; M-x markdown-preview-mode
+	 (define-key markdown-mode-map (kbd "C-c p") 'markdown-preview-mode)
+	 (setq markdown-preview-stylesheets
+	       ;;(list "~/.emacs.d/markdown/Clearness.css")
+	       (list "~/.emacs.d/markdown/Solarized(Dark).css")
+	       ;;(list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css")
+	       )
+	 ))

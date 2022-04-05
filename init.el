@@ -36,22 +36,25 @@
 ;;(load-theme 'wheatgrass t)
 ;;;(load-theme 'wombat t)
 
+;;====================================
+;;  exec-path
+;;====================================
+(defun ak-setenv()
+    (load "~/.emacs.d/site-lisp/exec-path-from-shell.el")
+    (add-to-list 'exec-path-from-shell-variables "A_DIRECTORY")
+    (add-to-list 'exec-path-from-shell-variables "B_DIRECTORY")
+    (add-to-list 'exec-path-from-shell-variables "C_DIRECTORY")
+    (add-to-list 'exec-path-from-shell-variables "E_DIRECTORY")
+    (add-to-list 'exec-path-from-shell-variables "LANG")
+    (exec-path-from-shell-initialize)
+    )
+
 ;; emacs.app?  shell emacs?
 (if (getenv "PWD")
     (message "shell start")
   (message "launch app")
-
   ;;(setenv  "PATH" (concat "/usr/local/bin:/Users/Akira/bin:/Users/Akira/go/bin:/usr/local/bin/go:" (getenv "PATH")))
-  ;;====================================
-  ;;  exec-path
-  ;;====================================
-  (load "~/.emacs.d/site-lisp/exec-path-from-shell.el")
-  (add-to-list 'exec-path-from-shell-variables "A_DIRECTORY")
-  (add-to-list 'exec-path-from-shell-variables "B_DIRECTORY")
-  (add-to-list 'exec-path-from-shell-variables "C_DIRECTORY")
-  (add-to-list 'exec-path-from-shell-variables "E_DIRECTORY")
-  (add-to-list 'exec-path-from-shell-variables "LANG")
-  (exec-path-from-shell-initialize)
+  (ak-setenv)
   )
 
 ;;(if (string= (getenv "LANG") "ja_JP.UTF-8")
@@ -60,10 +63,10 @@
 ;;  (message "LANG was set to ja_JP.UTF-8"))
 
 
-(or (getenv "A_DIRECTORY") (setenv "A_DIRECTORY" "~/data"))
-(or (getenv "B_DIRECTORY") (setenv "B_DIRECTORY" "~/bin"))
-(or (getenv "C_DIRECTORY") (setenv "C_DIRECTORY" "~/Documents"))
-(or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" "~/Desktop"))
+(or (getenv "A_DIRECTORY") (setenv "A_DIRECTORY" (concat (getenv "HOME") "/Downloads")))
+(or (getenv "B_DIRECTORY") (setenv "B_DIRECTORY" (concat (getenv "HOME") "/bin")))
+(or (getenv "C_DIRECTORY") (setenv "C_DIRECTORY" (concat (getenv "HOME") "/Documents")))
+(or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" (concat (getenv "HOME") "/Desktop")))
 
 ;;;;;; C-x d  /ftp:user@host:
 ;;;;(setq ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
@@ -82,6 +85,18 @@
 (load "~/.emacs.d/.emacs.el")
 
 
+(defun ak-vscode ()
+  "vscode key setting"
+  (interactive)
+  (global-set-key (kbd "M-h") 'help)
+  (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
+  (global-set-key [M-up]   'ak-last-buffer)
+  (global-set-key [M-down] 'ak-next-buffer)
+  ;;;; (global-set-key (kbd "M-,") 'beginning-of-buffer)
+  ;;;; (global-set-key (kbd "M-.") 'end-of-buffer)
+  ;;;; (define-key input-decode-map (kbd "M-<") (kbd "M-S-,"))
+  ;;;; (define-key input-decode-map (kbd "M->") (kbd "M-S-."))
+  )
 
 (if (not (string= window-system "ns"))
     ;;; -nw no window emacs
@@ -96,6 +111,13 @@
        '(smerge-markers ((t (:extend t :background "blue"))))
        )
       (menu-bar-mode -1)
+      (if (string= (getenv "TERM_PROGRAM") "vscode")
+	  (progn
+	    ;;;;"terminal.integrated.macOptionIsMeta": true
+	    (message "vscode")
+	    (ak-vscode)
+	    )
+	)
       (message "emacs -nw"))
   ;;;else window emacs ;;;
   (load-theme 'deeper-blue t)
@@ -126,7 +148,8 @@
  '(comint-password-prompt-regexp
    "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'")
  '(default-input-method "japanese")
- '(package-selected-packages '(magit))
+ '(dired-clean-up-buffers-too nil)
+ '(package-selected-packages '(markdown-toc markdown-preview-mode markdown-mode magit))
  '(split-width-threshold nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

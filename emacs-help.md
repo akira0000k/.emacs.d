@@ -44,8 +44,8 @@
     C-x o       C-Tab   : 画面移動
                 C-S-Tab : 画面移動 (逆回り)
     C-x 0       S-f4    : カーソルのいる画面をひっこめる (分割されているとき)
-                C-next  : バッファ切り替え 奥へ
-                C-prior : バッファ切り替え 戻る
+                C-next  : バッファ切り替え 奥へ    (Ctrl + PageDown)
+                C-prior : バッファ切り替え 戻る    (Ctrl + PageUp)
                 f7      : 画面縮小 (分割されているとき)  M-x shrink-window
                 f8      : 画面拡大 (分割されているとき)  M-x enlarge-window
     C-x C-b             : バッファリスト表示
@@ -111,41 +111,38 @@
 
 ## カーソル移動
 
-- Windows流
+● Windows流
  
-```
-→   ←   ↑   ↓   Home   End   PageUp  PageDown   Cntl+Home   Cntl+End
+    →   ←   ↑   ↓   Home   End   PageUp  PageDown   Cntl+Home   Cntl+End
 
-```
-- MAC流
+● MAC流
 
-```
-C-f C-b C-p C-n  s-left  s-right  fn+up  fn+down  s-up  s-down
-```
-- emacs流    　　　　　　(bashと共通)
+    C-f C-b C-p C-n  s-left  s-right  fn+up  fn+down  Command+up  Command+down
 
-```
-C-n         down    : 一行下
-C-p         up      : 一行上
-C-f         right   : 一文字右
-C-b         left    : 一文字左
-C-a         home    : 行頭
-C-e         end     : 行末
-            prior   : 一画面上 (旧来のM-v は cua-modeで使用)
-            next    : 一画面下 (旧来のC-v は cua-paste)
-            M-n     : 半画面上
-            M-p     : 半画面下
-            C-home  : バッファ先頭
-            C-end   : バッファ末尾
-M-<         C-,     : バッファ先頭
-M->         C-.     : バッファ末尾
-M-f         C-right : 一語右
-M-b         C-left  : 一語左
-            C-down  : 一行下へスクロール
-            C-up    : 一行上へスクロール
-            C-S-down: 画面の中か一番下の行にカーソル移動
-            C-S-up  : 画面の中か一番上の行にカーソル移動
-```
+● emacs流    　　　　　　(bashと共通)
+
+    C-n         down    : 一行下
+    C-p         up      : 一行上
+    C-f         right   : 一文字右
+    C-b         left    : 一文字左
+    C-a         home    : 行頭
+    C-e         end     : 行末
+    C-v                 : (旧来は下画面だが cua-paste)
+    M-v                 : (旧来は上画面だが delete-selection-repeat-replace-region)
+                prior   : 上画面     (PageUp)
+                next    : 下画面     (PageDown)
+                M-n     : 半画面上
+                M-p     : 半画面下
+                C-home  : バッファ先頭
+                C-end   : バッファ末尾
+    M-<         C-,     : バッファ先頭
+    M->         C-.     : バッファ末尾
+    M-f         C-right : 一語右
+    M-b         C-left  : 一語左
+                C-down  : 一行下へスクロール
+                C-up    : 一行上へスクロール
+                C-S-down: カーソルを画面の中、下、下画面
+                C-S-up  : カーソルを画面の中、上、上画面
 
 ## 行の移動
 
@@ -187,35 +184,31 @@ M-b         C-left  : 一語左
 
 ## 選択
 
-- ターミナルの機能
+● ターミナルの機能
 
-```
-マウスで選択--> copy されている
-右クリック  --> paste
-```
+    マウスで選択--> copy されている
+    右クリック  --> paste
 
-- Emacsの機能 (旧来)
+● Emacsの機能 (旧来)
 
-```
-C-x h              : バッファ全選択
-C-space            : 選択開始　　　 (Mark Set と表示されます)
-C-RET              : 矩形選択の開始 (cua mode)
-            このあと カーソル移動で 選択領域が拡大します
-C-g                : 選択解除
-```
-- Shiftキーをつかった選択 (最近風)
+    C-space            : 選択開始　　　 (Mark Set と表示されます)
+                         このあと カーソル移動で 選択領域が拡大します
+    C-RET              : 矩形選択の開始 (cua mode)
+                         このあと カーソル移動で 矩形選択領域が拡大します
+    C-x h       s-a    : バッファ全選択
+    C-g                : 選択解除
 
-```
-S-left    S-right      S-C-left	 S-C-right
-S-up      S-down
-S-Home	  S-End	       S-C-Home	 S-C-End
-S-PageUp  S-PageDown
-C-S-b     C-S-f        M-S-b 	 M-S-f
-C-S-p     C-S-n
-C-S-a     C-S-e        C-<       C->
-M-S-p     M-S-n
-Shiftキーを放してカーソル移動すると選択解除
-```
+● Shiftキーをつかった選択 (最近風)
+
+    S-left    S-right      S-C-left	 S-C-right
+    S-up      S-down
+    S-Home	  S-End	       S-C-Home	 S-C-End
+    S-PageUp  S-PageDown
+    C-S-b     C-S-f        M-S-b 	 M-S-f
+    C-S-p     C-S-n
+    C-S-a     C-S-e        C-<       C->
+    M-S-p     M-S-n
+    Shiftキーを放してカーソル移動すると選択解除
 
 
     選択された状態で
@@ -224,8 +217,9 @@ Shiftキーを放してカーソル移動すると選択解除
     C-d         delete : 選択領域の削除
     C-g                : 選択解除
     C-y         C-v    : 選択領域を copyしたもので置き換え
-        copy された状態で
-    C-y         C-v    : paste    (旧来C-v はPageDownだった)
+	
+    copy された状態で
+    C-y         C-v    : paste    (旧来C-v はPageDown相当)
 
 
 ## 文字コードの指定
@@ -536,6 +530,7 @@ Windows や Mac OSX のキー操作を取り入れてemacsの敷居を低くす�
 基本的な emacsのキーバインドはそのまま残しています。Mac ではemacs流が取り入れられている
 ため、違和感はないと思います。
 本来のemacsキーバインドを変えたところは、次の通り。
+
 - C-h はヘルプでなく、backspace
 - C-r は逆方向検索でなく、置換
 - C-z はサスペンドでなく、undo
