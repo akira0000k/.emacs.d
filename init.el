@@ -68,6 +68,9 @@
 (or (getenv "C_DIRECTORY") (setenv "C_DIRECTORY" (concat (getenv "HOME") "/Documents")))
 (or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" (concat (getenv "HOME") "/Desktop")))
 
+
+(load "~/.emacs.d/.emacs.el")
+
 ;;;;;; C-x d  /ftp:user@host:
 ;;;;(setq ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
 ;;;;(setq ange-ftp-ftp-program-name "/usr/local/bin/ftp")
@@ -81,8 +84,10 @@
 
 ;;;; (setq shell-file-name "/bin/bash")
 
-
-(load "~/.emacs.d/.emacs.el")
+;; (setq markdown-command "markdown")
+;; (setq markdown-command "markdown_py")
+;; (setq markdown-command "github-markup")
+;; (setq markdown-command "pandoc")
 
 
 (defun ak-vscode ()

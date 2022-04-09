@@ -1,8 +1,8 @@
 ;; Erase Menu bar
-;; (menu-bar-mode -1)
-;; ;;(menu-bar-mode 1)
-;; ;;;; M-x tmm-menubar
-;; ;;;; ESC `
+(menu-bar-mode -1)
+;;(menu-bar-mode 1)
+;;;; M-x tmm-menubar
+;;;; ESC `
 
 (display-time)
 (line-number-mode t)
@@ -698,6 +698,7 @@
 (setq shell-mode-hook
       '(lambda ()
          ;; comint 関係の設定
+         (setq shell-dirstack-query "pwd")
          (setq comint-process-echoes t)
          (setq comint-input-autoexpand nil)
                                         ;(setq comint-input-autoexpand 'input)
@@ -796,18 +797,21 @@
 ;;====================================
 ;;;;markdown-mode
 ;;====================================
-;(require 'markdown-mode "markdown-mode.el" t)
+;; M-x package-install RET markdown-mode RET
+;; M-x package-install RET markdown-preview-mode RET
+
+;;(require 'markdown-mode "markdown-mode.el" t)
 ;; M-x markdown-live-preview-mode
+;; C-c C-c l
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
+(setq markdown-command "markdown")  ;;default legacy command
 
 (setq markdown-mode-hook
       '(lambda ()
-	 (setq markdown-command "github-markup")
 	 (setq markdown-command-needs-filename t)
-
-	 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-	 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-	 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-
 	 ;; markdown preview mode
 	 ;; M-x markdown-preview-mode
 	 (define-key markdown-mode-map (kbd "C-c p") 'markdown-preview-mode)
