@@ -403,8 +403,7 @@
          (local-set-key [end]     'ak-dired-end-of-buffer)
          (local-set-key [prior]   'ak-dired-scroll-down)
          (local-set-key [next]    'ak-dired-scroll-up)
-         ;;(local-set-key [f5]      'revert-buffer)               ;; g
-         (local-set-key [f5]      'dired-omit-mode)               ;; toggle omit mode
+         (local-set-key [f5]      'revert-buffer)               ;; g
          (local-set-key "\M-s" 'shell)                          ;;emacs23  override M-s prefix
          (local-set-key "H"    'dired-find-file-hexl)           ;;originally make Hard link
          ))
