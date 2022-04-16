@@ -14,6 +14,3 @@
 ;; (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
 ;; shift select mode
 ;; C-x SPC     start emacs24 rectangle mark mode
-
-;;;;(global-set-key (kbd "C-v") 'yank) ;; C-y
-(global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg

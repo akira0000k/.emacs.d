@@ -1,5 +1,6 @@
-; teraterm KOSMAX 設定  TERM=xterm 用
-;                       TERM=vt100 のときと、screenに入るときは pc-teraconf-screen.el のロードが必要。
+; teraterm KEYBOARD.CNF 設定  TERM=xterm 用
+; 
+; screen内では　　　 TERM=xterm emacs -nw　とする
 ; 
 ; 2015.6.30 A.Kosuge
 ;
@@ -246,12 +247,3 @@ User76=1088,1,$1C]
 ;                   <home> => M-O H
 User77=327,1,$1BOH
 
-;	;                   [C-f7] => => C-\ c                    (create new shell)
-;	User77=1089,1,$1Cc
-;	;                 [S-C-f7] => C-\ S C-\ tab C-\ n       (divide screen---and next shell)
-;	User78=1601,1,$1CS$1C$09$1Cn
-;
-;	;                   [C-f8] => C-\ c C-\ n              (create new shell and next shell)
-;	User79=1090,1,$1Cc$1Cn
-;	;                 [S-C-f8] => C-\ | C-\ tab C-\ n       (divide screen | and next shell)
-;	User80=1602,1,$1C|$1C$09$1Cn

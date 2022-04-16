@@ -1,0 +1,100 @@
+autodetach on
+
+escape ^\^\
+
+startup_message off
+
+scrollback 10000
+
+caption always "%{= wb} %-w%{=bu dr}%n %t%{-}%+w %= %{=b wk}"
+
+# avoid console resize entering screen
+termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+
+# cancel default bindings
+#
+
+# C-backslash \      ... Really quit and kill all your windows [y/n]
+bind \\
+# C-backslash k      ... Really kill this window [y/n]
+bind k
+#                    alt-> kill bash by C-c  or  C-backslash K
+
+# C-backslash i      ... display window info
+bind i
+# C-backslash O      ... This window is no longer logged in.
+bind O
+# C-backslash .      ... Termcap entry written to "/var/run/screen/S-a-kosuge/.termcap".
+bind .
+# C-backslash ,      ... display GNU licence
+bind ,
+
+
+# bindings (C-\ command)
+# 
+# C-backslash c      ... create new screen
+# C-backslash space  ... next screen
+# C-backslash n      ... next screen
+# C-backslash p      ... prev screen
+# C-backslash 0      ... goto first screen  (numeric)
+
+# C-backslash S      ... divide screen  vertically    A-V
+# C-backslash |      ... divide screen  horizontally  <|>
+# C-backslash X      ... hide
+# C-backslash Q      ... undivide all
+# C-backslash tab    ... another division
+
+# C-backslash d      ... detach screen         # screen -ls ; screen -r PID
+# C-backslash z      ... suspend
+# C-backslash K      ... Really kill this window [y/n]
+
+# C-D                ... stop shell and kill screen
+
+#  *copy mode 
+# C-backslash [      ... enter copy mode
+# escape             ... exit copy mode   Insert, Delete .....
+# Home               ... go to top    1G
+# End                ... goto end     G
+# Page Up            ... page up      C-b
+# Page Down          ... page down    C-f
+# C-u                ... half up
+# C-d                ... half down
+# Space              ... mark/copy
+
+
+# screen -ls         # show screen
+# screen -r          # attach
+# screen -r 99999    # attach process
+# screen -d -r       # detach and attach
+# screen -d -r 99999 # detach and attach
+
+
+# teraterm keybind for screen
+# C-f1        C-\ tab                 ... next division
+# S-C-f1      C-\ n                   ... next shell
+
+# C-f2        C-\ S C-\ tab  C-\ n C-\ n   ... divide screen---and next shell x2
+# S-C-f2      C-\ S  C-\ tab  C-\ c        ... divide screen---and create new shell
+
+# C-f3        C-\ | C-\ tab  C-\ n C-\ n   ... divide screen | and next shell x2
+# S-C-f3      C-\ | C-\ tab  C-\ c         ... divide screen | and create new shell
+
+# C-f4        C-\ X                   ... erase division
+# S-C-f4      C-D    C-\ X            ... kill shell and erase division
+
+# C-f5        C-\ [                   ... enter copy mode
+# C-f6        C-\ ]                   ... paste
+
+
+
+# MAC OSX iTerm2 keybind for screen
+# opt-f1        C-\ tab		   ... next division
+# S-opt-f1	C-\ n		   ... next shell
+
+# opt-f2        C-\ S C-\ tab  C-\ n C-\ n    ... divide screen---and next shell x2
+# S-opt-f2	C-\ S  C-\ tab  C-\ c     ... divide screen---and create new shell
+
+# opt-f3        C-\ | C-\ tab  C-\ n C-\ n    ... divide screen | and next shell x2
+# S-opt-f3	C-\ | C-\ tab	 C-\ c      ... divide screen | and create new shell
+
+# opt-f4	C-\ X		   ... erase division

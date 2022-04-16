@@ -44,6 +44,10 @@
 ;; for MAC OSX
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 
+;; overwridden by cua-mode
+;;;;(global-set-key (kbd "C-v") 'yank) ;; C-y
+(global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
+
 
 
 ;; ------ 01keys.el ------
@@ -350,9 +354,6 @@
 ;; (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
 ;; shift select mode
 ;; C-x SPC     start emacs24 rectangle mark mode
-
-;;;;(global-set-key (kbd "C-v") 'yank) ;; C-y
-(global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
 
 
 
