@@ -1,3 +1,5 @@
+;; ------ 00misc.el ------
+
 ;; Erase Menu bar
 (menu-bar-mode -1)
 ;;(menu-bar-mode 1)
@@ -39,6 +41,12 @@
 ;;   M-%                isearch-query-replace  ex. C-s aaa M-% bbb
 (global-set-key (kbd "C-r") 'query-replace) ;; M-% aaa bbb
 
+;; for MAC OSX
+(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
+
+
+
+;; ------ 01keys.el ------
 
 ;;====================================
 ;;;; Teraterm End key = <select>
@@ -70,52 +78,6 @@
 ;;(define-key input-decode-map (kbd "M->") (kbd "M-S-."))
 
 
-;;====================================
-;;;; function keys
-;;====================================
-(global-set-key [f1] 'help-for-help)
-(global-set-key [S-f1] 'other-window)
-;;(global-set-key [S-f1] 'delete-other-windows)
-
-(global-set-key [f2] 'ak-divide-screen-toggle)
-(global-set-key [S-f2] 'ak-divide-screen-or-other)
-;; (global-set-key [f2] 'ak-divide-screen-or-other)
-;; (global-set-key [S-f2] 'delete-other-windows)
-
-(global-set-key [f3] 'isearch-repeat-forward)
-(global-set-key [S-f3] 'isearch-repeat-backward)
-
-;;(global-set-key [f4]  '(lambda()(interactive)(kill-buffer nil)))
-(global-set-key "\C-xk" 'ak-kill-buffer)
-(global-set-key [f4]    'ak-kill-buffer)
-(global-set-key [S-f4] 'delete-window)
-
-(global-set-key [f5]  'recenter)
-(global-set-key [S-f5]  '(lambda()(interactive)(dired ".")))
-
-(global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
-(global-set-key [S-f6]   'electric-indent-mode)
-
-(global-set-key [f7]   'shrink-window)
-(global-set-key [S-f7] 'shrink-window-horizontally)
-(global-set-key [f8]   'enlarge-window)
-(global-set-key [S-f8] 'enlarge-window-horizontally)
-
-(global-set-key [f9]  'describe-key-briefly)
-(global-set-key [S-f9] '(lambda()(interactive)
-                          (if case-fold-search
-                              (progn (setq case-fold-search nil)(message "case sensitive Search mode"))
-                            (progn (setq case-fold-search t)(message "ignore case Search mode")))
-                          ))
-
-(global-set-key [f10] 'window-toggle-division)
-(global-set-key [S-f10] 'window-toggle-division-reverse)
-
-(global-set-key [f11] 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
-(global-set-key [f12] 'global-linum-mode)
-(global-set-key [S-f11] 'scroll-right)
-(global-set-key [S-f12] 'scroll-left)
-
 
 ;;====================================
 ;;;; MAC OSX command keys
@@ -133,26 +95,26 @@
 (global-set-key (kbd "s-z") 'undo)
 
 
-;; MAC OSX option key + up down left right
-;;;; [M-right]   ;; previous word
-;;;; [M-left]    ;; next word
-(global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
-                            (if (eolp) (next-line))
-                            (end-of-line)))
-(global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
-                            (if (bolp) (previous-line))
-                            (beginning-of-line)))
-;; fast cursor move
-(global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
-                            (next-line 2)))
-(global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
-                            (previous-line 2)))
+
+;; MAC OSX Terminal.app keyboard setting
+(progn
+  (define-key input-decode-map "\e[25~" [S-f5])
+  (define-key input-decode-map "\e[26~" [S-f6])
+  (define-key input-decode-map "\e[28~" [S-f7])
+  (define-key input-decode-map "\e[29~" [S-f8])
+  (define-key input-decode-map "\e[31~" [S-f9])
+  (define-key input-decode-map "\e[32~" [S-f10])
+  (define-key input-decode-map "\e[33~" [S-f11])
+  (define-key input-decode-map "\e[34~" [S-f12])
+)
+
+
+
+;; ------ 02cursor.el ------
 
 ;;====================================
 ;;;; control keys
 ;;====================================
-;; for MAC OSX
-(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 
 ;;              [C-up]                    ;; Start Mission Control @ MAC OSX
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
@@ -175,23 +137,22 @@
 ;;(global-set-key (kbd "M-,") 'beginning-of-buffer)  ;;joke
 ;;(global-set-key (kbd "M-.") 'end-of-buffer)
 
-;;;誘惑の甘い罠
-;;; MAC OSX ではスーパー+xcv がつかえるのでそちらを使う?
-(setq cua-prefix-override-inhibit-delay 0.01)
-(setq cua-enable-cua-keys t)
-;(setq cua-enable-cua-keys nil)
-(cua-mode t)
 
-;; ;; <C-return>  start cua set rectangle mark
-;; (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
-;; shift select mode
-;; C-x SPC     start emacs24 rectangle mark mode
+;; ;; MAC OSX option key + up down left right
+;; ;;;; [M-right]   ;; previous word
+;; ;;;; [M-left]    ;; next word
+;; (global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
+;;                             (if (eolp) (next-line))
+;;                             (end-of-line)))
+;; (global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
+;;                             (if (bolp) (previous-line))
+;;                             (beginning-of-line)))
 
-;;;;(global-set-key (kbd "C-v") 'yank) ;; C-y
-(global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
-
-(global-set-key (kbd "M-s") 'shell) ;; M-x shell
-
+;; fast cursor move
+(global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
+                            (next-line 2)))
+(global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
+                            (previous-line 2)))
 
 
 ;;====================================
@@ -374,6 +335,29 @@
         (beginning-of-line)))
   )
 
+
+
+;; ------ 03cua.el ------
+
+;;;誘惑の甘い罠
+;;; MAC OSX ではスーパー+xcv がつかえるのでそちらを使う?
+(setq cua-prefix-override-inhibit-delay 0.01)
+(setq cua-enable-cua-keys t)
+;(setq cua-enable-cua-keys nil)
+(cua-mode t)
+
+;; ;; <C-return>  start cua set rectangle mark
+;; (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
+;; shift select mode
+;; C-x SPC     start emacs24 rectangle mark mode
+
+;;;;(global-set-key (kbd "C-v") 'yank) ;; C-y
+(global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
+
+
+
+;; ------ 04dired.el ------
+
 ;;====================================
 ;;;;  dired bindings
 ;;====================================
@@ -469,6 +453,56 @@
   "In dired, visit the Binary file in hexl-mode named on this line."
   (interactive)
   (hexl-find-file (dired-get-filename)))
+
+
+
+;; ------ 05like.el ------
+
+;;====================================
+;;;; function keys
+;;====================================
+(global-set-key [f1] 'help-for-help)
+(global-set-key [S-f1] 'other-window)
+;;(global-set-key [S-f1] 'delete-other-windows)
+
+(global-set-key [f2] 'ak-divide-screen-toggle)
+(global-set-key [S-f2] 'ak-divide-screen-or-other)
+;; (global-set-key [f2] 'ak-divide-screen-or-other)
+;; (global-set-key [S-f2] 'delete-other-windows)
+
+(global-set-key [f3] 'isearch-repeat-forward)
+(global-set-key [S-f3] 'isearch-repeat-backward)
+
+;;(global-set-key [f4]  '(lambda()(interactive)(kill-buffer nil)))
+(global-set-key "\C-xk" 'ak-kill-buffer)
+(global-set-key [f4]    'ak-kill-buffer)
+(global-set-key [S-f4] 'delete-window)
+
+(global-set-key [f5]  'recenter)
+(global-set-key [S-f5]  '(lambda()(interactive)(dired ".")))
+
+(global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
+(global-set-key [S-f6]   'electric-indent-mode)
+
+(global-set-key [f7]   'shrink-window)
+(global-set-key [S-f7] 'shrink-window-horizontally)
+(global-set-key [f8]   'enlarge-window)
+(global-set-key [S-f8] 'enlarge-window-horizontally)
+
+(global-set-key [f9]  'describe-key-briefly)
+(global-set-key [S-f9] '(lambda()(interactive)
+                          (if case-fold-search
+                              (progn (setq case-fold-search nil)(message "case sensitive Search mode"))
+                            (progn (setq case-fold-search t)(message "ignore case Search mode")))
+                          ))
+
+(global-set-key [f10] 'window-toggle-division)
+(global-set-key [S-f10] 'window-toggle-division-reverse)
+
+(global-set-key [f11] 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
+(global-set-key [f12] 'global-linum-mode)
+(global-set-key [S-f11] 'scroll-right)
+(global-set-key [S-f12] 'scroll-left)
 
 
 ;;====================================
@@ -573,6 +607,38 @@
         (if (one-window-p)
                 (split-window)
           (other-window -1)))
+
+;;====================================
+;;;;add region mark
+;;====================================
+;;  "リージョンに引用マークをつける"  M-x cite-region
+(defvar quoting-marker "//")
+;;;(defun cite-region ()        tex で消える
+(defun ciregion ()
+  "insert // to region"
+  (interactive)
+  (setq quoting-marker
+                (read-string "Quoting marker: " quoting-marker)
+                )
+  
+  (save-excursion
+    (let 
+                (
+                  (e (max (region-end) (region-beginning)))
+                   (b (min (region-end) (region-beginning)))
+                    (len (length quoting-marker))
+                         )
+      (goto-char b)
+      (while (<= (+ (point) 1) e)
+        ;;xx (insert-string quoting-marker)
+        (insert quoting-marker)
+        (setq e (+ e len))
+        (forward-line 1)))))
+;;;end cite-region
+
+
+
+;; ------ 06buffer.el ------
 
 ;;====================================
 ;;;;circular buffer change
@@ -693,7 +759,15 @@
   (list-buffers-if-exist))
 (ad-activate 'dired)
 
-;; ---------  Shell Keybinding  ---------------
+
+
+;; ------ 07shell.el ------
+
+;;====================================
+;;;; shell-mode
+;;====================================
+(global-set-key (kbd "M-s") 'shell) ;; M-x shell
+
 (setq shell-mode-hook
       '(lambda ()
          ;; comint 関係の設定
@@ -706,7 +780,9 @@
                                         ;(setq comint-scroll-to-bottom-on-output t)
          (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
          ))
+
 (load "~/.emacs.d/site-lisp/tails-comint-history.el")
+
 (define-key shell-mode-map  [f5]     '(lambda()(interactive)(dirs)))
 (define-key comint-mode-map [home]   'beginning-of-buffer)
 (define-key comint-mode-map [end]    'end-of-buffer)
@@ -729,58 +805,24 @@
     (forward-line -1)))
 
 
-;; ---------  View mode Keybinding  ---------------
+
+;; ------ 08mode.el ------
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+
+
+;;====================================
+;;;;view-mode
+;;====================================
 (require 'view)
 (define-key view-mode-map [f5] '(lambda()(interactive)(revert-buffer nil t t)))
 
 
 ;;====================================
-;;;;add region mark
-;;====================================
-;;  "リージョンに引用マークをつける"  M-x cite-region
-(defvar quoting-marker "//")
-;;;(defun cite-region ()        tex で消える
-(defun ciregion ()
-  "insert // to region"
-  (interactive)
-  (setq quoting-marker
-                (read-string "Quoting marker: " quoting-marker)
-                )
-  
-  (save-excursion
-    (let 
-                (
-                  (e (max (region-end) (region-beginning)))
-                   (b (min (region-end) (region-beginning)))
-                    (len (length quoting-marker))
-                         )
-      (goto-char b)
-      (while (<= (+ (point) 1) e)
-        ;;xx (insert-string quoting-marker)
-        (insert quoting-marker)
-        (setq e (+ e len))
-        (forward-line 1)))))
-;;;end cite-region
-
-
-;; MAC OSX Terminal.app keyboard setting
-(progn
-  (define-key input-decode-map "\e[25~" [S-f5])
-  (define-key input-decode-map "\e[26~" [S-f6])
-  (define-key input-decode-map "\e[28~" [S-f7])
-  (define-key input-decode-map "\e[29~" [S-f8])
-  (define-key input-decode-map "\e[31~" [S-f9])
-  (define-key input-decode-map "\e[32~" [S-f10])
-  (define-key input-decode-map "\e[33~" [S-f11])
-  (define-key input-decode-map "\e[34~" [S-f12])
-)
-
-(add-to-list 'load-path "~/.emacs.d/site-lisp/")
-
-;;====================================
 ;;;;bash-completion
 ;;====================================
 ;;(load "~/.emacs.d/site-lisp/bash-completion.el")
+
 
 ;;====================================
 ;;;;go-mode
@@ -791,7 +833,12 @@
 ;;  (autoload 'go-mode "go-mode" nil t)
 ;;  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
+
+;;====================================
+;;;;yaml-mode
+;;====================================
 (require 'yaml-mode)
+
 
 ;;====================================
 ;;;;markdown-mode

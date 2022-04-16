@@ -69,7 +69,8 @@
 (or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" (concat (getenv "HOME") "/Desktop")))
 
 
-(load "~/.emacs.d/.emacs.el")
+;;(load "~/.emacs.d/.emacs.el")
+(load "~/.emacs.d/dot/.emacs.el")
 
 ;;;;;; C-x d  /ftp:user@host:
 ;;;;(setq ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
@@ -154,7 +155,8 @@
    "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'")
  '(default-input-method "japanese")
  '(dired-clean-up-buffers-too nil)
- '(package-selected-packages '(markdown-toc markdown-preview-mode markdown-mode magit))
+ '(package-selected-packages
+   '(dockerfile-mode docker markdown-toc markdown-preview-mode markdown-mode magit))
  '(split-width-threshold nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
