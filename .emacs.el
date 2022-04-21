@@ -390,7 +390,7 @@
          (local-set-key [next]    'ak-dired-scroll-up)
          (local-set-key [f5]      'revert-buffer)               ;; g
          (local-set-key "\M-s" 'shell)                          ;;emacs23  override M-s prefix
-         (local-set-key "H"    'dired-find-file-hexl)           ;;originally make Hard link
+         (local-set-key "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
          ))
 (defun ak-dired-find-file (&optional arg)
   "find file or select char."
@@ -450,7 +450,7 @@
     (scroll-up)
     (dired-next-line 1))
   )
-(defun dired-find-file-hexl ()
+(defun ak-dired-find-file-hexl ()
   "In dired, visit the Binary file in hexl-mode named on this line."
   (interactive)
   (hexl-find-file (dired-get-filename)))
