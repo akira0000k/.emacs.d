@@ -72,18 +72,25 @@
 ;;(load "~/.emacs.d/.emacs.el")
 (load "~/.emacs.d/dot/.emacs.el")
 
-;;;;;; C-x d  /ftp:user@host:
-;;;;(setq ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
-;;;;(setq ange-ftp-ftp-program-name "/usr/local/bin/ftp")
+;; Tramp
+;; C-x d  /docker:user@container:
+;; C-x d  /ftp:user@host:
+;;;; (setq ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
+;;;; (setq ange-ftp-ftp-program-name "/usr/local/bin/ftp")
 
-;;;;;; lsを GNU coreutil gls に変える
-;;;;(setq insert-directory-program "/usr/local/bin/gls")
+;;;; ;; Mac OSX  lsを GNU coreutil gls に変える
+;;;; (setq insert-directory-program "/usr/local/bin/gls")
+;;;; ;; .zshrc  export PS1="%n@%m %~ %# "
+;;;; (setq dirtrack-list '(" \\(.*\\) % " 1))
 
-;;;;; lsでなく lisp 版を使う
+;;;; ;; linux in Docker
+;;;; ;; .bashrc  PS1='$0@\u:\w\$ '
+;;;; (setq shell-file-name "/bin/bash")
+;;;; (setq dirtrack-list '(":\\(.*\\)[#\\$]" 1))
+
+;;;; ;; lsでなく lisp 版を使う
 ;;;; (setq ls-lisp-use-insert-directory-program nil)
 ;;;; (require 'ls-lisp)
-
-;;;; (setq shell-file-name "/bin/bash")
 
 ;; (setq markdown-command "markdown")
 ;; (setq markdown-command "markdown_py")

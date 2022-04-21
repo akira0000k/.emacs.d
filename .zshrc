@@ -64,7 +64,8 @@ alias ]]]]='cd ../../../..'
 alias ]]]]]='cd ../../../../..'
        
 if [ "$TERM" = dumb ]; then
-    export PS1="%n@%m %1~ %# "
+    #export PS1="%n@%m %1~ %# "
+    export PS1="%n@%m %~ %# "
 else
     export PS1="|
 %n@%m %1~ %# "

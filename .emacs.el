@@ -780,6 +780,7 @@
          (setq comint-scroll-to-bottom-on-input t)
                                         ;(setq comint-scroll-to-bottom-on-output t)
          (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
+	 (dirtrack-mode)
          ))
 
 (load "~/.emacs.d/site-lisp/tails-comint-history.el")
