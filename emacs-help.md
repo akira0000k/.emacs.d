@@ -117,7 +117,7 @@
 
 ● MAC流
 
-    C-f C-b C-p C-n  s-left  s-right  fn+up  fn+down  Command+up  Command+down
+    C-f C-b C-p C-n  Command-left  Command-right  fn+up  fn+down  Command+up  Command+down
 
 ● emacs流    　　　　　　(bashと共通)
 
@@ -499,7 +499,7 @@
 
 ## teraterm 設定 (Windows)
 
-    /home/user/.emacs.lisp/TERA/KOSMAX24-both.CNF   (xterm用)
+    /home/user/.emacs.lisp/TERA/KOSMAX.CNF   (xterm用)
     をteraterm install directory にダウンロードし、
          KEYBOARD.CNF のかわりに使う
        
