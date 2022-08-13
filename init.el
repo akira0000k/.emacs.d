@@ -21,10 +21,10 @@
 ;; 起動時のフレーム設定
 (setq initial-frame-alist
       (list
-      '(top . 200)
-      '(left . 500)
+      '(top . 20)
+      '(left . 100)
       '(width . 151)
-      '(height . 62)))
+      '(height . 53)))
 (setq default-frame-alist initial-frame-alist)
 
 ;;;    M-x describe-theme    =>tab ..show themes available
@@ -95,7 +95,7 @@
 ;; (setq markdown-command "markdown")
 ;; (setq markdown-command "markdown_py")
 ;; (setq markdown-command "github-markup")
-;; (setq markdown-command "pandoc")
+;; (setq markdown-command "pandoc")   ;; brew install pandoc
 
 
 (defun ak-vscode ()
@@ -114,15 +114,24 @@
 (if (not (string= window-system "ns"))
     ;;; -nw no window emacs
     (progn
-      ;;(load-theme 'tango-dark t)  ;;background 111 nara warukunai ga...
+      ;; for MAC OSX iTerm2 3.4.16  same as XWindow Emacs
+      (load-theme 'deeper-blue t)
       (custom-set-faces
-       ;;'(font-lock-function-name-face ((t (:foreground "blue" :weight semi-bold)))) ;;;for xterm-256color
-       '(link ((t (:foreground "cyan" :underline t))))
-       '(magit-section-highlight ((t (:extend t :background "blue"))))
-       '(minibuffer-prompt ((t (:foreground "cyan"))))
-       ;;'(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
-       '(smerge-markers ((t (:extend t :background "blue"))))
+       '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
+       '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
+       '(region ((t (:extend t :background "dark red"))))
        )
+
+      ;; ;; for debian   TERM=xterm emacs -nw
+      ;; (custom-set-faces
+      ;;  ;;'(font-lock-function-name-face ((t (:foreground "blue" :weight semi-bold)))) ;;;for xterm-256color
+      ;;  '(link ((t (:foreground "cyan" :underline t))))
+      ;;  '(magit-section-highlight ((t (:extend t :background "blue"))))
+      ;;  '(minibuffer-prompt ((t (:foreground "cyan"))))
+      ;;  ;;'(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
+      ;;  '(smerge-markers ((t (:extend t :background "blue"))))
+      ;;  )
+
       (menu-bar-mode -1)
       (if (string= (getenv "TERM_PROGRAM") "vscode")
 	  (progn

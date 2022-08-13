@@ -1,0 +1,17 @@
+[core]
+	symlinks = true
+[user]
+	name = akira0000k
+	email = 95961660+akira0000k@users.noreply.github.com
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[alias]
+	tree = log --graph --branches --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Creset%x09by"%C(cyan ul)%an%Creset" %x09%C(auto)%s %d'
+	logs = log --graph --all
+[diff]
+	tool = meld
+[merge]
+	tool = meld

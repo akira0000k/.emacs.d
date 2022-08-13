@@ -1,5 +1,6 @@
-
+.DS_Store
 *~
 *.bak
 elpa
 auto-save-list
+transient

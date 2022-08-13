@@ -124,6 +124,8 @@
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
 (global-set-key [C-down] '(lambda()(interactive)(scroll-up 1)))
 (global-set-key [C-up]   '(lambda()(interactive)(scroll-down 1)))
+(global-set-key (kbd "s-<next>")  '(lambda()(interactive)(scroll-up 2)))
+(global-set-key (kbd "s-<prior>") '(lambda()(interactive)(scroll-down 2)))
 ;;(global-set-key [C-S-down] '(lambda()(interactive)(scroll-up 4)))
 ;;(global-set-key [C-S-up]   '(lambda()(interactive)(scroll-down 4)))
 (global-set-key (kbd "<wheel-up>")  '(lambda()(interactive)(scroll-down 2)))
