@@ -155,6 +155,7 @@
   ;;  '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
   ;;  '(shadow ((t (:foreground "lime green"))))
   ;;  )
+  (define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
   (menu-bar-mode 1)
   (message "emacs Xwindow"))
 

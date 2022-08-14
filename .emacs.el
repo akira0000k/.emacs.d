@@ -72,6 +72,18 @@
 (define-key input-decode-map "\e[1;8C" (kbd "<s-S-right>"))
 (define-key input-decode-map "\e[1;7D" (kbd "<s-left>"))
 (define-key input-decode-map "\e[1;8D" (kbd "<s-S-left>"))
+(define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
+(define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))
+;;;; M-[ 1 ; 8 A	C-M-S-<up>      to   s-S-<up>   
+;;;; M-[ 1 ; 8 B	C-M-S-<down>	to   s-S-<down> 
+;;;; M-[ 1 ; 8 C	C-M-S-<right>	to   s-S-<right>
+;;;; M-[ 1 ; 8 D	C-M-S-<left>	to   s-S-<left> 
+;;;; M-[ 1 ; 7 A	C-M-<up>        to   s-<up>   
+;;;; M-[ 1 ; 7 B	C-M-<down>	to   s-<down> 
+;;;; M-[ 1 ; 7 C	C-M-<right>	to   s-<right>
+;;;; M-[ 1 ; 7 D	C-M-<left>	to   s-<left> 
+;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
+;;;; M-[ 5 ; 7 ~	C-M-<prior>	to   s-<prior>
 ;; shift-control-,  select to filetop
 ;; shift-control-.  select to fileend
 (define-key input-decode-map "\e[60;6u" (kbd "C-S-,"))  ;; for iTerm2
@@ -100,17 +112,17 @@
 
 
 
-;; MAC OSX Terminal.app keyboard setting
-(progn
-  (define-key input-decode-map "\e[25~" [S-f5])
-  (define-key input-decode-map "\e[26~" [S-f6])
-  (define-key input-decode-map "\e[28~" [S-f7])
-  (define-key input-decode-map "\e[29~" [S-f8])
-  (define-key input-decode-map "\e[31~" [S-f9])
-  (define-key input-decode-map "\e[32~" [S-f10])
-  (define-key input-decode-map "\e[33~" [S-f11])
-  (define-key input-decode-map "\e[34~" [S-f12])
-)
+;; ;; MAC OSX Terminal.app keyboard setting
+;; (progn
+;;   (define-key input-decode-map "\e[25~" [S-f5])
+;;   (define-key input-decode-map "\e[26~" [S-f6])
+;;   (define-key input-decode-map "\e[28~" [S-f7])
+;;   (define-key input-decode-map "\e[29~" [S-f8])
+;;   (define-key input-decode-map "\e[31~" [S-f9])
+;;   (define-key input-decode-map "\e[32~" [S-f10])
+;;   (define-key input-decode-map "\e[33~" [S-f11])
+;;   (define-key input-decode-map "\e[34~" [S-f12])
+;; )
 
 
 
