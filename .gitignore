@@ -2,6 +2,7 @@
 *~
 *.bak
 elpa
+elpy
 auto-save-list
 transient
 .markdown-preview.html

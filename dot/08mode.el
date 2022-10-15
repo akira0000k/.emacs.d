@@ -62,3 +62,9 @@
 	       ;;(list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css")
 	       )
 	 ))
+
+;;====================================
+;;;; elpy  python developing environment
+;;====================================
+(if (boundp 'elpy-enable)
+    (elpy-enable))
