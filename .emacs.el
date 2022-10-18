@@ -894,5 +894,9 @@
 ;;====================================
 ;;;; elpy  python developing environment
 ;;====================================
-(if (boundp 'elpy-enable)
+
+;; error in process sentinel: elpy-rpc--default-error-callback: peculiar error: "exited abnormally with code 1"
+;; M-x elpy-rpc-reinstall-virtualenv
+
+(if (fboundp 'elpy-enable)
     (elpy-enable))

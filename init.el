@@ -1,14 +1,26 @@
-;; (package-initialize)
-;; (setq package-archives
-;;       '(("gnu" . "http://elpa.gnu.org/packages/")
-;;         ("melpa" . "http://melpa.org/packages/")
-;;         ("org" . "http://orgmode.org/elpa/")))
-(require 'package)
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/") t)
 ;; M-x package-refresh-contents RET
 ;; M-x package-list-package
 ;; M-x package-install RET magit RET
+(require 'package)
+(package-initialize)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+;; (package-refresh-contents)
+;; ;; Installs packages
+;; ;; myPackage contains a list of package names
+;; (defvar myPackages
+;;   '(
+;;     markdown-mode
+;;     markdown-preview-mode
+;;     elpy
+;;     )
+;;   )
+;; ;;Scans the list in myPackages
+;; ;; If the package listed is not already installed, install it
+;; (mapc #'(lambda (package)
+;;  	  (unless (package-installed-p package)
+;;  	    (package-install package)))
+;;       myPackages)
 
 ;;  ;; 作成するファイルやdirectoryに　グループ書き込み権限をつけaる
 ;;  ;; for check
