@@ -16,6 +16,10 @@
 ;;(setq visible-bell t)
 (setq ring-bell-function 'ignore)
 
+(setq default-input-method "japanese")
+(setq split-width-threshold nil)
+(setq use-dialog-box nil)
+
 ;;====================================
 ;;;; keybinding while Isearch.  ex. C-s C-w ..yank word
 ;;====================================

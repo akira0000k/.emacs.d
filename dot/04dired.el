@@ -9,6 +9,7 @@
 ;; edit filename in dired mode
 (require 'wdired)
 (require 'dired-x)
+(setq dired-clean-up-buffers-too nil)
 ;; S            dired-do-symlink
 ;; Y            dired-do-relsymlink
 (define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)

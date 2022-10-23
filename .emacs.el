@@ -16,6 +16,10 @@
 ;;(setq visible-bell t)
 (setq ring-bell-function 'ignore)
 
+(setq default-input-method "japanese")
+(setq split-width-threshold nil)
+(setq use-dialog-box nil)
+
 ;;====================================
 ;;;; keybinding while Isearch.  ex. C-s C-w ..yank word
 ;;====================================
@@ -379,6 +383,7 @@
 ;; edit filename in dired mode
 (require 'wdired)
 (require 'dired-x)
+(setq dired-clean-up-buffers-too nil)
 ;; S            dired-do-symlink
 ;; Y            dired-do-relsymlink
 (define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)
@@ -826,6 +831,10 @@
   (if (= (point-max) (point))
       (tails-comint-previous-input)     ;(comint-previous-input 1)
     (forward-line -1)))
+
+(setq comint-password-prompt-regexp
+      "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'"
+      )
 
 
 

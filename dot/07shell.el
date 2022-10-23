@@ -44,3 +44,7 @@
   (if (= (point-max) (point))
       (tails-comint-previous-input)     ;(comint-previous-input 1)
     (forward-line -1)))
+
+(setq comint-password-prompt-regexp
+      "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'"
+      )
