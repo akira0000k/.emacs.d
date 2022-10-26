@@ -44,24 +44,26 @@
 ;;(require 'markdown-mode "markdown-mode.el" t)
 ;; M-x markdown-live-preview-mode
 ;; C-c C-c l
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+(if (fboundp 'markdown-mode)
+    (progn
+      (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+      (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+      (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
-(setq markdown-command "markdown")  ;;default legacy command
+      (setq markdown-command "markdown")  ;;default legacy command
 
-(setq markdown-mode-hook
-      '(lambda ()
-	 (setq markdown-command-needs-filename t)
-	 ;; markdown preview mode
-	 ;; M-x markdown-preview-mode
-	 (define-key markdown-mode-map (kbd "C-c p") 'markdown-preview-mode)
-	 (setq markdown-preview-stylesheets
-	       ;;(list "~/.emacs.d/markdown/Clearness.css")
-	       (list "~/.emacs.d/markdown/Solarized(Dark).css")
-	       ;;(list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css")
-	       )
-	 ))
+      (setq markdown-mode-hook
+	    '(lambda ()
+	       (setq markdown-command-needs-filename t)
+	       ;; markdown preview mode
+	       ;; M-x markdown-preview-mode
+	       (define-key markdown-mode-map (kbd "C-c p") 'markdown-preview-mode)
+	       (setq markdown-preview-stylesheets
+		     ;;(list "~/.emacs.d/markdown/Clearness.css")
+		     (list "~/.emacs.d/markdown/Solarized(Dark).css")
+		     ;;(list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css")
+		     )
+	       ))))
 
 ;;====================================
 ;;;; elpy  python developing environment
@@ -72,3 +74,11 @@
 
 (if (fboundp 'elpy-enable)
     (elpy-enable))
+
+;;====================================
+;;;; git
+;;====================================
+
+;; ;; VC (version control) is standard lisp package.
+;; ;; Cancel .git check when no "git" command installed.
+;; (setq vc-handled-backends nil)

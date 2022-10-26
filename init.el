@@ -171,6 +171,9 @@
   (menu-bar-mode 1)
   (message "emacs Xwindow"))
 
+;; face etc.
+;; M-x list-faces-display
+;; M-x describe-face
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
