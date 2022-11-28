@@ -37,8 +37,6 @@
 ;;   M-r                isearch-toggle-regexp          ex. C-s M-r
 ;;   M-s SPC            isearch-toggle-lax-whitespace  ex. C-s M-s SPC
 ;;   toggle default
-(setq isearch-case-fold-search nil)  ;;ignore case (default)
-;;(setq isearch-case-fold-search t)  ;;case sensitive
 (setq isearch-lax-whitespace nil)  ;;off
 ;;(setq isearch-lax-whitespace t)  ;;on (default)
 
