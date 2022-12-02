@@ -53,10 +53,13 @@
 ;;====================================
 ;;;; press left at top of window then kill buffer and show dired
 ;;====================================
-(global-set-key [left] 'ak-left-char)
-;;(global-set-key (kbd "C-b") 'ak-left-char)
+;; Cursor L, R move always logical order, backward and forward,
+;; even at arabic and hebrew document (R->L) and visual-order-cursor-movement is t
+(global-set-key [left] 'ak-backward-char)
+(global-set-key [right] 'forward-char)
+;;(global-set-key (kbd "C-b") 'ak-backward-char)
 
-(defun ak-left-char (&optional arg)
+(defun ak-backward-char (&optional arg)
   "press left arrow at the top  then kill buffer."
   (interactive "^p")
   (if this-command-keys-shift-translated
