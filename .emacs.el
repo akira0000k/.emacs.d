@@ -533,11 +533,17 @@
 ;;====================================
 ;;;; press left at top of window then kill buffer and show dired
 ;;====================================
-;; Cursor L, R move always logical order, backward and forward,
-;; even at arabic and hebrew document (R->L) and visual-order-cursor-movement is t
-(global-set-key [left] 'ak-backward-char)
-(global-set-key [right] 'forward-char)
 ;;(global-set-key (kbd "C-b") 'ak-backward-char)
+
+;; ;; Cursor L, R move always logical order, backward and forward,
+;; ;; even at R2L text and visual-order-cursor-movement is t
+;; (global-set-key [left] 'ak-backward-char)
+;; (global-set-key [right] 'forward-char)
+
+;; cursor move L R naturally at R2L text.
+(global-set-key [left] 'ak-left-char)
+(global-set-key [right] 'ak-right-char)
+(setq visual-order-cursor-movement t)
 
 (defun ak-backward-char (&optional arg)
   "press left arrow at the top  then kill buffer."
@@ -550,6 +556,32 @@
       ;else
       (kill-buffer-and-dired)
       )
+    )
+  )
+(defun ak-left-char (&optional arg)
+  "press left arrow at the top  then kill buffer."
+  (interactive "^p")
+  (if this-command-keys-shift-translated
+      (left-char arg)
+    ;;else
+    (if (and(equal (point) (point-min))
+	(equal (current-bidi-paragraph-direction) 'left-to-right))
+	(kill-buffer-and-dired)
+      ;;else
+      (left-char arg))
+    )
+  )
+(defun ak-right-char (&optional arg)
+  "press right arrow at the top  then kill buffer at R2L text."
+  (interactive "^p")
+  (if this-command-keys-shift-translated
+      (right-char arg)
+    ;;else
+    (if (and(equal (point) (point-min))
+	(equal (current-bidi-paragraph-direction) 'right-to-left))
+	(kill-buffer-and-dired)
+      ;;else
+      (right-char arg))
     )
   )
 (defun kill-buffer-and-dired()
