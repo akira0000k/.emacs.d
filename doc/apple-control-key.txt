@@ -1,0 +1,48 @@
+https://support.apple.com/ja-jp/HT201236
+
+カーソル移動系はシフトキーと併用して選択できます
+
+
+Mac のキーボードショートカット
+
+書類に関するショートカット
+
+
+control + H：挿入ポイントの左側にある文字を削除します。または、「delete」キーをお使いください。
+control + D：挿入ポイントの右側にある文字を削除します。または、「fn + delete」キーをお使いください。
+control + K：挿入ポイントから、行または段落の末尾までの範囲にあるテキストを削除します。
+
+control + A：行または段落の先頭に移動します。
+control + E：行または段落の末尾に移動します。
+control + F：1 文字分進みます。
+control + B：1 文字分戻ります。
+control + L：カーソルまたは選択範囲を表示領域の中央に表示します。
+control + P：1 行上に移動します。
+control + N：1 行下に移動します。
+
+control + O：挿入ポイントの後に 1 行挿入します。
+control + T：挿入ポイントの右側の文字と左側の文字を置換します。
+
+
+
+https://www.danrodney.com/mac/
+Mac Keyboard Shortcuts
+The Biggest & Best List of Mac Keystrokes
+
+
+Emacs Key Bindings Only work in some apps (Safari, Mail, TextEdit, etc.)
+Action                                                                  	Keystroke	Remember As
+Go to start of line (move cursor to start of line)                      	Ctrl-A  	A = Start of alphabet
+Go to end of line (move cursor to end of line)                          	Ctrl-E  	E = End
+Go up one line                                                          	Ctrl-P  	P = Previous
+Go down one line                                                        	Ctrl-N  	N = Next
+Go back a character (move cursor left)                                  	Ctrl-B  	B = Back
+Go forward a character (move cursor right)                              	Ctrl-F  	F = Forward
+Delete the character to the right of the cursor                         	Ctrl-D  	D = Delete
+Delete the character to the left of the cursor                          	Ctrl-H  	
+Delete the selection or to the end of the line (acts like cutting the text)	Ctrl-K  	K = Kill
+Yank back the killed text (acts like pasting)                           	Ctrl-Y  	Y = Yank
+Scroll down                                                             	Ctrl-V  	
+Center the current line in the window                                   	Ctrl-L  	
+Insert line break after the cursor without moving the cursor            	Ctrl-O  	
+Transpose letters (swaps letters on left and right of cursor)           	Ctrl-T  	T = Transpose

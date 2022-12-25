@@ -1,0 +1,211 @@
+Akira@nBook-Pro ~ % LANG=C nano
+|
+  GNU nano 7.1                                                               New Buffer
+
+^G Help         ^O Write Out    ^W Where Is     ^K Cut          ^T Execute      ^C Location     M-U Undo        M-A Set Mark    M-] To Bracket  M-Q Previous
+^X Exit         ^R Read File    ^\ Replace      ^U Paste        ^J Justify      ^/ Go To Line   M-E Redo        M-6 Copy        ^Q Where Was    M-W Next
+
+^G
+
+ The nano editor is designed to emulate the functionality and ease-of-use
+ of the UW Pico text editor.  There are four main sections of the editor.
+ The top line shows the program version, the current filename being
+ edited, and whether or not the file has been modified.  Next is the main
+ editor window showing the file being edited.  The status line is the
+ third line from the bottom and shows important messages.  The bottom two
+ lines show the most commonly used shortcuts in the editor.
+
+ Shortcuts are written as follows: Control-key sequences are notated with
+ a '^' and can be entered either by using the Ctrl key or pressing the Esc
+ key twice.  Meta-key sequences are notated with 'M-' and can be entered
+ using either the Alt, Cmd, or Esc key, depending on your keyboard setup.
+ Also, pressing Esc twice and then typing a three-digit decimal number
+ from 000 to 255 will enter the character with the corresponding value.
+ The following keystrokes are available in the main editor window.
+ Alternative keys are shown in parentheses:
+
+^G     (F1)      Display this help text
+^X     (F2)      Close the current buffer / Exit from nano
+^O     (F3)      Write the current buffer (or the marked region) to disk
+^R     (Ins)     Insert another file into current buffer (or into new buffer)
+
+^W     (F6)      Search forward for a string or a regular expression
+^\     (M-R)     Replace a string or a regular expression
+^K     (F9)      Cut current line (or marked region) and store it in cutbuffer
+^U     (F10)     Paste the contents of cutbuffer at current cursor position
+
+^T               Execute a function or an external command
+^J     (F4)      Justify the current paragraph
+
+^C     (F11)     Display the position of the cursor
+^/     (M-G)     Go to line and column number
+
+M-U              Undo the last operation
+M-E              Redo the last undone operation
+
+M-A    (^6)      Mark text starting from the cursor position
+M-6    (M-^)     Copy current line (or marked region) and store it in cutbuffer
+
+M-]              Go to the matching bracket
+
+^Q               Search backward for a string or a regular expression
+M-Q              Search next occurrence backward
+M-W              Search next occurrence forward
+
+^B     (Left)    Go back one character
+^F     (Right)   Go forward one character
+^Left  (M-Space) Go back one word
+^Right (^Space)  Go forward one word
+^A     (Home)    Go to beginning of current line
+^E     (End)     Go to end of current line
+
+^P     (Up)      Go to previous line
+^N     (Down)    Go to next line
+M-Up   (M--)     Scroll up one line without moving the cursor textually
+M-Down (M-+)     Scroll down one line without moving the cursor textually
+
+^Up    (M-7)     Go to previous block of text
+^Down  (M-8)     Go to next block of text
+M-(    (M-9)     Go to beginning of paragraph; then of previous paragraph
+M-)    (M-0)     Go just beyond end of paragraph; then of next paragraph
+
+^Y     (PgUp)    Go one screenful up
+^V     (PgDn)    Go one screenful down
+M-\    (^Home)   Go to the first line of the file
+M-/    (^End)    Go to the last line of the file
+
+M-Left (M-,)     Switch to the previous file buffer
+M-Right(M-.)     Switch to the next file buffer
+
+^I     (Tab)     Insert a tab at the cursor position (or indent marked lines)
+^M     (Enter)   Insert a newline at the cursor position
+
+^H     (Bsp)     Delete the character to the left of the cursor
+^D     (Del)     Delete the character under the cursor
+
+M-Bsp  (Sh-^Del) Delete backward from cursor to word start
+^Del             Delete forward from cursor to next word start
+M-T              Cut from the cursor position to the end of the file
+
+M-J              Justify the entire file
+M-D              Count the number of lines, words, and characters
+M-V              Insert the next keystroke verbatim
+
+M-}              Indent the current line (or marked lines)
+M-{    (Sh-Tab)  Unindent the current line (or marked lines)
+
+M-3              Comment/uncomment the current line (or marked lines)
+^]               Try and complete the current word
+
+M-:              Start/stop recording a macro
+M-;              Run the last recorded macro
+
+M-Del            Throw away the current line (or marked region)
+
+M-Ins            Place or remove an anchor at the current line
+M-PgUp           Jump backward to the nearest anchor
+M-PgDn           Jump forward to the nearest anchor
+
+F12              Invoke the spell checker, if available
+M-B              Invoke the linter, if available
+M-F              Invoke a program to format/arrange/manipulate the buffer
+
+                 Suspend the editor (return to the shell)
+^L               Refresh (redraw) the current screen
+^L               Center the line where the cursor is
+
+^S               Save file without prompting
+
+M-Z              Hidden interface enable/disable
+M-X              Help mode enable/disable
+M-C              Constant cursor position display enable/disable
+M-S              Soft wrapping of overlong lines enable/disable
+M-N              Line numbering enable/disable
+M-P              Whitespace display enable/disable
+M-Y              Color syntax highlighting enable/disable
+
+M-H              Smart home key enable/disable
+M-I              Auto indent enable/disable
+M-K              Cut to end enable/disable
+M-L              Hard wrapping of overlong lines enable/disable
+M-O              Conversion of typed tabs to spaces enable/disable
+M-M              Mouse support enable/disable
+
+
+
+^L Refresh                ^W Where Is               M-Q Previous              ^P Prev Line              ^Y Prev Page              M-\ First Line
+^X Close                  ^Q Where Was              M-W Next                  ^N Next Line              ^V Next Page              M-/ Last Line
+
+
+Akira@nBook-Pro ~ % type nano
+nano is /usr/local/bin/nano
+|
+Akira@nBook-Pro ~ % LANG=C nano --help
+Usage: nano [OPTIONS] [[+LINE[,COLUMN]] FILE]...
+
+To place the cursor on a specific line of a file, put the line number with
+a '+' before the filename.  The column number can be added after a comma.
+When a filename is '-', nano reads data from standard input.
+
+ Option         Long option             Meaning
+ -A             --smarthome             Enable smart home key
+ -B             --backup                Save backups of existing files
+ -C <dir>       --backupdir=<dir>       Directory for saving unique backup files
+ -D             --boldtext              Use bold instead of reverse video text
+ -E             --tabstospaces          Convert typed tabs to spaces
+ -F             --multibuffer           Read a file into a new buffer by default
+ -G             --locking               Use (vim-style) lock files
+ -H             --historylog            Save & reload old search/replace strings
+ -I             --ignorercfiles         Don't look at nanorc files
+ -J <number>    --guidestripe=<number>  Show a guiding bar at this column
+ -K             --rawsequences          Fix numeric keypad key confusion problem
+ -L             --nonewlines            Don't add an automatic newline
+ -M             --trimblanks            Trim tail spaces when hard-wrapping
+ -N             --noconvert             Don't convert files from DOS/Mac format
+ -O             --bookstyle             Leading whitespace means new paragraph
+ -P             --positionlog           Save & restore position of the cursor
+ -Q <regex>     --quotestr=<regex>      Regular expression to match quoting
+ -R             --restricted            Restrict access to the filesystem
+ -S             --softwrap              Display overlong lines on multiple rows
+ -T <number>    --tabsize=<number>      Make a tab this number of columns wide
+ -U             --quickblank            Wipe status bar upon next keystroke
+ -V             --version               Print version information and exit
+ -W             --wordbounds            Detect word boundaries more accurately
+ -X <string>    --wordchars=<string>    Which other characters are word parts
+ -Y <name>      --syntax=<name>         Syntax definition to use for coloring
+ -Z             --zap                   Let Bsp and Del erase a marked region
+ -a             --atblanks              When soft-wrapping, do it at whitespace
+ -b             --breaklonglines        Automatically hard-wrap overlong lines
+ -c             --constantshow          Constantly show cursor position
+ -d             --rebinddelete          Fix Backspace/Delete confusion problem
+ -e             --emptyline             Keep the line below the title bar empty
+ -f <file>      --rcfile=<file>         Use only this file for configuring nano
+ -g             --showcursor            Show cursor in file browser & help text
+ -h             --help                  Show this help text and exit
+ -i             --autoindent            Automatically indent new lines
+ -j             --jumpyscrolling        Scroll per half-screen, not per line
+ -k             --cutfromcursor         Cut from cursor to end of line
+ -l             --linenumbers           Show line numbers in front of the text
+ -m             --mouse                 Enable the use of the mouse
+ -n             --noread                Do not read the file (only write it)
+ -o <dir>       --operatingdir=<dir>    Set operating directory
+ -p             --preserve              Preserve XON (^Q) and XOFF (^S) keys
+ -q             --indicator             Show a position+portion indicator
+ -r <number>    --fill=<number>         Set width for hard-wrap and justify
+ -s <program>   --speller=<program>     Use this alternative spell checker
+ -t             --saveonexit            Save changes on exit, don't prompt
+ -u             --unix                  Save a file by default in Unix format
+ -v             --view                  View mode (read-only)
+ -w             --nowrap                Don't hard-wrap long lines [default]
+ -x             --nohelp                Don't show the two help lines
+ -y             --afterends             Make Ctrl+Right stop at word ends
+ -%             --stateflags            Show some states on the title bar
+ -_             --minibar               Show a feedback bar at the bottom
+ -0             --zero                  Hide all bars, use whole terminal
+|
+Akira@nBook-Pro ~ % LANG=C nano --version
+ GNU nano, version 7.1
+ (C) 2022 the Free Software Foundation and various contributors
+ Compiled options: --disable-libmagic --enable-utf8
+|
+Akira@nBook-Pro ~ %
