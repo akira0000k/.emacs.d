@@ -99,10 +99,10 @@
 ;;;; (setq ange-ftp-ftp-program-args '("-i" "-n" "-g" "-v" "-e"))
 ;;;; (setq ange-ftp-ftp-program-name "/usr/local/bin/ftp")
 
-;;;; ;; Mac OSX  lsを GNU coreutil gls に変える
-;;;; (setq insert-directory-program "/usr/local/bin/gls")
-;;;; ;; .zshrc  export PS1="%n@%m %~ %# "
-;;;; (setq dirtrack-list '(" \\(.*\\) % " 1))
+;; Mac OSX  lsを GNU coreutil gls に変える
+(setq insert-directory-program "/usr/local/bin/gls")
+;; .zshrc  export PS1="%n@%m %~ %# "
+(setq dirtrack-list '(" \\(.*\\) % " 1))
 
 ;;;; ;; linux in Docker
 ;;;; ;; .bashrc  PS1='$0@\u:\w\$ '
@@ -115,7 +115,7 @@
 
 ;; (setq markdown-command "markdown")
 ;; (setq markdown-command "markdown_py")
-;; (setq markdown-command "pandoc")   ;; brew install pandoc
+(setq markdown-command "pandoc")   ;; brew install pandoc
 
 ;; VSCODE
 ;; Settings

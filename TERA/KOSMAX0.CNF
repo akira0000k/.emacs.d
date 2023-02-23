@@ -92,17 +92,17 @@ User3=850,1,$1B[2;2~
 ;                   <S-delete> cut
 User4=851,1,$1B[3;2~
 ;                   [S-left]
-User5=843,1,$1B[1;2D
+User5=843,1,$1BO2D
 ;                   [S-right]
-User6=845,1,$1B[1;2C
+User6=845,1,$1BO2C
 ;                   [S-up]
-User7=840,1,$1B[1;2A
+User7=840,1,$1BO2A
 ;                   [S-down]
-User8=848,1,$1B[1;2B
+User8=848,1,$1BO2B
 ;                   [S-home]
-User9=839,1,$1B[1;2H
+User9=839,1,$1BO2H
 ;                   [S-end]
-User10=847,1,$1B[1;2F
+User10=847,1,$1BO2F
 ;                   [S-prior]
 User11=841,1,$1B[5;2~
 ;                   [S-next]
@@ -112,17 +112,17 @@ User13=1863,1,$1B[1;6H
 ;                   [S-C-end]
 User14=1871,1,$1B[1;6F
 ;                   [C-left]
-User15=1355,1,$1B[1;5D
+User15=1355,1,$1BO5D
 ;                   [C-right]
-User16=1357,1,$1B[1;5C
+User16=1357,1,$1BO5C
 ;                   [C-up]
-User17=1352,1,$1B[1;5A
+User17=1352,1,$1BO5A
 ;                   [C-down]
-User18=1360,1,$1B[1;5B
+User18=1360,1,$1BO5B
 ;                   [C-home]
-User19=1351,1,$1B[1;5H
+User19=1351,1,$1BO5H
 ;                   [C-end]
-User20=1359,1,$1B[1;5F
+User20=1359,1,$1BO5F
 ;                   [C-prior]
 User21=1353,1,$1B[5;5~
 ;                   [C-next]
@@ -132,17 +132,17 @@ User23=1867,1,$1B[1;6D
 ;                   [S-C-right]
 User24=1869,1,$1B[1;6C
 ;        NumLockOff:[S-left]
-User25=587,1,$1B[1;2D
+User25=587,1,$1BO2D
 ;                   [S-right]
-User26=589,1,$1B[1;2C
+User26=589,1,$1BO2C
 ;                   [S-up]
-User27=584,1,$1B[1;2A
+User27=584,1,$1BO2A
 ;                   [S-down]
-User28=592,1,$1B[1;2B
+User28=592,1,$1BO2B
 ;                   [S-home]
-User29=583,1,$1B[1;2H
+User29=583,1,$1BO2H
 ;                   [S-end]
-User30=591,1,$1B[1;2F
+User30=591,1,$1BO2F
 ;                   [S-prior]
 User31=585,1,$1B[5;2~
 ;                   [S-next]
@@ -152,17 +152,17 @@ User33=1607,1,$1B[1;6H
 ;                   [S-C-end]
 User34=1615,1,$1B[1;6F
 ;                   [C-left]
-User35=1099,1,$1B[1;5D
+User35=1099,1,$1BO5D
 ;                   [C-right]
-User36=1101,1,$1B[1;5C
+User36=1101,1,$1BO5C
 ;                   [C-up]
-User37=1096,1,$1B[1;5A
+User37=1096,1,$1BO5A
 ;                   [C-down]
-User38=1104,1,$1B[1;5B
+User38=1104,1,$1BO5B
 ;                   [C-home]
-User39=1095,1,$1B[1;5H
+User39=1095,1,$1BO5H
 ;                   [C-end]
-User40=1103,1,$1B[1;5F
+User40=1103,1,$1BO5F
 ;                   [C-prior]
 User41=1097,1,$1B[5;5~
 ;                   [C-next]
@@ -176,9 +176,9 @@ User45=1039,1,$1B[27;5;9~
 ;                   [C-S-tab]
 User46=1551,1,$1B[27;6;9~
 ;                   C-,
-User47=1075,1,$1B[44;5u
+User47=1075,1,$1B[27;5;44~
 ;                   C-.
-User48=1076,1,$1B[46;5u
+User48=1076,1,$1B[27;5;46~
 ;                   <C-return>
 User49=1052,1,$1B[27;5;13~
 ;                   <C-delete>
@@ -191,14 +191,15 @@ User52=60,1,$1BOQ
 User53=61,1,$1BOR
 ;                   [f4]
 User54=62,1,$1BOS
-;                   [S-f1]  teraterm bug?
-User55=571,1,$1B[1;2P 
+;                   [S-f1]  [f13]  dame
+User55=571,1,$1BO2P
+;User55=571,1,$1B[1;2P 
 ;                   [S-f2]
-User56=572,1,$1B[1;2Q
+User56=572,1,$1BO2Q
 ;                   [S-f3]
-User57=573,1,$1B[1;2R
+User57=573,1,$1BO2R
 ;                   [S-f4]
-User58=574,1,$1B[1;2S
+User58=574,1,$1BO2S
 ;                   [f17] => [S-f5]
 User59=575,1,$1B[15;2~
 ;                   [f18] => [S-f6]

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+echo Check iput characters
+
+printf "> "
+while read line; do
+    #echo "$line"
+    len=${#line}
+    for ((i=0; i<len; i++)); do
+	char=${line:$i:1}
+	echo "[$((i+1))]"
+	printf "        %q\n" "$char"
+	if [ "$char" = $'\E' ]; then
+	    echo   "        ESCAPE"
+	else
+	    echo   "        \"$char\""
+	fi
+    done
+    
+    printf "> "
+done

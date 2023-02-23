@@ -57,7 +57,9 @@
 ;;====================================
 ;;;; Teraterm End key = <select>
 ;;====================================
+(define-key input-decode-map "\e[1~" [home])   ;;<find> to <home>  (screen)
 (define-key input-decode-map "\e[4~" [end])    ;;<select> to <end>  (NumLock-off 1)
+(define-key input-decode-map "\e[3~" (kbd "<deletechar>"))   ;;vscode delete key was DEL
 
 ;;  MAC OSX  default reversed by kbd setting   ¥-->\   fn ¥-->¥
 ;;      but C-\  M-\  ...ng

@@ -1,0 +1,120 @@
+Last login: Thu Feb 23 00:53:24 on ttys005
+|
+Akira@nBook-Pro ~ % brew install --cask --no-quarantine gcenx/wine/wine-crossover
+Running `brew update --auto-update`...
+==> Downloading https://formulae.brew.sh/api/formula.json
+######################################################################## 100.0%
+==> Downloading https://formulae.brew.sh/api/cask.json
+######################################################################## 100.0%
+==> Tapping gcenx/wine
+Cloning into '/usr/local/Homebrew/Library/Taps/gcenx/homebrew-wine'...
+remote: Enumerating objects: 819, done.
+remote: Counting objects: 100% (237/237), done.
+remote: Compressing objects: 100% (80/80), done.
+remote: Total 819 (delta 188), reused 165 (delta 157), pack-reused 582
+Receiving objects: 100% (819/819), 129.71 KiB | 5.64 MiB/s, done.
+Resolving deltas: 100% (521/521), done.
+Tapped 4 casks and 6 formulae (27 files, 196.9KB).
+==> Caveats
+wine-crossover supports running 32-bit & 64-bit windows binaries.
+
+wine-crossover does not support creating a 32-bit wine prefix.
+
+To enable noflicker set the following registry key in your prefix:
+[HKCU\Software\Wine\Mac Driver]
+"ForceOpenGLBackingStore"="y"
+
+==> Downloading https://github.com/Gcenx/winecx/releases/download/crossover-wine-22.0.1/wine-crossover-22.0.1-osx64.tar.xz
+==> Downloading from https://objects.githubusercontent.com/github-production-release-asset-2e65be/234656434/dc98eb04-b4ab-4e78-a188-aca1b441cd1c?X-Amz-Algorithm
+######################################################################## 100.0%
+==> Installing Cask wine-crossover
+Warning: macOS's Gatekeeper has been disabled for this Cask
+==> Moving App 'Wine Crossover.app' to '/Applications/Wine Crossover.app'
+==> Linking Binary 'appdb' to '/usr/local/bin/appdb'
+==> Linking Binary 'winehelp' to '/usr/local/bin/winehelp'
+==> Linking Binary 'msiexec' to '/usr/local/bin/msiexec'
+==> Linking Binary 'notepad' to '/usr/local/bin/notepad'
+==> Linking Binary 'regedit' to '/usr/local/bin/regedit'
+==> Linking Binary 'regsvr32' to '/usr/local/bin/regsvr32'
+==> Linking Binary 'wine' to '/usr/local/bin/wine'
+==> Linking Binary 'wine-preloader' to '/usr/local/bin/wine-preloader'
+==> Linking Binary 'wine64' to '/usr/local/bin/wine64'
+==> Linking Binary 'wine64-preloader' to '/usr/local/bin/wine64-preloader'
+==> Linking Binary 'wineboot' to '/usr/local/bin/wineboot'
+==> Linking Binary 'winecfg' to '/usr/local/bin/winecfg'
+==> Linking Binary 'wineconsole' to '/usr/local/bin/wineconsole'
+==> Linking Binary 'winedbg' to '/usr/local/bin/winedbg'
+==> Linking Binary 'winefile' to '/usr/local/bin/winefile'
+==> Linking Binary 'winemine' to '/usr/local/bin/winemine'
+==> Linking Binary 'winepath' to '/usr/local/bin/winepath'
+==> Linking Binary 'wineserver' to '/usr/local/bin/wineserver'
+🍺  wine-crossover was successfully installed!
+|
+Akira@nBook-Pro ~ %
+
+
+
+
+
+
+
+################################################################################
+#                           Wine Is Not an Emulator                            #
+################################################################################
+
+ Welcome to wine-7.7 (CrossOverFOSS 22.0.1).
+
+ In order to start a program:
+   .exe: wine64 program.exe
+   .msi: msiexec /i program.msi
+
+ If you want to configure wine:
+   winecfg
+
+ To get information about app compatibility:
+   appdb Program Name
+
+|
+Akira@nBook-Pro ~ % cd Windows
+|
+Akira@nBook-Pro Windows % cd teraterm-5.0-alpha1 
+|
+Akira@nBook-Pro teraterm-5.0-alpha1 % ls *.exe
+-rwxrwxrwx@ 1 Akira  staff   172032  4 18  2022 cyglaunch.exe*
+-rwxrwxrwx@ 1 Akira  staff    52736  4 18  2022 cygterm.exe*
+-rwxrwxrwx@ 1 Akira  staff   360448  4 18  2022 keycode.exe*
+-rwxrwxrwx@ 1 Akira  staff  2867712  4 18  2022 ttermpro.exe*
+-rwxrwxrwx@ 1 Akira  staff  2100736  4 18  2022 ttpmacro.exe*
+-rwxrwxrwx@ 1 Akira  staff   622080  4 18  2022 ttpmenu.exe*
+|
+Akira@nBook-Pro teraterm-5.0-alpha1 % type wine64
+wine64 is '/Applications/Wine Crossover.app/Contents/Resources/wine/bin/wine64'
+|
+Akira@nBook-Pro teraterm-5.0-alpha1 % wine64 ttermpro.exe
+wine: created the configuration directory '/Users/Akira/.wine'
+002c:fixme:actctx:parse_depend_manifests Could not find dependent assembly L"Microsoft.Windows.Common-Controls" (6.0.0.0)
+002c:fixme:shell:create_link failed to connect to mount manager
+002c:fixme:shell:create_link failed to connect to mount manager
+00dc:err:setupapi:SetupDefaultQueueCallbackW copy error 1812 L"@C:\\windows\\system32\\drivers\\wineusb.sys,-1" -> L"C:\\windows\\inf\\wineusb.inf"
+00f0:fixme:module:dlopen_32on64_opengl32 loaded "/Applications/Wine Crossover.app/Contents/Resources/wine/lib/wine/x86_32on64-unix/opengl32.dll.so" early @ 0x69a1e000
+00f0:fixme:msg:pack_message msg 14 (WM_ERASEBKGND) not supported yet
+00f8:fixme:module:dlopen_32on64_opengl32 loaded "/Applications/Wine Crossover.app/Contents/Resources/wine/lib/wine/x86_32on64-unix/opengl32.dll.so" early @ 0x6aa1e000
+wine: configuration in L"/Users/Akira/.wine" has been updated.
+0024:fixme:module:dlopen_32on64_opengl32 loaded "/Applications/Wine Crossover.app/Contents/Resources/wine/lib/wine/x86_32on64-unix/opengl32.dll.so" early @ 0x6a951000
+0024:fixme:htmlhelp:HtmlHelpW HH case HH_INITIALIZE not handled.
+013c:fixme:imm:ImeSetActiveContext (0x37a060, 0): stub
+013c:fixme:imm:ImmReleaseContext (0000000000040052, 000000000037A060): stub
+0024:fixme:imm:ImeSetActiveContext (0x28731a0, 1): stub
+0024:fixme:imm:ImmReleaseContext (0002002A, 028731A0): stub
+0024:fixme:imm:ImeHandleNotify WM_IME_NOTIFY:IMN_SETOPENSTATUS
+0024:fixme:shell:CustomDestinationList_BeginList 008C3920 (0012CD60 {92ca9dcd-5622-4bba-a805-5e9f541bd8c9} 0012CD6C): stub
+0158:fixme:kernelbase:AppPolicyGetThreadInitializationType FFFFFFFA, 04C6FEF8
+0024:fixme:winsock:bind unknown protocol 0
+0024:fixme:imm:ImeHandleNotify WM_IME_NOTIFY:IMN_SETCOMPOSITIONFONT
+0024:fixme:imm:ImeHandleNotify WM_IME_NOTIFY:IMN_SETCOMPOSITIONFONT
+0024:fixme:imm:ImeHandleNotify WM_IME_NOTIFY:IMN_SETCOMPOSITIONWINDOW
+0024:fixme:imm:ImeHandleNotify WM_IME_NOTIFY:IMN_SETCOMPOSITIONWINDOW
+0024:fixme:htmlhelp:HtmlHelpW HH case HH_UNINITIALIZE not handled.
+0024:fixme:kernelbase:AppPolicyGetProcessTerminationMethod FFFFFFFA, 0012FE98
+|
+Akira@nBook-Pro teraterm-5.0-alpha1 % 
