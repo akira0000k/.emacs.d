@@ -138,21 +138,21 @@
 
 ;;              [C-up]                    ;; Start Mission Control @ MAC OSX
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key [C-down] '(lambda()(interactive)(scroll-up 1)))
-(global-set-key [C-up]   '(lambda()(interactive)(scroll-down 1)))
-(global-set-key (kbd "s-<next>")  '(lambda()(interactive)(scroll-up 2)))
-(global-set-key (kbd "s-<prior>") '(lambda()(interactive)(scroll-down 2)))
+(global-set-key [C-down] #'(lambda()(interactive)(scroll-up 1)))
+(global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
+(global-set-key (kbd "s-<next>")  #'(lambda()(interactive)(scroll-up 2)))
+(global-set-key (kbd "s-<prior>") #'(lambda()(interactive)(scroll-down 2)))
 ;;(global-set-key [C-S-down] '(lambda()(interactive)(scroll-up 4)))
 ;;(global-set-key [C-S-up]   '(lambda()(interactive)(scroll-down 4)))
-(global-set-key (kbd "<wheel-up>")  '(lambda()(interactive)(scroll-down 2)))
-(global-set-key (kbd "<wheel-down>")  '(lambda()(interactive)(scroll-up 2)))
-(global-set-key (kbd "C-M-p") '(lambda()(interactive)(previous-line 2)))
-(global-set-key (kbd "C-M-n") '(lambda()(interactive)(next-line 2)))
+(global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
+(global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
+(global-set-key (kbd "C-M-p") #'(lambda()(interactive)(forward-line -2)))
+(global-set-key (kbd "C-M-n") #'(lambda()(interactive)(forward-line 2)))
 
 
 ;;;; iTerm2 use move tab function by C-tab
 (global-set-key [C-tab] 'other-window)
-(global-set-key [C-S-tab] '(lambda()(interactive)(other-window -1)))
+(global-set-key [C-S-tab] #'(lambda()(interactive)(other-window -1)))
 
 (global-set-key (kbd "C-,") 'beginning-of-buffer)
 (global-set-key (kbd "C-.") 'end-of-buffer)
@@ -171,10 +171,10 @@
 ;;                             (beginning-of-line)))
 
 ;; fast cursor move
-(global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
-                            (next-line 2)))
-(global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
-                            (previous-line 2)))
+(global-set-key (kbd "<M-down>") #'(lambda()(interactive "^")
+                            (forward-line 2)))
+(global-set-key (kbd "<M-up>")   #'(lambda()(interactive "^")
+                            (forward-line -2)))
 
 
 ;;====================================
@@ -313,7 +313,7 @@
   (if(= (window-start) 1)
       (progn
         (beginning-of-line)
-        (next-line (/ (window-body-height) -2))
+        (forward-line (/ (window-body-height) -2))
         )
     (let ( (a (current-line)) )
       (scroll-down (/ (window-body-height) 2))
@@ -324,7 +324,7 @@
   "カーソルは画面内固定で半画面 scroll-up。"
   (interactive "^")
   (if(= (window-end) (point-max))
-      (next-line (/ (window-body-height) 2))
+      (forward-line (/ (window-body-height) 2))
     (let ( (a (current-line)) )
       (if(< a 1) (setq a 1))
       (scroll-up (/ (window-body-height) 2))
@@ -387,13 +387,13 @@
 ;; S            dired-do-symlink
 ;; Y            dired-do-relsymlink
 (define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)
-(define-key dired-mode-map "h" '(lambda()(interactive)(dired "~")))
-(define-key dired-mode-map "r" '(lambda()(interactive)(dired "/")))
-(define-key dired-mode-map "z" '(lambda()(interactive)(dired dired-default-directory)))
-(and (setq a-directory (getenv "A_DIRECTORY")) (define-key dired-mode-map "a" '(lambda()(interactive)(dired a-directory))))
-(and (setq b-directory (getenv "B_DIRECTORY")) (define-key dired-mode-map "b" '(lambda()(interactive)(dired b-directory))))
-(and (setq c-directory (getenv "C_DIRECTORY")) (define-key dired-mode-map "c" '(lambda()(interactive)(dired c-directory))))
-(and (setq e-directory (getenv "E_DIRECTORY")) (define-key dired-mode-map "e" '(lambda()(interactive)(dired e-directory))))
+(define-key dired-mode-map "h" #'(lambda()(interactive)(dired "~")))
+(define-key dired-mode-map "r" #'(lambda()(interactive)(dired "/")))
+(define-key dired-mode-map "z" #'(lambda()(interactive)(dired dired-default-directory)))
+(and (setq a-directory (getenv "A_DIRECTORY")) (define-key dired-mode-map "a" #'(lambda()(interactive)(dired a-directory))))
+(and (setq b-directory (getenv "B_DIRECTORY")) (define-key dired-mode-map "b" #'(lambda()(interactive)(dired b-directory))))
+(and (setq c-directory (getenv "C_DIRECTORY")) (define-key dired-mode-map "c" #'(lambda()(interactive)(dired c-directory))))
+(and (setq e-directory (getenv "E_DIRECTORY")) (define-key dired-mode-map "e" #'(lambda()(interactive)(dired e-directory))))
 ;;                         ">" 'dired-next-dirline
 ;;                         "<" 'dired-previous-dirline
 (setq dired-default-directory default-directory)
@@ -506,7 +506,7 @@
 (global-set-key [S-f4] 'delete-window)
 
 (global-set-key [f5]  'recenter)
-(global-set-key [S-f5]  '(lambda()(interactive)(dired ".")))
+(global-set-key [S-f5]  #'(lambda()(interactive)(dired ".")))
 
 (global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
 (global-set-key [S-f6]   'electric-indent-mode)
@@ -517,7 +517,7 @@
 (global-set-key [S-f8] 'enlarge-window-horizontally)
 
 (global-set-key [f9]  'describe-key-briefly)
-(global-set-key [S-f9] '(lambda()(interactive)
+(global-set-key [S-f9] #'(lambda()(interactive)
                           (if case-fold-search
                               (progn (setq case-fold-search nil)(message "case sensitive Search mode"))
                             (progn (setq case-fold-search t)(message "ignore case Search mode")))
@@ -846,11 +846,11 @@
 
 (load "~/.emacs.d/site-lisp/tails-comint-history.el")
 
-(define-key shell-mode-map  [f5]     '(lambda()(interactive)(dirs)))
+(define-key shell-mode-map  [f5]     #'(lambda()(interactive)(dirs)))
 (define-key comint-mode-map [home]   'beginning-of-buffer)
 (define-key comint-mode-map [end]    'end-of-buffer)
-(define-key comint-mode-map [C-up]   '(lambda()(interactive)(scroll-down 1)))
-(define-key comint-mode-map [C-down] '(lambda()(interactive)(scroll-up 1)))
+(define-key comint-mode-map [C-up]   #'(lambda()(interactive)(scroll-down 1)))
+(define-key comint-mode-map [C-down] #'(lambda()(interactive)(scroll-up 1)))
 (define-key comint-mode-map [up]     'ak-shell-up)
 (define-key comint-mode-map [down]   'ak-shell-down)
 (defun ak-shell-down ()
@@ -885,7 +885,7 @@
 ;;;;view-mode
 ;;====================================
 (require 'view)
-(define-key view-mode-map [f5] '(lambda()(interactive)(revert-buffer nil t t)))
+(define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
 
 
 ;;====================================

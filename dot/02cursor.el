@@ -9,21 +9,21 @@
 
 ;;              [C-up]                    ;; Start Mission Control @ MAC OSX
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key [C-down] '(lambda()(interactive)(scroll-up 1)))
-(global-set-key [C-up]   '(lambda()(interactive)(scroll-down 1)))
-(global-set-key (kbd "s-<next>")  '(lambda()(interactive)(scroll-up 2)))
-(global-set-key (kbd "s-<prior>") '(lambda()(interactive)(scroll-down 2)))
+(global-set-key [C-down] #'(lambda()(interactive)(scroll-up 1)))
+(global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
+(global-set-key (kbd "s-<next>")  #'(lambda()(interactive)(scroll-up 2)))
+(global-set-key (kbd "s-<prior>") #'(lambda()(interactive)(scroll-down 2)))
 ;;(global-set-key [C-S-down] '(lambda()(interactive)(scroll-up 4)))
 ;;(global-set-key [C-S-up]   '(lambda()(interactive)(scroll-down 4)))
-(global-set-key (kbd "<wheel-up>")  '(lambda()(interactive)(scroll-down 2)))
-(global-set-key (kbd "<wheel-down>")  '(lambda()(interactive)(scroll-up 2)))
-(global-set-key (kbd "C-M-p") '(lambda()(interactive)(previous-line 2)))
-(global-set-key (kbd "C-M-n") '(lambda()(interactive)(next-line 2)))
+(global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
+(global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
+(global-set-key (kbd "C-M-p") #'(lambda()(interactive)(forward-line -2)))
+(global-set-key (kbd "C-M-n") #'(lambda()(interactive)(forward-line 2)))
 
 
 ;;;; iTerm2 use move tab function by C-tab
 (global-set-key [C-tab] 'other-window)
-(global-set-key [C-S-tab] '(lambda()(interactive)(other-window -1)))
+(global-set-key [C-S-tab] #'(lambda()(interactive)(other-window -1)))
 
 (global-set-key (kbd "C-,") 'beginning-of-buffer)
 (global-set-key (kbd "C-.") 'end-of-buffer)
@@ -42,10 +42,10 @@
 ;;                             (beginning-of-line)))
 
 ;; fast cursor move
-(global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
-                            (next-line 2)))
-(global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
-                            (previous-line 2)))
+(global-set-key (kbd "<M-down>") #'(lambda()(interactive "^")
+                            (forward-line 2)))
+(global-set-key (kbd "<M-up>")   #'(lambda()(interactive "^")
+                            (forward-line -2)))
 
 
 ;;====================================
@@ -184,7 +184,7 @@
   (if(= (window-start) 1)
       (progn
         (beginning-of-line)
-        (next-line (/ (window-body-height) -2))
+        (forward-line (/ (window-body-height) -2))
         )
     (let ( (a (current-line)) )
       (scroll-down (/ (window-body-height) 2))
@@ -195,7 +195,7 @@
   "カーソルは画面内固定で半画面 scroll-up。"
   (interactive "^")
   (if(= (window-end) (point-max))
-      (next-line (/ (window-body-height) 2))
+      (forward-line (/ (window-body-height) 2))
     (let ( (a (current-line)) )
       (if(< a 1) (setq a 1))
       (scroll-up (/ (window-body-height) 2))

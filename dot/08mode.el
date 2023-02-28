@@ -10,7 +10,7 @@
 ;;;;view-mode
 ;;====================================
 (require 'view)
-(define-key view-mode-map [f5] '(lambda()(interactive)(revert-buffer nil t t)))
+(define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
 
 
 ;;====================================

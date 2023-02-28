@@ -24,11 +24,11 @@
 
 (load "~/.emacs.d/site-lisp/tails-comint-history.el")
 
-(define-key shell-mode-map  [f5]     '(lambda()(interactive)(dirs)))
+(define-key shell-mode-map  [f5]     #'(lambda()(interactive)(dirs)))
 (define-key comint-mode-map [home]   'beginning-of-buffer)
 (define-key comint-mode-map [end]    'end-of-buffer)
-(define-key comint-mode-map [C-up]   '(lambda()(interactive)(scroll-down 1)))
-(define-key comint-mode-map [C-down] '(lambda()(interactive)(scroll-up 1)))
+(define-key comint-mode-map [C-up]   #'(lambda()(interactive)(scroll-down 1)))
+(define-key comint-mode-map [C-down] #'(lambda()(interactive)(scroll-up 1)))
 (define-key comint-mode-map [up]     'ak-shell-up)
 (define-key comint-mode-map [down]   'ak-shell-down)
 (defun ak-shell-down ()
