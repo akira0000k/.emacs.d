@@ -11,9 +11,8 @@
 ;;(global-set-key [S-f1] 'delete-other-windows)
 
 (global-set-key [f2] 'ak-divide-screen-toggle)
-(global-set-key [S-f2] 'ak-divide-screen-or-other)
-;; (global-set-key [f2] 'ak-divide-screen-or-other)
-;; (global-set-key [S-f2] 'delete-other-windows)
+;;(global-set-key [S-f2] 'ak-divide-screen-or-other)
+(global-set-key [S-f2] 'ak-divide-screen3-or-other)
 
 (global-set-key [f3] 'isearch-repeat-forward)
 (global-set-key [S-f3] 'isearch-repeat-backward)
@@ -132,7 +131,8 @@
     (delete-other-windows)
     (if (= (window-height) before-height)
         (progn
-          (split-window-vertically)            ;; ---------------
+          ;;(split-window-vertically)            ;; ---------------
+          (split-window-below)
           (if (org-xor reverse (= before-minx (nth 0 (window-edges))))
               (other-window 1)
             )
@@ -140,7 +140,8 @@
           (other-window 1)
           )
       (progn
-        (split-window-horizontally)            ;;     A | B
+        ;;(split-window-horizontally)            ;;     A | B
+        (split-window-right)
         (if (org-xor reverse (not (= before-miny (nth 1 (window-edges)))))
             (other-window 1)
           )
@@ -175,17 +176,37 @@
   "Divide one window or Close next window."
   (interactive)
         (if (one-window-p)
-                (split-window)
+                (split-window-below)
           (delete-other-windows)))
 
 ;;====================================
-;;;;divide/other screen
+;;;;divide L|R /one screen
+;;====================================
+(defun ak-divide-screen3-toggle()
+  "Divide one window or Close next window."
+  (interactive)
+        (if (one-window-p)
+                (split-window-right)
+          (delete-other-windows)))
+
+;;====================================
+;;;;divide/other screen (reverse)
 ;;====================================
 (defun ak-divide-screen-or-other()
   "Divide one window or move to next window."
   (interactive)
         (if (one-window-p)
-                (split-window)
+                (split-window-below)
+          (other-window -1)))
+
+;;====================================
+;;;;divide L|R /other screen (reverse)
+;;====================================
+(defun ak-divide-screen3-or-other()
+  "Divide one window or move to next window."
+  (interactive)
+        (if (one-window-p)
+                (split-window-right)
           (other-window -1)))
 
 ;;====================================
