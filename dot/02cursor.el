@@ -17,8 +17,8 @@
 ;;(global-set-key [C-S-up]   '(lambda()(interactive)(scroll-down 4)))
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
-(global-set-key (kbd "C-M-p") #'(lambda()(interactive)(forward-line -2)))
-(global-set-key (kbd "C-M-n") #'(lambda()(interactive)(forward-line 2)))
+(global-set-key (kbd "C-M-p") #'(lambda()(interactive "^")(forward-line -2)))
+(global-set-key (kbd "C-M-n") #'(lambda()(interactive "^")(forward-line 2)))
 
 
 ;;;; iTerm2 use move tab function by C-tab
