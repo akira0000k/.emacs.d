@@ -77,6 +77,8 @@
   ;;(setenv  "PATH" (concat "/usr/local/bin:/Users/Akira/bin:/Users/Akira/go/bin:/usr/local/bin/go:" (getenv "PATH")))
   (ak-setenv)
   )
+;; ls sort order error
+(setenv "LC_COLLATE" "C")
 
 ;;(if (string= (getenv "LANG") "ja_JP.UTF-8")
 ;;    (message "getenv LANG = ja_JP.UTF-8")

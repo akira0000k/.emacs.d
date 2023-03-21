@@ -11,7 +11,7 @@ typeset -U path PATH
 ## always give group write permission for create file and dir
 #umask 002
 
-alias ls='ls -laF'
+alias ls='LC_COLLATE=C ls -laF'
 
 export emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
 alias emacs='$emacs &!'   #disown
