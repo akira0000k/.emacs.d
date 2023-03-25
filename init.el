@@ -67,6 +67,7 @@
     (add-to-list 'exec-path-from-shell-variables "C_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "E_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "LANG")
+    (add-to-list 'exec-path-from-shell-variables "LC_COLLATE")
     (exec-path-from-shell-initialize)
     )
 
@@ -77,8 +78,8 @@
   ;;(setenv  "PATH" (concat "/usr/local/bin:/Users/Akira/bin:/Users/Akira/go/bin:/usr/local/bin/go:" (getenv "PATH")))
   (ak-setenv)
   )
-;; ls sort order error
-(setenv "LC_COLLATE" "C")
+;;;; ls sort order error
+;;(setenv "LC_COLLATE" "C")
 
 ;;(if (string= (getenv "LANG") "ja_JP.UTF-8")
 ;;    (message "getenv LANG = ja_JP.UTF-8")

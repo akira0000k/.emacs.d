@@ -3,6 +3,7 @@
 
 #locale
 export LANG=ja_JP.UTF-8
+export LC_COLLATE=C
 #locale
 export GOPATH=~/go
 export PATH=~/bin:$GOPATH/bin:/usr/local/bin:"$PATH"
@@ -11,7 +12,7 @@ typeset -U path PATH
 ## always give group write permission for create file and dir
 #umask 002
 
-alias ls='LC_COLLATE=C ls -laF'
+alias ls='ls -laF'
 
 export emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
 alias emacs='$emacs &!'   #disown
