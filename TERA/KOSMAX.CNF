@@ -246,3 +246,26 @@ User76=1088,1,$1C]
 ;                   <home> => M-O H
 User77=327,1,$1BOH
 
+;;;;;;;;;;;;add
+;                   C-<
+User78=1587,1,$1B[60;6u
+;                   C->
+User79=1588,1,$1B[62;6u
+;                   [S-C-up]
+User80=1864,1,$1B[1;6A
+;                   [S-C-down]
+User81=1872,1,$1B[1;6B
+;                   C-S-a => C-x @ S C-a
+User82=1566,1,$18@S$01
+;                   C-S-b => C-x @ S C-b
+User83=1584,1,$18@S$02
+;                   C-S-e => C-x @ S C-e
+User84=1554,1,$18@S$05
+;                   C-S-f => C-x @ S C-f
+User85=1569,1,$18@S$06
+;                   C-S-n => C-x @ S C-n
+User86=1585,1,$18@S$0E
+;                   C-S-p => C-x @ S C-p
+User87=1561,1,$18@S$10
+;                   C-S-v => C-x @ S C-v
+User88=1583,1,$18@S$16

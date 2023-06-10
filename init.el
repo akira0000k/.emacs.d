@@ -120,6 +120,10 @@
 ;; (setq markdown-command "markdown_py")
 ;; (setq markdown-command "pandoc")   ;; brew install pandoc
 
+;; ;; VC (version control) is standard lisp package.
+;; ;; Cancel .git check when no "git" command installed.
+;; (setq vc-handled-backends nil)
+
 ;; VSCODE
 ;; Settings
 ;; Terminal > Integrated: Mac Option Is Meta...check
@@ -158,6 +162,7 @@
       ;;  '(minibuffer-prompt ((t (:foreground "cyan"))))
       ;;  ;;'(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
       ;;  '(smerge-markers ((t (:extend t :background "blue"))))
+      ;;  '(region ((t (:extend t :background "dark red"))))
       ;;  )
 
       (menu-bar-mode -1)

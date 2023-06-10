@@ -88,14 +88,15 @@
 ;;;; M-[ 1 ; 7 D	C-M-<left>	to   s-<left> 
 ;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
 ;;;; M-[ 5 ; 7 ~	C-M-<prior>	to   s-<prior>
-;; shift-control-,  select to filetop
-;; shift-control-.  select to fileend
-(define-key input-decode-map "\e[60;6u" (kbd "C-S-,"))  ;; for iTerm2
-(define-key input-decode-map "\e[62;6u" (kbd "C-S-."))
-(define-key input-decode-map (kbd "C-<") (kbd "C-S-,"))  ;; for Emacs.app
-(define-key input-decode-map (kbd "C->") (kbd "C-S-."))
-;;(define-key input-decode-map (kbd "M-<") (kbd "M-S-,")) //joke
-;;(define-key input-decode-map (kbd "M->") (kbd "M-S-."))
+
+;; Shift-Control-Comma,   select to filetop
+;; Shift-Control-Period.  select to fileend
+;;;; (define-key input-decode-map "\e[60;6u" (kbd "C-S-,"))  ;; for iTerm2
+;;;; (define-key input-decode-map "\e[62;6u" (kbd "C-S-."))
+;;;; (define-key input-decode-map (kbd "C-<") (kbd "C-S-,"))  ;; for Emacs.app
+;;;; (define-key input-decode-map (kbd "C->") (kbd "C-S-."))
+(define-key key-translation-map (kbd "C-<") (kbd "C-S-,"))
+(define-key key-translation-map (kbd "C->") (kbd "C-S-."))
 
 
 
@@ -146,8 +147,8 @@
 ;;(global-set-key [C-S-up]   '(lambda()(interactive)(scroll-down 4)))
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
-(global-set-key (kbd "C-M-p") #'(lambda()(interactive "^")(forward-line -2)))
-(global-set-key (kbd "C-M-n") #'(lambda()(interactive "^")(forward-line 2)))
+;;(global-set-key (kbd "C-M-p") #'(lambda()(interactive "^")(forward-line -2)))
+;;(global-set-key (kbd "C-M-n") #'(lambda()(interactive "^")(forward-line 2)))
 
 
 ;;;; iTerm2 use move tab function by C-tab
@@ -171,10 +172,10 @@
 ;;                             (beginning-of-line)))
 
 ;; fast cursor move
-(global-set-key (kbd "<M-down>") #'(lambda()(interactive "^")
-                            (forward-line 2)))
-(global-set-key (kbd "<M-up>")   #'(lambda()(interactive "^")
-                            (forward-line -2)))
+(global-set-key (kbd "M-<down>")   #'(lambda()(interactive "^")(forward-line 2)))
+(global-set-key (kbd "ESC <down>") #'(lambda()(interactive "^")(forward-line 2)))
+(global-set-key (kbd "M-<up>")     #'(lambda()(interactive "^")(forward-line -2)))
+(global-set-key (kbd "ESC <up>")   #'(lambda()(interactive "^")(forward-line -2)))
 
 
 ;;====================================

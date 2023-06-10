@@ -37,14 +37,15 @@
 ;;;; M-[ 1 ; 7 D	C-M-<left>	to   s-<left> 
 ;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
 ;;;; M-[ 5 ; 7 ~	C-M-<prior>	to   s-<prior>
-;; shift-control-,  select to filetop
-;; shift-control-.  select to fileend
-(define-key input-decode-map "\e[60;6u" (kbd "C-S-,"))  ;; for iTerm2
-(define-key input-decode-map "\e[62;6u" (kbd "C-S-."))
-(define-key input-decode-map (kbd "C-<") (kbd "C-S-,"))  ;; for Emacs.app
-(define-key input-decode-map (kbd "C->") (kbd "C-S-."))
-;;(define-key input-decode-map (kbd "M-<") (kbd "M-S-,")) //joke
-;;(define-key input-decode-map (kbd "M->") (kbd "M-S-."))
+
+;; Shift-Control-Comma,   select to filetop
+;; Shift-Control-Period.  select to fileend
+;;;; (define-key input-decode-map "\e[60;6u" (kbd "C-S-,"))  ;; for iTerm2
+;;;; (define-key input-decode-map "\e[62;6u" (kbd "C-S-."))
+;;;; (define-key input-decode-map (kbd "C-<") (kbd "C-S-,"))  ;; for Emacs.app
+;;;; (define-key input-decode-map (kbd "C->") (kbd "C-S-."))
+(define-key key-translation-map (kbd "C-<") (kbd "C-S-,"))
+(define-key key-translation-map (kbd "C->") (kbd "C-S-."))
 
 
 
