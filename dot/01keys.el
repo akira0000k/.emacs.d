@@ -26,7 +26,9 @@
 (define-key input-decode-map "\e[1;7D" (kbd "<s-left>"))
 (define-key input-decode-map "\e[1;8D" (kbd "<s-S-left>"))
 (define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
+(define-key input-decode-map "\e[5;8~" (kbd "s-S-<prior>"))
 (define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))
+(define-key input-decode-map "\e[6;8~" (kbd "s-S-<next>"))
 ;;;; M-[ 1 ; 8 A	C-M-S-<up>      to   s-S-<up>   
 ;;;; M-[ 1 ; 8 B	C-M-S-<down>	to   s-S-<down> 
 ;;;; M-[ 1 ; 8 C	C-M-S-<right>	to   s-S-<right>
@@ -35,8 +37,10 @@
 ;;;; M-[ 1 ; 7 B	C-M-<down>	to   s-<down> 
 ;;;; M-[ 1 ; 7 C	C-M-<right>	to   s-<right>
 ;;;; M-[ 1 ; 7 D	C-M-<left>	to   s-<left> 
-;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
 ;;;; M-[ 5 ; 7 ~	C-M-<prior>	to   s-<prior>
+;;;; M-[ 5 ; 8 ~	C-M-S-<prior>	to   s-S-<prior>
+;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
+;;;; M-[ 6 ; 8 ~	C-M-S-<next>    to   s-S-<next>
 
 ;; Shift-Control-Comma,   select to filetop
 ;; Shift-Control-Period.  select to fileend

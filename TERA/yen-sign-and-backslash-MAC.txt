@@ -1,0 +1,101 @@
+Montereyで初期化したら発覚
+¥ を \ とする設定がなくなっている。fn ¥ も \ にならない。
+
+ちなみに
+\ (0x5c)
+¥ (0xc2 0xa5)
+
+Montrey では メモやテキストエディットなどは
+opt ¥ が \
+だ。
+
+
+
+1. iTerm2 から emacs --nw
+
+ほぼ問題なし。
+
+¥のバックスラッシュはそのまま \ と出る
+Fn ¥   で2バイトの ¥ も出せる。ターミナルが気を利かせてやってくれているのだろうか。
+
+C-\ は従来の設定不要
+
+;;;; ;;	for emacs.app	 terminal->no need
+;;;; (define-key input-decode-map (kbd "C-¥") (kbd "C-\\"))
+
+M-\ は M-¥ になってしまうのでこうする
+
+(define-key input-decode-map (kbd "M-¥") (kbd "M-\\"))
+
+または
+Send ^[\            opt¥
+     (escape\)
+とすればこれも不要
+
+
+1.1 iTerm2 から nano
+
+^\     (M-R)     正規表現置換
+M-\    (^Home)   ファイルの先頭行へ移動  ===> [ 未知のシーケンス ]
+
+Send ^[\            opt¥
+を定義すれば M-\ が可能
+
+
+
+2. emacs for OSX アプリ
+
+\ を出すことはできない
+
+(define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
+
+¥は必ず\にされるので、逆に¥を出すことはできなくなった。
+Fn \ としても無理
+
+C-\, M-\ は上記だけではダメなのでこうする。
+(define-key input-decode-map (kbd "M-¥") (kbd "M-\\"))
+(define-key input-decode-map (kbd "C-¥") (kbd "C-\\"))
+
+
+X windowの時だけ ¥ を \ にする。
+.emacs.d/init.el
+(if (not (display-graphic-p))
+    ;;; -nw no window emacs
+    (progn
+      ;; for MAC OSX iTerm2 3.4.16  same as XWindow Emacs
+      (menu-bar-mode -1)
+      (message "emacs -nw"))
+  ;;;else window emacs ;;;
+  (define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
+  (menu-bar-mode 1)
+  (message "emacs Xwindow"))
+
+これで f1 k ¥
+でこのように表示される
+
+\ (translated from ¥) runs the command self-insert-command (found in
+global-map), which is an interactive built-in function in ‘C source
+code’.
+
+
+3.考察
+
+emacs OSX アプリは、MOS用のキーバインド
+C-M-e
+C-M-t
+C-M-d
+C-M-f
+C-M-g
+C-M-c
+C-M-RET
+C-M-BAK
+もemacs コマンドと認識されて、MOSは使えない。
+
+C-M-e  runs the command end-of-defun
+C-M-<return> undefined.
+
+下位のレイヤーからキー入力を取得していると考えられる。
+
+
+同様にバックスラッシュに関しても OSが opt ¥ を \ に変換する前の状態が入力されるので、
+opt ¥ は \ でなくて M-¥ になる。

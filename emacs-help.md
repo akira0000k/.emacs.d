@@ -36,18 +36,21 @@
         keybind
     標準        代替キー
      ↓           ↓
-    C-x 2       f2, S-f2: 画面分割 上下 (一画面の時)
-    C-x 3               : 画面分割 左右
+    C-x 2       f2      : 画面分割 上下 (一画面の時)
+    C-x 3       S-f2    : 画面分割 左右 (一画面の時)
     C-x 1       f2      : 現画面だけにする (分割されている時)
     C-x o       S-f1    : 画面移動
                 S-f2    : 画面移動 (逆回り) (分割されている時)
     C-x o       C-Tab   : 画面移動
                 C-S-Tab : 画面移動 (逆回り)
+    C-x k       f4      : バッファの削除。修正中なら確認
     C-x 0       S-f4    : カーソルのいる画面をひっこめる (分割されているとき)
                 C-next  : バッファ切り替え 奥へ    (Ctrl + PageDown)
                 C-prior : バッファ切り替え 戻る    (Ctrl + PageUp)
-                f7      : 画面縮小 (分割されているとき)  M-x shrink-window
-                f8      : 画面拡大 (分割されているとき)  M-x enlarge-window
+                f7      : 画面高縮小 (横に分割されているとき)  M-x shrink-window
+                f8      : 画面高拡大 (横に分割されているとき)  M-x enlarge-window
+                S-f7    : 画面幅縮小 (縦に分割されているとき)  M-x shrink-window-horizontally
+                S-f8    : 画面幅拡大 (縦に分割されているとき)  M-x enlarge-window-horizontally
     C-x C-b             : バッファリスト表示
 
 
@@ -137,12 +140,25 @@
                 C-end   : バッファ末尾
     M-<         C-,     : バッファ先頭
     M->         C-.     : バッファ末尾
+                C-<     : バッファ先頭まで選択
+                C->     : バッファ末尾まで選択
     M-f         C-right : 一語右
     M-b         C-left  : 一語左
-                C-down  : 一行下へスクロール
-                C-up    : 一行上へスクロール
-                C-S-down: カーソルを画面の中、下、下画面
-                C-S-up  : カーソルを画面の中、上、上画面
+                C-down  : １行下へスクロール
+                C-up    : １行上へスクロール
+                C-S-down: ４行下へスクロール
+                C-S-up  : ４行上へスクロール
+           command-prior: カーソルを画面の中、下、下画面
+           command-next : カーソルを画面の中、上、上画面
+
+## 次画面の操作
+
+                M-prior : 上画面     (PageUp)
+                M-next  : 下画面     (PageDown)
+                M-home  : バッファ先頭
+                M-end   : バッファ末尾
+                M-down  : ２行下へスクロール
+                M-up    : ２行上へスクロール
 
 ## 行の移動
 

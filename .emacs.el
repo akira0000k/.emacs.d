@@ -77,7 +77,9 @@
 (define-key input-decode-map "\e[1;7D" (kbd "<s-left>"))
 (define-key input-decode-map "\e[1;8D" (kbd "<s-S-left>"))
 (define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
+(define-key input-decode-map "\e[5;8~" (kbd "s-S-<prior>"))
 (define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))
+(define-key input-decode-map "\e[6;8~" (kbd "s-S-<next>"))
 ;;;; M-[ 1 ; 8 A	C-M-S-<up>      to   s-S-<up>   
 ;;;; M-[ 1 ; 8 B	C-M-S-<down>	to   s-S-<down> 
 ;;;; M-[ 1 ; 8 C	C-M-S-<right>	to   s-S-<right>
@@ -86,8 +88,10 @@
 ;;;; M-[ 1 ; 7 B	C-M-<down>	to   s-<down> 
 ;;;; M-[ 1 ; 7 C	C-M-<right>	to   s-<right>
 ;;;; M-[ 1 ; 7 D	C-M-<left>	to   s-<left> 
-;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
 ;;;; M-[ 5 ; 7 ~	C-M-<prior>	to   s-<prior>
+;;;; M-[ 5 ; 8 ~	C-M-S-<prior>	to   s-S-<prior>
+;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
+;;;; M-[ 6 ; 8 ~	C-M-S-<next>    to   s-S-<next>
 
 ;; Shift-Control-Comma,   select to filetop
 ;; Shift-Control-Period.  select to fileend
@@ -141,14 +145,10 @@
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
 (global-set-key [C-down] #'(lambda()(interactive)(scroll-up 1)))
 (global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
-(global-set-key (kbd "s-<next>")  #'(lambda()(interactive)(scroll-up 2)))
-(global-set-key (kbd "s-<prior>") #'(lambda()(interactive)(scroll-down 2)))
-;;(global-set-key [C-S-down] '(lambda()(interactive)(scroll-up 4)))
-;;(global-set-key [C-S-up]   '(lambda()(interactive)(scroll-down 4)))
+(global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
+(global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
-;;(global-set-key (kbd "C-M-p") #'(lambda()(interactive "^")(forward-line -2)))
-;;(global-set-key (kbd "C-M-n") #'(lambda()(interactive "^")(forward-line 2)))
 
 
 ;;;; iTerm2 use move tab function by C-tab
@@ -157,8 +157,6 @@
 
 (global-set-key (kbd "C-,") 'beginning-of-buffer)
 (global-set-key (kbd "C-.") 'end-of-buffer)
-;;(global-set-key (kbd "M-,") 'beginning-of-buffer)  ;;joke
-;;(global-set-key (kbd "M-.") 'end-of-buffer)
 
 
 ;; ;; MAC OSX option key + up down left right
@@ -171,12 +169,11 @@
 ;;                             (if (bolp) (previous-line))
 ;;                             (beginning-of-line)))
 
-;; fast cursor move
-(global-set-key (kbd "M-<down>")   #'(lambda()(interactive "^")(forward-line 2)))
-(global-set-key (kbd "ESC <down>") #'(lambda()(interactive "^")(forward-line 2)))
-(global-set-key (kbd "M-<up>")     #'(lambda()(interactive "^")(forward-line -2)))
-(global-set-key (kbd "ESC <up>")   #'(lambda()(interactive "^")(forward-line -2)))
-
+;; scroll other window 2 line
+(global-set-key (kbd "M-<down>")   #'(lambda()(interactive)(scroll-other-window 2)))
+(global-set-key (kbd "ESC <down>") #'(lambda()(interactive)(scroll-other-window 2)))
+(global-set-key (kbd "M-<up>")     #'(lambda()(interactive)(scroll-other-window -2)))
+(global-set-key (kbd "ESC <up>")   #'(lambda()(interactive)(scroll-other-window -2)))
 
 ;;====================================
 ;;;; go to top or end by page down/up
@@ -261,8 +258,8 @@
 ;;   (move-to-window-line -1)
 ;;   )
 
-(global-set-key (kbd "<C-S-up>") 'ak-cursor-top)
-(global-set-key (kbd "<C-S-down>") 'ak-cursor-bottom)
+(global-set-key (kbd "s-<prior>") 'ak-cursor-top)
+(global-set-key (kbd "s-<next>")  'ak-cursor-bottom)
 (defun ak-cursor-top ()
   "move cursor to middle or top of screen or scroll down(Page Up)"
   (interactive "^")

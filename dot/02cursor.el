@@ -11,14 +11,10 @@
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
 (global-set-key [C-down] #'(lambda()(interactive)(scroll-up 1)))
 (global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
-(global-set-key (kbd "s-<next>")  #'(lambda()(interactive)(scroll-up 2)))
-(global-set-key (kbd "s-<prior>") #'(lambda()(interactive)(scroll-down 2)))
-;;(global-set-key [C-S-down] '(lambda()(interactive)(scroll-up 4)))
-;;(global-set-key [C-S-up]   '(lambda()(interactive)(scroll-down 4)))
+(global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
+(global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
-;;(global-set-key (kbd "C-M-p") #'(lambda()(interactive "^")(forward-line -2)))
-;;(global-set-key (kbd "C-M-n") #'(lambda()(interactive "^")(forward-line 2)))
 
 
 ;;;; iTerm2 use move tab function by C-tab
@@ -27,8 +23,6 @@
 
 (global-set-key (kbd "C-,") 'beginning-of-buffer)
 (global-set-key (kbd "C-.") 'end-of-buffer)
-;;(global-set-key (kbd "M-,") 'beginning-of-buffer)  ;;joke
-;;(global-set-key (kbd "M-.") 'end-of-buffer)
 
 
 ;; ;; MAC OSX option key + up down left right
@@ -41,12 +35,11 @@
 ;;                             (if (bolp) (previous-line))
 ;;                             (beginning-of-line)))
 
-;; fast cursor move
-(global-set-key (kbd "M-<down>")   #'(lambda()(interactive "^")(forward-line 2)))
-(global-set-key (kbd "ESC <down>") #'(lambda()(interactive "^")(forward-line 2)))
-(global-set-key (kbd "M-<up>")     #'(lambda()(interactive "^")(forward-line -2)))
-(global-set-key (kbd "ESC <up>")   #'(lambda()(interactive "^")(forward-line -2)))
-
+;; scroll other window 2 line
+(global-set-key (kbd "M-<down>")   #'(lambda()(interactive)(scroll-other-window 2)))
+(global-set-key (kbd "ESC <down>") #'(lambda()(interactive)(scroll-other-window 2)))
+(global-set-key (kbd "M-<up>")     #'(lambda()(interactive)(scroll-other-window -2)))
+(global-set-key (kbd "ESC <up>")   #'(lambda()(interactive)(scroll-other-window -2)))
 
 ;;====================================
 ;;;; go to top or end by page down/up
@@ -131,8 +124,8 @@
 ;;   (move-to-window-line -1)
 ;;   )
 
-(global-set-key (kbd "<C-S-up>") 'ak-cursor-top)
-(global-set-key (kbd "<C-S-down>") 'ak-cursor-bottom)
+(global-set-key (kbd "s-<prior>") 'ak-cursor-top)
+(global-set-key (kbd "s-<next>")  'ak-cursor-bottom)
 (defun ak-cursor-top ()
   "move cursor to middle or top of screen or scroll down(Page Up)"
   (interactive "^")
