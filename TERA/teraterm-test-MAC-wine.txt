@@ -1,0 +1,99 @@
+テラタームの キーバインドをアップデート
+
+KOSMAX.CNFに次の行を追加した。
+
+テストはMACの wine-crossover (homebrew) で行ったので、Windows 上での検証はしていない。
+
+;;;;;;;;;;;;add
+;                   C-<
+User78=1587,1,$1B[60;6u
+;                   C->
+User79=1588,1,$1B[62;6u
+;                   [S-C-up]
+User80=1864,1,$1B[1;6A
+;                   [S-C-down]
+User81=1872,1,$1B[1;6B
+;                   C-S-a => C-x @ S C-a
+User82=1566,1,$18@S$01
+;                   C-S-b => C-x @ S C-b
+User83=1584,1,$18@S$02
+;                   C-S-e => C-x @ S C-e
+User84=1554,1,$18@S$05
+;                   C-S-f => C-x @ S C-f
+User85=1569,1,$18@S$06
+;                   C-S-n => C-x @ S C-n
+User86=1585,1,$18@S$0E
+;                   C-S-p => C-x @ S C-p
+User87=1561,1,$18@S$10
+;                   C-S-v => C-x @ S C-v
+User88=1583,1,$18@S$16
+;;;;;;;;;;;;;;Alt key test
+;                   M-<home>
+User89=2375,1,$1B[1;3H
+;                   M-<end>
+User90=2383,1,$1B[1;3F
+;                   [M-up]
+User91=2376,1,$1B[1;3A
+;                   [M-down]
+User92=2384,1,$1B[1;3B
+;                   M-<prior>
+User93=2377,1,$1B[5;3~
+;                   M-<next>
+User94=2385,1,$1B[6;3~
+
+
+内容
+C-. C-. +シフト (つまり C-<, C->) で、ファイルの端まで選択する
+
+C-up/down +シフト でスクロールが加速する
+
+コントロール系のカーソルの動き +シフトて選択
+
+M-home/end で、次画面の端まで
+M-up/down で、次画面の行スクロール
+M-prior/next で、次画面の頁スクロール
+
+wine-crossover を使ってwindowsのexeを動かすのだが。この時メタキーは MACの command☘️ キーということだ。
+
+テラタームのホームページで
+keycode.exe で表示されるコードに +2048 すると、メタキーを組み合わせた場合がわかると書いてあった。
+
+http://ttssh2.osdn.jp/manual/4/ja/reference/keycode.txt
+~~~
+ただし、Altキーをメタ・キーとして使う設定にしている場合(設定->キーボードにある
+Metaキーにチェックをいれている状態)はAlt+keyも指定する事ができます。
+キーコードは KEYCODE.EXE で調べられますが、単体のAltキーとの組合せには
+対応していません。Altキーとの組合せでのキーコードを調べるには、単独での
+キーコードを調べて、その値に2048を足してください。
+
+たとえば、Alt+Vのキーコードは V が 47 なので、2095 となります。
+~~~
+
+home, up, prior = 327, 328, 329
+end, down, next = 335, 336, 337
+
+メタキーを加えた場合 +2048 とすると
+2375, 2376, 2377
+2383, 2384, 2385
+になる。
+
+この値でUser89-94までを定義してみた。
+wine64 でttpmacro.exe を起動し、ssh接続してemacsを起動すると command+home などで次画面が動くことを確認できた。
+
+
+これで windows 上でも動作することを期待するが、不安もある。例えば
+M-f と M-F は違うコードのはずだがうまく M-F で範囲選択してくれるだろうか。
+wine ではうまくいかないので ESC F を使った。
+
+f9 M-F でこうなるはず。
+M-f (translated from M-F) runs the command forward-word
+
+
+
+MACの iTerm2 でoptPage Up/Down の定義がないけれど動いている。
+この時
+ESC ESC [ 6 ~
+というキーが送られている
+f9 M-prior では
+ESC <prior> (translated from ESC M-[ 6 ~) runs the command scroll-other-window-down
+と出る。
