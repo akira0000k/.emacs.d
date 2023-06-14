@@ -143,10 +143,22 @@
 
 ;;              [C-up]                    ;; Start Mission Control @ MAC OSX
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key [C-down] #'(lambda()(interactive)(scroll-up 1)))
-(global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
-(global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
-(global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
+;; (global-set-key [C-down] #'(lambda()(interactive)(scroll-up 1)))
+;; (global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
+;; (global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
+;; (global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
+(global-set-key [C-up] #'(lambda()(interactive "^")
+			     (let ( (pos0 (current-line)) )
+			       (scroll-down 1)(move-to-window-line pos0))))
+(global-set-key [C-down] #'(lambda()(interactive "^")
+			     (let ( (pos0 (current-line)) )
+			       (scroll-up 1)(move-to-window-line pos0))))
+(global-set-key [C-S-up] #'(lambda()(interactive "^")
+			     (let ( (pos0 (current-line)) )
+			       (scroll-down 4)(move-to-window-line pos0))))
+(global-set-key [C-S-down] #'(lambda()(interactive "^")
+			       (let ( (pos0 (current-line)) )
+				 (scroll-up 4)(move-to-window-line pos0))))
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
 
@@ -170,10 +182,14 @@
 ;;                             (beginning-of-line)))
 
 ;; scroll other window 2 line
-(global-set-key (kbd "M-<down>")   #'(lambda()(interactive)(scroll-other-window 2)))
-(global-set-key (kbd "ESC <down>") #'(lambda()(interactive)(scroll-other-window 2)))
-(global-set-key (kbd "M-<up>")     #'(lambda()(interactive)(scroll-other-window -2)))
-(global-set-key (kbd "ESC <up>")   #'(lambda()(interactive)(scroll-other-window -2)))
+(global-set-key (kbd "M-<down>")   #'(lambda()(interactive)(scroll-other-window  1)))
+(global-set-key (kbd "ESC <down>") #'(lambda()(interactive)(scroll-other-window  1)))
+(global-set-key (kbd "M-<up>")     #'(lambda()(interactive)(scroll-other-window -1)))
+(global-set-key (kbd "ESC <up>")   #'(lambda()(interactive)(scroll-other-window -1)))
+(global-set-key (kbd "M-S-<down>")   #'(lambda()(interactive)(scroll-other-window  4)))
+(global-set-key (kbd "ESC S-<down>") #'(lambda()(interactive)(scroll-other-window  4)))
+(global-set-key (kbd "M-S-<up>")     #'(lambda()(interactive)(scroll-other-window -4)))
+(global-set-key (kbd "ESC S-<up>")   #'(lambda()(interactive)(scroll-other-window -4)))
 
 ;;====================================
 ;;;; go to top or end by page down/up
