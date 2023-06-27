@@ -1,0 +1,15 @@
+{
+    "workbench.colorTheme": "Default Dark+",
+    "git.openRepositoryInParentFolders": "never",
+    "update.mode": "none",
+    "terminal.integrated.macOptionIsMeta": true,
+    "python.defaultInterpreterPath": "/usr/local/bin/python3",
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "emacs-mcx.useMetaPrefixEscape": true,
+    "extensions.ignoreRecommendations": true,
+    "editor.accessibilitySupport": "off",
+    "emacs-mcx.useMetaPrefixMacCmd": true,
+    "editor.acceptSuggestionOnEnter": "off"
+}

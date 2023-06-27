@@ -1,0 +1,177 @@
+// 既定値を上書きするには、このファイル内にキー バインドを挿入しますauto[]
+[
+    {
+        "key": "ctrl+home",
+        "command": "emacs-mcx.beginningOfBuffer",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+end",
+        "command": "emacs-mcx.endOfBuffer",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+,",
+        "command": "emacs-mcx.beginningOfBuffer",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+.",
+        "command": "emacs-mcx.endOfBuffer",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+v",
+        "command": "emacs-mcx.yank",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "emacs-mcx.copyRegion",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+z",
+        "command": "undo",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+p",
+        "command": "emacs-mcx.scrollDownCommand",
+        "when": "config.emacs-mcx.useMetaPrefixMacCmd && editorTextFocus && !suggestWidgetVisible"
+    },
+    {
+        "key": "cmd+n",
+        "command": "emacs-mcx.scrollUpCommand",
+        "when": "config.emacs-mcx.useMetaPrefixMacCmd && editorTextFocus && !suggestWidgetVisible"
+    },
+    {
+        "key": "ctrl+x ctrl+c",
+        "command": "-workbench.action.closeWindow"
+    },
+    {
+        "key": "ctrl+x left",
+        "command": "workbench.action.previousEditor",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "ctrl+x left",
+        "command": "-workbench.action.previousEditor"
+    },
+    {
+        "key": "ctrl+x right",
+        "command": "workbench.action.nextEditor",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "ctrl+x right",
+        "command": "-workbench.action.nextEditor"
+    },
+    {
+        "key": "f1",
+        "command": "workbench.action.showCommands",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "f1",
+        "command": "-workbench.action.showCommands"
+    },
+    {
+        "key": "f3",
+        "command": "-workbench.action.terminal.findNext",
+        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "shift+f3",
+        "command": "-workbench.action.terminal.findPrevious",
+        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "f5",
+        "command": "debug.openView",
+        "when": "!debuggersAvailable && !terminalFocus"
+    },
+    {
+        "key": "f5",
+        "command": "-debug.openView",
+        "when": "!debuggersAvailable"
+    },
+    {
+        "key": "f6",
+        "command": "workbench.action.focusNextPart",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "f6",
+        "command": "-workbench.action.focusNextPart"
+    },
+    {
+        "key": "shift+f6",
+        "command": "workbench.action.focusPreviousPart",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "shift+f6",
+        "command": "-workbench.action.focusPreviousPart"
+    },
+    {
+        "key": "f5",
+        "command": "workbench.action.debug.continue",
+        "when": "!terminalFocus && debugState == 'stopped'"
+    },
+    {
+        "key": "f5",
+        "command": "-workbench.action.debug.continue",
+        "when": "debugState == 'stopped'"
+    },
+    {
+        "key": "f5",
+        "command": "workbench.action.debug.start",
+        "when": "!terminalFocus && debuggersAvailable && debugState == 'inactive'"
+    },
+    {
+        "key": "f5",
+        "command": "-workbench.action.debug.start",
+        "when": "debuggersAvailable && debugState == 'inactive'"
+    },
+    {
+        "key": "ctrl+v",
+        "command": "-emacs-mcx.isearchExit",
+        "when": "editorFocus && findWidgetVisible && !isComposing"
+    },
+    {
+        "key": "ctrl+v",
+        "command": "-emacs-mcx.scrollUpCommand",
+        "when": "editorTextFocus && !suggestWidgetVisible"
+    },
+    {
+        "key": "cmd+v",
+        "command": "-emacs-mcx.isearchExit",
+        "when": "config.emacs-mcx.useMetaPrefixMacCmd && editorFocus && findWidgetVisible && !isComposing"
+    },
+    {
+        "key": "cmd+v",
+        "command": "-emacs-mcx.scrollDownCommand",
+        "when": "config.emacs-mcx.useMetaPrefixMacCmd && editorTextFocus && !suggestWidgetVisible"
+    },
+    {
+        "key": "cmd+c",
+        "command": "emacs-mcx.copyRegion",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+c",
+        "command": "-emacs-mcx.transformToTitlecase",
+        "when": "config.emacs-mcx.useMetaPrefixMacCmd && editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+x",
+        "command": "-workbench.action.showCommands",
+        "when": "config.emacs-mcx.useMetaPrefixMacCmd"
+    },
+    {
+        "key": "cmd+x",
+        "command": "emacs-mcx.killRegion",
+        "when": "editorTextFocus && !editorReadonly"
+    }
+]

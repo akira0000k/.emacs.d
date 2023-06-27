@@ -1,0 +1,75 @@
+Emacs を MACのVSCodeで使う
+
+一つの困難
+   MACだと optionキーでアクセント記号が出る
+   ˜˜˜˜˜˜˜˜π˜˜˜˜˜˜˜˜˜π
+   M-n....M-pM-n....M-p
+
+   英語キーボードでは、optionキーでギリシャ文字などが出るが、5種類のアクセントがキー2回押しでつけられる。デッドキーという
+   opt+e e = é  アクサンテギュ
+   opt+u u = ü  ウムラウト
+   opt+i i = î  アクサンシルコンフレックス
+   opt+n n = ñ  チルダ
+   opt+_ a = à  アクサングラーヴ
+
+   emacs.app や iterm2 ではこれを回避できているが、VSCodeではアクセントが出てしまう。
+   メタキーを option にしたときに、M-e M-u M-i M-n M-_ は押さないように気を付ける。
+
+1. Codeを emacs風キーバインドにする
+   Awesome Emacs Keymap 拡張機能をインストール
+
+   メタキーを command キーにする。
+   カット&ペーストは cmd-x cmd-c cmd-v
+   
+2. VSCodeのターミナルで emacsを使う。完全ではないがかなり使える。
+   メタキーは option キーを使う
+   カット&ペーストは C-x C-c C-v
+
+3. VSCodeのシェル
+   メタキーは option キーを使う
+   カット&ペーストは C-w opt-w C-y  (zshの機能)
+
+ユーザーのキーバインド格納ファイル
+   ~/Application Support/Code/User/keybindings.json
+
+
+VSCODEでのキーバインド設定結果をまとめます。
+
+・ファイル先頭/末尾
+CODE: C-home C-end C-, C-.
+EMax: C-home C-end opt-, opt-.
+Term: cmd-home cmd-end
+
+・ページ移動
+CODE: PageUp PageDown cmd-p cmd-n
+EMax: PageUp PageDown opt-p opt-v   (opt-nはチルダが出るのでダメ)
+Term: PageUp PageDown 
+
+・カット&ペースト
+CODE: cmd-x cmd-c cmd-v
+    (commandキー＋xcvはMAC流)
+CODE: C-w C-c C-v
+    (C-x C-s:save とか使うので、C-xは使えない)
+
+EMax: C-x C-c C-v
+    (CUAモードは有効)
+Emax: C-w opt-w C-y
+    (emacs originalも有効)
+Emax: マウス選択 右ボタンコピー  右ボタン貼り付け/cmd-v
+
+Term: C-w opt-w C-y  (zshバッファー)
+Term: マウス選択 右ボタンコピー  右ボタン貼り付け/cmd-v
+
+・行末までカット&ペースト
+CODE: C-k C-y
+Emax: C-k C-y
+Term: C-k C-y   (zshバッファー)
+
+注意:
+CODEでカット/コピーしたものは Emaxで貼り付けられる。
+Emax でカット/コピーしたものは CODEでは貼り付けられない。(マウス以外)
+Emax でマウスを使って選択、右ボタンでコピーしたものは CODEで貼り付けられる。
+     しかし、Emac自身に対しては、すぐにはキーで貼り付けられない。右ボタンで貼り付けならできる。
+
+
+  

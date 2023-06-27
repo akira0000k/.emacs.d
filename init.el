@@ -131,7 +131,6 @@
 (defun ak-vscode ()
   "vscode key setting"
   (interactive)
-  (global-set-key (kbd "M-h") 'help)
   (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
   ;;;; (global-set-key [M-up]   'ak-last-buffer)
   ;;;; (global-set-key [M-down] 'ak-next-buffer)
@@ -139,6 +138,11 @@
   (global-set-key (kbd "M-.") 'end-of-buffer)
   (define-key input-decode-map (kbd "M-<") (kbd "M-S-,"))
   (define-key input-decode-map (kbd "M->") (kbd "M-S-."))
+  ;; MacOSX option + n = tilde dead key. VSCode can not handle M-e M-u M-i M-n M-_
+  (if (boundp 'cua--cua-keys-keymap)
+      (define-key cua--cua-keys-keymap (kbd "M-v") 'half-page-up)
+    (message "cua boundp? no.")
+    (global-set-key (kbd "M-v") 'half-page-up))
   )
 
 ;;;; (if (not (string= window-system "ns"))

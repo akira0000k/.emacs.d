@@ -157,8 +157,10 @@
                 M-next  : 下画面     (PageDown)
                 M-home  : バッファ先頭
                 M-end   : バッファ末尾
-                M-down  : ２行下へスクロール
-                M-up    : ２行上へスクロール
+                M-down  : １1行下へスクロール
+                M-up    : １行上へスクロール
+                M-S-down: ４行下へスクロール
+                M-S-up  : ４行上へスクロール
 
 ## 行の移動
 
@@ -332,6 +334,7 @@
     g           f5      : revert-buffer in dired mode
                 f5      : revert-buffer in view mode
     M-x dirs    f5      : resync current directory stack (in shell mode)
+    C-l         f5      : recenter
     C-x d       S-f5    : dired
     C-x RET c   f6      : select coding system
                 S-f6    : toggle electric indent mode
