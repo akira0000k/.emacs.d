@@ -36,40 +36,58 @@ Emacs を MACのVSCodeで使う
 VSCODEでのキーバインド設定結果をまとめます。
 
 ・ファイル先頭/末尾
-CODE: C-home C-end C-, C-.
-EMax: C-home C-end opt-, opt-.
+CODE: C-home   C-end    C-,   C-.
+EMax: C-home   C-end    opt-, opt-.
 Term: cmd-home cmd-end
 
 ・ページ移動
 CODE: PageUp PageDown cmd-p cmd-n
-EMax: PageUp PageDown opt-p opt-v   (opt-nはチルダが出るのでダメ)
+EMax: PageUp PageDown           (opt-nはチルダが出るのでダメ)
 Term: PageUp PageDown 
 
-・カット&ペースト
-CODE: cmd-x cmd-c cmd-v
-    (commandキー＋xcvはMAC流)
-CODE: C-w C-c C-v
-    (C-x C-s:save とか使うので、C-xは使えない)
 
-EMax: C-x C-c C-v
-    (CUAモードは有効)
-Emax: C-w opt-w C-y
-    (emacs originalも有効)
+・カット/コピー&ペースト
+CODE: cmd-x cmd-c cmd-v         (MAC流)
+CODE: C-w C-c C-v               (C-x C-s:save とか使うので、C-xは使えない)
+CODE: C-w C-S-w C-y             (cmd+w はエディターを閉じるにつかうので、コピーは C-大文字W とする)
+
+EMax: C-x C-c C-v               (cua-mode 有効で)
+Emax: C-w opt-w C-y             (emacs originalも有効)
+Emax: C-w opt-w opt-v           (opt-w のつぎは opt-v がやりやすい)
 Emax: マウス選択 右ボタンコピー  右ボタン貼り付け/cmd-v
 
-Term: C-w opt-w C-y  (zshバッファー)
+Term: C-w opt-w C-y             (zshバッファー)
 Term: マウス選択 右ボタンコピー  右ボタン貼り付け/cmd-v
 
 ・行末までカット&ペースト
 CODE: C-k C-y
 Emax: C-k C-y
-Term: C-k C-y   (zshバッファー)
+Term: C-k C-y                   (zshバッファー)
 
 注意:
 CODEでカット/コピーしたものは Emaxで貼り付けられる。
 Emax でカット/コピーしたものは CODEでは貼り付けられない。(マウス以外)
 Emax でマウスを使って選択、右ボタンでコピーしたものは CODEで貼り付けられる。
-     しかし、Emac自身に対しては、すぐにはキーで貼り付けられない。右ボタンで貼り付けならできる。
+     しかし、Emac自身に対しては、右ボタンで貼り付けたあと、キーでも貼り付けられる。
+
+emacs: C-w C-S-w C-y の時、
+iTerm2で C-S-w  は   C-x @ S ^C  というシーケンスを送信する。
 
 
-  
+・UNDO
+CODE: cmd-z  C-z  C-x u  C-/  C-_
+Emax:        C-z  C-x u  C-/  C-S-_
+Term:             C-x u  C-/  C-S-_
+
+
+・画面終了
+エディターを閉じる
+CODE: cmd-w  C-x k
+Emax:        C-x k   f4
+エディターグループを閉じる
+CODE: cmd-w
+
+・終了
+CODEの終了: cmd-S-w
+Emaxの終了: C-x C-c
+Termの終了: C-d

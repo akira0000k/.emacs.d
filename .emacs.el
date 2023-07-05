@@ -43,11 +43,17 @@
 ;;   M-%                isearch-query-replace  ex. C-s aaa M-% bbb
 (global-set-key (kbd "C-r") 'query-replace) ;; M-% aaa bbb
 
+;; no cua-mode  cut/copy/paste=C-w C-S-w C-y
+(global-set-key (kbd "C-S-w") 'kill-ring-save) ;; M-w
+(global-set-key (kbd "C-x r W") 'copy-rectangle-as-kill)  ;; C-x r M-w
+
 ;; for MAC OSX
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 
 ;; overwridden by cua-mode
-;;;;(global-set-key (kbd "C-v") 'yank) ;; C-y
+;; no cua-mode  cut/paste=C-w C-v  copy/paste=M-w M-v
+(global-set-key (kbd "M-v") 'yank) ;; C-y
+(global-set-key (kbd "C-v") 'yank) ;; C-y
 (global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
 
 
@@ -188,8 +194,8 @@
 ;;====================================
 (global-set-key (kbd "<next>")  'ak-scroll-up)   ;;PageDown
 (global-set-key (kbd "<prior>") 'ak-scroll-down) ;;PageUp
-(global-set-key (kbd "C-v") 'ak-scroll-up)    ;;orthodox style
-(global-set-key (kbd "M-v") 'ak-scroll-down)  ;;orthodox style
+;;(global-set-key (kbd "C-v") 'ak-scroll-up)    ;;orthodox style
+;;(global-set-key (kbd "M-v") 'ak-scroll-down)  ;;orthodox style
 (defun ak-scroll-down ()
   "scroll down = Page Up"
   (interactive "^")
@@ -369,8 +375,7 @@
 
 ;;;誘惑の甘い罠
 ;;; MAC OSX ではスーパー+xcv がつかえるのでそちらを使う?
-(setq cua-prefix-override-inhibit-delay 0.01)
-(setq cua-enable-cua-keys t)
+(setq cua-enable-cua-keys t)   ;;defalt  region selected->C-x:cut C-c:copy
 ;(setq cua-enable-cua-keys nil)
 (cua-mode t)
 
@@ -378,6 +383,12 @@
 ;; (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
 ;; shift select mode
 ;; C-x SPC     start emacs24 rectangle mark mode
+
+;; cut/paste=C-w C-v  copy/paste=M-w M-v   possible
+(if (boundp 'cua--cua-keys-keymap)
+    (define-key cua--cua-keys-keymap (kbd "M-v") 'yank))
+;;was     M-v runs the command delete-selection-repeat-replace-region
+
 
 
 

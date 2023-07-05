@@ -43,9 +43,15 @@
 ;;   M-%                isearch-query-replace  ex. C-s aaa M-% bbb
 (global-set-key (kbd "C-r") 'query-replace) ;; M-% aaa bbb
 
+;; no cua-mode  cut/copy/paste=C-w C-S-w C-y
+(global-set-key (kbd "C-S-w") 'kill-ring-save) ;; M-w
+(global-set-key (kbd "C-x r W") 'copy-rectangle-as-kill)  ;; C-x r M-w
+
 ;; for MAC OSX
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 
 ;; overwridden by cua-mode
-;;;;(global-set-key (kbd "C-v") 'yank) ;; C-y
+;; no cua-mode  cut/paste=C-w C-v  copy/paste=M-w M-v
+(global-set-key (kbd "M-v") 'yank) ;; C-y
+(global-set-key (kbd "C-v") 'yank) ;; C-y
 (global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg

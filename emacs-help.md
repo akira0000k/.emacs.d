@@ -130,8 +130,8 @@
     C-b         left    : 一文字左
     C-a         home    : 行頭
     C-e         end     : 行末
-    C-v                 : (旧来は下画面だが cua-paste)
-    M-v                 : (旧来は上画面だが delete-selection-repeat-replace-region)
+    C-v                 : 廃止
+    M-v                 : 廃止
                 prior   : 上画面     (PageUp)
                 next    : 下画面     (PageDown)
                 M-n     : 半画面上
@@ -207,12 +207,13 @@
     マウスで選択--> copy されている
     右クリック  --> paste
 
-● Emacsの機能 (旧来)
+● Emacsの機能
 
-    C-space            : 選択開始　　　 (Mark Set と表示されます)
+    C-space            : 選択開始　　　　   (Mark Set と表示されます)
                          このあと カーソル移動で 選択領域が拡大します
-    C-RET              : 矩形選択の開始 (cua mode)
+    C-x space   C-RET  : 矩形選択の開始     (C-RET は cua mode)
                          このあと カーソル移動で 矩形選択領域が拡大します
+    C-M-mouse1drag     : マウスで矩形選択
     C-x h       s-a    : バッファ全選択
     C-g                : 選択解除
 
@@ -228,16 +229,20 @@
     M-S-p     M-S-n
     Shiftキーを放してカーソル移動すると選択解除
 
+● コピペ
 
     選択された状態で
-    C-w         C-x    : cut      (C-x cutは cua-mode)
-    M-w         C-c    : copy して選択解除
+    C-w         C-x    : cut  　　　　　　  (C-x は cua-mode)
+    M-w         C-c    : copy して選択解除  (C-c は cua-mode)
+                M-S-w  : copy して選択解除
     C-d         delete : 選択領域の削除
     C-g                : 選択解除
-    C-y         C-v    : 選択領域を copyしたもので置き換え
+    C-y         C-v    : 選択領域を置き換え  (C-v は cua-mode)
+	            M-v    : 選択領域を置き換え
 	
     copy された状態で
-    C-y         C-v    : paste    (旧来C-v はPageDown相当)
+    C-y         C-v    : paste    (旧来C-v はPageDown)
+	            M-v    : paste    (旧来M-v はPageUp)
 
 
 ## 文字コードの指定
@@ -252,11 +257,11 @@
     C-x RET f          : 読み込みバッファ内コーディングシステムの変更
         Coding system for saving file (default iso-2022-jp): 
      
-    文字コード→   UTF-8          PC 　        EUC            JIS       改行表示
+    文字コード→ UTF-8          PC          EUC            JIS      改行表示
      lf        utf-8-unix    sjis-unix   euc-jp-unix    junet-unix    :
      crlf      utf-8-dos     sjis-dos    euc-jp-dos     junet-dos    (DOS)
      cr        utf-8-mac     sjis-mac    euc-jp-mac     junet-mac    (Mac)
-                  U             E           S               J              
+                  U             S           E               J
      
       例
     [--]-EEE:---F1  main.cc        11:30AM 0.02 Mail   (C++)--L1--C0--Top-----

@@ -1,0 +1,36 @@
+yank pop
+
+Emacsではすべてのコピーはリストに記録されている。
+
+ペーストを使う限り、先頭の、つまり直近にコビーしたものが出てくる。
+
+ペースト(yank  C-y または C-v)
+
+yank-pop (M-y) をつかうと以前にコビーしたものも取り出せる。
+
+Emacs
+
+1. M-y でミニバッファに Yank from kill ring: と表示
+
+tabで全部の候補表示
+上下矢印で選択
+または、先頭をタイプしてtab
+ENTERで文字の貼り付けが行われる
+
+2. C-y M-y と打つと、
+貼り付け位置に過去にコビーしたものが次々にあらわれる。Enterで確定。
+   C-v M-y でも同様
+
+VSCODE (Awesome Emacs Keybind)
+
+2. の C-y M-y のみ使える。
+(cmd-v cmd-y など)
+
+先行する yank コマンドがない場合は、
+Previous command was not a yank.
+と下に表示される。
+
+先行するyankとは Emacs-MCS: Yank である。
+これは ^Y  ^V  cmd-v に割り当てられている。
+VSCode システム 貼り付け cmd-v では yank popは機能しなかった。
+

@@ -173,5 +173,40 @@
         "key": "cmd+x",
         "command": "emacs-mcx.killRegion",
         "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+w",
+        "command": "-workbench.action.closeWindow",
+        "when": "!editorIsOpen && !multipleEditorGroups"
+    },
+    {
+        "key": "cmd+w",
+        "command": "-emacs-mcx.copyRegion",
+        "when": "config.emacs-mcx.useMetaPrefixMacCmd && editorTextFocus"
+    },
+    {
+        "key": "cmd+v",
+        "command": "emacs-mcx.yank",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+w",
+        "command": "emacs-mcx.copyRegion",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "w",
+        "command": "emacs-mcx.copyRectangleAsKill",
+        "when": "editorTextFocus && emacs-mcx.acceptingRectCommand"
+    },
+    {
+        "key": "cmd+w",
+        "command": "-emacs-mcx.copyRectangleAsKill",
+        "when": "config.emacs-mcx.useMetaPrefixMacCmd && editorTextFocus && emacs-mcx.acceptingRectCommand"
+    },
+    {
+        "key": "shift+w",
+        "command": "emacs-mcx.copyRectangleAsKill",
+        "when": "editorTextFocus && emacs-mcx.acceptingRectCommand"
     }
 ]

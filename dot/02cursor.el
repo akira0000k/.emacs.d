@@ -54,8 +54,8 @@
 ;;====================================
 (global-set-key (kbd "<next>")  'ak-scroll-up)   ;;PageDown
 (global-set-key (kbd "<prior>") 'ak-scroll-down) ;;PageUp
-(global-set-key (kbd "C-v") 'ak-scroll-up)    ;;orthodox style
-(global-set-key (kbd "M-v") 'ak-scroll-down)  ;;orthodox style
+;;(global-set-key (kbd "C-v") 'ak-scroll-up)    ;;orthodox style
+;;(global-set-key (kbd "M-v") 'ak-scroll-down)  ;;orthodox style
 (defun ak-scroll-down ()
   "scroll down = Page Up"
   (interactive "^")

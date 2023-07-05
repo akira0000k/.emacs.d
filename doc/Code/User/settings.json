@@ -10,6 +10,7 @@
     "emacs-mcx.useMetaPrefixEscape": true,
     "extensions.ignoreRecommendations": true,
     "editor.accessibilitySupport": "off",
-    "emacs-mcx.useMetaPrefixMacCmd": true,
-    "editor.acceptSuggestionOnEnter": "off"
+    "editor.acceptSuggestionOnEnter": "off",
+    "emacs-mcx.enableDigitArgument": false,
+    "emacs-mcx.useMetaPrefixMacCmd": true
 }
