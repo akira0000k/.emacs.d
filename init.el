@@ -136,6 +136,7 @@
   (global-set-key (kbd "M-.") 'end-of-buffer)
   (define-key input-decode-map (kbd "M-<") (kbd "M-S-,"))
   (define-key input-decode-map (kbd "M->") (kbd "M-S-."))
+  (define-key input-decode-map (kbd "¥") (kbd "\\"))
   (if (boundp 'cua--cua-keys-keymap)
       (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
     (message "cua boundp? no."))

@@ -74,6 +74,12 @@ emacs: C-w C-S-w C-y の時、
 iTerm2で C-S-w  は   C-x @ S ^C  というシーケンスを送信する。
 
 
+・backslash
+CODE: opt+¥
+Emax: \                         emacs.app と同様に ¥ を \ に読み替える。
+Term:                           できない
+
+
 ・UNDO
 CODE: cmd-z  C-z  C-x u  C-/  C-_
 Emax:        C-z  C-x u  C-/  C-S-_
