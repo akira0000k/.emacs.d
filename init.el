@@ -136,7 +136,7 @@
   (global-set-key (kbd "M-.") 'end-of-buffer)
   (define-key input-decode-map (kbd "M-<") (kbd "M-S-,"))
   (define-key input-decode-map (kbd "M->") (kbd "M-S-."))
-  (define-key input-decode-map (kbd "¥") (kbd "\\"))
+  ;;;; (define-key input-decode-map (kbd "¥") (kbd "\\"))
   (if (boundp 'cua--cua-keys-keymap)
       (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
     (message "cua boundp? no."))
@@ -199,7 +199,7 @@
   ;;  '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
   ;;  '(shadow ((t (:foreground "lime green"))))
   ;;  )
-  (define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
+  ;;;; (define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
   (setq initial-buffer-choice t)  ;; macOS Ventura  image-type: Invalid image type ‘svg’
   (menu-bar-mode 1)
   (message "emacs Xwindow"))

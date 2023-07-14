@@ -75,9 +75,10 @@ iTerm2で C-S-w  は   C-x @ S ^C  というシーケンスを送信する。
 
 
 ・backslash
-CODE: opt+¥
-Emax: \                         emacs.app と同様に ¥ を \ に読み替える。
-Term:                           できない
+キーボード設定で、(あ)日本語-かな入力 "¥"キーで入力する文字: を \（バックスラッシュ）に変更する。
+CODE: \   fn+\,opt+\ で ¥
+Emax: \   fn+\ で ¥
+Term: \   fn+\ で ¥
 
 
 ・UNDO
