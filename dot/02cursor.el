@@ -134,6 +134,8 @@
 
 (global-set-key (kbd "s-<prior>") 'ak-cursor-top)
 (global-set-key (kbd "s-<next>")  'ak-cursor-bottom)
+(global-set-key (kbd "M-<left>")  'ak-cursor-top)
+(global-set-key (kbd "M-<right>") 'ak-cursor-bottom)
 (defun ak-cursor-top ()
   "move cursor to middle or top of screen or scroll down(Page Up)"
   (interactive "^")

@@ -19,7 +19,7 @@ alias emacs='$emacs &!'   #disown
 
 alias emx='TERM=xterm $emacs -nw'
 alias emt='TERM=vt100 VT100=yes $emacs -nw'
-#alias emv='TERM=vt100 $emacs -nw'
+alias emv='TERM_PROGRAM=vscode $emacs -nw'
 
 alias em='$emacs -nw'
 
