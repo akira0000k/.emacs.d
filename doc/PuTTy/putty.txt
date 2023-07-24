@@ -1,0 +1,91 @@
+Putty は使えるか。
+
+MacOSX (Ventura) の wine64 で windowsの putty.exe を起動した。Windowsの PuTTY は未検証。
+
+・メタは Esc を使う。
+
+・シフトセレクションは使えない。
+
+・fn キーは PuTTY設定 > 端末 > キーボード の
+ファンクションキーとキーパッド を Xterm 216+ にすることで使用可能。シフトと併用できる。
+
+
+・emacs に入ると、矢印キーなどが全然使えないのでかなり不便だ。
+
+Puttyターミナル上ではこのような信号がきている。
+
+    Esc [ A    up
+    Esc [ B    down
+    Esc [ C    right
+    Esc [ D    left
+     
+    Esc [ 1 ~  home
+    Esc [ 4 ~  end
+     
+    Esc [ 3 ~  delete
+     
+    Esc [ 5 ~  prior
+    Esc [ 6 ~  next
+
+しかし、emacs で f1 k で調べてみると、
+
+    f1 k 右矢印
+    6 runs the command digit-argument
+     
+    f1 k Esc 右矢印
+    ESC <kp-6> (translated from ESC M-O v) is undefined
+
+どうも、テンキーと認識しているようだ。
+
+    end      M-O q    <kp-1>
+    down     M-O r    <kp-2>
+    next     M-O s    <kp-3>
+    left     M-O t    <kp-4>
+    right    M-O v    <kp-6>
+    home     M-O w    <kp-7> 
+    up       M-O x    <kp-8>
+    prior    M-O y    <kp-9>
+    delete   M-O n
+
+次のようにして、矢印キーなどを使えるようにした。ただし、シフト、コントロールキーとの併用はできないが、
+Esc をメタキーとして使うことはできる。
+
+(defun ak-puttykey ()
+  "PuTTY key setting"
+  (interactive)
+  (define-key input-decode-map (kbd "M-O q") [end])       ;; <kp-1>
+  (define-key input-decode-map (kbd "M-O r") [down])      ;; <kp-2>
+  (define-key input-decode-map (kbd "M-O s") [next])      ;; <kp-3>
+  (define-key input-decode-map (kbd "M-O t") [left])      ;; <kp-4>
+  (define-key input-decode-map (kbd "M-O v") [right])     ;; <kp-6>
+  (define-key input-decode-map (kbd "M-O w") [home])      ;; <kp-7>
+  (define-key input-decode-map (kbd "M-O x") [up])        ;; <kp-8>
+  (define-key input-decode-map (kbd "M-O y") [prior])     ;; <kp-9>
+  (define-key input-decode-map (kbd "M-O n") (kbd "<deletechar>"))
+  (global-set-key [home] 'beginning-of-buffer)
+  (global-set-key [end]  'end-of-buffer)
+  (ak-vscode)
+  )
+
+ (if (string= (getenv "PUTTY") "yes")
+  (progn
+    (ak-puttykey)
+    (message "PuTTY terminal")))
+
+alias empu='PUTTY=yes emacs -nw'
+
+
+・または PuTTY設定 > 端末 > 高度な設定 の
+
+アプリケーションキーパッドモードを無効にする にチェックを入れると、矢印キーなどが使えた。
+上記 M-O v -> right などの設定は不要だが、付けておいてもよい。
+
+
+・VSCode の設定が便利なので使う。
+
+    Esc n  Esc p  Esc N  Esc P
+
+    Esc ,  Esc .  Esc <  Esc >
+
+    C-x SPACE で cua-modeの矩形選択開始
+ 

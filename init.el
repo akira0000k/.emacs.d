@@ -144,6 +144,22 @@
     (message "cua boundp? no."))
   )
 
+(defun ak-puttykey ()
+  "PuTTY key setting"
+  (interactive)
+  (define-key input-decode-map (kbd "M-O q") [end])       ;; <kp-1>
+  (define-key input-decode-map (kbd "M-O r") [down])      ;; <kp-2>
+  (define-key input-decode-map (kbd "M-O s") [next])      ;; <kp-3>
+  (define-key input-decode-map (kbd "M-O t") [left])      ;; <kp-4>
+  (define-key input-decode-map (kbd "M-O v") [right])     ;; <kp-6>
+  (define-key input-decode-map (kbd "M-O w") [home])      ;; <kp-7>
+  (define-key input-decode-map (kbd "M-O x") [up])        ;; <kp-8>
+  (define-key input-decode-map (kbd "M-O y") [prior])     ;; <kp-9>
+  (define-key input-decode-map (kbd "M-O n") (kbd "<deletechar>"))
+  (global-set-key [home] 'beginning-of-buffer)
+  (global-set-key [end]  'end-of-buffer)
+  (ak-vscode)
+  )
 ;;;; (if (not (string= window-system "ns"))
 (if (not (display-graphic-p))
     ;;; -nw no window emacs
@@ -186,6 +202,10 @@
 	     )
 	    )
 	)
+      (if (string= (getenv "PUTTY") "yes")
+	  (progn
+	    (ak-puttykey)
+	    (message "PuTTY terminal")))
       (message "emacs -nw"))
   ;;;else window emacs ;;;
   (load-theme 'deeper-blue t)

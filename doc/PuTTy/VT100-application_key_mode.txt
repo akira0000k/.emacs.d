@@ -1,0 +1,166 @@
+ターミナルのモード
+application mode と application keypad key mode
+
+
+
+The Linux Documentation Project
+https://tldp.org
+
+https://tldp.org/HOWTO/Keyboard-and-Console-HOWTO.html
+
+https://tldp.org/HOWTO/Keyboard-and-Console-HOWTO-21.html
+
+==============================================================================
+21. Some properties of the VT100 - application key mode
+
+: Sometimes my cursor keys or keypad keys produce strange codes?
+
+When the terminal is in application cursor key mode the cursor keys produce Esc O x and otherwise Esc [ x where x is one of A,B,C,D.
+Certain programs put the terminal in application cursor key mode; if you kill them with kill -9, or if they crash, then the mode will not be reset.
+
+        % echo -e '\033c'  
+
+resets all properties of the current VC. Just changing the cursor application key mode is done by
+
+        % echo -e '\033[?1h' 
+
+(set) and
+
+        % echo -e '\033[?1l' 
+
+(clear).
+
+When the terminal is in application keypad key mode the keypad keys produce Esc O y and otherwise Esc [ z ~ for certain y and z.
+Setting application keypad key mode is done by
+
+        % echo -e '\033=' 
+
+and
+
+        % echo -e '\033>' 
+
+clears it again. 
+==============================================================================
+
+
+・やってみる-->application mode
+
+Akira@nBook-Pro bin % echo -e '\033[?1h'
+
+|
+Akira@nBook-Pro bin % ./chkchar
+Check iput characters
+> ^[OA
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        O
+        "O"
+[3]
+        A
+        "A"
+> ^[OC
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        O
+        "O"
+[3]
+        C
+        "C"
+> %
+|
+Akira@nBook-Pro bin %
+
+    -------->もどす
+Akira@nBook-Pro bin % echo -e '\033[?1l'
+
+|
+Akira@nBook-Pro bin % ./chkchar
+Check iput characters
+> ^[[A
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        \[
+        "["
+[3]
+        A
+        "A"
+> ^[[C
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        \[
+        "["
+[3]
+        C
+        "C"
+> %
+|
+Akira@nBook-Pro bin %
+
+
+
+・PuTTYで-->application keypad key mode
+
+-bash@root:~/bin# echo -e '\033='
+
+-bash@root:~/bin# ./chkchar
+Check iput characters
+> ^[Ox
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        O
+        "O"
+[3]
+        x
+        "x"
+> ^[Ov
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        O
+        "O"
+[3]
+        v
+        "v"
+> -bash@root:~/bin#
+
+
+    -------->もどす
+-bash@root:~/bin# echo -e '\033>'
+
+-bash@root:~/bin# ./chkchar
+Check iput characters
+> ^[[A
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        \[
+        "["
+[3]
+        A
+        "A"
+> ^[[C
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        \[
+        "["
+[3]
+        C
+        "C"
+> -bash@root:~/bin#
+
+矢印が application keypad key mode で影響を受けるのは Puttyの特殊事情。
+MacOSX の wine64 putty.exe でこうなったが、WindowsのPuTTY ではどうなるだろうか?

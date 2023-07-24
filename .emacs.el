@@ -377,6 +377,7 @@
 
 ;;;誘惑の甘い罠
 ;;; MAC OSX ではスーパー+xcv がつかえるのでそちらを使う?
+(setq cua-prefix-override-inhibit-delay 0.01)
 (setq cua-enable-cua-keys t)   ;;defalt  region selected->C-x:cut C-c:copy
 ;(setq cua-enable-cua-keys nil)
 (cua-mode t)
