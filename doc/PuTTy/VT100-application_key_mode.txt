@@ -164,3 +164,54 @@ Check iput characters
 
 矢印が application keypad key mode で影響を受けるのは Puttyの特殊事情。
 MacOSX の wine64 putty.exe でこうなったが、WindowsのPuTTY ではどうなるだろうか?
+
+
+・アプリケーションキーバッドモードを無効にする にチェックを入れれば上記の対応は不要。
+
+
+・xterm風ビットフラグを選択すれば、コントロールとシフトが若干使える。
+  アプリケーションカーソルキーモードを無効にする にチェックを入れる。
+
+S-<home> S-<end> のキーマップは懐古的なもの
+
+-bash@root:~/bin# ./chkchar
+Check iput characters
+> ^[[1;2~
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        \[
+        "["
+[3]
+        1
+        "1"
+[4]
+        \;
+        ";"
+[5]
+        2
+        "2"
+[6]
+        \~
+        "~"
+> ^[[4;2~
+[1]
+        $'\E'
+        ESCAPE
+[2]
+        \[
+        "["
+[3]
+        4
+        "4"
+[4]
+        \;
+        ";"
+[5]
+        2
+        "2"
+[6]
+        \~
+        "~"
+> -bash@root:~/bin#

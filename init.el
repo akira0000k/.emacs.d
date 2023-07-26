@@ -156,6 +156,8 @@
   (define-key input-decode-map (kbd "M-O x") [up])        ;; <kp-8>
   (define-key input-decode-map (kbd "M-O y") [prior])     ;; <kp-9>
   (define-key input-decode-map (kbd "M-O n") (kbd "<deletechar>"))
+  (define-key input-decode-map (kbd "M-[ 1 ; 2 ~") (kbd "S-<home>"))
+  (define-key input-decode-map (kbd "M-[ 4 ; 2 ~") (kbd "S-<end>"))
   (global-set-key [home] 'beginning-of-buffer)
   (global-set-key [end]  'end-of-buffer)
   (ak-vscode)
