@@ -304,7 +304,7 @@
 
 ## シェルの起動
 
-    M-x shell      M-s  : シェル起動
+    M-x shell     M-x s : シェル起動
     M-p             ↑   : history 前      シェルと違いアプリケーション入力中でも可
     M-n             ↓   : history 次      同上
     xx↑                 : xx で始まる history 前
@@ -329,9 +329,9 @@
 
     M-x help    f1      : help
     C-x o       S-f1    : other screen
-    C-x 2       f2      : devide screen toggle
+    C-x 2       f2      : devide screen - toggle
     C-x 1       f2      : devide screen toggle
-                S-f2    : devide screen or other screen(逆回り)
+    C-x 3       S-f2    : devide screen | or other screen(逆回り)
     C-s         f3      : re search forward
     C-s C-r     S-f3    : re search backward
     C-x k       f4      : kill buffer
@@ -343,6 +343,8 @@
     C-x d       S-f5    : dired
     C-x RET c   f6      : select coding system
                 S-f6    : toggle electric indent mode
+                ESC-f6  : macro start
+                C-f6    : macro end/call macro
                 f7      : shrink window
                 f8      : enlarge window
                 S-f7    : shrink window horizontally
@@ -351,6 +353,8 @@
                 S-f9    : toggle case sensitive search
                 f10     : rotate divided screen
                 S-f10   : rotate divided screen reverse
+                M-f10   : maximize frame toggle
+                M-f11   : fullscreen toggle
                 f11     : wrap line toggle
                 f12     : line number toggle
                 S-f11   : scroll right

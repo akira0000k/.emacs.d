@@ -56,6 +56,12 @@
 (global-set-key (kbd "C-v") 'yank) ;; C-y
 (global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
 
+;;                    M-f10       'toggle-frame-maximized
+;;                    f11         'toggle-frame-fullscreen  ;; -> M-f11
+;;                    C-x C-c     'save-buffers-kill-terminal
+;;                    C-x C-z     'suspend-frame            ;; <- C-z
+;;                    C-x 5 2     'make-frame-command
+
 
 
 ;; ------ 01keys.el ------
@@ -449,7 +455,7 @@
          (local-set-key [prior]   'ak-dired-scroll-down)
          (local-set-key [next]    'ak-dired-scroll-up)
          (local-set-key [f5]      'revert-buffer)               ;; g
-         (local-set-key "\M-s" 'shell)                          ;;emacs23  override M-s prefix
+         ;; (local-set-key "\M-s" 'shell)                          ;;emacs23  override M-s prefix
          (local-set-key "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
          ))
 (defun ak-dired-find-file (&optional arg)
@@ -522,19 +528,25 @@
 ;;====================================
 ;;;; function keys
 ;;====================================
+;;was                 help-command
 (global-set-key [f1] 'help-for-help)
 (global-set-key [S-f1] 'other-window)
-;;(global-set-key [S-f1] 'delete-other-windows)
 
+;;        C-x 6 2		2C-two-columns
+;;        C-x 6 b		2C-associate-buffer
+;;        C-x 6 s		2C-split
+;;was                 2C-command
 (global-set-key [f2] 'ak-divide-screen-toggle)
 ;;(global-set-key [S-f2] 'ak-divide-screen-or-other)
 (global-set-key [S-f2] 'ak-divide-screen3-or-other)
 
+;;was                 kmacro-start-macro-or-insert-counter
 (global-set-key [f3] 'isearch-repeat-forward)
 (global-set-key [S-f3] 'isearch-repeat-backward)
 
-;;(global-set-key [f4]  '(lambda()(interactive)(kill-buffer nil)))
+(defun ak-kill-buffer() (interactive) (kill-buffer))  ;; redefined later
 (global-set-key "\C-xk" 'ak-kill-buffer)
+;;was                    kmacro-end-or-call-macro
 (global-set-key [f4]    'ak-kill-buffer)
 (global-set-key [S-f4] 'delete-window)
 
@@ -543,6 +555,9 @@
 
 (global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
 (global-set-key [S-f6]   'electric-indent-mode)
+;;test macro
+(global-set-key (kbd "ESC <f6>")  'kmacro-start-macro-or-insert-counter)  ;; <f3>
+(global-set-key [C-f6]  'kmacro-end-or-call-macro)  ;; <f4>
 
 (global-set-key [f7]   'shrink-window)
 (global-set-key [S-f7] 'shrink-window-horizontally)
@@ -556,9 +571,15 @@
                             (progn (setq case-fold-search t)(message "ignore case Search mode")))
                           ))
 
+;;was  menu-bar-open
 (global-set-key [f10] 'window-toggle-division)
 (global-set-key [S-f10] 'window-toggle-division-reverse)
+;;               M-f10   toggle-frame-maximized  =  "ESC <f10>"
 
+(global-set-key (kbd "M-<f11>")   'toggle-frame-fullscreen)  ;; <f11>
+(global-set-key (kbd "ESC <f11>") 'toggle-frame-fullscreen)  ;; <f11>
+
+;;was                 'toggle-frame-fullscreen  ==> "ESC <f11>"
 (global-set-key [f11] 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
 (global-set-key [f12] 'global-linum-mode)
 (global-set-key [S-f11] 'scroll-right)
@@ -883,7 +904,9 @@
 ;;====================================
 ;;;; shell-mode
 ;;====================================
-(global-set-key (kbd "M-s") 'shell) ;; M-x shell
+;; (global-set-key (kbd "M-s") 'shell) ;; M-x shell
+;; M-x shell  ==>  M-x s
+(defun s() "shell start" (interactive) (shell))
 
 (setq shell-mode-hook
       '(lambda ()

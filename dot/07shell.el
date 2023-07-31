@@ -6,7 +6,9 @@
 ;;====================================
 ;;;; shell-mode
 ;;====================================
-(global-set-key (kbd "M-s") 'shell) ;; M-x shell
+;; (global-set-key (kbd "M-s") 'shell) ;; M-x shell
+;; M-x shell  ==>  M-x s
+(defun s() "shell start" (interactive) (shell))
 
 (setq shell-mode-hook
       '(lambda ()

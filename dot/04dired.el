@@ -55,7 +55,7 @@
          (local-set-key [prior]   'ak-dired-scroll-down)
          (local-set-key [next]    'ak-dired-scroll-up)
          (local-set-key [f5]      'revert-buffer)               ;; g
-         (local-set-key "\M-s" 'shell)                          ;;emacs23  override M-s prefix
+         ;; (local-set-key "\M-s" 'shell)                          ;;emacs23  override M-s prefix
          (local-set-key "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
          ))
 (defun ak-dired-find-file (&optional arg)
