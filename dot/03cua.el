@@ -20,3 +20,29 @@
     (define-key cua--cua-keys-keymap (kbd "M-v") 'yank))
 ;;was     M-v runs the command delete-selection-repeat-replace-region
 
+
+;;;; org-mode 
+;; org-mode-hook desables cua-mode
+;; C-<return> (global-map)        will enable  cua-mode in non org-mode
+;; C-<return> (cua-global-keymap) will desable cua-mode in org-mode
+
+(defun cua-set-rectangle-mark2 (&optional reopen)
+  "Set mark and start in CUA rectangle mode.
+With prefix argument, activate previous rectangle if possible."
+  (interactive "P")
+  (if (string= major-mode "org-mode")
+      (progn
+	(message "cua-mode disabled")
+	(cua-mode -1))
+    ;; else
+    (cua-set-rectangle-mark)))
+(if (boundp 'cua-global-keymap)
+    (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2))
+
+(defun ak-c-return ()
+  "Enables cua-mode again."
+  (interactive)
+  (cua-mode t)
+  (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2)
+  (message "cua-mode enabled"))
+(global-set-key (kbd "C-<return>") 'ak-c-return)

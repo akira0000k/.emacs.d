@@ -71,7 +71,7 @@
 ;;====================================
 (define-key input-decode-map "\e[1~" [home])   ;;<find> to <home>  (screen)
 (define-key input-decode-map "\e[4~" [end])    ;;<select> to <end>  (NumLock-off 1)
-(define-key input-decode-map "\e[3~" (kbd "<deletechar>"))   ;;vscode delete key was DEL
+(define-key input-decode-map "\e[3~" [deletechar])   ;;vscode delete key was DEL
 
 ;;  MAC OSX  default reversed by kbd setting   ¥-->\   fn ¥-->¥
 ;;      but C-\  M-\  ...ng
@@ -398,6 +398,32 @@
     (define-key cua--cua-keys-keymap (kbd "M-v") 'yank))
 ;;was     M-v runs the command delete-selection-repeat-replace-region
 
+
+;;;; org-mode 
+;; org-mode-hook desables cua-mode
+;; C-<return> (global-map)        will enable  cua-mode in non org-mode
+;; C-<return> (cua-global-keymap) will desable cua-mode in org-mode
+
+(defun cua-set-rectangle-mark2 (&optional reopen)
+  "Set mark and start in CUA rectangle mode.
+With prefix argument, activate previous rectangle if possible."
+  (interactive "P")
+  (if (string= major-mode "org-mode")
+      (progn
+	(message "cua-mode disabled")
+	(cua-mode -1))
+    ;; else
+    (cua-set-rectangle-mark)))
+(if (boundp 'cua-global-keymap)
+    (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2))
+
+(defun ak-c-return ()
+  "Enables cua-mode again."
+  (interactive)
+  (cua-mode t)
+  (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2)
+  (message "cua-mode enabled"))
+(global-set-key (kbd "C-<return>") 'ak-c-return)
 
 
 
@@ -1035,3 +1061,16 @@
 ;; ;; VC (version control) is standard lisp package.
 ;; ;; Cancel .git check when no "git" command installed.
 ;; (setq vc-handled-backends nil)
+
+
+;;====================================
+;;;; org-mode
+;;====================================
+
+(setq org-support-shift-select t)
+
+(add-hook 'org-mode-hook (lambda() (cua-mode -1)
+			   (message "cua-mode disabled")))
+
+;; (global-map)        C-<return> will enable  cua-mode in non org-mode
+;; (cua-global-keymap) C-<return> will desable cua-mode in org-mode

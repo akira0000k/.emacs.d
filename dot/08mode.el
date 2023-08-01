@@ -82,3 +82,16 @@
 ;; ;; VC (version control) is standard lisp package.
 ;; ;; Cancel .git check when no "git" command installed.
 ;; (setq vc-handled-backends nil)
+
+
+;;====================================
+;;;; org-mode
+;;====================================
+
+(setq org-support-shift-select t)
+
+(add-hook 'org-mode-hook (lambda() (cua-mode -1)
+			   (message "cua-mode disabled")))
+
+;; (global-map)        C-<return> will enable  cua-mode in non org-mode
+;; (cua-global-keymap) C-<return> will desable cua-mode in org-mode
