@@ -211,6 +211,12 @@
       (message "emacs -nw"))
   ;;;else window emacs ;;;
   (load-theme 'deeper-blue t)
+  ;;;;                                $ brew tap homebrew/cask-fonts
+  ;;;;                                $ brew install font-hackgen-nerd
+  (let ((installfont "HackGen Console NF-14"))
+    (if (x-list-fonts installfont)
+	(set-face-font 'default installfont)
+      (message "%s font not installed" installfont)))
   (custom-set-faces
    '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
    '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))

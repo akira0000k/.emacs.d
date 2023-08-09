@@ -88,6 +88,10 @@
 ;;;; org-mode
 ;;====================================
 
+;; # shift-selection in org-mode
+;; nil      : no
+;; t        : except on headline, list, property, BEGIN in clock table, table, timestamp
+;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
 (add-hook 'org-mode-hook (lambda() (cua-mode -1)

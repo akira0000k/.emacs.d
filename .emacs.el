@@ -975,8 +975,15 @@ With prefix argument, activate previous rectangle if possible."
 ;      "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'"
 ;      )
 
-(setq comint-password-prompt-regexp
-   "\\(^ *\\|\\( SMB\\|'s\\|Bad\\|CVS\\|Current\\|Enter\\(?: \\(?:Auth\\|same\\|the\\)\\)?\\|Kerberos\\|LDAP\\|New\\|Old\\|PEM\\|Repeat\\|Retype\\|SUDO\\|UNIX\\|Verify\\|\\[sudo]\\|doas\\|login\\) +.*\\)\\(?:adgangskode\\|contrasenya\\|contraseña\\|decryption key\\|encryption key\\|geslo\\|hasło\\|heslo\\|iphasiwedi\\|jelszó\\|lozinka\\|lösenord\\|mot de passe\\|mật khẩu\\|parola\\|pasahitza\\|pass phrase\\|passcode\\|passord\\|passphrase\\|passwor[dt]\\|pasvorto\\|pin\\|salasana\\|senha\\|slaptažodis\\|wachtwoord\\|лозинка\\|пароль\\|ססמה\\|كلمة السر\\|गुप्तशब्द\\|शब्दकूट\\|গুপ্তশব্দ\\|পাসওয়ার্ড\\|ਪਾਸਵਰਡ\\|પાસવર્ડ\\|ପ୍ରବେଶ ସଙ୍କେତ\\|கடவுச்சொல்\\|సంకేతపదము\\|ಗುಪ್ತಪದ\\|അടയാളവാക്ക്\\|රහස්පදය\\|ពាក្យសម្ងាត់\\|パスワード\\|密[码碼]\\|암호\\|Response\\)\\(?:\\(?:, try\\)? *again\\| (empty for no passphrase)\\| (again)\\)?\\(?: [[:alpha:]]+ .+\\)?[[:blank:]]*[:：៖][[:space:]]*\\'\\|^Enter encryption key: (repeat) *\\'")
+;; (setq comint-password-prompt-regexp
+;;    "\\(^ *\\|\\( SMB\\|'s\\|Bad\\|CVS\\|Current\\|Enter\\(?: \\(?:Auth\\|same\\|the\\)\\)?\\|Kerberos\\|LDAP\\|New\\|Old\\|PEM\\|Repeat\\|Retype\\|SUDO\\|UNIX\\|Verify\\|\\[sudo]\\|doas\\|login\\) +.*\\)\\(?:adgangskode\\|contrasenya\\|contraseña\\|decryption key\\|encryption key\\|geslo\\|hasło\\|heslo\\|iphasiwedi\\|jelszó\\|lozinka\\|lösenord\\|mot de passe\\|mật khẩu\\|parola\\|pasahitza\\|pass phrase\\|passcode\\|passord\\|passphrase\\|passwor[dt]\\|pasvorto\\|pin\\|salasana\\|senha\\|slaptažodis\\|wachtwoord\\|лозинка\\|пароль\\|ססמה\\|كلمة السر\\|गुप्तशब्द\\|शब्दकूट\\|গুপ্তশব্দ\\|পাসওয়ার্ড\\|ਪਾਸਵਰਡ\\|પાસવર્ડ\\|ପ୍ରବେଶ ସଙ୍କେତ\\|கடவுச்சொல்\\|సంకేతపదము\\|ಗುಪ್ತಪದ\\|അടയാളവാക്ക്\\|රහස්පදය\\|ពាក្យសម្ងាត់\\|パスワード\\|密[码碼]\\|암호\\|Response\\)\\(?:\\(?:, try\\)? *again\\| (empty for no passphrase)\\| (again)\\)?\\(?: [[:alpha:]]+ .+\\)?[[:blank:]]*[:：៖][[:space:]]*\\'\\|^Enter encryption key: (repeat) *\\'")
+
+
+(add-to-list 'display-buffer-alist
+	     ;;'("^\\*shell\\*$" . (display-buffer-same-window))  ;; default
+	     ;;'("^\\*shell\\*$" . (display-buffer-below-selected))  ;; emacs 25.1
+	     '("^\\*shell\\*$" . (display-buffer-at-bottom))
+	     )
 
 
 
@@ -1067,6 +1074,10 @@ With prefix argument, activate previous rectangle if possible."
 ;;;; org-mode
 ;;====================================
 
+;; # shift-selection in org-mode
+;; nil      : no
+;; t        : except on headline, list, property, BEGIN in clock table, table, timestamp
+;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
 (add-hook 'org-mode-hook (lambda() (cua-mode -1)
@@ -1074,3 +1085,59 @@ With prefix argument, activate previous rectangle if possible."
 
 ;; (global-map)        C-<return> will enable  cua-mode in non org-mode
 ;; (cua-global-keymap) C-<return> will desable cua-mode in org-mode
+
+;; ------ 09org.el ------
+
+(global-set-key (kbd "C-c l") 'org-store-link)
+;; (setq org-startup-with-inline-images t)
+
+(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+
+;;+++++++++++++++++++++++
+(setq org-todo-keywords
+      '((sequence "SOMEDAY" "TODO" "DOING" "|" "DONE" "CANCELLED"))
+      ;;'((sequence "TODO" "|" "DONE")) ;;;; default
+      )
+;;
+;; or, in org file
+;;#+TODO: TODO DOING | DONE CANCELLED
+
+;; org-todo
+;; http://emacs.rubikitch.com/sd1502-org-mode/
+;;
+;; org-captureで2種類のメモを扱うようにする
+(setq org-capture-templates
+      '(("t" "New TODO" entry
+         (file+headline "~/org/todo.org" "やること") "* TODO %U これやろう%?\n\n")
+        ("m" "Memo" entry
+         (file+headline "~/org/memo.org" "メモ") "* %U なんのメモ?%?\n関連ファイル=%F")
+	))
+;; %T <active timestamp>    as C-c .
+;; %U [inactive timestamp]  as C-c !
+
+;; org-agendaでaを押したら予定表とTODOリストを表示
+(setq org-agenda-custom-commands
+      '(
+	("a" "Agenda and TODO" ((agenda "")(alltodo "")))
+	))
+;; org-agendaで扱うファイル/ディレクトリは複数可
+(setq org-agenda-files '(
+			 "~/org/todo.org"
+			 "~/org/todos/"
+			 "~/org/idol/"
+			 "~/org/"
+			 ))
+
+;; TODOリストにアクティブな日付がついているTODOを表示しない
+(setq org-agenda-todo-ignore-with-date t)
+;; 今日から予定を表示させる
+(setq org-agenda-start-on-weekday nil)
+
+;; アジェンダ表示で下線を用いる
+(add-hook 'org-agenda-mode-hook #'(lambda () (hl-line-mode 1)))
+(setq hl-line-face 'underline)
+
+;; DONEの時刻を記録
+(setq org-log-done 'time)

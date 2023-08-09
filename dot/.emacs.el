@@ -7,4 +7,5 @@
 (load "~/.emacs.d/dot/06buffer.el")
 (load "~/.emacs.d/dot/07shell.el")
 (load "~/.emacs.d/dot/08mode.el")
+(load "~/.emacs.d/dot/09org.el")
 
