@@ -30,7 +30,7 @@
   "Set mark and start in CUA rectangle mode.
 With prefix argument, activate previous rectangle if possible."
   (interactive "P")
-  (if (string= major-mode "org-mode")
+  (if (and(not ak-cua-org-p)(string= major-mode "org-mode"))
       (progn
 	(message "cua-mode disabled")
 	(cua-mode -1))
@@ -42,7 +42,28 @@ With prefix argument, activate previous rectangle if possible."
 (defun ak-c-return ()
   "Enables cua-mode again."
   (interactive)
+  (setq ak-cua-org-p nil)  
+  (setq cua-enable-cua-keys t)
   (cua-mode t)
   (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2)
   (message "cua-mode enabled"))
 (global-set-key (kbd "C-<return>") 'ak-c-return)
+
+;;
+;; use rectangle in org-mode
+;;
+(defvar ak-cua-org-p nil)
+
+(defun cua-rect ()
+  "Enable to use cua-rectangle.  Without C-x cut."
+  (interactive)
+  (if (default-value 'cua-mode)
+      (progn  (setq ak-cua-org-p nil)
+	      (cua-mode -1)
+	      (message "cua rectangle desabled"))
+    ;;else
+    (setq ak-cua-org-p t)
+    (setq cua-enable-cua-keys nil)
+    (cua-mode t)
+    (message "cua rectangle enabled")
+  ))

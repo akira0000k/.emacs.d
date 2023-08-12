@@ -234,7 +234,7 @@
     選択された状態で
     C-w         C-x    : cut  　　　　　　  (C-x は cua-mode)
     M-w         C-c    : copy して選択解除  (C-c は cua-mode)
-                M-S-w  : copy して選択解除
+                C-S-w  : copy して選択解除
     C-d         delete : 選択領域の削除
     C-g                : 選択解除
     C-y         C-v    : 選択領域を置き換え  (C-v は cua-mode)

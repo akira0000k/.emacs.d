@@ -7,6 +7,8 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
+(eval-after-load "org"
+  '(require 'ox-md nil t))
 
 ;;+++++++++++++++++++++++
 (setq org-todo-keywords
