@@ -31,14 +31,14 @@
 #   | /    | <           | <                     |
     
     例
-    | コマンド  | 押し方                        | 機能                 |
-    |-----------+-------------------------------+----------------------|
-    | C-g       | Control + g                   | 動作のキャンセル     |
-    | C-x d     | Control + x  (放して) d       | dired ファイラー表示 |
-    | C-x C-b   | Controlを押したまま x b       | バッファリスト表示   |
-    | s-a       | command + a                   | 全選択    (MAC)      |
-    | M-x shell | Alt + x (Altを放して) "shell" | 内部shell 起動       |
-#   | /         | <                             | <                    |
+    | コマンド  | 押し方                        | 機能                                  |
+    |-----------+-------------------------------+---------------------------------------|
+    | C-g       | Control + g                   | 動作のキャンセル (全ての局面において) |
+    | C-x d     | Control + x  (放して) d       | dired ファイラー表示                  |
+    | C-x C-b   | Controlを押したまま x b       | バッファリスト表示                    |
+    | s-a       | command + a                   | 全選択    (MAC)                       |
+    | M-x shell | Alt + x (Altを放して) "shell" | 内部shell 起動                        |
+#   | /         | <                             | <                                     |
 
 
 ** dired ファイラー表示
@@ -94,7 +94,7 @@
     |---------+----------+----------------------------------------------------------------------------------------|
     | C-x C-f |          | ファイル名を指定して開く。なければ新ファイル作成                                       |
     |         |          | ~Find file: ~/~ <--- ファイル名入力                                                    |
-    |         | ←        | ファイルの先頭で 左に行こうとしたときは、編集の終了                                    |
+    |         | left     | ファイルの先頭で 左に行こうとしたときは、編集の終了                                    |
     | C-x k   | f4       | 保存せずに終了                                                                         |
     |         |          | ~Buffer newfile.txt modified; kill anyway? (yes or no)~ 　<---yes:すてる no:終了しない |
     | C-x C-w |          | 名前を付けて保存                                                                       |
@@ -128,10 +128,10 @@
     | C-e     | end      | 行末                           |
     | C-v     |          | 廃止                           |
     | M-v     |          | 廃止                           |
-    |         | prior    | 上画面     (PageUp)            |
     |         | next     | 下画面     (PageDown)          |
-    |         | M-n      | 半画面上                       |
-    |         | M-p      | 半画面下                       |
+    |         | prior    | 上画面     (PageUp)            |
+    |         | M-n      | 半画面下                       |
+    |         | M-p      | 半画面上                       |
     |         | C-home   | バッファ先頭                   |
     |         | C-end    | バッファ末尾                   |
     | M-<     | C-,      | バッファ先頭                   |
@@ -144,23 +144,24 @@
     |         | C-up     | １行上へスクロール             |
     |         | C-S-down | ４行下へスクロール             |
     |         | C-S-up   | ４行上へスクロール             |
-    |         | s-prior  | カーソルを画面の中、下、下画面 |
-    |         | s-next   | カーソルを画面の中、上、上画面 |
+    |         | s-next   | カーソルを画面の中、下、下画面 |
+    |         | s-prior  | カーソルを画面の中、上、上画面 |
     | M-g M-g |          | 行番号を入力してその行に移動   |
 #   | /       | <        |                                |
 
 ** 検索
 
-    | 標準       | 代替キー |                                            |
-    |------------+----------+--------------------------------------------|
-    | C-s string |          | インクリメンタルサーチ                     |
-    | C-s C-k    |          | ミニバッファで入力                         |
-    | C-s C-r    |          | 逆方向インクリメンタルサーチ  (旧来はC-r)  |
-    | C-s C-s    | f3       | 再検索           C-s word C-s C-s ...      |
-    | C-s C-r    | S-f3     | 逆方向に再検索    C-s C-r word C-r C-r ... |
-    |            | C-r      | 置換                                       |
-    | C-s M-r    |          | 正規表現検索                               |
-#   | /          | <        |                                            |
+    | 標準            | 代替キー |                                              |
+    |-----------------+----------+----------------------------------------------|
+    | C-s string      |          | インクリメンタルサーチ                       |
+    | C-s M-e         | C-s C-k  | ミニバッファで入力                           |
+    | C-s C-r string  |          | 逆方向インクリメンタルサーチ  (旧来はC-r)    |
+    | C-s C-s ...     | f3       | 再検索           C-s (word) C-s C-s ...      |
+    | C-s C-r C-r ... | S-f3     | 逆方向に再検索    C-s C-r (word) C-r C-r ... |
+    | M-%             | C-r      | 置換                                         |
+    | C-M-s regexp    |          | 正規表現検索                                 |
+    | C-M-%           |          | 正規表現置換                                 |
+#   | /               | <        |                                              |
 
 ** 編集
 
@@ -169,19 +170,19 @@
     ホスト側の日本語入力を使うときは、emacsの入力切り替えは使う必要ありません。ただし\\
     日本語モードだとAltキーを使うコマンドが利かないことがあります。
      
-    | 標準   | 代替キー |                                                                                    |
-    |--------+----------+------------------------------------------------------------------------------------|
-    | C-d    | delete   | Delete                                                                             |
-    | M-d    |          | 一語削除 (cut)                                                                     |
-    | C-h    | DEL      | Backspace    (旧来はC-h はhelp)                                                    |
-    | C-k    |          | カーソルより後を削除 (cut)                                                         |
-    | C-x u  | C-z      | undo   (旧来はC-z はサスペンドだが、C-x C-z で行う)                                |
-    | C-/    |          | undo                                                                               |
-    | C-_    |          | undo                                                                               |
-    | C-g    |          | undo の中断   次からのundo は逆方向   (emacs すべての場面でキャンセルの意味がある) |
-    | Insert |          | 上書きモードになります .. Ovwrt と表示 (Windows)                                   |
-    | C-\    |          | emacs の日本語入力on-off                                                           |
-#   | /      | <        |                                                                                    |
+    | 標準   | 代替キー |                                                     |
+    |--------+----------+-----------------------------------------------------|
+    | C-d    | delete   | Delete                                              |
+    | M-d    |          | 一語削除 (cut)                                      |
+    | C-h    | DEL      | Backspace    (旧来はC-h はhelp)                     |
+    | C-k    |          | カーソルより後を削除 (cut)                          |
+    | C-x u  | C-z      | undo   (旧来はC-z はサスペンドだが、C-x C-z で行う) |
+    | C-/    |          | undo                                                |
+    | C-_    |          | undo                                                |
+    | C-g    |          | undo の中断   次からのundo は逆方向                 |
+    | Insert |          | 上書きモードになります .. Ovwrt と表示 (Windows)    |
+    | C-\    |          | emacs の日本語入力on-off                            |
+#   | /      | <        |                                                     |
 
 ** 選択
 
@@ -228,6 +229,8 @@
     | C-y  | C-v      | paste　　　　　　  (C-v は cua-mode)                  |
     |      | M-v      | paste                                                 |
     |      |          | paste 時領域が選択されていれば copyされたもので上書き |
+    | C-k  |          | カーソルより後を削除 (cut)                            |
+    | M-d  |          | 一語削除 (cut)                                        |
 #   | /    | <        |                                                       |
 
 ** 再表示
@@ -247,8 +250,8 @@
     | C-x 1   | f2       | 現画面だけにする (分割されている時)                                  |
     | C-x o   | S-f1     | 画面移動                                                             |
     |         | S-f2     | 画面移動 (逆回り) (分割されている時)                                 |
-    | C-x o   | C-Tab    | 画面移動                                                             |
-    |         | C-S-Tab  | 画面移動 (逆回り)                                                    |
+    | C-x o   | C-TAB    | 画面移動                                                             |
+    |         | C-S-TAB  | 画面移動 (逆回り)                                                    |
     | C-x k   | f4       | バッファの削除。修正中なら確認                                       |
     | C-x 0   | S-f4     | カーソルのいる画面をひっこめる (分割されているとき)                  |
     |         | C-next   | バッファ切り替え 奥へ    (Ctrl + PageDown)                           |
@@ -264,8 +267,8 @@
 
     | 標準    | 代替キー |                       |
     |---------+----------+-----------------------|
-    | M-prior |          | 上画面     (PageUp)   |
     | M-next  |          | 下画面     (PageDown) |
+    | M-prior |          | 上画面     (PageUp)   |
     | M-home  |          | バッファ先頭          |
     | M-end   |          | バッファ末尾          |
     |         | M-down   | １1行下へスクロール   |
@@ -284,10 +287,8 @@
     | C-x RET c | f6       | コーディングシステムの指定をしてコマンドを実行する |
 #   | /         | <        |                                                    |
     	
-    #+begin_example
-    Coding system for following command (default utf-8-unix): sjis-dos
-    Command to execute with sjis-dos:    ここで C-x C-w などコマンド実行
-    #+end_example
+    ~Coding system for following command (default utf-8-unix): sjis-dos~\\
+    ~Command to execute with sjis-dos:~　　　　ここで C-x C-w などコマンド実行
 
 *** 読み込んだファイルの変更     
 
@@ -351,8 +352,8 @@
     | 標準      | 代替キー |                                                          |
     |-----------+----------+----------------------------------------------------------|
     | M-x shell | M-x s    | シェル起動                                               |
-    | M-p       | ↑        | history 前      シェルと違いアプリケーション入力中でも可 |
-    | M-n       | ↓        | history 次      同上                                     |
+    | M-p       | up       | history 前      シェルと違いアプリケーション入力中でも可 |
+    | M-n       | down     | history 次      同上                                     |
     | xx↑       |          | xx で始まる history 前                                   |
     | C-p       |          | カーソル上                                               |
     | C-n       |          | カーソル下                                               |
@@ -376,17 +377,17 @@
     | 標準      | 代替キー |                                                |
     |-----------+----------+------------------------------------------------|
     | M-x help  | f1       | help                                           |
-    | C-x o     | S-f1     | other screen                                   |
+    | C-x o     | S-f1     | other screen　　　　　　　(順周り)             |
     | C-x 2     | f2       | devide screen - toggle                         |
     | C-x 1     | f2       | devide screen toggle                           |
-    | C-x 3     | S-f2     | devide screen or other screen (逆回り)         |
+    | C-x 3     | S-f2     | devide screen \vert{} or other screen (逆回り) |
     | C-s       | f3       | re search forward                              |
     | C-s C-r   | S-f3     | re search backward                             |
     | C-x k     | f4       | kill buffer                                    |
     | C-x 0     | S-f4     | delete-window                                  |
     | g         | f5       | revert-buffer in dired mode                    |
     |           | f5       | revert-buffer in view mode                     |
-    | M-x dirs  | f5       | resync current directory stack (in shell mode) |
+    | M-x dirs  | f5       | resync current directory stack in shell mode   |
     | C-l       | f5       | recenter                                       |
     | C-x d     | S-f5     | dired                                          |
     | C-x RET c | f6       | select coding system                           |
@@ -397,11 +398,11 @@
     |           | f8       | enlarge window                                 |
     |           | S-f7     | shrink window horizontally                     |
     |           | S-f8     | enlarge window horizontally                    |
-    |           | f9       | describe key briefly      (旧来のf1 k)         |
+    | f1 k      | f9       | describe key briefly                           |
     |           | S-f9     | toggle case sensitive search                   |
     |           | f10      | rotate divided screen                          |
     |           | S-f10    | rotate divided screen reverse                  |
-    |           | M-f10    | maximize frame toggle                          |
+    | M-f10     |          | maximize frame toggle                          |
     |           | M-f11    | fullscreen toggle                              |
     |           | f11      | wrap line toggle                               |
     |           | f12      | line number toggle                             |
@@ -580,7 +581,7 @@
     iTerm2 > Preferences > Profiles > Keys > Presets > Import\\
     から読み込ませてください
     
-    C-tab C-S-tab は iTerm2のタブ切り替えに使うかも。。
+    C-TAB C-S-TAB は iTerm2のタブ切り替えに使うかも。。
     
     macの ¥ キーは \ に変更(キッパリ)
     

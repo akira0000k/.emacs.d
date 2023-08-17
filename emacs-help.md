@@ -132,10 +132,10 @@
     C-e         end     : 行末
     C-v                 : 廃止
     M-v                 : 廃止
-                prior   : 上画面     (PageUp)
                 next    : 下画面     (PageDown)
-                M-n     : 半画面上
-                M-p     : 半画面下
+                prior   : 上画面     (PageUp)
+                M-n     : 半画面下
+                M-p     : 半画面上
                 C-home  : バッファ先頭
                 C-end   : バッファ末尾
     M-<         C-,     : バッファ先頭
@@ -148,13 +148,13 @@
                 C-up    : １行上へスクロール
                 C-S-down: ４行下へスクロール
                 C-S-up  : ４行上へスクロール
-           command-prior: カーソルを画面の中、下、下画面
-           command-next : カーソルを画面の中、上、上画面
+           command-next : カーソルを画面の中、下、下画面
+           command-prior: カーソルを画面の中、上、上画面
 
 ## 次画面の操作
 
-                M-prior : 上画面     (PageUp)
                 M-next  : 下画面     (PageDown)
+                M-prior : 上画面     (PageUp)
                 M-home  : バッファ先頭
                 M-end   : バッファ末尾
                 M-down  : １1行下へスクロール

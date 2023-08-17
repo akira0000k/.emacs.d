@@ -36,11 +36,13 @@
 ;;   M-c                isearch-toggle-case-fold       ex. C-s M-c
 ;;   M-r                isearch-toggle-regexp          ex. C-s M-r
 ;;   M-s SPC            isearch-toggle-lax-whitespace  ex. C-s M-s SPC
+;;   M-%                isearch-query-replace          ex. C-s aaa M-% bbb
+;;   C-M-%              isearch-query-replace-regexp   ex. C-s ^aaa C-M-% bbb
+
 ;;   toggle default
 (setq isearch-lax-whitespace nil)  ;;off
 ;;(setq isearch-lax-whitespace t)  ;;on (default)
 
-;;   M-%                isearch-query-replace  ex. C-s aaa M-% bbb
 (global-set-key (kbd "C-r") 'query-replace) ;; M-% aaa bbb
 
 ;; no cua-mode  cut/copy/paste=C-w C-S-w C-y
