@@ -1,5 +1,6 @@
-# * emacs-help.org
-** 簡単なEmacs 使用法
+#+TITLE: 簡単なEmacs 使用法
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./css/Solarized(Dark).css">
+# * 簡単なEmacs 使用法
 ** はじめに
 *** 起動と終了
 
@@ -195,9 +196,10 @@
 
     | 標準           | 代替キー |                                                  |
     |----------------+----------+--------------------------------------------------|
-    | C-space        |          | 選択開始　　　　   (Mark Set と表示されます)     |
+    | C-SPC          |          | (Control + Space) 選択開始                       |
     |                |          | このあと カーソル移動で 選択領域が拡大します     |
-    | C-x space      | C-RET    | 矩形選択の開始     (C-RET は cua mode)           |
+    | C-x SPC        |          | (Control + x Space) 標準矩形選択の開始           |
+    |                | C-RET    | (Control + Return) 矩形選択の開始     (cua-mode) |
     |                |          | このあと カーソル移動で 矩形選択領域が拡大します |
     | C-M-mouse1drag |          | マウスで矩形選択                                 |
     | C-x h          | s-a      | バッファ全選択                                   |
@@ -313,8 +315,8 @@
      
     #+begin_example
     例
-    -UUU:**--F1  emacs-help.org   52% (300,85)   (Org) 2:02PM 1.68 ----------------------------------
-    -UUS(DOS)----F1  KOSMAX.CNF     Top (1,0)     Git-main  (Fundamental) 2:03PM 1.17 ---------------
+    -UUU:**--F1  emacs-help.org   52% (300,85)   (Org) 2:02PM 1.68 ----------------------
+    -UUS(DOS)----F1  KOSMAX.CNF     Top (1,0)     Git-main  (Fundamental) 2:03PM 1.17 ---
     #+end_example
      
     通常はファイルを読み込むときは文字コードを自動認識しますがたまに誤認識することがある。
