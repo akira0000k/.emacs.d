@@ -230,7 +230,7 @@
   ;;  '(shadow ((t (:foreground "lime green"))))
   ;;  )
   ;;;; (define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
-  (setq initial-buffer-choice t)  ;; macOS Ventura  image-type: Invalid image type ‘svg’
+  (setq initial-buffer-choice "./")  ;; macOS Ventura  image-type: Invalid image type ‘svg’
   (menu-bar-mode 1)
   (message "emacs Xwindow"))
 
