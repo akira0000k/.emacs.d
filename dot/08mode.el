@@ -94,8 +94,20 @@
 ;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
-(add-hook 'org-mode-hook (lambda() (cua-mode -1)
-			   (message "cua-mode disabled")))
+(require 'buffer-focus-hook)
 
-;; (global-map)        C-<return> will enable  cua-mode in non org-mode
-;; (cua-global-keymap) C-<return> will desable cua-mode in org-mode
+(defun focus-in ()
+  (setq cua-enable-cua-keys nil)
+  (message "no xcv."))
+
+(defun focus-out ()
+  (setq cua-enable-cua-keys t)
+  (message "xcv enable") t)
+
+(add-hook 'org-mode-hook (lambda()
+			   ;;           C-y is not cua-paste but org-yank
+			   (define-key org-mode-map (kbd "C-y") 'org-yank)
+			   (define-key org-mode-map (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
+			   (buffer-focus-in-callback 'focus-in)
+			   (buffer-focus-out-callback 'focus-out)
+			   ))
