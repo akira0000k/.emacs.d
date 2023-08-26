@@ -59,8 +59,9 @@
 	       ;; M-x markdown-preview-mode
 	       (define-key markdown-mode-map (kbd "C-c p") 'markdown-preview-mode)
 	       (setq markdown-preview-stylesheets
+		     (list "~/.emacs.d/css/md.css")
 		     ;;(list "~/.emacs.d/markdown/Clearness.css")
-		     (list "~/.emacs.d/markdown/Solarized(Dark).css")
+		     ;;(list "~/.emacs.d/markdown/Solarized(Dark).css")
 		     ;;(list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css")
 		     )
 	       ))))

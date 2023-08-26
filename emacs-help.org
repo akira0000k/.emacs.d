@@ -1,5 +1,5 @@
 #+TITLE: 簡単なEmacs 使用法
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./css/Solarized(Dark).css">
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./css/org.css">
 # * 簡単なEmacs 使用法
 ** はじめに
 *** 起動と終了

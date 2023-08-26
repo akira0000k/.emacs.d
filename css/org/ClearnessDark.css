@@ -13,27 +13,27 @@ body {
     font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
     font-size: 13px;
     line-height: 18px;
-    color: #737373;
-    background-color: white;
+    color: #fff;
+    background-color: #282a36;
     margin: 10px 13px 10px 13px;
 }
 table {
 	margin: 10px 0 15px 0;
 	border-collapse: collapse;
 }
+/*
 td,th {
 	border: 1px solid #ddd;
 	padding: 3px 10px;
 }
 th {
 	padding: 5px 10px;
-}
-
+}*/
 a {
-    color: #0069d6;
+    color: #59acf3;
 }
 a:hover {
-    color: #0050a3;
+    color: #a7d8ff;
     text-decoration: none;
 }
 a img {
@@ -48,7 +48,7 @@ h3,
 h4,
 h5,
 h6 {
-    color: #404040;
+    color: #fff;
     line-height: 36px;
 }
 h1 {
@@ -76,31 +76,20 @@ hr {
     border-bottom: 1px solid #ccc;
 }
 blockquote {
-    padding: 13px 13px 21px 15px;
-    margin-bottom: 18px;
-    font-family:georgia,serif;
-    font-style: italic;
+  border-left: 4px solid;
+  padding: 0 15px;
 }
-blockquote:before {
-    content:"\201C";
-    font-size:40px;
-    margin-left:-10px;
-    font-family:georgia,serif;
-    color:#eee;
+blockquote > :first-child {
+  margin-top: 0;
 }
-blockquote p {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 18px;
-    margin-bottom: 0;
-    font-style: italic;
+blockquote > :last-child {
+  margin-bottom: 15px;
 }
-code, pre {
+code,
+pre {
     font-family: Monaco, Andale Mono, Courier New, monospace;
 }
 code {
-    background-color: #fee9cc;
-    color: rgba(0, 0, 0, 0.75);
     padding: 1px 3px;
     font-size: 12px;
     -webkit-border-radius: 3px;
@@ -112,16 +101,16 @@ pre {
     padding: 14px;
     margin: 0 0 18px;
     line-height: 16px;
-    font-size: 11px;
-    border: 1px solid #d9d9d9;
+    font-size: 13px;
+    border: 1px solid #888;
+    white-space: pre;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
-pre code {
-    background-color: #fff;
-    color:#737373;
-    font-size: 11px;
-    padding: 0;
+code,
+pre {
+    background-color: #282a36;
+    color: #eee;
 }
 sup {
     font-size: 0.83em;
