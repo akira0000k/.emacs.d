@@ -153,17 +153,18 @@
 
 ** 検索
 
-    | 標準            | 代替キー |                                              |
-    |-----------------+----------+----------------------------------------------|
-    | C-s string      |          | インクリメンタルサーチ                       |
-    | C-s M-e         | C-s C-k  | ミニバッファで入力                           |
-    | C-s C-r string  |          | 逆方向インクリメンタルサーチ  (旧来はC-r)    |
-    | C-s C-s ...     | f3       | 再検索           C-s (word) C-s C-s ...      |
-    | C-s C-r C-r ... | S-f3     | 逆方向に再検索    C-s C-r (word) C-r C-r ... |
-    | M-%             | C-r      | 置換                                         |
-    | C-M-s regexp    |          | 正規表現検索                                 |
-    | C-M-%           |          | 正規表現置換                                 |
-    | /               | <        |                                              |
+    | 標準            | 代替キー |                                               |
+    |-----------------+----------+-----------------------------------------------|
+    | C-s string      |          | インクリメンタルサーチ　　M-x isearch-forward |
+    | C-s M-e         | C-s C-k  | ミニバッファで入力                            |
+    | C-s C-r string  |          | 逆方向インクリメンタルサーチ  (旧来はC-r)     |
+    | C-s C-s ...     | f3       | 再検索　　　　　　C-s (word) C-s C-s ...      |
+    | C-s C-r C-r ... | S-f3     | 逆方向に再検索　　C-s C-r (word) C-r C-r ...  |
+    | M-%             | C-r      | 置換　　　　　　M-x query-replace             |
+    | C-M-s regexp    |          | 正規表現検索　　M-x isearch-forward-regexp    |
+    | C-M-%           |          | 正規表現置換　　M-x query-replace-regexp      |
+    | M-s a C-s       |          | マルチファイル検索　M-x dired-do-isearch      |
+    | /               | <        |                                               |
 
 ** 編集
 
@@ -275,8 +276,8 @@
     |---------+----------+-----------------------|
     | M-next  |          | 下画面     (PageDown) |
     | M-prior |          | 上画面     (PageUp)   |
-    | M-home  |          | バッファ先頭          |
-    | M-end   |          | バッファ末尾          |
+    | M-home  | M-s-up   | バッファ先頭          |
+    | M-end   | M-s-down | バッファ末尾          |
     |         | M-down   | １1行下へスクロール   |
     |         | M-up     | １行上へスクロール    |
     |         | M-S-down | ４行下へスクロール    |
