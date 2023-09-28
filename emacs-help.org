@@ -406,7 +406,7 @@
     |           | S-f7     | shrink window horizontally                     |
     |           | S-f8     | enlarge window horizontally                    |
     | f1 k      | f9       | describe key briefly                           |
-    |           | S-f9     | toggle case sensitive search                   |
+    |           | S-f9     | toggle case sensitivity for search and occur   |
     |           | f10      | rotate divided screen                          |
     |           | S-f10    | rotate divided screen reverse                  |
     | M-f10     |          | maximize frame toggle                          |

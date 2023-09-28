@@ -45,8 +45,8 @@
 (global-set-key [f9]  'describe-key-briefly)
 (global-set-key [S-f9] #'(lambda()(interactive)
                           (if case-fold-search
-                              (progn (setq case-fold-search nil)(message "case sensitive Search mode"))
-                            (progn (setq case-fold-search t)(message "ignore case Search mode")))
+                              (progn (setq-default case-fold-search nil)(message "case sensitive Search mode"))
+                            (progn (setq-default case-fold-search t)(message "ignore case Search mode")))
                           ))
 
 ;;was  menu-bar-open
