@@ -132,6 +132,11 @@
 (global-set-key (kbd "s-c") 'kill-ring-save)
 (global-set-key (kbd "s-v") 'yank)
 (global-set-key (kbd "s-z") 'undo)
+(global-set-key (kbd "s-ち") 'mark-whole-buffer)
+(global-set-key (kbd "s-さ") 'kill-region)
+(global-set-key (kbd "s-そ") 'kill-ring-save)
+(global-set-key (kbd "s-ひ") 'yank)
+(global-set-key (kbd "s-つ") 'undo)
 
 
 
