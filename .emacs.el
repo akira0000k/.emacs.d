@@ -627,6 +627,13 @@ With prefix argument, activate previous rectangle if possible."
 ;; cursor move L R naturally at R2L text.
 (global-set-key [left] 'ak-left-char)
 (global-set-key [right] 'ak-right-char)
+(if (boundp 'cua--rectangle-keymap)
+    (progn
+      (define-key cua--rectangle-keymap [remap ak-right-char]          #'cua-resize-rectangle-right)
+      (define-key cua--rectangle-keymap [remap ak-left-char]           #'cua-resize-rectangle-left)
+      (define-key cua--rectangle-keymap [remap ak-backward-char]       #'cua-resize-rectangle-left)
+      ))
+
 (setq visual-order-cursor-movement t)
 
 (defun ak-backward-char (&optional arg)

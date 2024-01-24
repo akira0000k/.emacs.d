@@ -1,3 +1,7 @@
+;;;; comment out with ;; if some function not necessary.
+;;;; like
+;;;; ;;(load "~/.emacs.d/dot/03cua.el")
+;;;;
 (load "~/.emacs.d/dot/00misc.el")
 (load "~/.emacs.d/dot/01keys.el")
 (load "~/.emacs.d/dot/02cursor.el")
