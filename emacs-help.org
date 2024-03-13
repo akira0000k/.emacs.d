@@ -158,14 +158,14 @@
     | 標準            | 代替キー |                                               |
     |-----------------+----------+-----------------------------------------------|
     | C-s string      |          | インクリメンタルサーチ　　M-x isearch-forward |
+    | C-M-s regexp    | C-s M-r  | 正規表現検索　　M-x isearch-forward-regexp    |
     | C-s M-e         | C-s C-k  | ミニバッファで入力                            |
     | C-s C-r string  |          | 逆方向インクリメンタルサーチ  (旧来はC-r)     |
     | C-s C-s ...     | f3       | 再検索　　　　　　C-s (word) C-s C-s ...      |
     | C-s C-r C-r ... | S-f3     | 逆方向に再検索　　C-s C-r (word) C-r C-r ...  |
     | M-%             | C-r      | 置換　　　　　　M-x query-replace             |
-    | C-M-s regexp    |          | 正規表現検索　　M-x isearch-forward-regexp    |
-    | C-M-%           |          | 正規表現置換　　M-x query-replace-regexp      |
-    | M-s a C-s       |          | マルチファイル検索　M-x dired-do-isearch      |
+    | C-M-%           | C-M-r    | 正規表現置換　　M-x query-replace-regexp      |
+    | s-e             | C-s C-y  | copy した内容で検索　M-x isearch-yank-kill    |
     | /               | <        |                                               |
 
 ** 編集

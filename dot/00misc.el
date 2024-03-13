@@ -44,6 +44,7 @@
 ;;(setq isearch-lax-whitespace t)  ;;on (default)
 
 (global-set-key (kbd "C-r") 'query-replace) ;; M-% aaa bbb
+(global-set-key (kbd "C-M-r") 'query-replace-regexp) ;; C-M-% aaa bbb
 
 ;; no cua-mode  cut/copy/paste=C-w C-S-w C-y
 (global-set-key (kbd "C-S-w") 'kill-ring-save) ;; M-w
