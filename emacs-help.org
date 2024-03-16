@@ -409,7 +409,7 @@
     |           | S-f8     | enlarge window horizontally                    |
     | f1 k      | f9       | describe key briefly                           |
     |           | S-f9     | toggle case sensitivity for search and occur   |
-    |           | f10      | rotate divided screen                          |
+    |           | f10      | swap divided screen                            |
     |           | S-f10    | rotate divided screen reverse                  |
     | M-f10     |          | maximize frame toggle                          |
     |           | M-f11    | fullscreen toggle                              |
@@ -645,3 +645,5 @@ Windows や Mac OSX のキー操作を取り入れてemacsの敷居を低くす�
 - end  はファイル末尾でなく行末
   
 おわり
+# ブラウザでhtmlを見る
+# C-c C-e h o

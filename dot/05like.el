@@ -50,7 +50,7 @@
                           ))
 
 ;;was  menu-bar-open
-(global-set-key [f10] 'window-toggle-division)
+(global-set-key [f10] 'window-swap-division)
 (global-set-key [S-f10] 'window-toggle-division-reverse)
 ;;               M-f10   toggle-frame-maximized  =  "ESC <f10>"
 
@@ -133,6 +133,45 @@
     (find-alternate-file "."))
   )
 
+;;=============================A<>B=====
+;;; swap 2 screen  A<-|->B    ------
+;;=============================B<>A=====
+(defun window-swap-division ()
+  "toggle window ver-hor divide"
+  (interactive)
+  (unless (= (count-windows 1) 2)
+    (error "one window"))
+  (let ((before-height (window-height))
+        (before-minx (nth 0 (window-edges)))
+        (before-miny (nth 1 (window-edges)))
+        (after-minx)
+        (after-miny)
+        (other-buf (window-buffer (next-window))))
+    (delete-other-windows)
+    (if (= (window-height) before-height)
+        (progn
+	  ;;(message "||vertical||")
+          (split-window-right)
+          (if (not (= before-minx (nth 0 (window-edges))))
+	      ;;(progn
+	      (other-window 1) ;;(message "AAAAAAAA"))
+            )
+          (switch-to-buffer other-buf)
+          (other-window 1)
+          )
+      (progn
+	;;(message "--horizontal--")
+        (split-window-below)
+        (if (not (= before-miny (nth 1 (window-edges))))
+	    ;;(progn
+            (other-window 1) ;;(message "BBBBBBBBB"))
+          )
+        (switch-to-buffer other-buf)
+        (other-window 1)
+        )
+      )
+    )
+  )
 ;;========================A=========B===
 ;;; rotate 2 screen  A|B ---  B|A  ---
 ;;========================B=========A===
