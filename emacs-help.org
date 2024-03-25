@@ -270,6 +270,8 @@
     | C-x {       | S-f7     | 画面幅縮小 (縦に分割されているとき)  M-x shrink-window-horizontally  |
     | C-x }       | S-f8     | 画面幅拡大 (縦に分割されているとき)  M-x enlarge-window-horizontally |
     | C-x C-b     |          | バッファリスト表示                                                   |
+    |             | f10      | 2分割されている時、上下または左右を入れ替える                        |
+    |             | S-f10    | 2分割されている時、水平と垂直分割を切り替える                        |
     | /           | <        |                                                                      |
 
 *** 次画面の操作
@@ -409,8 +411,8 @@
     |           | S-f8     | enlarge window horizontally                    |
     | f1 k      | f9       | describe key briefly                           |
     |           | S-f9     | toggle case sensitivity for search and occur   |
-    |           | f10      | swap divided screen                            |
-    |           | S-f10    | rotate divided screen reverse                  |
+    |           | f10      | swap split window                              |
+    |           | S-f10    | toggle vertical / horizontal split             |
     | M-f10     |          | maximize frame toggle                          |
     |           | M-f11    | fullscreen toggle                              |
     |           | f11      | wrap line toggle                               |

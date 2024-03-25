@@ -601,8 +601,10 @@ With prefix argument, activate previous rectangle if possible."
                           ))
 
 ;;was  menu-bar-open
-(global-set-key [f10] 'window-swap-division)
-(global-set-key [S-f10] 'window-toggle-division-reverse)
+(global-set-key [f10] 'ak-window-swap-split)
+(global-set-key [S-f10] 'ak-window-vh-split)
+;; (global-set-key [f10] 'ak-window-rotate-split)
+;; (global-set-key [S-f10] 'ak-window-rotate-split-reverse)
 ;;               M-f10   toggle-frame-maximized  =  "ESC <f10>"
 
 (global-set-key (kbd "M-<f11>")   'toggle-frame-fullscreen)  ;; <f11>
@@ -687,16 +689,14 @@ With prefix argument, activate previous rectangle if possible."
 ;;=============================A<>B=====
 ;;; swap 2 screen  A<-|->B    ------
 ;;=============================B<>A=====
-(defun window-swap-division ()
-  "toggle window ver-hor divide"
+(defun ak-window-swap-split ()
+  "swap 2 window of U-D or L-R"
   (interactive)
   (unless (= (count-windows 1) 2)
     (error "one window"))
   (let ((before-height (window-height))
         (before-minx (nth 0 (window-edges)))
         (before-miny (nth 1 (window-edges)))
-        (after-minx)
-        (after-miny)
         (other-buf (window-buffer (next-window))))
     (delete-other-windows)
     (if (= (window-height) before-height)
@@ -704,8 +704,7 @@ With prefix argument, activate previous rectangle if possible."
 	  ;;(message "||vertical||")
           (split-window-right)
           (if (not (= before-minx (nth 0 (window-edges))))
-	      ;;(progn
-	      (other-window 1) ;;(message "AAAAAAAA"))
+	      (other-window 1)
             )
           (switch-to-buffer other-buf)
           (other-window 1)
@@ -714,8 +713,42 @@ With prefix argument, activate previous rectangle if possible."
 	;;(message "--horizontal--")
         (split-window-below)
         (if (not (= before-miny (nth 1 (window-edges))))
-	    ;;(progn
-            (other-window 1) ;;(message "BBBBBBBBB"))
+            (other-window 1)
+          )
+        (switch-to-buffer other-buf)
+        (other-window 1)
+        )
+      )
+    )
+  )
+;;================================A=====
+;;; VerHor swap 2  A|B  <-->   ------
+;;================================B=====
+(defun ak-window-vh-split ()
+  "toggle window split ver-hor"
+  (interactive)
+  (unless (= (count-windows 1) 2)
+    (error "one window"))
+  (let ((before-height (window-height))
+        (before-minx (nth 0 (window-edges)))
+        (before-miny (nth 1 (window-edges)))
+        (other-buf (window-buffer (next-window))))
+    (delete-other-windows)
+    (if (= (window-height) before-height)
+        (progn
+	  ;;(message "||vertical||")
+          (split-window-below)
+          (if (= before-minx (nth 0 (window-edges)))
+              (other-window 1)
+            )
+          (switch-to-buffer other-buf)
+          (other-window 1)
+          )
+      (progn
+	;;(message "--horizontal--")
+        (split-window-right)
+        (if (= before-miny (nth 1 (window-edges)))
+            (other-window 1)
           )
         (switch-to-buffer other-buf)
         (other-window 1)
@@ -726,35 +759,33 @@ With prefix argument, activate previous rectangle if possible."
 ;;========================A=========B===
 ;;; rotate 2 screen  A|B ---  B|A  ---
 ;;========================B=========A===
-(defun org-xor (a b)
+(defun ak-xor (a b)
   "Exclusive or."
   (if a (not b) b))
-(defun window-toggle-division (&optional reverse)
-  "toggle window ver-hor divide"
+(defun ak-window-rotate-split (&optional reverse)
+  "rotate window split clockwise"
   (interactive)
   (unless (= (count-windows 1) 2)
     (error "one window"))
   (let ((before-height (window-height))
         (before-minx (nth 0 (window-edges)))
         (before-miny (nth 1 (window-edges)))
-        (after-minx)
-        (after-miny)
         (other-buf (window-buffer (next-window))))
     (delete-other-windows)
     (if (= (window-height) before-height)
         (progn
-          ;;(split-window-vertically)            ;; ---------------
+	  ;;(message "||vertical||")
           (split-window-below)
-          (if (org-xor reverse (= before-minx (nth 0 (window-edges))))
+          (if (ak-xor reverse (= before-minx (nth 0 (window-edges))))
               (other-window 1)
             )
           (switch-to-buffer other-buf)
           (other-window 1)
           )
       (progn
-        ;;(split-window-horizontally)            ;;     A | B
+	;;(message "--horizontal--")
         (split-window-right)
-        (if (org-xor reverse (not (= before-miny (nth 1 (window-edges)))))
+        (if (ak-xor reverse (not (= before-miny (nth 1 (window-edges)))))
             (other-window 1)
           )
         (switch-to-buffer other-buf)
@@ -763,10 +794,10 @@ With prefix argument, activate previous rectangle if possible."
       )
     )
   )
-(defun window-toggle-division-reverse ()
-  "toggle window ver-hor divide"
+(defun ak-window-rotate-split-reverse ()
+  "rotate window split unti-clockwise"
   (interactive)
-  (window-toggle-division t)
+  (ak-window-rotate-split t)
   )
 
 ;;====================================
