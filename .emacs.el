@@ -588,10 +588,10 @@ With prefix argument, activate previous rectangle if possible."
 (global-set-key (kbd "ESC <f6>")  'kmacro-start-macro-or-insert-counter)  ;; <f3>
 (global-set-key [C-f6]  'kmacro-end-or-call-macro)  ;; <f4>
 
-(global-set-key [f7]   'shrink-window)
-(global-set-key [S-f7] 'shrink-window-horizontally)
-(global-set-key [f8]   'enlarge-window)
-(global-set-key [S-f8] 'enlarge-window-horizontally)
+(global-set-key [f7]   'ak-shrink-window)
+(global-set-key [S-f7] 'ak-shrink-window2)
+(global-set-key [f8]   'ak-enlarge-window)
+(global-set-key [S-f8] 'ak-enlarge-window2)
 
 (global-set-key [f9]  'describe-key-briefly)
 (global-set-key [S-f9] #'(lambda()(interactive)
@@ -602,9 +602,9 @@ With prefix argument, activate previous rectangle if possible."
 
 ;;was  menu-bar-open
 (global-set-key [f10] 'ak-window-swap-split)
-(global-set-key [S-f10] 'ak-window-vh-split)
+;; (global-set-key [S-f10] 'ak-window-vh-split)
 ;; (global-set-key [f10] 'ak-window-rotate-split)
-;; (global-set-key [S-f10] 'ak-window-rotate-split-reverse)
+(global-set-key [S-f10] 'ak-window-rotate-split-reverse)
 ;;               M-f10   toggle-frame-maximized  =  "ESC <f10>"
 
 (global-set-key (kbd "M-<f11>")   'toggle-frame-fullscreen)  ;; <f11>
@@ -686,6 +686,43 @@ With prefix argument, activate previous rectangle if possible."
     (find-alternate-file "."))
   )
 
+;;======================================
+;;; shrink / enlarge window automatic_|_
+;;======================================
+(defun ak-shrink-window (&optional vh)
+  "shrink window to possible direction"
+  (interactive)
+  (if (window-full-height-p)
+      (shrink-window 1 t)
+    (if (window-full-width-p)
+        (shrink-window 1 nil)
+      ;;else
+      (if vh
+	  (shrink-window 1 t) ;;<-|
+	(shrink-window 1 nil)) ;;_A_ (default)
+      ))
+  )
+(defun ak-shrink-window2 ()
+  "for small window, shrink <-|"
+  (interactive)
+  (ak-shrink-window t))
+(defun ak-enlarge-window (&optional vh)
+  "enlarge window to possible direction"
+  (interactive)
+  (if (window-full-height-p)
+      (enlarge-window 1 t)
+    (if (window-full-width-p)
+        (enlarge-window 1 nil)
+      ;;else
+      (if vh
+	  (enlarge-window 1 t) ;;->|
+	(enlarge-window 1 nil)) ;;_V_ (default)
+      ))
+  )
+(defun ak-enlarge-window2 ()
+  "for small window, enlarge ->|"
+  (interactive)
+  (ak-enlarge-window t))
 ;;=============================A<>B=====
 ;;; swap 2 screen  A<-|->B    ------
 ;;=============================B<>A=====
