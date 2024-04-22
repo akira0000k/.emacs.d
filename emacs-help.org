@@ -1,5 +1,7 @@
 #+TITLE: 簡単なEmacs 使用法
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./css/org.css">
+#+OPTIONS: _:{}
+#+OPTIONS: ^:{}
 # * 簡単なEmacs 使用法
 ** はじめに
 *** 起動と終了
@@ -57,9 +59,13 @@
     | v     |          | ファイル view (read only)           |
     |       | H        | ヘキサモードでファイルを表示        |
     | +     |          | ディレクトリ作成                    |
-    |       | h        | ~/       ホームディレクトリ表示     |
-    |       | r        | /        ルートディレクトリ表示     |
-    |       | z        | emacsを起動したディレクトリ表示     |
+    |       | a        | A_DIRECTORY へ移動 (.dirrc で定義)  |
+    |       | b        | B_DIRECTORY へ移動                  |
+    |       | c        | C_DIRECTORY へ移動                  |
+    |       | e        | E_DIRECTORY へ移動                  |
+    |       | h        | ホームディレクトリ ~ へ移動         |
+    |       | r        | ルートディレクトリ / へ移動         |
+    |       | z        | emacs 起動ディレクトリへ移動        |
     |       | E        | ファイル名直接編集 C-c C-c で終了   |
     | /     | <        |                                     |
 \\
@@ -78,20 +84,20 @@
     マークをつけて、複数ファイルに対して実行
     | 標準    | 　　　　 |                                                      |
     |---------+----------+------------------------------------------------------|
-    | d d d x |          | 削除選択し実行                                       |
-    | ~     x |          | (チルダx) ~付きバックアップファイルを全て選択し削除  |
-    | m m m D |          | 複数選択し削除                                       |
-    | m m m C |          | 複数選択し別directoryに copy                         |
-    | m m m R |          | 複数選択し別directoryに 移動                         |
-    | m m m S |          | 複数選択し別directoryに シンボリックリンクを作成     |
-    | m m m Y |          | 複数選択し別directoryに 相対シンボリックリンクを作成 |
-    | m m m M |          | 複数選択しchmod                                      |
+    | d d‥ x  |          | 削除選択し実行                                       |
+    | ~ x     |          | (チルダx) ~付きバックアップファイルを全て選択し削除  |
+    | m m‥ D  |          | 複数選択し削除                                       |
+    | m m‥ C  |          | 複数選択し別directoryに copy                         |
+    | m m‥ R  |          | 複数選択し別directoryに 移動                         |
+    | m m‥ S  |          | 複数選択し別directoryに シンボリックリンクを作成     |
+    | m m‥ Y  |          | 複数選択し別directoryに 相対シンボリックリンクを作成 |
+    | m m‥ M  |          | 複数選択しchmod                                      |
     | u       |          | マークを消して下へ                                   |
     | DEL     |          | (Backspace) マークを消して上へ                       |
     | M-DEL   |          | (Alt + Backspace)  すべのマークを消す                |
     | /       | <        |                                                      |
 
-** ファイルを開く
+** ファイルを開く/閉じる
 
     | 標準    | 代替キー |                                                      |
     |---------+----------+------------------------------------------------------|
@@ -128,11 +134,11 @@
     | C-n     | down     | 一行下                         |
     | C-p     | up       | 一行上                         |
     | C-f     | right    | 一文字右                       |
-    | C-b     | left     | 一文字左                       |
-    | C-a     | home     | 行頭                           |
+    | C-b     | left     | 一文字左(ファイル先頭では終了) |
+    | C-a     | home     | 行頭と先頭文字のトグル         |
     | C-e     | end      | 行末                           |
-    | C-v     |          | 廃止                           |
-    | M-v     |          | 廃止                           |
+    | (C-v)   |          | 廃止                           |
+    | (M-v)   |          | 廃止                           |
     |         | next     | 下画面     (PageDown)          |
     |         | prior    | 上画面     (PageUp)            |
     |         | M-n      | 半画面下                       |
@@ -157,18 +163,18 @@
 
 ** 検索
 
-    | 標準            | 代替キー |                                               |
-    |-----------------+----------+-----------------------------------------------|
-    | C-s string      |          | インクリメンタルサーチ　　M-x isearch-forward |
-    | C-M-s regexp    | C-s M-r  | 正規表現検索　　M-x isearch-forward-regexp    |
-    | C-s M-e         | C-s C-k  | ミニバッファで入力                            |
-    | C-s C-r string  |          | 逆方向インクリメンタルサーチ  (旧来はC-r)     |
-    | C-s C-s ...     | f3       | 再検索　　　　　　C-s (word) C-s C-s ...      |
-    | C-s C-r C-r ... | S-f3     | 逆方向に再検索　　C-s C-r (word) C-r C-r ...  |
-    | M-%             | C-r      | 置換　　　　　　M-x query-replace             |
-    | C-M-%           | C-M-r    | 正規表現置換　　M-x query-replace-regexp      |
-    | s-e             | C-s C-y  | copy した内容で検索　M-x isearch-yank-kill    |
-    | /               | <        |                                               |
+    | 標準            | 代替キー    |                                               |
+    |-----------------+-------------+-----------------------------------------------|
+    | C-s str         |             | インクリメンタルサーチ　　M-x isearch-forward |
+    | C-M-s regexp    | C-s M-r     | 正規表現検索　　M-x isearch-forward-regexp    |
+    | C-s M-e         | C-s C-k     | ミニバッファで入力                            |
+    |                 | C-s C-r str | 逆方向インクリメンタルサーチ  (C-rは置換)     |
+    | C-s C-s ...     | f3          | 再検索　　　　　　C-s (str) C-s C-s ...       |
+    | C-s C-r C-r ... | S-f3        | 逆方向に再検索　　C-s C-r (str) C-r C-r ...   |
+    | M-%             | C-r         | 置換　　　　　　M-x query-replace             |
+    | C-M-%           | C-M-r       | 正規表現置換　　M-x query-replace-regexp      |
+    | s-e             | C-s C-y     | copy した内容で検索　M-x isearch-yank-kill    |
+    | /               | <           |                                               |
 
 ** 編集
 
@@ -177,19 +183,19 @@
     ホスト側の日本語入力を使うときは、emacsの入力切り替えは使う必要ありません。ただし\\
     日本語モードだとAltキーを使うコマンドが利かないことがあります。
      
-    | 標準   | 代替キー |                                                     |
-    |--------+----------+-----------------------------------------------------|
-    | C-d    | delete   | Delete                                              |
-    | M-d    |          | 一語削除 (cut)                                      |
-    | C-h    | DEL      | Backspace    (旧来はC-h はhelp)                     |
-    | C-k    |          | カーソルより後を削除 (cut)                          |
-    | C-x u  | C-z      | undo   (旧来はC-z はサスペンドだが、C-x C-z で行う) |
-    | C-/    |          | undo                                                |
-    | C-_    |          | undo                                                |
-    | C-g    |          | undo の中断   次からのundo は逆方向                 |
-    | Insert |          | 上書きモードになります .. Ovwrt と表示 (Windows)    |
-    | C-\    |          | emacs の日本語入力on-off                            |
-    | /      | <        |                                                     |
+    | 標準   | 代替キー |                                      |
+    |--------+----------+--------------------------------------|
+    | C-d    | delete   | Delete                               |
+    | M-d    |          | 一語削除 (cut)                       |
+    | DEL    | C-h      | Backspace    (C-h helpは、f1)        |
+    | C-k    |          | カーソルより後を削除 (cut)           |
+    | C-x u  | C-z      | undo   (C-z サスペンドは、C-x C-z)   |
+    | C-/    |          | undo                                 |
+    | C-_    |          | undo                                 |
+    | C-g    |          | undo の中断   次からのundo は逆方向  |
+    | Insert |          | 上書きモード .. Ovwrt 表示 (Windows) |
+    | C-\    |          | emacs の日本語入力on-off             |
+    | /      | <        |                                      |
 
 ** 選択
 
@@ -377,51 +383,51 @@
 
 ** 終了、中断
 
-    | 標準    | 　　　　 |                                          |
-    |---------+----------+------------------------------------------|
-    | C-x C-c |          | emacs の終了                             |
-    | C-x C-z |          | suspend         (旧来のC-z はundoとした) |
-    | fg      |          | (コマンド) シェルからEmacsに復帰する     |
-    | /       | <        |                                          |
+    | 標準    | 　　　　 |                                      |
+    |---------+----------+--------------------------------------|
+    | C-x C-c |          | emacs の終了                         |
+    | C-x C-z |          | suspend　　　　　　　(C-z はundo)    |
+    | fg      |          | (コマンド) シェルからEmacsに復帰する |
+    | /       | <        |                                      |
 
 
 ** function key 設定一覧
 
-    | 標準      | 代替キー |                                                |
-    |-----------+----------+------------------------------------------------|
-    | M-x help  | f1       | help                                           |
-    | C-x o     | S-f1     | other screen　　　　　　　(順周り)             |
-    | C-x 2     | f2       | devide screen - toggle                         |
-    | C-x 1     | f2       | devide screen toggle                           |
-    | C-x 3     | S-f2     | devide screen \vert{} or other screen (逆回り) |
-    | C-s       | f3       | re search forward                              |
-    | C-s C-r   | S-f3     | re search backward                             |
-    | C-x k     | f4       | kill buffer                                    |
-    | C-x 0     | S-f4     | delete-window                                  |
-    | g         | f5       | revert-buffer in dired mode                    |
-    |           | f5       | revert-buffer in view mode                     |
-    | M-x dirs  | f5       | resync current directory stack in shell mode   |
-    | C-l       | f5       | recenter                                       |
-    | C-x d     | S-f5     | dired                                          |
-    | C-x RET c | f6       | select coding system                           |
-    |           | S-f6     | toggle electric indent mode                    |
-    |           | ESC-f6   | macro start                                    |
-    |           | C-f6     | macro end/call macro                           |
-    |           | f7       | shrink window                                  |
-    |           | f8       | enlarge window                                 |
-    |           | S-f7     | shrink window horizontally                     |
-    |           | S-f8     | enlarge window horizontally                    |
-    | f1 k      | f9       | describe key briefly                           |
-    |           | S-f9     | toggle case sensitivity for search and occur   |
-    |           | f10      | swap split window                              |
-    |           | S-f10    | toggle vertical / horizontal split             |
-    | M-f10     |          | maximize frame toggle                          |
-    |           | M-f11    | fullscreen toggle                              |
-    |           | f11      | wrap line toggle                               |
-    |           | f12      | line number toggle                             |
-    |           | S-f11    | scroll right                                   |
-    |           | S-f12    | scroll left                                    |
-    | /         | <        |                                                |
+    | 標準        | 代替キー |                                                |
+    |-------------+----------+------------------------------------------------|
+    | f1          |          | M-x help　　　　　(C-h は backspace)           |
+    | C-x o       | S-f1     | other screen　　　　　　　(順周り)             |
+    | C-x 2       | f2       | devide screen ー toggle                        |
+    | C-x 1       | f2       | devide screen toggle                           |
+    | C-x 3       | S-f2     | devide screen \vert{} or other screen (逆回り) |
+    | C-s C-s     | f3       | re search forward                              |
+    | C-s C-r C-r | S-f3     | re search backward                             |
+    | C-x k       | f4       | kill buffer                                    |
+    | C-x 0       | S-f4     | delete-window                                  |
+    | g           | f5       | revert-buffer in dired mode                    |
+    |             | f5       | revert-buffer in view mode                     |
+    | M-x dirs    | f5       | resync current directory stack in shell mode   |
+    | C-l         | f5       | recenter                                       |
+    | C-x d       | S-f5     | dired                                          |
+    | C-x RET c   | f6       | select coding system                           |
+    |             | S-f6     | toggle electric indent mode                    |
+    |             | ESC-f6   | macro start                                    |
+    |             | C-f6     | macro end/call macro                           |
+    |             | f7       | shrink window                                  |
+    | C-x ^       | f8       | enlarge window                                 |
+    | C-x {       | S-f7     | shrink window horizontally                     |
+    | C-x }       | S-f8     | enlarge window horizontally                    |
+    | f1 k        | f9       | describe key briefly                           |
+    |             | S-f9     | toggle case sensitivity for search and occur   |
+    |             | f10      | swap split window                              |
+    |             | S-f10    | toggle vertical / horizontal split             |
+    | M-f10       |          | maximize frame toggle                          |
+    |             | M-f11    | fullscreen toggle                              |
+    |             | f11      | wrap line toggle                               |
+    |             | f12      | line number toggle                             |
+    |             | S-f11    | scroll right                                   |
+    |             | S-f12    | scroll left                                    |
+    | /           | <        |                                                |
 
 
 ** help
