@@ -42,15 +42,6 @@
 ;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
 ;;;; M-[ 6 ; 8 ~	C-M-S-<next>    to   s-S-<next>
 
-;; Shift-Control-Comma,   select to filetop
-;; Shift-Control-Period.  select to fileend
-;;;; (define-key input-decode-map "\e[60;6u" (kbd "C-S-,"))  ;; for iTerm2
-;;;; (define-key input-decode-map "\e[62;6u" (kbd "C-S-."))
-;;;; (define-key input-decode-map (kbd "C-<") (kbd "C-S-,"))  ;; for Emacs.app
-;;;; (define-key input-decode-map (kbd "C->") (kbd "C-S-."))
-(define-key key-translation-map (kbd "C-<") (kbd "C-S-,"))
-(define-key key-translation-map (kbd "C->") (kbd "C-S-."))
-
 
 
 ;;====================================

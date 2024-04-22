@@ -25,8 +25,14 @@
 (global-set-key [C-tab] 'other-window)
 (global-set-key [C-S-tab] #'(lambda()(interactive)(other-window -1)))
 
+;; Control-Comma,   go to filetop
+;; Control-Period.  go to fileend
 (global-set-key (kbd "C-,") 'beginning-of-buffer)
 (global-set-key (kbd "C-.") 'end-of-buffer)
+;; Shift-Control-Comma,   select to filetop
+;; Shift-Control-Period.  select to fileend
+(define-key key-translation-map (kbd "C-<") (kbd "C-S-,"))
+(define-key key-translation-map (kbd "C->") (kbd "C-S-."))
 
 
 ;; ;; MAC OSX option key + up down left right

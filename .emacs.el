@@ -66,6 +66,30 @@
 ;;                    C-x 5 2     'make-frame-command
 
 
+;;
+;;  kill region or kill line. (MAC OSX style)
+;;
+(global-set-key (kbd "C-k") 'ak-kill-line)
+;;  copy
+(global-set-key (kbd "C-S-k") 'kill-ring-save)
+;; kill active region or kill line
+;; active region may have length 0
+(defun ak-kill-line (&optional arg)
+  (interactive "P")
+  (if (region-active-p)
+      (kill-region 0 0 t)
+    (kill-line arg)))
+
+;; ;; For use-region-p to returns t, the region must not be empty.
+;; ;; That is, if a zero length region exists, execute a kill-line.
+;; (setq use-empty-active-region nil) ;;default
+;; (defun ak-kill-line (&optional arg)
+;;   (interactive "P")
+;;   (if (use-region-p)
+;;       (kill-region 0 0 t)
+;;     (kill-line arg)))
+
+
 
 ;; ------ 01keys.el ------
 
@@ -107,15 +131,6 @@
 ;;;; M-[ 5 ; 8 ~	C-M-S-<prior>	to   s-S-<prior>
 ;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
 ;;;; M-[ 6 ; 8 ~	C-M-S-<next>    to   s-S-<next>
-
-;; Shift-Control-Comma,   select to filetop
-;; Shift-Control-Period.  select to fileend
-;;;; (define-key input-decode-map "\e[60;6u" (kbd "C-S-,"))  ;; for iTerm2
-;;;; (define-key input-decode-map "\e[62;6u" (kbd "C-S-."))
-;;;; (define-key input-decode-map (kbd "C-<") (kbd "C-S-,"))  ;; for Emacs.app
-;;;; (define-key input-decode-map (kbd "C->") (kbd "C-S-."))
-(define-key key-translation-map (kbd "C-<") (kbd "C-S-,"))
-(define-key key-translation-map (kbd "C->") (kbd "C-S-."))
 
 
 
@@ -179,8 +194,14 @@
 (global-set-key [C-tab] 'other-window)
 (global-set-key [C-S-tab] #'(lambda()(interactive)(other-window -1)))
 
+;; Control-Comma,   go to filetop
+;; Control-Period.  go to fileend
 (global-set-key (kbd "C-,") 'beginning-of-buffer)
 (global-set-key (kbd "C-.") 'end-of-buffer)
+;; Shift-Control-Comma,   select to filetop
+;; Shift-Control-Period.  select to fileend
+(define-key key-translation-map (kbd "C-<") (kbd "C-S-,"))
+(define-key key-translation-map (kbd "C->") (kbd "C-S-."))
 
 
 ;; ;; MAC OSX option key + up down left right
