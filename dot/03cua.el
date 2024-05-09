@@ -12,7 +12,10 @@
 
 ;; ;; <C-return>  start cua set rectangle mark
 ;; (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
-;; shift select mode
+
+;; Alternate keybind of cua-rect for org-mode. 
+(global-set-key (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
+
 ;; C-x SPC     start emacs24 rectangle mark mode
 
 ;; cut/paste=C-w C-v  copy/paste=M-w M-v   possible

@@ -66,8 +66,6 @@
 ;;====================================
 (global-set-key (kbd "<next>")  'ak-scroll-up)   ;;PageDown
 (global-set-key (kbd "<prior>") 'ak-scroll-down) ;;PageUp
-;;(global-set-key (kbd "C-v") 'ak-scroll-up)    ;;orthodox style
-;;(global-set-key (kbd "M-v") 'ak-scroll-down)  ;;orthodox style
 (defun ak-scroll-down ()
   "scroll down = Page Up"
   (interactive "^")
@@ -193,6 +191,9 @@
 ;;====================================
 (global-set-key (kbd "M-p") 'half-page-down)
 (global-set-key (kbd "M-n") 'half-page-up)
+;; overwridden by cua mode
+(global-set-key (kbd "C-v") 'half-page-up)
+(global-set-key (kbd "M-v") 'half-page-down)
 (defun half-page-down()
   "カーソルは画面内固定で半画面 scroll-down。"
   (interactive "^")
@@ -226,9 +227,10 @@
 ;;====================================
 (global-set-key [C-home]  'beginning-of-buffer)
 (global-set-key [C-end]   'end-of-buffer)
-(global-set-key [home]  'home-toggle)
-(global-set-key [end]   'move-end-of-line)  ;; MAC OSX .. default=end of buffer
-(global-set-key (kbd "C-a")'home-toggle)
+;;;;  (global-set-key [home]  'home-toggle)
+;;;;  (global-set-key [end]   'move-end-of-line)  ;; MAC OSX .. default=end of buffer
+(global-set-key (kbd "C-a") 'home-toggle)
+(global-set-key (kbd "s-<left>") 'home-toggle)
 (defun home-toggle ()
   "go and back between beginning of line and first char."
   (interactive "^")

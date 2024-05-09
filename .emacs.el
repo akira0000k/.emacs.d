@@ -54,9 +54,9 @@
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 
 ;; overwridden by cua-mode
-;; no cua-mode  cut/paste=C-w C-v  copy/paste=M-w M-v
-(global-set-key (kbd "M-v") 'yank) ;; C-y
-(global-set-key (kbd "C-v") 'yank) ;; C-y
+;;;;  ;; no cua-mode  cut/paste=C-w C-v  copy/paste=M-w M-v
+;;;;  (global-set-key (kbd "M-v") 'yank) ;; C-y
+;;;;  (global-set-key (kbd "C-v") 'yank) ;; C-y
 (global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
 
 ;;                    M-f10       'toggle-frame-maximized
@@ -64,30 +64,6 @@
 ;;                    C-x C-c     'save-buffers-kill-terminal
 ;;                    C-x C-z     'suspend-frame            ;; <- C-z
 ;;                    C-x 5 2     'make-frame-command
-
-
-;;
-;;  kill region or kill line. (MAC OSX style)
-;;
-(global-set-key (kbd "C-k") 'ak-kill-line)
-;;  copy
-(global-set-key (kbd "C-S-k") 'kill-ring-save)
-;; kill active region or kill line
-;; active region may have length 0
-(defun ak-kill-line (&optional arg)
-  (interactive "P")
-  (if (region-active-p)
-      (kill-region 0 0 t)
-    (kill-line arg)))
-
-;; ;; For use-region-p to returns t, the region must not be empty.
-;; ;; That is, if a zero length region exists, execute a kill-line.
-;; (setq use-empty-active-region nil) ;;default
-;; (defun ak-kill-line (&optional arg)
-;;   (interactive "P")
-;;   (if (use-region-p)
-;;       (kill-region 0 0 t)
-;;     (kill-line arg)))
 
 
 
@@ -143,30 +119,43 @@
 (global-set-key [s-left]  'move-beginning-of-line)
 (global-set-key [s-right] 'move-end-of-line)
 ;;     same as default
-(global-set-key (kbd "s-a") 'mark-whole-buffer)
-(global-set-key (kbd "s-x") 'kill-region)
-(global-set-key (kbd "s-c") 'kill-ring-save)
-(global-set-key (kbd "s-v") 'yank)
-(global-set-key (kbd "s-z") 'undo)
+;;;;  (global-set-key (kbd "s-a") 'mark-whole-buffer)
+;;;;  (global-set-key (kbd "s-z") 'undo)
+;;;;  (global-set-key (kbd "s-x") 'kill-region)
+;;;;  (global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;kill-ring-save)
+;;;;  (global-set-key (kbd "s-v") 'yank)
+;;;;  (global-set-key (kbd "s-y") 'ns-paste-secondary)
+
+;;;;  (global-set-key (kbd "s-k") 'kill-current-buffer)
+;;;;  (global-set-key (kbd "s-s") 'save-buffer)
+;;;;  (global-set-key (kbd "s-u") 'revert-buffer)
+
+;;;;  (global-set-key (kbd "s-d") 'isearch-repeat-backward)
+;;;;  (global-set-key (kbd "s-f") 'isearch-forward)
+;;;;  (global-set-key (kbd "s-F") 'isearch-backward)
+;;;;  (global-set-key (kbd "s-g") 'isearch-repeat-forward)
+;;;;  (global-set-key (kbd "s-e") 'isearch-yank-kill)
+;;;;  (global-set-key (kbd "s-j") 'exchange-point-and-mark)
+;;      HIRAGANA key
 (global-set-key (kbd "s-ち") 'mark-whole-buffer)
-(global-set-key (kbd "s-さ") 'kill-region)
-(global-set-key (kbd "s-そ") 'kill-ring-save)
-(global-set-key (kbd "s-ひ") 'yank)
 (global-set-key (kbd "s-つ") 'undo)
+(global-set-key (kbd "s-さ") 'kill-region)
+(global-set-key (kbd "s-そ") 'ns-copy-including-secondary) ;;kill-ring-save)
+(global-set-key (kbd "s-ひ") 'yank)
+(global-set-key (kbd "s-ん") 'ns-paste-secondary)
+
+(global-set-key (kbd "s-の") 'kill-current-buffer)
+(global-set-key (kbd "s-と") 'save-buffer)
+(global-set-key (kbd "s-な") 'revert-buffer)
+
+(global-set-key (kbd "s-し") 'isearch-repeat-backward)
+(global-set-key (kbd "s-は") 'isearch-forward)
+(global-set-key (kbd "s-き") 'isearch-repeat-forward)
+(global-set-key (kbd "s-い") 'isearch-yank-kill)
+(global-set-key (kbd "s-ま") 'exchange-point-and-mark)
 
 
 
-;; ;; MAC OSX Terminal.app keyboard setting
-;; (progn
-;;   (define-key input-decode-map "\e[25~" [S-f5])
-;;   (define-key input-decode-map "\e[26~" [S-f6])
-;;   (define-key input-decode-map "\e[28~" [S-f7])
-;;   (define-key input-decode-map "\e[29~" [S-f8])
-;;   (define-key input-decode-map "\e[31~" [S-f9])
-;;   (define-key input-decode-map "\e[32~" [S-f10])
-;;   (define-key input-decode-map "\e[33~" [S-f11])
-;;   (define-key input-decode-map "\e[34~" [S-f12])
-;; )
 
 
 
@@ -235,8 +224,6 @@
 ;;====================================
 (global-set-key (kbd "<next>")  'ak-scroll-up)   ;;PageDown
 (global-set-key (kbd "<prior>") 'ak-scroll-down) ;;PageUp
-;;(global-set-key (kbd "C-v") 'ak-scroll-up)    ;;orthodox style
-;;(global-set-key (kbd "M-v") 'ak-scroll-down)  ;;orthodox style
 (defun ak-scroll-down ()
   "scroll down = Page Up"
   (interactive "^")
@@ -362,6 +349,9 @@
 ;;====================================
 (global-set-key (kbd "M-p") 'half-page-down)
 (global-set-key (kbd "M-n") 'half-page-up)
+;; overwridden by cua mode
+(global-set-key (kbd "C-v") 'half-page-up)
+(global-set-key (kbd "M-v") 'half-page-down)
 (defun half-page-down()
   "カーソルは画面内固定で半画面 scroll-down。"
   (interactive "^")
@@ -395,9 +385,10 @@
 ;;====================================
 (global-set-key [C-home]  'beginning-of-buffer)
 (global-set-key [C-end]   'end-of-buffer)
-(global-set-key [home]  'home-toggle)
-(global-set-key [end]   'move-end-of-line)  ;; MAC OSX .. default=end of buffer
-(global-set-key (kbd "C-a")'home-toggle)
+;;;;  (global-set-key [home]  'home-toggle)
+;;;;  (global-set-key [end]   'move-end-of-line)  ;; MAC OSX .. default=end of buffer
+(global-set-key (kbd "C-a") 'home-toggle)
+(global-set-key (kbd "s-<left>") 'home-toggle)
 (defun home-toggle ()
   "go and back between beginning of line and first char."
   (interactive "^")
@@ -425,7 +416,10 @@
 
 ;; ;; <C-return>  start cua set rectangle mark
 ;; (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
-;; shift select mode
+
+;; Alternate keybind of cua-rect for org-mode. 
+(global-set-key (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
+
 ;; C-x SPC     start emacs24 rectangle mark mode
 
 ;; cut/paste=C-w C-v  copy/paste=M-w M-v   possible
@@ -594,10 +588,9 @@ With prefix argument, activate previous rectangle if possible."
 (global-set-key [f3] 'isearch-repeat-forward)
 (global-set-key [S-f3] 'isearch-repeat-backward)
 
-(defun ak-kill-buffer() (interactive) (kill-buffer))  ;; redefined later
-(global-set-key "\C-xk" 'ak-kill-buffer)
 ;;was                    kmacro-end-or-call-macro
-(global-set-key [f4]    'ak-kill-buffer)
+(global-set-key [f4]    'kill-current-buffer)
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
 (global-set-key [S-f4] 'delete-window)
 
 (global-set-key [f5]  'recenter)
@@ -639,9 +632,29 @@ With prefix argument, activate previous rectangle if possible."
 
 
 ;;====================================
+;;;; kill region or kill line. (MAC OSX style)
+;;====================================
+(global-set-key (kbd "C-k") 'ak-kill-line)
+;;  copy
+(global-set-key (kbd "C-S-k") 'ak-copy-line)
+;; kill active region or kill line
+;; active region may have length 0
+(defun ak-kill-line (&optional arg)
+  (interactive "P")
+  (if (region-active-p)
+      (kill-region 0 0 t)
+    (kill-line arg)))
+(defun ak-copy-line (&optional arg)
+  (interactive "P")
+  (if (region-active-p)
+      (kill-ring-save 0 0 t)
+    (kill-line arg)
+    (yank)))
+
+;;====================================
 ;;;; press left at top of window then kill buffer and show dired
 ;;====================================
-;;(global-set-key (kbd "C-b") 'ak-backward-char)
+(global-set-key (kbd "C-b") 'ak-backward-char)
 
 ;; ;; Cursor L, R move always logical order, backward and forward,
 ;; ;; even at R2L text and visual-order-cursor-movement is t
@@ -1011,10 +1024,21 @@ With prefix argument, activate previous rectangle if possible."
 ;;;;      "Kill buffer and change buffer-list."
 ;;;;      (list-buffers-if-exist))
 ;;;;    (ad-activate 'kill-buffer)
-(defun ak-kill-buffer()
+;; (defun ak-kill-buffer()
+;;   (interactive)
+;;   (kill-buffer)
+;;   (list-buffers-if-exist))
+;; (global-set-key [remap kill-buffer] 'ak-kill-buffer)
+
+(defun ak-kill-current-buffer()
   (interactive)
-  (kill-buffer)
+  ;; enabling focus-out hook of org-mode
+  (if (string= major-mode "org-mode")
+      (if (fboundp 'ak-org-focus-out)
+	  (ak-org-focus-out)))
+  (kill-current-buffer)
   (list-buffers-if-exist))
+(global-set-key [remap kill-current-buffer] 'ak-kill-current-buffer)
 
 (defadvice quit-window (after AK-quit-window )
   "Quit window and change buffer-list."
@@ -1221,20 +1245,20 @@ With prefix argument, activate previous rectangle if possible."
 
 (require 'buffer-focus-hook)
 
-(defun focus-in ()
-  (setq cua-enable-cua-keys nil)
+(defun ak-org-focus-in ()
   (message "no xcv."))
 
-(defun focus-out ()
-  (setq cua-enable-cua-keys t)
-  (message "xcv enable") t)
+(defun ak-org-focus-out ()
+  (message "xcv enable.")
+  t)
 
 (add-hook 'org-mode-hook (lambda()
+			   (setq-local cua-enable-cua-keys nil)
 			   ;;           C-y is not cua-paste but org-yank
 			   (define-key org-mode-map (kbd "C-y") 'org-yank)
-			   (define-key org-mode-map (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
-			   (buffer-focus-in-callback 'focus-in)
-			   (buffer-focus-out-callback 'focus-out)
+			   ;;(define-key org-mode-map (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
+			   (buffer-focus-in-callback 'ak-org-focus-in)
+			   (buffer-focus-out-callback 'ak-org-focus-out)
 			   ))
 
 ;; ------ 09org.el ------

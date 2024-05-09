@@ -97,18 +97,18 @@
 
 (require 'buffer-focus-hook)
 
-(defun focus-in ()
-  (setq cua-enable-cua-keys nil)
+(defun ak-org-focus-in ()
   (message "no xcv."))
 
-(defun focus-out ()
-  (setq cua-enable-cua-keys t)
-  (message "xcv enable") t)
+(defun ak-org-focus-out ()
+  (message "xcv enable.")
+  t)
 
 (add-hook 'org-mode-hook (lambda()
+			   (setq-local cua-enable-cua-keys nil)
 			   ;;           C-y is not cua-paste but org-yank
 			   (define-key org-mode-map (kbd "C-y") 'org-yank)
-			   (define-key org-mode-map (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
-			   (buffer-focus-in-callback 'focus-in)
-			   (buffer-focus-out-callback 'focus-out)
+			   ;;(define-key org-mode-map (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
+			   (buffer-focus-in-callback 'ak-org-focus-in)
+			   (buffer-focus-out-callback 'ak-org-focus-out)
 			   ))

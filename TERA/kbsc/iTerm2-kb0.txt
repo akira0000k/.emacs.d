@@ -1,0 +1,43 @@
+Page01
+Send Hex Codes: 0x1f                                            ^-
+Send Hex Codes: 0x00                                            ^2
+Send Hex Codes: 0x1b                                            ^3
+Send Hex Codes: Ox1c                                            ^4
+Send Hex Codes: Ox1d                                            ^5
+Send Hex Codes: Ox1e                                            ^6
+Send Hex Codes: Ox1f                                            ^7
+Send Hex Codes: 0x7f                                            ^8
+Send ^[ [1;2A                                                   ⬆️ ↑
+Send ^[ [1;5A                                                   ^↑
+Send ^[ [1;6A                                                   ^⬆️ ↑
+Send Hex Codes: 0x1b 0x1b 0x5b 0x41                             opt ↑
+Send ^[ [1;2B                                                    ⬆️ ↓
+Send ^[ [1;5B                                                   ^↓
+Send ^[ [1;6B                                                   ^⬆️ ↓
+Send Hex Codes: 0x1b 0x1b 0x5b 0x42                             opt ↓
+Send ^[ [1;2D                                                   ⬆️ ←
+Send ^[ [1;5D                                                   ^←
+Page02
+Send ^[ [1;6D                                                   ^⬆️ ←
+Send Hex Codes: 0x1b 0x1b 0x5b 0x44                             opt ←
+Send ^[ [1;2C                                                    ⬆️ →    
+Send ^[ [1;5C                                                   ^️→    
+Send ^[ [1;6C                                                   ^⬆️ →   
+Send Hex Codes: 0x1b 0x1b 0x5b 0x43                             opt →
+Send ^[ [1;2P                                                   ⬆️ F1
+Send ^[ [1;2Q                                                   ⬆️ F2
+Send ^[ [1;2R                                                   ⬆️ F3
+Send ^[ [1;2S                                                   ⬆️ F4
+Send ^[ [15;2~                                                  ⬆️ F5
+Send ^[ [17;2~                                                  ⬆️ F6
+Send ^[ [18;2~                                                  ⬆️ F7
+Send ^[ [19;2~                                                  ⬆️ F8
+Send ^[ [20;2~                                                  ⬆️ F9
+Send ^[ [21;2~                                                  ⬆️ F10
+Send ^[ [23;2~                                                  ⬆️ F11
+Send ^[ [24;2~                                                  ⬆️ F12
+Page03
+Send ^[ [1;2H                                                   ⬆️ Home
+Send ^[ [1;5H                                                   ^Home
+Send ^[ [1;2F                                                   ⬆️ End
+Send ^[ [1;5F                                                   ^End

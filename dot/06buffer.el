@@ -72,10 +72,21 @@
 ;;;;      "Kill buffer and change buffer-list."
 ;;;;      (list-buffers-if-exist))
 ;;;;    (ad-activate 'kill-buffer)
-(defun ak-kill-buffer()
+;; (defun ak-kill-buffer()
+;;   (interactive)
+;;   (kill-buffer)
+;;   (list-buffers-if-exist))
+;; (global-set-key [remap kill-buffer] 'ak-kill-buffer)
+
+(defun ak-kill-current-buffer()
   (interactive)
-  (kill-buffer)
+  ;; enabling focus-out hook of org-mode
+  (if (string= major-mode "org-mode")
+      (if (fboundp 'ak-org-focus-out)
+	  (ak-org-focus-out)))
+  (kill-current-buffer)
   (list-buffers-if-exist))
+(global-set-key [remap kill-current-buffer] 'ak-kill-current-buffer)
 
 (defadvice quit-window (after AK-quit-window )
   "Quit window and change buffer-list."

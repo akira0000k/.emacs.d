@@ -54,9 +54,9 @@
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 
 ;; overwridden by cua-mode
-;; no cua-mode  cut/paste=C-w C-v  copy/paste=M-w M-v
-(global-set-key (kbd "M-v") 'yank) ;; C-y
-(global-set-key (kbd "C-v") 'yank) ;; C-y
+;;;;  ;; no cua-mode  cut/paste=C-w C-v  copy/paste=M-w M-v
+;;;;  (global-set-key (kbd "M-v") 'yank) ;; C-y
+;;;;  (global-set-key (kbd "C-v") 'yank) ;; C-y
 (global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
 
 ;;                    M-f10       'toggle-frame-maximized
@@ -64,27 +64,3 @@
 ;;                    C-x C-c     'save-buffers-kill-terminal
 ;;                    C-x C-z     'suspend-frame            ;; <- C-z
 ;;                    C-x 5 2     'make-frame-command
-
-
-;;
-;;  kill region or kill line. (MAC OSX style)
-;;
-(global-set-key (kbd "C-k") 'ak-kill-line)
-;;  copy
-(global-set-key (kbd "C-S-k") 'kill-ring-save)
-;; kill active region or kill line
-;; active region may have length 0
-(defun ak-kill-line (&optional arg)
-  (interactive "P")
-  (if (region-active-p)
-      (kill-region 0 0 t)
-    (kill-line arg)))
-
-;; ;; For use-region-p to returns t, the region must not be empty.
-;; ;; That is, if a zero length region exists, execute a kill-line.
-;; (setq use-empty-active-region nil) ;;default
-;; (defun ak-kill-line (&optional arg)
-;;   (interactive "P")
-;;   (if (use-region-p)
-;;       (kill-region 0 0 t)
-;;     (kill-line arg)))

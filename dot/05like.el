@@ -22,10 +22,9 @@
 (global-set-key [f3] 'isearch-repeat-forward)
 (global-set-key [S-f3] 'isearch-repeat-backward)
 
-(defun ak-kill-buffer() (interactive) (kill-buffer))  ;; redefined later
-(global-set-key "\C-xk" 'ak-kill-buffer)
 ;;was                    kmacro-end-or-call-macro
-(global-set-key [f4]    'ak-kill-buffer)
+(global-set-key [f4]    'kill-current-buffer)
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
 (global-set-key [S-f4] 'delete-window)
 
 (global-set-key [f5]  'recenter)
@@ -67,9 +66,29 @@
 
 
 ;;====================================
+;;;; kill region or kill line. (MAC OSX style)
+;;====================================
+(global-set-key (kbd "C-k") 'ak-kill-line)
+;;  copy
+(global-set-key (kbd "C-S-k") 'ak-copy-line)
+;; kill active region or kill line
+;; active region may have length 0
+(defun ak-kill-line (&optional arg)
+  (interactive "P")
+  (if (region-active-p)
+      (kill-region 0 0 t)
+    (kill-line arg)))
+(defun ak-copy-line (&optional arg)
+  (interactive "P")
+  (if (region-active-p)
+      (kill-ring-save 0 0 t)
+    (kill-line arg)
+    (yank)))
+
+;;====================================
 ;;;; press left at top of window then kill buffer and show dired
 ;;====================================
-;;(global-set-key (kbd "C-b") 'ak-backward-char)
+(global-set-key (kbd "C-b") 'ak-backward-char)
 
 ;; ;; Cursor L, R move always logical order, backward and forward,
 ;; ;; even at R2L text and visual-order-cursor-movement is t
