@@ -245,15 +245,15 @@
     |-------+----------+------+--------------------------------------------|
     | C-w   | C-x      | s-x  | 選択領域を cut　　(C-x は cua-mode)        |
     | M-w   | C-c      | s-c  | 選択領域を copy　 (C-c は cua-mode)        |
-    | C-y   | C-v      | s-v  | paste　　　　　　 (C-v は cua-mode)        |
-    | C-y   |          |      | org-yank 　　　　 (org-mode)               |
     |       | C-S-w    |      | 選択領域を copy                            |
+    | C-y   | C-v      | s-v  | paste　　　　　　 (C-v は cua-mode)        |
     |       | M-v      |      | paste                                      |
+    | C-y   |          |      | org-yank 　　　　 (org-mode)               |
     |       |          | s-y  | s-c でcopyしたものをpaste (ターミナル不可) |
-    | C-k   |          |      | カーソルより後(又は選択領域)を cut (Mac風) |
-    |       | C-S-k    |      | カーソルより後(又は選択領域)を copy        |
     | M-d   |          |      | 一語 cut                                   |
     | M-DEL |          |      | 一語前を削除 (cut)                         |
+    | C-k   |          |      | カーソルより後(又は選択領域)を cut (Mac風) |
+    |       | C-S-k    |      | カーソルより後(又は選択領域)を copy        |
     | /     | <        |      |                                            |
 
     copy 後、領域選択は解除、\\
@@ -626,26 +626,27 @@
 ** コンソール起動する時の設定
 *** iTerm2 設定 (Mac OSX)
 
-    ~/home/user/.emacs.lisp/TERA/Iterm2-default.itermkeymap~
+    ~.emacs.d/doc/iTerm2/Iterm2-default.itermkeymap~ を
     
     iTerm2 > Preferences > Profiles > Keys > Presets > Import\\
-    から読み込ませてください
+    から読み込ませる。
     
-    C-TAB C-S-TAB は iTerm2のタブ切り替えに使うかも。。
+    fn キーを押さなくても f1..f12が使えるようにする。
     
-    macの ¥ キーは \ に変更(キッパリ)
+    macの ¥ キーは \ に変更し、fn + ¥ で ¥ にする。\\
+    (Mac OSX では "¥" は2バイトUTF-8で "\" が本来の1バイト文字)
     
-    C-up C-down などの Mission Controlキーとの競合問題。
+    C-up C-down などの Mission Controlキーとの競合問題を解決する。
     
+    C-TAB C-S-TAB は iTerm2のタブ切り替えに使っても良い。
+
     M-C- はmagnet で使うのでemacsでは使わず、s-up などを M-C-up に読み替えて戻している。
     
-    fn キーを押さなくても f1..f12が使えるようにする
 
 *** teraterm 設定 (Windows)
 
-    ~/home/user/.emacs.lisp/TERA/KOSMAX.CNF~   (xterm用)\\
-    をteraterm install directory にダウンロードし、
-         KEYBOARD.CNF のかわりに使う
+    ~.emacs.d/TERA/KOSMAX.CNF~   (xterm用)\\
+    をteraterm install directory に置き、KEYBOARD.CNF のかわりに使う。
        
     テラターム設定 メニュー
       - Setup
@@ -664,15 +665,15 @@
 
 *** 左Cntl キーの位置について
 
-    Emacsのキー定義では、'A' キーの左が Cntl キーであると操作しやすくなっています。\\
-    Windows の Caps Lock キーと 左Cntl キーを入れ替えるのがおすすめです。
+    Emacsのキー定義では、'A' キーの左が Cntl キーであると操作しやすい。\\
+    Windows の Caps Lock キーと 左Cntl キーを入れ替えるとよい。
 
 
 ** 方針
 
-Windows や Mac OSX のキー操作を取り入れてemacsの敷居を低くすることに努めました。\\
-基本的な emacsのキーバインドは一部を除いて残しています。Mac ではemacs流が取り入れられている
-ため、違和感はないと思います。
+Windows や Mac OSX のキー操作を取り入れてemacsの敷居を低くすることに努めた。\\
+基本的な emacsのキーバインドは残している。Mac OSX ではemacs流のキーバインドが
+取り入れられているため、違和感はないと思う。
 
 本来のemacsキーバインドを変えたところは、次の通り。
 

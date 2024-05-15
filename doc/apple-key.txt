@@ -6,7 +6,7 @@
 - s-0		text-scale-adjust
   s-:		ispell
   s-=		text-scale-adjust
-* s-?		info
+- s-?		info
   s-C		ns-popup-color-panel
 * s-D		dired
   s-E		edit-abbrevs
@@ -89,7 +89,7 @@
   
   s-,		customize
   s-:		ispell
-* s-?		info
+- s-?		info
 * s-D		dired
   s-E		edit-abbrevs
 * s-M		manual-entry
