@@ -192,9 +192,8 @@
     |        | C-S-k    |      | カーソルより後(又は選択領域)を copy        |
     | C-y    |          |      | paste                                      |
     | C-x u  | C-z      | s-z  | undo　　(C-z サスペンドは、C-x C-z)        |
-    | C-/    |          |      | undo                                       |
-    | C-_    |          |      | undo                                       |
-    | C-g    |          |      | undo の中断   次からのundo は逆方向        |
+    | C-_    | C-/      |      | undo　　(使えないかも)                     |
+    | C-g    |          |      | undo の中断。次から undo は redo           |
     | Insert |          |      | 上書きモード .. Ovwrt 表示 (Windows)       |
     | C-\    |          |      | emacs の日本語入力on-off                   |
     | /      | <        |      |                                            |
@@ -213,7 +212,7 @@
 
     | 標準           | 代替キー  | 　　 |                                    |
     |----------------+-----------+------+------------------------------------|
-    | C-SPC          |           |      | (Control+Space) 選択開始           |
+    | C-SPC          | C-@       |      | (Control+Space) 選択開始           |
     |                |           |      | 以後カーソル移動で 選択領域が拡大  |
     | C-x SPC        |           |      | (Control+x Space) 標準矩形選択開始 |
     | C-RET          | C-c C-SPC |      | (Control+Return) cua矩形選択開始   |
