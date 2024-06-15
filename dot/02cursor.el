@@ -225,13 +225,9 @@
 ;;====================================
 ;;;; Home Toggle like Visual Studio
 ;;====================================
-(global-set-key [C-home]  'beginning-of-buffer)
-(global-set-key [C-end]   'end-of-buffer)
-;;;;  (global-set-key [home]  'home-toggle)
-;;;;  (global-set-key [end]   'move-end-of-line)  ;; MAC OSX .. default=end of buffer
-(global-set-key (kbd "C-a") 'home-toggle)
-(global-set-key (kbd "s-<left>") 'home-toggle)
-(defun home-toggle ()
+(global-set-key (kbd "C-a") 'ak-home-toggle)
+(global-set-key (kbd "s-<left>") 'ak-home-toggle)
+(defun ak-home-toggle ()
   "go and back between beginning of line and first char."
   (interactive "^")
   (if (not (bolp))
@@ -244,3 +240,25 @@
     (if (eolp)
         (beginning-of-line)))
   )
+
+;;====================================
+;;;; begining/end of buffer/line(shift)
+;;====================================
+(global-set-key [C-home]  'beginning-of-buffer)
+(global-set-key [C-end]   'end-of-buffer)
+(global-set-key [home]  'ak-beginning-of-buffer)
+(global-set-key [end]   'ak-end-of-buffer)
+(defun ak-beginning-of-buffer(&optional arg)
+  "set cursor at beginning of buffer or line(shift)"
+  (interactive "^")
+  (if this-command-keys-shift-translated
+      (ak-home-toggle)
+    (beginning-of-buffer arg)
+  ))
+(defun ak-end-of-buffer(&optional arg)
+  "set cursor at end of buffer or line(shift)"
+  (interactive "^")
+  (if this-command-keys-shift-translated
+      (move-end-of-line arg)
+    (end-of-buffer arg)
+  ))
