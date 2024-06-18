@@ -138,12 +138,10 @@
     | C-b     | left     |         | 一文字左(先頭ではファイルを閉じる) |
     | C-a     | (S-home) | s-left  | 行頭と先頭文字のトグル　(選択時)   |
     | C-e     | (S-end)  | s-right | 行末　　　　　　　　　　(選択時)   |
-    | (C-v)   |          |         | 半画面下　　(org-mode)             |
-    | (M-v)   |          |         | 半画面上　　(org-mode)             |
     |         | next     |         | 下画面     (PageDown)              |
     |         | prior    |         | 上画面     (PageUp)                |
-    |         | M-n      |         | 半画面下                           |
-    |         | M-p      |         | 半画面上                           |
+    | (C-v)   | M-n      |         | 半画面下　　(org-mode)             |
+    | (M-v)   | M-p      |         | 半画面上　　(org-mode)             |
     | M-<     | C-,      | s-up    | バッファ先頭                       |
     | M->     | C-.      | s-down  | バッファ末尾                       |
     |         | C-<      |         | バッファ先頭まで選択               |
@@ -191,6 +189,12 @@
     | C-k    |          |      | カーソルより後(又は選択領域)を cut (Mac風) |
     |        | C-S-k    |      | カーソルより後(又は選択領域)を copy        |
     | C-y    |          |      | paste                                      |
+    | C-i    | TAB      |      | インデント調整など                         |
+    | M-i    |          |      | タブ挿入                                   |
+    | C-m    | RET      |      | 改行                                       |
+    | C-j    |          |      | 改行してインデント                         |
+    | C-o    |          |      | カーソルを残して改行                       |
+    | C-t    |          |      | カーソルの前の文字を後ろに移動             |
     | C-x u  | C-z      | s-z  | undo　　(C-z サスペンドは、C-x C-z)        |
     | C-_    | C-/      |      | undo　　(使えないかも)                     |
     | C-g    |          |      | undo の中断。次から undo は redo           |
@@ -240,20 +244,25 @@
 
 *** コピー&ペースト
 
-    | 標準  | 代替キー | 　　 |                                            |
-    |-------+----------+------+--------------------------------------------|
-    | C-w   | C-x      | s-x  | 選択領域を cut　　(C-x は cua-mode)        |
-    | M-w   | C-c      | s-c  | 選択領域を copy　 (C-c は cua-mode)        |
-    |       | C-S-w    |      | 選択領域を copy                            |
-    | C-y   | C-v      | s-v  | paste　　　　　　 (C-v は cua-mode)        |
-    |       | M-v      |      | paste                                      |
-    | C-y   |          |      | org-yank 　　　　 (org-mode)               |
-    |       |          | s-y  | s-c でcopyしたものをpaste (ターミナル不可) |
-    | M-d   |          |      | 一語 cut                                   |
-    | M-DEL |          |      | 一語前を削除 (cut)                         |
-    | C-k   |          |      | カーソルより後(又は選択領域)を cut (Mac風) |
-    |       | C-S-k    |      | カーソルより後(又は選択領域)を copy        |
-    | /     | <        |      |                                            |
+    | 標準    | 代替キー | 　　 |                                            |
+    |---------+----------+------+--------------------------------------------|
+    | C-w     | C-x      | s-x  | 選択領域を cut　　(C-x は cua-mode)        |
+    | M-w     | C-c      | s-c  | 選択領域を copy　 (C-c は cua-mode)        |
+    |         | C-S-w    |      | 選択領域を copy                            |
+    | C-y     | C-v      | s-v  | paste　　　　　　 (C-v は cua-mode)        |
+    |         | M-v      |      | paste                                      |
+    |         |          | s-y  | s-c でcopyしたものをpaste (ターミナル不可) |
+    | M-y     |          |      | yank-pop                                   |
+    |         |          |      | M-y TAB　　　(kill-ringから選択)           |
+    |         |          |      | C-y M-y M-y..　(kill-ringからpop)          |
+    | C-k     |          |      | カーソルより後(又は選択領域)を cut (Mac風) |
+    |         | C-S-k    |      | カーソルより後(又は選択領域)を copy        |
+    | C-S-DEL |          |      | 一行 cut                                   |
+    | M-d     |          |      | 一語 cut                                   |
+    | M-DEL   |          |      | 一語前を cut                               |
+    | M-k     |          |      | 一文 cut                                   |
+    | C-M-k   |          |      | 一lisp要素 cut                             |
+    | /       | <        |      |                                            |
 
     copy 後、領域選択は解除、\\
     paste 時、領域が選択されていれば上書き、\\
