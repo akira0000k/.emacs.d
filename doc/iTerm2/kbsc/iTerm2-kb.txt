@@ -44,6 +44,7 @@ Send Hex Codes: 0×18 0x40 0x73 0x76                             command v
 Send Hex Codes: 0x18 0x40 0x73 0x78                             command x
 Send Hex Codes: 0x18 0x40 0x73 0x7a                             command z
 Send Hex Codes: 0x18 0x40 0x73 0x7C                             ⬆️ command |
+Send ^[ [3;6~                                                   ^⬆️ ← delete
 Send ^[ \                                                       opt ¥
 Send ^[ [1;2A                                                   ⬆️ ↑
 Send ^[ [1;5A                                                   ^↑
@@ -54,8 +55,8 @@ Send ^[ [1;7A                                                   command ↑
 Send ^[ [1;8A                                                   ⬆️ command ↑
 Send ^[ [1;2B                                                    ⬆️ ↓
 Send ^[ [1;5B                                                   ^↓
-Send ^[ [1;6B                                                   ^⬆️ ↓
 Page4
+Send ^[ [1;6B                                                   ^⬆️ ↓
 Send ^[ [1;3B                                                   opt ↓
 Send ^[ [1;4B                                                   opt ⬆️ ↓
 Send ^[ [1;7B                                                   command ↓
@@ -73,8 +74,8 @@ Send ^[ [1;6C                                                   ^⬆️ →
 Send ^[ [1;3C                                                   opt →
 Send ^[ [1;4C                                                   opt ⬆️ →
 Send ^[ [1;7C                                                   command →
-Send ^[ [1;8C                                                   ⬆️ command →
 Page5
+Send ^[ [1;8C                                                   ⬆️ command →
 Send ^[ [1;2P                                                   ⬆️ F1
 Send Hex Codes: 0x1c 0x09                                       opt F1
 Send Hex Codes: 0x1c 0x6e                                       opt ⬆️ F1
@@ -92,8 +93,8 @@ Send ^[ [18;2~                                                  ⬆️ F7
 Send ^[ [19;2~                                                  ⬆️ F8
 Send ^[ [20;2~                                                  ⬆️ F9
 Send ^[ [21;2~                                                  ⬆️ F10
-Send ^[ [23;2~                                                  ⬆️ F11
 Page6
+Send ^[ [23;2~                                                  ⬆️ F11
 Send ^[ [24;2~                                                  ⬆️ F12
 Ignore                                                          F13
 Ignore                                                          F14
@@ -111,4 +112,5 @@ Send ^[ [5;8~                                                   ⬆️ command P
 Send ^[ [6;2~                                                   ⬆️ Page Down
 Send ^[ [6;5~                                                   ^Page Down
 Send ^[ [6;7~                                                   command Page Down
+Page7
 Send ^[ [6;8~                                                   ⬆️ command Page Down

@@ -16,6 +16,10 @@
 ;;      for emacs.app    terminal->no need
 (define-key input-decode-map (kbd "C-¥") (kbd "C-\\"))
 
+;;  C-S-DEL kill-whole-line
+(define-key input-decode-map "\e[3;6~" (kbd "C-S-<backspace>")) ;;was C-S-<delete>
+
+
 ;; terminal send control+option up for command up
 (define-key input-decode-map "\e[1;7A" (kbd "<s-up>"))
 (define-key input-decode-map "\e[1;8A" (kbd "<s-S-up>"))
@@ -56,7 +60,8 @@
 ;;;;  (global-set-key (kbd "s-a") 'mark-whole-buffer)
 ;;;;  (global-set-key (kbd "s-z") 'undo)
 ;;;;  (global-set-key (kbd "s-x") 'kill-region)
-;;;;  (global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;kill-ring-save)
+;;;;  (global-set-key (kbd "s-c") 'kill-ring-save) ;;Terminal
+;;;;  (global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;Xwindow
 ;;;;  (global-set-key (kbd "s-v") 'yank)
 ;;;;  (global-set-key (kbd "s-y") 'ns-paste-secondary)
 

@@ -81,3 +81,19 @@ NG  Send Hex Codes: 0x1B 0x18 0x40 0x53 0x10     ^opt⬆p
 NG                 ESC  C-x   @    S   ^N ... P
 NG  in lisp-mode
 NG  C-M-x runs the command eval-defun
+
+
+これをターミナルでやりたい
+C-S-<backspace>			kill-whole-line
+1.
+C-S-h をやってみる
+Send Hex Codes: 0x18 0x40 0x53 0x08     ^⬆h
+C-h (translated from C-x @ S) runs the command backward-delete-char-untabify
+2.
+M-[ 3 ; 6 ~	C-S-<delete>
+Send ^[ [3;6~   ^⬆️ ← delete
+C-<delete> runs the command kill-word
+3.
+(define-key input-decode-map "\e[3;6~" (kbd "C-S-<backspace>"))
+C-S-<backspace> runs the command kill-whole-line
+やった

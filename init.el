@@ -187,6 +187,7 @@
       ;;  )
 
       (menu-bar-mode -1)
+      (global-set-key (kbd "s-c") 'kill-ring-save)
       (if (string= (getenv "TERM_PROGRAM") "vscode")
 	  (progn
 	    ;;;;"terminal.integrated.macOptionIsMeta": true
@@ -282,3 +283,4 @@
   (load custom-file))
 ;;;;;;;;;;;;;;;;;;;;;added by emacs;;;;;;;;;;;;;;;;;;;;;;custom.el
 (put 'scroll-left 'disabled nil)
+(put 'upcase-region 'disabled nil)
