@@ -60,6 +60,8 @@
     | v     |          |     | ファイル view (read only)           |
     |       | H        |     | ヘキサモードでファイルを表示        |
     | +     |          |     | ディレクトリ作成                    |
+    | s     |          |     | 日付順ソート toggle                 |
+    | t     |          |     | マーク反転                          |
     |       | a        |     | A_DIRECTORY へ移動 (.dirrc で定義)  |
     |       | b        |     | B_DIRECTORY へ移動                  |
     |       | c        |     | C_DIRECTORY へ移動                  |
@@ -126,7 +128,7 @@
 
 *** Mac流
 
-    ~C-f C-b C-p C-n  command-left  command-right  fn+up  fn+down  command+up  command+down~
+    ~C-f C-b C-p C-n   fn+up  fn+down  command+up  command+down~
 
 *** emacs流
 
@@ -136,8 +138,8 @@
     | C-p     | up       |         | 一行上                             |
     | C-f     | right    |         | 一文字右                           |
     | C-b     | left     |         | 一文字左(先頭ではファイルを閉じる) |
-    | C-a     | (S-home) | s-left  | 行頭と先頭文字のトグル　(選択時)   |
-    | C-e     | (S-end)  | s-right | 行末　　　　　　　　　　(選択時)   |
+    | C-a     | (S-home) |         | 行頭と先頭文字のトグル　(選択時)   |
+    | C-e     | (S-end)  |         | 行末　　　　　　　　　　(選択時)   |
     |         | next     |         | 下画面     (PageDown)              |
     |         | prior    |         | 上画面     (PageUp)                |
     | (C-v)   | M-n      |         | 半画面下　　(org-mode)             |
@@ -155,8 +157,8 @@
     |         | C-S-down |         | ４行下へスクロール                 |
     |         | C-S-up   |         | ４行上へスクロール                 |
     | M-r     |          |         | カーソルを画面の中、上、下         |
-    |         |          | s-next  | カーソルを画面の中、下、下画面     |
-    |         |          | s-prior | カーソルを画面の中、上、上画面     |
+    |         | M-left   | s-left  | カーソルを画面の中、下、下画面     |
+    |         | M-right  | s-right | カーソルを画面の中、上、上画面     |
     | M-g M-g |          | s-l     | 行番号を入力してその行に移動       |
     | /       | <        |         |                                    |
 

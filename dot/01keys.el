@@ -21,14 +21,14 @@
 
 
 ;; terminal send control+option up for command up
-(define-key input-decode-map "\e[1;7A" (kbd "<s-up>"))
-(define-key input-decode-map "\e[1;8A" (kbd "<s-S-up>"))
-(define-key input-decode-map "\e[1;7B" (kbd "<s-down>"))
-(define-key input-decode-map "\e[1;8B" (kbd "<s-S-down>"))
-(define-key input-decode-map "\e[1;7C" (kbd "<s-right>"))
-(define-key input-decode-map "\e[1;8C" (kbd "<s-S-right>"))
-(define-key input-decode-map "\e[1;7D" (kbd "<s-left>"))
-(define-key input-decode-map "\e[1;8D" (kbd "<s-S-left>"))
+(define-key input-decode-map "\e[1;7A" (kbd "s-<up>"))
+(define-key input-decode-map "\e[1;8A" (kbd "s-S-<up>"))
+(define-key input-decode-map "\e[1;7B" (kbd "s-<down>"))
+(define-key input-decode-map "\e[1;8B" (kbd "s-S-<down>"))
+(define-key input-decode-map "\e[1;7C" (kbd "s-<right>"))
+(define-key input-decode-map "\e[1;8C" (kbd "s-S-<right>"))
+(define-key input-decode-map "\e[1;7D" (kbd "s-<left>"))
+(define-key input-decode-map "\e[1;8D" (kbd "s-S-<left>"))
 (define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
 (define-key input-decode-map "\e[5;8~" (kbd "s-S-<prior>"))
 (define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))

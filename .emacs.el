@@ -87,14 +87,14 @@
 
 
 ;; terminal send control+option up for command up
-(define-key input-decode-map "\e[1;7A" (kbd "<s-up>"))
-(define-key input-decode-map "\e[1;8A" (kbd "<s-S-up>"))
-(define-key input-decode-map "\e[1;7B" (kbd "<s-down>"))
-(define-key input-decode-map "\e[1;8B" (kbd "<s-S-down>"))
-(define-key input-decode-map "\e[1;7C" (kbd "<s-right>"))
-(define-key input-decode-map "\e[1;8C" (kbd "<s-S-right>"))
-(define-key input-decode-map "\e[1;7D" (kbd "<s-left>"))
-(define-key input-decode-map "\e[1;8D" (kbd "<s-S-left>"))
+(define-key input-decode-map "\e[1;7A" (kbd "s-<up>"))
+(define-key input-decode-map "\e[1;8A" (kbd "s-S-<up>"))
+(define-key input-decode-map "\e[1;7B" (kbd "s-<down>"))
+(define-key input-decode-map "\e[1;8B" (kbd "s-S-<down>"))
+(define-key input-decode-map "\e[1;7C" (kbd "s-<right>"))
+(define-key input-decode-map "\e[1;8C" (kbd "s-S-<right>"))
+(define-key input-decode-map "\e[1;7D" (kbd "s-<left>"))
+(define-key input-decode-map "\e[1;8D" (kbd "s-S-<left>"))
 (define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
 (define-key input-decode-map "\e[5;8~" (kbd "s-S-<prior>"))
 (define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))
@@ -305,8 +305,8 @@
 ;;   (move-to-window-line -1)
 ;;   )
 
-(global-set-key (kbd "s-<prior>") 'ak-cursor-top)
-(global-set-key (kbd "s-<next>")  'ak-cursor-bottom)
+(global-set-key (kbd "s-<left>")  'ak-cursor-top)
+(global-set-key (kbd "s-<right>") 'ak-cursor-bottom)
 (global-set-key (kbd "M-<left>")  'ak-cursor-top)
 (global-set-key (kbd "M-<right>") 'ak-cursor-bottom)
 (defun ak-cursor-top ()
@@ -389,7 +389,6 @@
 ;;;; Home Toggle like Visual Studio
 ;;====================================
 (global-set-key (kbd "C-a") 'ak-home-toggle)
-(global-set-key (kbd "s-<left>") 'ak-home-toggle)
 (defun ak-home-toggle ()
   "go and back between beginning of line and first char."
   (interactive "^")
