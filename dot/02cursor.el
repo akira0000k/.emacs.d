@@ -71,7 +71,7 @@
   (interactive "^")
   (if (= (point-min) (point))
       (message "Beginning of buffer@")
-    (if (first-page-p)
+    (if (ak-first-page-p)
         (goto-char (point-min))
       (if (not this-command-keys-shift-translated)
           (scroll-down )
@@ -90,7 +90,7 @@
   (if (= (point-max) (point))
       (message "End of buffer@")
     ;;else
-    (if (last-page-p)
+    (if (ak-last-page-p)
         (goto-char (point-max))
       ;;else
       (if (not this-command-keys-shift-translated)
@@ -109,14 +109,6 @@
       )
     )
   )
-(defun first-page-p ()
-  (if (= (point-min) (window-start))
-          t
-        nil))
-(defun last-page-p ()
-  (if (= (point-max) (window-end))
-          t
-        nil))
 
 
 ;;====================================

@@ -241,26 +241,7 @@
 ;;;; | browse-url-default-macosx-browser | Mac OS open command |
 (if (not (memq system-type '(darwin)))
     nil
-  ;; (define-key dired-mode-map "W" 'ak-browse-url-of-dired-file1)
-  ;; (defun ak-browse-url-of-dired-file1 ()
-  ;;   "In Dired, ask a WWW browser to display the file named on this line."
-  ;;   (interactive)
-  ;;   (let ((tem (dired-get-filename t t)))
-  ;;     (if (not tem)
-  ;;  	  (error "No file on this line")
-  ;;  	(let ((file (expand-file-name tem))
-  ;;  	      (pathlist)
-  ;;  	      (newpath "file:/"))
-  ;;  	  (setq pathlist (split-string file "/"))
-  ;;  	  (dolist (elem pathlist)
-  ;;  	    ;; each directory name bettween / may contain multiple byte string.
-  ;;  	    ;; so, do url encode for every element of list.
-  ;;  	    (setq file (url-hexify-string elem))
-  ;;  	    (setq newpath (concat newpath "/" file)))
-  ;;  	  ;;(message "dired W %s" newpath)
-  ;;  	  (browse-url-default-macosx-browser newpath)
-  ;;  	  ))))
-
+  (require 'dired)
   (define-key dired-mode-map "W" 'ak-browse-url-of-dired-file)
   (defun ak-browse-url-of-dired-file ()
     "In Dired, ask a WWW browser to display the file named on this line."

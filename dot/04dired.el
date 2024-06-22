@@ -99,7 +99,7 @@
 (defun ak-dired-scroll-down ()
   "Page up and set cursor at file"
   (interactive "^")
-  (if (first-page-p)
+  (if (ak-first-page-p)
       (progn
         (move-to-window-line 0)
         (dired-next-line 4))
@@ -109,7 +109,7 @@
 (defun ak-dired-scroll-up ()
   "Page down and set cursor at file"
   (interactive "^")
-  (if (last-page-p)
+  (if (ak-last-page-p)
       (progn
         (move-to-window-line -1)
         (dired-previous-line 1))

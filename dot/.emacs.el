@@ -13,3 +13,19 @@
 (load "~/.emacs.d/dot/08mode.el")
 (load "~/.emacs.d/dot/09org.el")
 
+
+
+;; -------------------------
+
+;;====================================
+;;  common functions
+;;====================================
+
+(defun ak-first-page-p ()
+  (if (= (point-min) (window-start))
+          t
+        nil))
+(defun ak-last-page-p ()
+  (if (= (point-max) (window-end))
+          t
+        nil))

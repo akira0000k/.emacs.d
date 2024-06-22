@@ -234,7 +234,7 @@
   (interactive "^")
   (if (= (point-min) (point))
       (message "Beginning of buffer@")
-    (if (first-page-p)
+    (if (ak-first-page-p)
         (goto-char (point-min))
       (if (not this-command-keys-shift-translated)
           (scroll-down )
@@ -253,7 +253,7 @@
   (if (= (point-max) (point))
       (message "End of buffer@")
     ;;else
-    (if (last-page-p)
+    (if (ak-last-page-p)
         (goto-char (point-max))
       ;;else
       (if (not this-command-keys-shift-translated)
@@ -272,14 +272,6 @@
       )
     )
   )
-(defun first-page-p ()
-  (if (= (point-min) (window-start))
-          t
-        nil))
-(defun last-page-p ()
-  (if (= (point-max) (window-end))
-          t
-        nil))
 
 
 ;;====================================
@@ -565,7 +557,7 @@ With prefix argument, activate previous rectangle if possible."
 (defun ak-dired-scroll-down ()
   "Page up and set cursor at file"
   (interactive "^")
-  (if (first-page-p)
+  (if (ak-first-page-p)
       (progn
         (move-to-window-line 0)
         (dired-next-line 4))
@@ -575,7 +567,7 @@ With prefix argument, activate previous rectangle if possible."
 (defun ak-dired-scroll-up ()
   "Page down and set cursor at file"
   (interactive "^")
-  (if (last-page-p)
+  (if (ak-last-page-p)
       (progn
         (move-to-window-line -1)
         (dired-previous-line 1))
@@ -1340,3 +1332,20 @@ With prefix argument, activate previous rectangle if possible."
 
 ;; DONEの時刻を記録
 (setq org-log-done 'time)
+
+
+
+;; -------------------------
+
+;;====================================
+;;  common functions
+;;====================================
+
+(defun ak-first-page-p ()
+  (if (= (point-min) (window-start))
+          t
+        nil))
+(defun ak-last-page-p ()
+  (if (= (point-max) (window-end))
+          t
+        nil))
