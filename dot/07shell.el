@@ -8,7 +8,7 @@
 ;;====================================
 ;; (global-set-key (kbd "M-s") 'shell) ;; M-x shell
 ;; M-x shell  ==>  M-x s
-(defun s() "shell start" (interactive) (shell))
+(defalias 's 'shell)
 
 (setq shell-mode-hook
       '(lambda ()

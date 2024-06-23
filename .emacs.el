@@ -64,6 +64,28 @@
 ;;                    C-x C-c     'save-buffers-kill-terminal
 ;;                    C-x C-z     'suspend-frame            ;; <- C-z
 ;;                    C-x 5 2     'make-frame-command
+;;                    s-n         'make-frame
+
+
+;;====================================
+;;;; kill region or kill line. (MAC OSX style)
+;;====================================
+(global-set-key (kbd "C-k") 'ak-kill-line)
+;;  copy
+(global-set-key (kbd "C-S-k") 'ak-copy-line)
+;; kill active region or kill line
+;; active region may have length 0
+(defun ak-kill-line (&optional arg)
+  (interactive "P")
+  (if (region-active-p)
+      (kill-region 0 0 t)
+    (kill-line arg)))
+(defun ak-copy-line (&optional arg)
+  (interactive "P")
+  (if (region-active-p)
+      (kill-ring-save 0 0 t)
+    (kill-line arg)
+    (yank)))
 
 
 
@@ -474,8 +496,12 @@ With prefix argument, activate previous rectangle if possible."
 (define-key dired-mode-map "h" #'(lambda()(interactive)(dired "~")))
 (define-key dired-mode-map "r" #'(lambda()(interactive)(dired "/")))
 (define-key dired-mode-map "z" #'(lambda()(interactive)(dired dired-default-directory)))
-(define-key dired-mode-map "\C-n" #'(lambda()(interactive "^")(next-line)))
-(define-key dired-mode-map "\C-p" #'(lambda()(interactive "^")(previous-line)))
+;; avoid remapping to dired-next(previous)-line
+(defalias 'ak-dired-next-line 'next-line)
+(defalias 'ak-dired-previous-line 'previous-line)
+(define-key dired-mode-map "\C-n" 'ak-dired-next-line)
+(define-key dired-mode-map "\C-p" 'ak-dired-previous-line)
+;; keep cursor on file name
 (define-key dired-mode-map [C-up] #'(lambda()(interactive "^")
 			     (let ( (pos0 (current-line)) )
 			       (scroll-down 1)(move-to-window-line pos0)(dired-next-line 0))))
@@ -580,91 +606,6 @@ With prefix argument, activate previous rectangle if possible."
   (hexl-find-file (dired-get-filename)))
 
 
-
-;; ------ 05like.el ------
-
-;;====================================
-;;;; function keys
-;;====================================
-;;was                 help-command
-(global-set-key [f1] 'help-for-help)
-(global-set-key [S-f1] 'other-window)
-
-;;        C-x 6 2		2C-two-columns
-;;        C-x 6 b		2C-associate-buffer
-;;        C-x 6 s		2C-split
-;;was                 2C-command
-(global-set-key [f2] 'ak-divide-screen-toggle)
-;;(global-set-key [S-f2] 'ak-divide-screen-or-other)
-(global-set-key [S-f2] 'ak-divide-screen3-or-other)
-
-;;was                 kmacro-start-macro-or-insert-counter
-(global-set-key [f3] 'isearch-repeat-forward)
-(global-set-key [S-f3] 'isearch-repeat-backward)
-
-;;was                    kmacro-end-or-call-macro
-(global-set-key [f4]    'kill-current-buffer)
-(global-set-key (kbd "C-x k") 'kill-current-buffer)
-(global-set-key [S-f4] 'delete-window)
-
-(global-set-key [f5]  'recenter)
-(global-set-key [S-f5]  #'(lambda()(interactive)(dired ".")))
-
-(global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
-(global-set-key [S-f6]   'electric-indent-mode)
-;;test macro
-(global-set-key (kbd "ESC <f6>")  'kmacro-start-macro-or-insert-counter)  ;; <f3>
-(global-set-key [C-f6]  'kmacro-end-or-call-macro)  ;; <f4>
-
-(global-set-key [f7]   'ak-shrink-window)
-(global-set-key [S-f7] 'ak-shrink-window2)
-(global-set-key [f8]   'ak-enlarge-window)
-(global-set-key [S-f8] 'ak-enlarge-window2)
-
-(global-set-key [f9]  'describe-key-briefly)
-(global-set-key [S-f9] #'(lambda()(interactive)
-                          (if case-fold-search
-                              (progn (setq-default case-fold-search nil)(message "case sensitive Search mode"))
-                            (progn (setq-default case-fold-search t)(message "ignore case Search mode")))
-                          ))
-
-;;was  menu-bar-open
-(global-set-key [f10] 'ak-window-swap-split)
-;; (global-set-key [S-f10] 'ak-window-vh-split)
-;; (global-set-key [f10] 'ak-window-rotate-split)
-(global-set-key [S-f10] 'ak-window-rotate-split-reverse)
-;;               M-f10   toggle-frame-maximized  =  "ESC <f10>"
-
-(global-set-key (kbd "M-<f11>")   'toggle-frame-fullscreen)  ;; <f11>
-(global-set-key (kbd "ESC <f11>") 'toggle-frame-fullscreen)  ;; <f11>
-
-;;was                 'toggle-frame-fullscreen  ==> "ESC <f11>"
-(global-set-key [f11] 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
-(global-set-key [f12] 'global-linum-mode)
-(global-set-key [S-f11] 'scroll-right)
-(global-set-key [S-f12] 'scroll-left)
-
-
-;;====================================
-;;;; kill region or kill line. (MAC OSX style)
-;;====================================
-(global-set-key (kbd "C-k") 'ak-kill-line)
-;;  copy
-(global-set-key (kbd "C-S-k") 'ak-copy-line)
-;; kill active region or kill line
-;; active region may have length 0
-(defun ak-kill-line (&optional arg)
-  (interactive "P")
-  (if (region-active-p)
-      (kill-region 0 0 t)
-    (kill-line arg)))
-(defun ak-copy-line (&optional arg)
-  (interactive "P")
-  (if (region-active-p)
-      (kill-ring-save 0 0 t)
-    (kill-line arg)
-    (yank)))
-
 ;;====================================
 ;;;; press left at top of window then kill buffer and show dired
 ;;====================================
@@ -733,6 +674,72 @@ With prefix argument, activate previous rectangle if possible."
       (kill-buffer nil)
     (find-alternate-file "."))
   )
+
+
+
+;; ------ 05like.el ------
+
+;;====================================
+;;;; function keys
+;;====================================
+;;was                 help-command
+(global-set-key [f1] 'help-for-help)
+(global-set-key [S-f1] 'other-window)
+
+;;        C-x 6 2		2C-two-columns
+;;        C-x 6 b		2C-associate-buffer
+;;        C-x 6 s		2C-split
+;;was                 2C-command
+(global-set-key [f2] 'ak-divide-screen-toggle)
+;;(global-set-key [S-f2] 'ak-divide-screen-or-other)
+(global-set-key [S-f2] 'ak-divide-screen3-or-other)
+
+;;was                 kmacro-start-macro-or-insert-counter
+(global-set-key [f3] 'isearch-repeat-forward)
+(global-set-key [S-f3] 'isearch-repeat-backward)
+
+;;was                    kmacro-end-or-call-macro
+(global-set-key [f4]    'kill-current-buffer)
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
+(global-set-key [S-f4] 'delete-window)
+
+(global-set-key [f5]  'recenter)
+(global-set-key [S-f5]  #'(lambda()(interactive)(dired ".")))
+
+(global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
+(global-set-key [S-f6]   'electric-indent-mode)
+;;test macro
+(global-set-key (kbd "ESC <f6>")  'kmacro-start-macro-or-insert-counter)  ;; <f3>
+(global-set-key [C-f6]  'kmacro-end-or-call-macro)  ;; <f4>
+
+(global-set-key [f7]   'ak-shrink-window)
+(global-set-key [S-f7] 'ak-shrink-window2)
+(global-set-key [f8]   'ak-enlarge-window)
+(global-set-key [S-f8] 'ak-enlarge-window2)
+
+(global-set-key [f9]  'describe-key-briefly)
+(global-set-key [S-f9] #'(lambda()(interactive)
+                          (if case-fold-search
+                              (progn (setq-default case-fold-search nil)(message "case sensitive Search mode"))
+                            (progn (setq-default case-fold-search t)(message "ignore case Search mode")))
+                          ))
+
+;;was  menu-bar-open
+(global-set-key [f10] 'ak-window-swap-split)
+;; (global-set-key [S-f10] 'ak-window-vh-split)
+;; (global-set-key [f10] 'ak-window-rotate-split)
+(global-set-key [S-f10] 'ak-window-rotate-split-reverse)
+;;               M-f10   toggle-frame-maximized  =  "ESC <f10>"
+
+(global-set-key (kbd "M-<f11>")   'toggle-frame-fullscreen)  ;; <f11>
+(global-set-key (kbd "ESC <f11>") 'toggle-frame-fullscreen)  ;; <f11>
+
+;;was                 'toggle-frame-fullscreen  ==> "ESC <f11>"
+(global-set-key [f11] 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
+(global-set-key [f12] 'global-linum-mode)
+(global-set-key [S-f11] 'scroll-right)
+(global-set-key [S-f12] 'scroll-left)
+
 
 ;;======================================
 ;;; shrink / enlarge window automatic_|_
@@ -1108,7 +1115,7 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;; (global-set-key (kbd "M-s") 'shell) ;; M-x shell
 ;; M-x shell  ==>  M-x s
-(defun s() "shell start" (interactive) (shell))
+(defalias 's 'shell)
 
 (setq shell-mode-hook
       '(lambda ()

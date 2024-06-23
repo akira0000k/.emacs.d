@@ -64,3 +64,25 @@
 ;;                    C-x C-c     'save-buffers-kill-terminal
 ;;                    C-x C-z     'suspend-frame            ;; <- C-z
 ;;                    C-x 5 2     'make-frame-command
+;;                    s-n         'make-frame
+
+
+;;====================================
+;;;; kill region or kill line. (MAC OSX style)
+;;====================================
+(global-set-key (kbd "C-k") 'ak-kill-line)
+;;  copy
+(global-set-key (kbd "C-S-k") 'ak-copy-line)
+;; kill active region or kill line
+;; active region may have length 0
+(defun ak-kill-line (&optional arg)
+  (interactive "P")
+  (if (region-active-p)
+      (kill-region 0 0 t)
+    (kill-line arg)))
+(defun ak-copy-line (&optional arg)
+  (interactive "P")
+  (if (region-active-p)
+      (kill-ring-save 0 0 t)
+    (kill-line arg)
+    (yank)))
