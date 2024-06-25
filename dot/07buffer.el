@@ -1,7 +1,7 @@
 
 
 
-;; ------ 06buffer.el ------
+;; ------ 07buffer.el ------
 
 ;;====================================
 ;;;;circular buffer change
@@ -118,6 +118,7 @@
 ;;   (list-buffers-if-exist))
 ;; (ad-activate 'view-filee)
 
+;;(setq ad-redefinition-action 'accept)
 (defadvice shell (after AK-shell)
   "M-x shell"
   (list-buffers-if-exist))

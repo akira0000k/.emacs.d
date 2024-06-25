@@ -1,7 +1,7 @@
 
 
 
-;; ------ 07shell.el ------
+;; ------ 06shell.el ------
 
 ;;====================================
 ;;;; shell-mode
@@ -38,14 +38,14 @@
   (interactive "^")
   (if (= (point-max) (point))
       (tails-comint-next-input)  ;(comint-next-input 1)
-    (forward-line)))
+    (next-line)))
 
 (defun ak-shell-up ()
   "prev command by up arrow at shell mode."
   (interactive "^")
   (if (= (point-max) (point))
       (tails-comint-previous-input)     ;(comint-previous-input 1)
-    (forward-line -1)))
+    (previous-line)))
 
 ;(setq comint-password-prompt-regexp
 ;      "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'"
