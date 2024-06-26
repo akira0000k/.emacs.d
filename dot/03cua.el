@@ -34,7 +34,7 @@ With prefix argument, activate previous rectangle if possible."
   (if (string= major-mode "org-mode")
       (org-insert-heading-respect-content)
     ;; else
-    (cua-set-rectangle-mark)))
+    (cua-set-rectangle-mark reopen)))
 
 (if (boundp 'cua-global-keymap)
     (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2))

@@ -474,7 +474,7 @@ With prefix argument, activate previous rectangle if possible."
   (if (string= major-mode "org-mode")
       (org-insert-heading-respect-content)
     ;; else
-    (cua-set-rectangle-mark)))
+    (cua-set-rectangle-mark reopen)))
 
 (if (boundp 'cua-global-keymap)
     (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2))
@@ -527,6 +527,7 @@ With prefix argument, activate previous rectangle if possible."
 ;; Also auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
+;;(setq auto-revert-interval 5) ;;default
 
 (setq dired-mode-hook
       '(lambda ()
@@ -1098,8 +1099,30 @@ With prefix argument, activate previous rectangle if possible."
       (string-match "^TAGS" name)
       ))
 
+;; Auto revert files when they change
+(global-auto-revert-mode t)
+;; Also auto refresh buffer list and dired, but be quiet about it
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
+;;(setq auto-revert-interval 5) ;;default
+
+;;(defun list-buffers-if-exist()
+;;  (and (get-buffer "*Buffer List*") (get-buffer-window (get-buffer "*Buffer List*")) (list-buffers)))
 (defun list-buffers-if-exist()
-  (and (get-buffer "*Buffer List*") (get-buffer-window (get-buffer "*Buffer List*")) (list-buffers)))
+  (let ((buflist (get-buffer "*Buffer List*"))
+	(orgint auto-revert-interval))
+    (if buflist
+	(if (get-buffer-window buflist)
+	    (list-buffers)
+	  ;;else
+	  (if (get-buffer-window-list buflist nil t)
+	      (progn
+		;; Update Buffer List on other frame
+		(setq auto-revert-interval 0.1)
+		(auto-revert-set-timer)
+		(setq auto-revert-interval orgint))
+	    )))
+    ))
 
 ;;;;buffer delete in *Buffer List* ddddd x works only 1 buffer.
 ;;;;    ;;; see --> buff-list.el
@@ -1138,20 +1161,20 @@ With prefix argument, activate previous rectangle if possible."
   (list-buffers-if-exist))
 (ad-activate 'switch-to-buffer)
 
-(defadvice delete-window (after AK-delete-window )
-  "Delete window and change buffer-list."
-  (list-buffers-if-exist))
-(ad-activate 'delete-window)
+;; (defadvice delete-window (after AK-delete-window )
+;;   "Delete window and change buffer-list."
+;;   (list-buffers-if-exist))
+;; (ad-activate 'delete-window)
 
 (defadvice find-file (after AK-find-file )
   "Find-File and change buffer-list."
   (list-buffers-if-exist))
 (ad-activate 'find-file)
 
-;; (defadvice view-filee (after AK-view-file )
+;; (defadvice view-file (after AK-view-file )
 ;;   "View-File and change buffer-list."
 ;;   (list-buffers-if-exist))
-;; (ad-activate 'view-filee)
+;; (ad-activate 'view-file)
 
 ;;(setq ad-redefinition-action 'accept)
 (defadvice shell (after AK-shell)
@@ -1159,10 +1182,10 @@ With prefix argument, activate previous rectangle if possible."
   (list-buffers-if-exist))
 (ad-activate 'shell)
 
-(defadvice dired-find-file-hexl (after AK-dired-find-file-hexl )
-  "Find-File-Hexl and change buffer-list."
-  (list-buffers-if-exist))
-(ad-activate 'dired-find-file-hexl)
+;; (defadvice dired-find-file-hexl (after AK-dired-find-file-hexl )
+;;   "Find-File-Hexl and change buffer-list."
+;;   (list-buffers-if-exist))
+;; (ad-activate 'dired-find-file-hexl)
 
 (defadvice dired (after AK-dired )
   "Dired and change buffer-list."
