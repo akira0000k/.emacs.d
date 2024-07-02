@@ -69,6 +69,10 @@
 ;;;;  (global-set-key (kbd "s-s") 'save-buffer)
 ;;;;  (global-set-key (kbd "s-u") 'revert-buffer)
 
+;;;;  (global-set-key (kbd "s-n") 'make-frame
+;;;;  (global-set-key (kbd "s-w") 'delete-frame
+;;;;  (global-set-key (kbd "s-'") 'next-window-any-frame)
+
 ;;;;  (global-set-key (kbd "s-d") 'isearch-repeat-backward)
 ;;;;  (global-set-key (kbd "s-f") 'isearch-forward)
 ;;;;  (global-set-key (kbd "s-F") 'isearch-backward)
@@ -86,6 +90,10 @@
 (global-set-key (kbd "s-の") 'kill-current-buffer)
 (global-set-key (kbd "s-と") 'save-buffer)
 (global-set-key (kbd "s-な") 'revert-buffer)
+
+(global-set-key (kbd "s-み") 'make-frame)
+(global-set-key (kbd "s-て") 'delete-frame)
+(global-set-key (kbd "s-ゃ") 'next-window-any-frame)
 
 (global-set-key (kbd "s-し") 'isearch-repeat-backward)
 (global-set-key (kbd "s-は") 'isearch-forward)
