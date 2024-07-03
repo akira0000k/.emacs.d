@@ -107,10 +107,12 @@ Send ^[ [1;5F                                                   ^End
 Send ^[ 11;3F                                                   opt End
 Send ^[ [5;2~                                                   ⬆️ Page Up
 Send ^[ [5;5~                                                   ^Page Up
+Send ^[ [5;3~                                                   opt Page Up
 Send ^[ [5;7~                                                   command Page Up
 Send ^[ [5;8~                                                   ⬆️ command Page Up
 Send ^[ [6;2~                                                   ⬆️ Page Down
 Send ^[ [6;5~                                                   ^Page Down
-Send ^[ [6;7~                                                   command Page Down
 Page7
+Send ^[ [6;3~                                                   opt Page Down
+Send ^[ [6;7~                                                   command Page Down
 Send ^[ [6;8~                                                   ⬆️ command Page Down

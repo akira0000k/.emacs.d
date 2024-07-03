@@ -56,10 +56,8 @@
 (global-set-key (kbd "ESC S-<down>") #'(lambda()(interactive)(scroll-other-window  4)))
 (global-set-key (kbd "M-S-<up>")     #'(lambda()(interactive)(scroll-other-window -4)))
 (global-set-key (kbd "ESC S-<up>")   #'(lambda()(interactive)(scroll-other-window -4)))
-(global-set-key (kbd "M-s-<up>")     'beginning-of-buffer-other-window)  ;;like M-home
-(global-set-key (kbd "ESC s-<up>")   'beginning-of-buffer-other-window)  ;;like M-home
-(global-set-key (kbd "M-s-<down>")   'end-of-buffer-other-window)        ;;like M-end
-(global-set-key (kbd "ESC s-<down>") 'end-of-buffer-other-window)        ;;like M-end
+;;   'beginning-of-buffer-other-window  M-<home>
+;;   'end-of-buffer-other-window        M-<end>
 ;;   'scroll-other-window-down  M-<prior>
 ;;   'scroll-other-window       M-<next>
 
