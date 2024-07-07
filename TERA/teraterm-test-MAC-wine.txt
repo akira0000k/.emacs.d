@@ -69,6 +69,8 @@ Metaキーにチェックをいれている状態)はAlt+keyも指定する事�
 たとえば、Alt+Vのキーコードは V が 47 なので、2095 となります。
 ~~~
 
+???????? home は wine64 keycode.exe では 71 だが KOSMAX.CNFには +256して 327 になっていた。
+
 home, up, prior = 327, 328, 329
 end, down, next = 335, 336, 337
 
@@ -97,3 +99,24 @@ ESC ESC [ 6 ~
 f9 M-prior では
 ESC <prior> (translated from ESC M-[ 6 ~) runs the command scroll-other-window-down
 と出る。
+
+
+追加
+left, S-left = 75, 587
+right, S-right = 77, 589
+メタキーを加えた場合 +2048 とすると
+2123, 2635
+2125, 2637
+だが、さらに +256 すると動作した。Windows環境ではどうなるか未確認。
+;                         M-<left> NEW
+User30=2379,1,$1B[1;3D
+;                         M-S-<left> NEW
+User31=2891,1,$1B[1;4D
+;                         M-<right> NEW
+User35=2381,1,$1B[1;3C
+;                         M-S-<right> NEW
+User36=2893,1,$1B[1;4C
+;                         C-S-<backspace> NEW  (C-S-<delete> のシーケンスを借用)
+User64=1550,1,$1B[3;6~
+;                         C-S-k => C-x @ S C-k NEW ???? (C-S-k, l, a, r はMACではダメ)
+User87=1573,1,$18@S$0B

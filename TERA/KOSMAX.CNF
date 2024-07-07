@@ -78,213 +78,238 @@ F12=88
 LocalEcho=off
 
 [User keys]
-;;noneed ;             <home>
-;;noneed User1=327,1,$1BOH
-;;dame	;      NumLockOff_1:<end>  damedame NumLock on ‚Å 1 ‚É‚È‚ç‚È‚¢
-;;dame	User2=79,1,$1BOF
+;                         <home>
+User1=327,1,$1BOH
+;                         <end>  not <select>
+User2=335,1,$1BOF
 
-;                   <end>  not<select>
-User1=335,1,$1BOF
-;                   <C-insert> copy
-User2=1362,1,$1B[2;5~
-;                   <S-insert> paste
-User3=850,1,$1B[2;2~
-;                   <S-delete> cut
-User4=851,1,$1B[3;2~
-;                   [S-left]
-User5=843,1,$1B[1;2D
-;                   [S-right]
-User6=845,1,$1B[1;2C
-;                   [S-up]
-User7=840,1,$1B[1;2A
-;                   [S-down]
-User8=848,1,$1B[1;2B
-;                   [S-home]
-User9=839,1,$1B[1;2H
-;                   [S-end]
-User10=847,1,$1B[1;2F
-;                   [S-prior]
+;                         S-<home>
+User3=839,1,$1B[1;2H
+;                         C-<home>
+User4=1351,1,$1B[1;5H
+;                         C-S-<home>
+User5=1863,1,$1B[1;6H
+;                         M-<home>
+User6=2375,1,$1B[1;3H
+
+;                         S-<end>
+User7=847,1,$1B[1;2F
+;                         C-<end>
+User8=1359,1,$1B[1;5F
+;                         C-S-<end>
+User9=1871,1,$1B[1;6F
+;                         M-<end>
+User10=2383,1,$1B[1;3F
+
+;                         S-<prior>
 User11=841,1,$1B[5;2~
-;                   [S-next]
-User12=849,1,$1B[6;2~
-;                   [S-C-home]
-User13=1863,1,$1B[1;6H
-;                   [S-C-end]
-User14=1871,1,$1B[1;6F
-;                   [C-left]
-User15=1355,1,$1B[1;5D
-;                   [C-right]
-User16=1357,1,$1B[1;5C
-;                   [C-up]
-User17=1352,1,$1B[1;5A
-;                   [C-down]
-User18=1360,1,$1B[1;5B
-;                   [C-home]
-User19=1351,1,$1B[1;5H
-;                   [C-end]
-User20=1359,1,$1B[1;5F
-;                   [C-prior]
-User21=1353,1,$1B[5;5~
-;                   [C-next]
-User22=1361,1,$1B[6;5~
-;                   [S-C-left]
-User23=1867,1,$1B[1;6D
-;                   [S-C-right]
-User24=1869,1,$1B[1;6C
-;        NumLockOff:[S-left]
-User25=587,1,$1B[1;2D
-;                   [S-right]
-User26=589,1,$1B[1;2C
-;                   [S-up]
-User27=584,1,$1B[1;2A
-;                   [S-down]
-User28=592,1,$1B[1;2B
-;                   [S-home]
-User29=583,1,$1B[1;2H
-;                   [S-end]
-User30=591,1,$1B[1;2F
-;                   [S-prior]
-User31=585,1,$1B[5;2~
-;                   [S-next]
-User32=593,1,$1B[6;2~
-;                   [S-C-home]
-User33=1607,1,$1B[1;6H
-;                   [S-C-end]
-User34=1615,1,$1B[1;6F
-;                   [C-left]
-User35=1099,1,$1B[1;5D
-;                   [C-right]
-User36=1101,1,$1B[1;5C
-;                   [C-up]
-User37=1096,1,$1B[1;5A
-;                   [C-down]
-User38=1104,1,$1B[1;5B
-;                   [C-home]
-User39=1095,1,$1B[1;5H
-;                   [C-end]
-User40=1103,1,$1B[1;5F
-;                   [C-prior]
-User41=1097,1,$1B[5;5~
-;                   [C-next]
-User42=1105,1,$1B[6;5~
-;                   [S-C-left]
-User43=1611,1,$1B[1;6D
-;                   [S-C-right]
-User44=1613,1,$1B[1;6C
-;                   [C-tab]
-User45=1039,1,$1B[27;5;9~
-;                   [C-S-tab]
-User46=1551,1,$1B[27;6;9~
-;                   C-,
-User47=1075,1,$1B[44;5u
-;                   C-.
-User48=1076,1,$1B[46;5u
-;                   <C-return>
-User49=1052,1,$1B[27;5;13~
-;                   <C-delete>
-User50=1363,1,$1B[3;5~
-;                   [f1]
-User51=59,1,$1BOP
-;                   [f2]
-User52=60,1,$1BOQ
-;                   [f3]
-User53=61,1,$1BOR
-;                   [f4]
-User54=62,1,$1BOS
-;                   [S-f1]  teraterm bug?
-User55=571,1,$1B[1;2P 
-;                   [S-f2]
-User56=572,1,$1B[1;2Q
-;                   [S-f3]
-User57=573,1,$1B[1;2R
-;                   [S-f4]
-User58=574,1,$1B[1;2S
-;                   [f17] => [S-f5]
-User59=575,1,$1B[15;2~
-;                   [f18] => [S-f6]
-User60=576,1,$1B[17;2~
-;                   [f19] => [S-f7]
-User61=577,1,$1B[18;2~
-;                   [f20] => [S-f8]
-User62=578,1,$1B[19;2~
-;                   [f21] => [S-f9]
-User63=579,1,$1B[20;2~
-;                   [f22] => [S-f10]
-User64=580,1,$1B[21;2~
-;                   [f23] => [S-f11]
-User65=599,1,$1B[23;2~
-;                   [f24] => [S-f12]
-User66=600,1,$1B[24;2~
+;                         C-<prior>
+User12=1353,1,$1B[5;5~
+;                         M-<prior>
+User13=2377,1,$1B[5;3~
 
-;;;;;;;;;;;;;;;;;;;;; .screenrc ;;;;;;;;;;;;;;;;;;;;;;;;;
-;                   [C-f1] => C-\ tab                    (next division)
-User67=1083,1,$1C$09
-;                   [S-C-f1] => C-\ n                    (next shell)
-User68=1595,1,$1Cn
+;                         S-<next>
+User14=849,1,$1B[6;2~
+;                         C-<next>
+User15=1361,1,$1B[6;5~
+;                         M-<next>
+User16=2385,1,$1B[6;3~
 
-;                   [C-f2] => C-\ S C-\ tab C-\ n C-\ n (divide screen---and next shell x2)
-User69=1084,1,$1CS$1C$09$1Cn$1Cn
-;                   [S-C-f2] => C-\ S C-\ tab C-\ c        (divide screen---and create new shell)
-User70=1596,1,$1CS$1C$09$1Cc
+;                         S-<up>
+User17=840,1,$1B[1;2A
+;                         C-<up>
+User18=1352,1,$1B[1;5A
+;                         C-S-<up>
+User19=1864,1,$1B[1;6A
+;                         M-<up>
+User20=2376,1,$1B[1;3A
+;                         M-S-<up>
+User21=2888,1,$1B[1;4A
 
-;                   [C-f3] => C-\ | C-\ tab C-\ n C-\ n (divide screen | and next shell x2)
-User71=1085,1,$1C|$1C$09$1Cn$1Cn
-;                   [S-C-f3] => C-\ | C-\ tab C-\ c        (divide screen | and create new shell)
-User72=1597,1,$1C|$1C$09$1Cc
+;                         S-<down>
+User22=848,1,$1B[1;2B
+;                         C-<down>
+User23=1360,1,$1B[1;5B
+;                         C-S-<down>
+User24=1872,1,$1B[1;6B
+;                         M-<down>
+User25=2384,1,$1B[1;3B
+;                         M-S-<down>
+User26=2896,1,$1B[1;4B
 
-;                   [C-f4] => C-\ X                      (erase division)
-User73=1086,1,$1CX
-;                   [S-C-f4] => C-D C-\ X                (kill shell and erase division)
-User74=1598,1,$04$1CX
+;                         S-<left>
+User27=843,1,$1B[1;2D
+;                         C-<left>
+User28=1355,1,$1B[1;5D
+;                         C-S-<left>
+User29=1867,1,$1B[1;6D
+;                         M-<left> NEW
+User30=2379,1,$1B[1;3D
+;                         M-S-<left> NEW
+User31=2891,1,$1B[1;4D
 
-;                   [C-f5] => C-\ [                      (copy mode)  (space:mark/copy)
-User75=1087,1,$1C[
-;                   [C-f6] => C-\ ]                      (paste)
-User76=1088,1,$1C]
+;                         S-<right>
+User32=845,1,$1B[1;2C
+;                         C-<right>
+User33=1357,1,$1B[1;5C
+;                         C-S-<right>
+User34=1869,1,$1B[1;6C
+;                         M-<right> NEW
+User35=2381,1,$1B[1;3C
+;                         M-S-<right> NEW
+User36=2893,1,$1B[1;4C
 
-;;;;;;;;;;;;test
-;                   <home> => M-O H
-User77=327,1,$1BOH
 
-;;;;;;;;;;;;add
-;                   C-<
-User78=1587,1,$1B[60;6u
-;                   C->
-User79=1588,1,$1B[62;6u
-;                   [S-C-up]
-User80=1864,1,$1B[1;6A
-;                   [S-C-down]
-User81=1872,1,$1B[1;6B
-;                   C-S-a => C-x @ S C-a
-User82=1566,1,$18@S$01
-;                   C-S-b => C-x @ S C-b
-User83=1584,1,$18@S$02
-;                   C-S-e => C-x @ S C-e
-User84=1554,1,$18@S$05
-;                   C-S-f => C-x @ S C-f
-User85=1569,1,$18@S$06
-;                   C-S-n => C-x @ S C-n
-User86=1585,1,$18@S$0E
-;                   C-S-p => C-x @ S C-p
-User87=1561,1,$18@S$10
-;                   C-S-v => C-x @ S C-v
-User88=1583,1,$18@S$16
-;;;;;;;;;;;;;;Alt key test
-;                   M-<home>
-User89=2375,1,$1B[1;3H
-;                   M-<end>
-User90=2383,1,$1B[1;3F
-;                   [M-up]
-User91=2376,1,$1B[1;3A
-;                   [M-down]
-User92=2384,1,$1B[1;3B
-;                   M-<prior>
-User93=2377,1,$1B[5;3~
-;                   M-<next>
-User94=2385,1,$1B[6;3~
-;                   [M-S-up]
-User95=2888,1,$1B[1;4A
-;                   [M-S-down]
-User96=2896,1,$1B[1;4B
-;                   C-S-w => C-x @ S C-w
-User97=1553,1,$18@S$17
+;                         S-<left> NumLockOff
+User37=587,1,$1B[1;2D
+;                         S-<right> NumLockOff
+User38=589,1,$1B[1;2C
+;                         S-<up> NumLockOff
+User39=584,1,$1B[1;2A
+;                         S-<down> NumLockOff
+User40=592,1,$1B[1;2B
+;                         S-<home> NumLockOff
+User41=583,1,$1B[1;2H
+;                         S-<end> NumLockOff
+User42=591,1,$1B[1;2F
+;                         S-<prior> NumLockOff
+User43=585,1,$1B[5;2~
+;                         S-<next> NumLockOff
+User44=593,1,$1B[6;2~
+
+;                         C-<left> NumLockOff
+User45=1099,1,$1B[1;5D
+;                         C-<right> NumLockOff
+User46=1101,1,$1B[1;5C
+;                         C-<up> NumLockOff
+User47=1096,1,$1B[1;5A
+;                         C-<down> NumLockOff
+User48=1104,1,$1B[1;5B
+;                         C-<home> NumLockOff
+User49=1095,1,$1B[1;5H
+;                         C-<end> NumLockOff
+User50=1103,1,$1B[1;5F
+;                         C-<prior> NumLockOff
+User51=1097,1,$1B[5;5~
+;                         C-<next> NumLockOff
+User52=1105,1,$1B[6;5~
+
+;                         C-S-<left> NumLockOff
+User53=1611,1,$1B[1;6D
+;                         C-S-<right> NumLockOff
+User54=1613,1,$1B[1;6C
+;                         C-S-<home> NumLockOff
+User55=1607,1,$1B[1;6H
+;                         C-S-<end> NumLockOff
+User56=1615,1,$1B[1;6F
+
+
+;                         C-<tab>
+User57=1039,1,$1B[27;5;9~
+;                         C-S-<tab>
+User58=1551,1,$1B[27;6;9~
+
+;                         C-,
+User59=1075,1,$1B[44;5u
+;                         C-.
+User60=1076,1,$1B[46;5u
+;                         C-<
+User61=1587,1,$1B[60;6u
+;                         C->
+User62=1588,1,$1B[62;6u
+
+;                         C-<return>
+User63=1052,1,$1B[27;5;13~
+;                         C-S-<backspace> NEW
+User64=1550,1,$1B[3;6~
+;                         S-<delete> cut ?????
+User65=851,1,$1B[3;2~
+;                         C-<delete> ?????
+User66=1363,1,$1B[3;5~
+
+
+;                         <f1>
+User67=59,1,$1BOP
+;                         <f2>
+User68=60,1,$1BOQ
+;                         <f3>
+User69=61,1,$1BOR
+;                         <f4>
+User70=62,1,$1BOS
+;                         S-<f1>  teraterm bug?
+User71=571,1,$1B[1;2P 
+;                         S-<f2>
+User72=572,1,$1B[1;2Q
+;                         S-<f3>
+User73=573,1,$1B[1;2R
+;                         S-<f4>
+User74=574,1,$1B[1;2S
+;                         <f17> => S-<f5>
+User75=575,1,$1B[15;2~
+;                         <f18> => S-<f6>
+User76=576,1,$1B[17;2~
+;                         <f19> => S-<f7>
+User77=577,1,$1B[18;2~
+;                         <f20> => S-<f8>
+User78=578,1,$1B[19;2~
+;                         <f21> => S-<f9>
+User79=579,1,$1B[20;2~
+;                         <f22> => S-<f10>
+User80=580,1,$1B[21;2~
+;                         <f23> => S-<f11>
+User81=599,1,$1B[23;2~
+;                         <f24> => S-<f12>
+User82=600,1,$1B[24;2~
+
+
+;                         C-S-a => C-x @ S C-a ????
+User83=1566,1,$18@S$01
+;                         C-S-b => C-x @ S C-b
+User84=1584,1,$18@S$02
+;                         C-S-e => C-x @ S C-e
+User85=1554,1,$18@S$05
+;                         C-S-f => C-x @ S C-f
+User86=1569,1,$18@S$06
+;                         C-S-k => C-x @ S C-k NEW ????
+User87=1573,1,$18@S$0B
+;                         C-S-n => C-x @ S C-n
+User88=1585,1,$18@S$0E
+;                         C-S-p => C-x @ S C-p
+User89=1561,1,$18@S$10
+;                         C-S-v => C-x @ S C-v
+User90=1583,1,$18@S$16
+;                         C-S-w => C-x @ S C-w
+User91=1553,1,$18@S$17
+
+
+;                         S-<insert> paste
+User92=850,1,$1B[2;2~
+;                         C-<insert> copy
+User93=1362,1,$1B[2;5~
+
+
+;;  ;    ;;;;;;;;;;;;;;;;;;;;   .screenrc ;;;;;;;;;;;;;;;;;;;;;;;;;
+;;  ;                         [C-f1] => C-\ tab                    (next division)
+;;  User94=1083,1,$1C$09
+;;  ;                         [C-S-f1] => C-\ n                    (next shell)
+;;  User95=1595,1,$1Cn
+;;   
+;;  ;                         [C-f2] => C-\ S C-\ tab C-\ n C-\ n (divide screen---and next shell x2)
+;;  User96=1084,1,$1CS$1C$09$1Cn$1Cn
+;;  ;                         [C-S-f2] => C-\ S C-\ tab C-\ c        (divide screen---and create new shell)
+;;  User97=1596,1,$1CS$1C$09$1Cc
+;;   
+;;  ;                         [C-f3] => C-\ | C-\ tab C-\ n C-\ n (divide screen | and next shell x2)
+;;  User98=1085,1,$1C|$1C$09$1Cn$1Cn
+;;  ;                         [C-S-f3] => C-\ | C-\ tab C-\ c        (divide screen | and create new shell)
+;;  User99=1597,1,$1C|$1C$09$1Cc
+;;;;;;;;99‚ª max ?
+;;  ;                         [C-f4] => C-\ X                      (erase division)
+;;  User100=1086,1,$1CX
+;;  ;                         [C-S-f4] => C-D C-\ X                (kill shell and erase division)
+;;  User101=1598,1,$04$1CX
+;;   
+;;  ;                         [C-f5] => C-\ [                      (copy mode)  (space:mark/copy)
+;;  User102=1087,1,$1C[
+;;  ;                         [C-f6] => C-\ ]                      (paste)
+;;  User103=1088,1,$1C]
