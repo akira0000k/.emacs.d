@@ -140,8 +140,8 @@
     | C-b     | left     |         | 一文字左(先頭ではファイルを閉じる) |
     | C-a     | (S-home) |         | 行頭と先頭文字のトグル　(選択時)   |
     | C-e     | (S-end)  |         | 行末　　　　　　　　　　(選択時)   |
-    |         | next     |         | 下画面     (PageDown)              |
-    |         | prior    |         | 上画面     (PageUp)                |
+    |         | next     | M-v     | 下画面     (PageDown)              |
+    |         | prior    | M-V     | 上画面     (PageUp)                |
     | (C-v)   | M-n      |         | 半画面下　　(org-mode)             |
     | (M-v)   | M-p      |         | 半画面上　　(org-mode)             |
     | M-<     | C-,      | s-up    | バッファ先頭                       |
@@ -252,7 +252,6 @@
     | M-w     | C-c      | s-c  | 選択領域を copy　 (C-c は cua-mode)        |
     |         | C-S-w    |      | 選択領域を copy                            |
     | C-y     | C-v      | s-v  | paste　　　　　　 (C-v は cua-mode)        |
-    |         | M-v      |      | paste                                      |
     |         |          | s-y  | s-c でcopyしたものをpaste (ターミナル不可) |
     | M-y     |          |      | yank-pop                                   |
     |         |          |      | M-y TAB　　　(kill-ringから選択)           |

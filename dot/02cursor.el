@@ -94,7 +94,8 @@
         (goto-char (point-max))
       ;;else
       (if (not this-command-keys-shift-translated)
-          (scroll-up )
+	  (progn (scroll-up )
+		 (next-line 1))
         ;;else
         (let ((po (point)))
           (move-to-window-line -1)      ;move cursor to window end

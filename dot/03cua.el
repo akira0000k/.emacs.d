@@ -18,11 +18,24 @@
 
 ;; C-x SPC     start emacs24 rectangle mark mode
 
-;; cut/paste=C-w C-v  copy/paste=M-w M-v   possible
-(if (boundp 'cua--cua-keys-keymap)
-    (define-key cua--cua-keys-keymap (kbd "M-v") 'yank))
-;;was     M-v runs the command delete-selection-repeat-replace-region
+;;  ;; cut/paste=C-w C-v  copy/paste=M-w M-v   possible
+;;  (if (boundp 'cua--cua-keys-keymap)
+;;      (define-key cua--cua-keys-keymap (kbd "M-v") 'yank))
+;;  ;;was     M-v runs the command delete-selection-repeat-replace-region
 
+;;====================================
+;;;; Page Down/Page Up  =  M-v M-u
+;;====================================
+(if (boundp 'cua--cua-keys-keymap)
+    (progn
+      (define-key cua--cua-keys-keymap (kbd "M-v") 'ak-cua-scroll-up)
+      (define-key cua--cua-keys-keymap (kbd "M-V") 'cua-scroll-down)
+      ;;(define-key cua--cua-keys-keymap (kbd "M-u") 'cua-scroll-down) ;;was upcase-word
+      ))
+(defun ak-cua-scroll-up (&optional arg)
+  (interactive "^P")
+  (cua-scroll-up arg)
+  (next-line 1))
 
 ;;;; org-mode 
 ;; see org-mode-hook
