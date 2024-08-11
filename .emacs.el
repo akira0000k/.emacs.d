@@ -340,8 +340,8 @@
       (message "Beginning of buffer@")
     (if (= (window-start) (point))
         (progn
-          (scroll-down (- (window-body-height) 1))
           (message "scroll down")
+          (scroll-down)
           )
       (let ( (pos0 (current-line)) )
         (move-to-window-line nil)
@@ -365,8 +365,8 @@
         (move-to-window-line -1)
         (if (> (current-line) pos0)
             nil ;; ok
-          (scroll-up (- (window-body-height) 1))
           (message "scroll up")
+          (scroll-up)
           )
         )
       )
