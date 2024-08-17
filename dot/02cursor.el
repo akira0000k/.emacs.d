@@ -99,12 +99,11 @@
         ;;else
         (let ((po (point)))
           (move-to-window-line -1)      ;move cursor to window end
-          (end-of-line)
           (if (= po (point))            ;cursor really moved?
               (progn
                 (scroll-up )        ;try again
                 (move-to-window-line -1)
-                (end-of-line)))
+		))
           )
         )
       )
