@@ -96,4 +96,105 @@ C-<delete> runs the command kill-word
 3.
 (define-key input-decode-map "\e[3;6~" (kbd "C-S-<backspace>"))
 C-S-<backspace> runs the command kill-whole-line
-やった
+やった。
+
+
+C-M-S-send-test.txt
+C-M-S-n, C-M-S-p は送信できるか?
+
+C-M-n (translated from C-M-S-n) runs the command forward-list
+C-M-p (translated from C-M-S-p) runs the command backward-list
+
+これはターミナルの emacs -nw でできるか??
+結論 できないかも。
+
+
+1. Esc + S + ^N/^P 案
+
+0x1b 0x18 0x40 0x53 0x0E
+0x1b 0x18 0x40 0x53 0x10
+Esc   ^X    @    S   ^N
+Esc   ^X    @    S   ^P
+Esc---C-x
+
+14	0E	016	^N		SO	シフトアウト
+16	10	020	^P		DLE	データリンクエスケープ
+24	18	030	^X		CAN	取消
+27	1B	033	^[	'\x1B'	ESC	(制御コード)エスケープ \e
+64	40	100	@
+83	53	123	S
+99	63	143	c
+115	73	163	s
+
+一見うまくいくかに思えたが、
+lisp-modeでは
+Esc C-x が
+C-M-x (translated from <escape> C-x) runs the command eval-defun
+なのでかち合う
+
+@S が画面に出た
+
+
+2. S + M-^n/^p 案
+
+0x18 0x40 0x53 0x8e
+0x18 0x40 0x53 0x90
+ ^X    @    S   M-^N
+ ^X    @    S	M-^P
+
+\216 is undefined
+\220 is undefined
+
+142	8E	216	M-^N
+144	90	220	M-^P
+
+
+
+3. Cntl + M-N/P 案
+
+0x18 0x40 0x63 0xce
+0x18 0x40 0x63 0xd0
+ ^X    @    c   M-N
+ ^X    @    c   M-P
+
+C-î is undefined
+C-ð is undefined
+
+206	CE	316	M-N	ﾎ
+208	D0	320	M-P	ﾐ
+
+
+
+0	00	000	^@	'\0'	NUL	ヌル
+1	01	001	^A		SOH	ヘッダ開始
+2	02	002	^B		STX	テキスト開始
+3	03	003	^C		ETX	テキスト終了
+4	04	004	^D		EOT	転送終了
+5	05	005	^E		ENQ	紹介
+6	06	006	^F		ACK	受信OK
+7	07	007	^G	'\a'	BEL	ベル 警告
+8	08	010	^H	'\b'	BS	バックスペース
+9	09	011	^I	'\t'	HT	水平タブ
+10	0A	012	^J	'\n'	LF/NL	復帰/改行
+11	0B	013	^K		VT	垂直タブ
+12	0C	014	^L	'\f'	FF	改ページ
+13	0D	015	^M	'\r'	CR	復帰
+14	0E	016	^N		SO	シフトアウト
+15	0F	017	^O		SI	シフトイン
+16	10	020	^P		DLE	データリンクエスケープ
+17	11	021	^Q		DC1	制御装置1
+18	12	022	^R		DC2	制御装置2
+19	13	023	^S		DC3	制御装置3
+20	14	024	^T		DC4	制御装置4
+21	15	025	^U		NAC	受信失敗
+22	16	026	^V		SYN	同期
+23	17	027	^W		ETB	転送ブロック終了
+24	18	030	^X		CAN	取消
+25	19	031	^Y		EM	メディア終了
+26	1A	032	^Z		SUB	置換           EOF 制御コード
+27	1B	033	^[	'\x1B'	ESC	(制御コード)エスケープ \e
+28	1C	034	^\		FS	ファイルセパレータ
+29	1D	035	^]		GS	グループセパレータ
+30	1E	036	^^		RS	レコードセパレータ
+31	1F	037	^_		US	ユニットセパレータ
+32	20	040	 		SP	(半角)スペース         \s
