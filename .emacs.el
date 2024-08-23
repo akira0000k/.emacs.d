@@ -108,31 +108,56 @@
 (define-key input-decode-map "\e[3;6~" (kbd "C-S-<backspace>")) ;;was C-S-<delete>
 
 
-;; terminal send control+option up for command up
-(define-key input-decode-map "\e[1;7A" (kbd "s-<up>"))
-(define-key input-decode-map "\e[1;8A" (kbd "s-S-<up>"))
-(define-key input-decode-map "\e[1;7B" (kbd "s-<down>"))
-(define-key input-decode-map "\e[1;8B" (kbd "s-S-<down>"))
-(define-key input-decode-map "\e[1;7C" (kbd "s-<right>"))
-(define-key input-decode-map "\e[1;8C" (kbd "s-S-<right>"))
-(define-key input-decode-map "\e[1;7D" (kbd "s-<left>"))
-(define-key input-decode-map "\e[1;8D" (kbd "s-S-<left>"))
-(define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
-(define-key input-decode-map "\e[5;8~" (kbd "s-S-<prior>"))
-(define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))
-(define-key input-decode-map "\e[6;8~" (kbd "s-S-<next>"))
-;;;; M-[ 1 ; 8 A	C-M-S-<up>      to   s-S-<up>   
-;;;; M-[ 1 ; 8 B	C-M-S-<down>	to   s-S-<down> 
-;;;; M-[ 1 ; 8 C	C-M-S-<right>	to   s-S-<right>
-;;;; M-[ 1 ; 8 D	C-M-S-<left>	to   s-S-<left> 
-;;;; M-[ 1 ; 7 A	C-M-<up>        to   s-<up>   
-;;;; M-[ 1 ; 7 B	C-M-<down>	to   s-<down> 
-;;;; M-[ 1 ; 7 C	C-M-<right>	to   s-<right>
-;;;; M-[ 1 ; 7 D	C-M-<left>	to   s-<left> 
-;;;; M-[ 5 ; 7 ~	C-M-<prior>	to   s-<prior>
-;;;; M-[ 5 ; 8 ~	C-M-S-<prior>	to   s-S-<prior>
-;;;; M-[ 6 ; 7 ~	C-M-<next>      to   s-<next>
-;;;; M-[ 6 ; 8 ~	C-M-S-<next>    to   s-S-<next>
+;;====================================
+;;;; Another modifier key after ESC 
+;;====================================
+;; avoid confusing with Esc C-x => eval-defun (in elisp moode)
+;; simple.el
+;; (define-key function-key-map [?\C-x ?@ ?S] 'event-apply-shift-modifier)
+;; (define-key function-key-map [?\C-x ?@ ?s] 'event-apply-super-modifier)
+
+(define-key function-key-map [?\M-s ?@ ?S] 'event-apply-shift-modifier)
+(define-key function-key-map [?\M-s ?@ ?s] 'event-apply-super-modifier)
+
+;;;; Esc Esc s @ S ^A   C-M-S-a   Shift + beginning-of-defun
+;;;; Esc Esc s @ S ^E   C-M-S-e   Shift + end-of-defun
+;;;; Esc Esc s @ S ^F	C-M-S-f   Shift + forward-sexp
+;;;; Esc Esc s @ S ^B	C-M-S-b   Shift + backward-sexp
+;;;; Esc Esc s @ S ^N	C-M-S-n   Shift + forward-list
+;;;; Esc Esc s @ S ^P	C-M-S-p   Shift + backward-list
+;;;; Esc Esc s @ S ^D   C-M-S-d   Shift + down-list
+;;;; Esc Esc s @ S ^U   C-M-S-u   Shift + backward-up-list
+;;;; Esc Esc s @ S ^L	C-M-S-l   recenter-other-window
+;;;; Esc Esc s @ S ^V	C-M-S-v   scroll-other-window-down
+;;;; Esc Esc s @ s f	M-s-f     isearch-forward-regexp
+;;;; Esc Esc s @ s F	M-s-F     isearch-backward-regexp
+
+
+;;====================================
+;;;; MAC OSX command key for iTerm2
+;;====================================
+;;;; terminal send control+option up for command up
+;;(define-key input-decode-map "\e[1;7A" (kbd "s-<up>"))
+;;(define-key input-decode-map "\e[1;8A" (kbd "s-S-<up>"))
+;;(define-key input-decode-map "\e[1;7B" (kbd "s-<down>"))
+;;(define-key input-decode-map "\e[1;8B" (kbd "s-S-<down>"))
+;;(define-key input-decode-map "\e[1;7C" (kbd "s-<right>"))
+;;(define-key input-decode-map "\e[1;8C" (kbd "s-S-<right>"))
+;;(define-key input-decode-map "\e[1;7D" (kbd "s-<left>"))
+;;(define-key input-decode-map "\e[1;8D" (kbd "s-S-<left>"))
+;;(define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
+;;(define-key input-decode-map "\e[5;8~" (kbd "s-S-<prior>"))
+;;(define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))
+;;(define-key input-decode-map "\e[6;8~" (kbd "s-S-<next>"))
+;;;; terminal send Esc s up for command up
+(define-key input-decode-map "\es\eOA" (kbd "s-<up>"))
+(define-key input-decode-map "\es\eOB" (kbd "s-<down>"))
+(define-key input-decode-map "\es\eOC" (kbd "s-<right>"))
+(define-key input-decode-map "\es\eOD" (kbd "s-<left>"))
+(define-key input-decode-map "\es\e[1;2A" (kbd "s-S-<up>"))
+(define-key input-decode-map "\es\e[1;2B" (kbd "s-S-<down>"))
+(define-key input-decode-map "\es\e[1;2C" (kbd "s-S-<right>"))
+(define-key input-decode-map "\es\e[1;2D" (kbd "s-S-<left>"))
 
 
 

@@ -56,24 +56,17 @@ C-x @ s         event-apply-super-modifier
 "C-x @ c ;" と押せば C-; を押したのと同じ効果が得られるようです。
 
 
-
+Shift modifierの例
 
 iTerm2-Preference-Profiles-Keys-(Default)-Key Mappings
-Send Hex Codes: 0x18 0x40 0x53 0x01     ^⬆︎A
-Send Hex Codes: 0x18 0x40 0x53 0x02     ^⬆b
-Send Hex Codes: 0x18 0x40 0x53 0x05     ^⬆e
-Send Hex Codes: 0x18 0x40 0x53 0x06     ^⬆f
-Send Hex Codes: 0x18 0x40 0x53 0x0E     ^⬆n
-Send Hex Codes: 0x18 0x40 0x53 0x10     ^⬆p
-Send Hex Codes: 0x18 0x40 0x53 0x16     ^⬆v
-               C-x   @   S    ^A ... ^V
-
-Send Hex Codes: 0x18 0x40 0x73 0x61     🍀a
-Send Hex Codes: 0x18 0x40 0x73 0x63     🍀c
-Send Hex Codes: 0x18 0x40 0x73 0x76     🍀v
-Send Hex Codes: 0x18 0x40 0x73 0x78     🍀x
-Send Hex Codes: 0x18 0x40 0x73 0x7a     🍀z
-               C-x   @   s    a ... z
+mod  Send Hex Codes: 0x18 0x40 0x53 0x01     ^⬆︎A
+mod  Send Hex Codes: 0x18 0x40 0x53 0x02     ^⬆b
+mod  Send Hex Codes: 0x18 0x40 0x53 0x05     ^⬆e
+mod  Send Hex Codes: 0x18 0x40 0x53 0x06     ^⬆f
+mod  Send Hex Codes: 0x18 0x40 0x53 0x0E     ^⬆n
+mod  Send Hex Codes: 0x18 0x40 0x53 0x10     ^⬆p
+mod  Send Hex Codes: 0x18 0x40 0x53 0x16     ^⬆v
+mod                  C-x   @   S    ^A ... ^V
 
 NG  C-M-S-n/p
 NG  Send Hex Codes: 0x1B 0x18 0x40 0x53 0x0E     ^opt⬆n
@@ -82,21 +75,31 @@ NG                 ESC  C-x   @    S   ^N ... P
 NG  in lisp-mode
 NG  C-M-x runs the command eval-defun
 
+     Esc + C-S-a を C-M-S-a として打てるようにする
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x01     ^⬆︎A
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x02     ^⬆b
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x05     ^⬆e
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x06     ^⬆f
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x0E     ^⬆n
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x10     ^⬆p
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x16     ^⬆v
+                 Esc   s    @   S    ^A ... ^V
 
-これをターミナルでやりたい
-C-S-<backspace>			kill-whole-line
-1.
-C-S-h をやってみる
-Send Hex Codes: 0x18 0x40 0x53 0x08     ^⬆h
-C-h (translated from C-x @ S) runs the command backward-delete-char-untabify
-2.
-M-[ 3 ; 6 ~	C-S-<delete>
-Send ^[ [3;6~   ^⬆️ ← delete
-C-<delete> runs the command kill-word
-3.
-(define-key input-decode-map "\e[3;6~" (kbd "C-S-<backspace>"))
-C-S-<backspace> runs the command kill-whole-line
-やった。
+Super modifier の例
+Send Hex Codes: 0x18 0x40 0x73 0x61     🍀a
+Send Hex Codes: 0x18 0x40 0x73 0x63     🍀c
+Send: "\es@sf                           🍀f
+Send Hex Codes: 0x18 0x40 0x73 0x76     🍀v
+Send Hex Codes: 0x18 0x40 0x73 0x78     🍀x
+Send Hex Codes: 0x18 0x40 0x73 0x7a     🍀z
+               C-x   @   s    a ... z
+
+Send Hex Codes: 0x18 0x40 0x73 0x44     ⬆🍀D
+Send: "\es@sF                           ⬆🍀F
+Send Hex Codes: 0x18 0x40 0x73 0x4C     ⬆🍀L
+Send Hex Codes: 0x18 0x40 0x73 0x4D     ⬆🍀M
+               C-x   @   s    A ... Z
+
 
 
 C-M-S-send-test.txt
@@ -106,10 +109,9 @@ C-M-n (translated from C-M-S-n) runs the command forward-list
 C-M-p (translated from C-M-S-p) runs the command backward-list
 
 これはターミナルの emacs -nw でできるか??
-結論 できないかも。
 
 
-1. Esc + S + ^N/^P 案
+1. Esc + S + ^N/^P 案 ... 没
 
 0x1b 0x18 0x40 0x53 0x0E
 0x1b 0x18 0x40 0x53 0x10
@@ -127,15 +129,51 @@ Esc---C-x
 115	73	163	s
 
 一見うまくいくかに思えたが、
-lisp-modeでは
-Esc C-x が
+lisp-modeでは、先頭の Esc C-x の部分が
 C-M-x (translated from <escape> C-x) runs the command eval-defun
-なのでかち合う
+となるのでかち合う
+@S が画面に出た。
 
-@S が画面に出た
+1.5 ヒント M-s o (occur) とかのマルチキーバインドを利用
+Esc M-s @ S ^N とすればできるのではないか ... OK
+
+;;simple.el　の定義をコビーしてくる
+(define-key function-key-map [?\C-x ?@ ?S] 'event-apply-shift-modifier)
+変更
+(define-key function-key-map [?\M-s ?@ ?S] 'event-apply-shift-modifier)
+(define-key function-key-map [?\M-s ?@ ?s] 'event-apply-super-modifier)
+0x1b 0x1b 0x73 0x40 0x53 0x01
+Esc  Esc    s    @    S   ^A
+0x1b 0x1b 0x73 0x40 0x53 0x02
+Esc  Esc    s    @    S   ^B
+0x1b 0x1b 0x73 0x40 0x53 0x04
+Esc  Esc    s    @    S   ^D
+0x1b 0x1b 0x73 0x40 0x53 0x05
+Esc  Esc    s    @    S   ^E
+0x1b 0x1b 0x73 0x40 0x53 0x06
+Esc  Esc    s    @    S   ^F
+0x1b 0x1b 0x73 0x40 0x53 0x0C
+Esc  Esc    s    @    S   ^L
+0x1b 0x1b 0x73 0x40 0x53 0x0E
+Esc  Esc    s    @    S   ^N
+0x1b 0x1b 0x73 0x40 0x53 0x10
+Esc  Esc    s    @    S   ^P
+0x1b 0x1b 0x73 0x40 0x53 0x15
+Esc  Esc    s    @    S   ^U
+0x1b 0x1b 0x73 0x40 0x53 0x16
+Esc  Esc    s    @    S   ^V
+できた
+
+M-s-f や M-s-F (Meta Super f/F) という、正規表現検索のキーバインドがあるので
+Send: "\es@sf                           🍀f
+Send: "\es@sF                           ⬆🍀F
+Send: "\e\es@sf                         opt 🍀f
+Send: "\e\es@sF                         opt ⬆🍀F
+このようにした。
 
 
-2. S + M-^n/^p 案
+
+2. S + M-^n/^p 案  .. 没
 
 0x18 0x40 0x53 0x8e
 0x18 0x40 0x53 0x90
@@ -150,7 +188,7 @@ C-M-x (translated from <escape> C-x) runs the command eval-defun
 
 
 
-3. Cntl + M-N/P 案
+3. Cntl + M-N/P 案  .. 没
 
 0x18 0x40 0x63 0xce
 0x18 0x40 0x63 0xd0
@@ -164,6 +202,7 @@ C-ð is undefined
 208	D0	320	M-P	ﾐ
 
 
+参考 コントロールコード
 
 0	00	000	^@	'\0'	NUL	ヌル
 1	01	001	^A		SOH	ヘッダ開始
@@ -198,3 +237,21 @@ C-ð is undefined
 30	1E	036	^^		RS	レコードセパレータ
 31	1F	037	^_		US	ユニットセパレータ
 32	20	040	 		SP	(半角)スペース         \s
+
+
+付録
+
+これをターミナルでやりたい
+C-S-<backspace>			kill-whole-line
+1.
+C-S-h をやってみる
+Send Hex Codes: 0x18 0x40 0x53 0x08     ^⬆h
+C-h (translated from C-x @ S) runs the command backward-delete-char-untabify
+2.
+M-[ 3 ; 6 ~	C-S-<delete>
+Send ^[ [3;6~   ^⬆️ ← delete
+C-<delete> runs the command kill-word
+3.
+(define-key input-decode-map "\e[3;6~" (kbd "C-S-<backspace>"))
+C-S-<backspace> runs the command kill-whole-line
+やった。
