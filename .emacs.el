@@ -170,30 +170,44 @@
 (global-set-key [s-left]  'move-beginning-of-line)
 (global-set-key [s-right] 'move-end-of-line)
 ;;     same as default
-;;;;  (global-set-key (kbd "s-a") 'mark-whole-buffer)
-;;;;  (global-set-key (kbd "s-z") 'undo)
-;;;;  (global-set-key (kbd "s-x") 'kill-region)
+(global-set-key (kbd "s-a") 'mark-whole-buffer)
+(global-set-key (kbd "s-l") 'goto-line)
+(global-set-key (kbd "s-D") 'dired)
+(global-set-key (kbd "s-M") 'manual-entry)
+(global-set-key (kbd "s-L") 'shell-command)
+(global-set-key (kbd "s-|") 'shell-command-on-region)
+
+(global-set-key (kbd "s-z") 'undo)
+(global-set-key (kbd "s-x") 'kill-region)
 ;;;;  (global-set-key (kbd "s-c") 'kill-ring-save) ;;Terminal
-;;;;  (global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;Xwindow
-;;;;  (global-set-key (kbd "s-v") 'yank)
-;;;;  (global-set-key (kbd "s-y") 'ns-paste-secondary)
+(global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;Xwindow
+(global-set-key (kbd "s-v") 'yank)
+(global-set-key (kbd "s-y") 'ns-paste-secondary) ;;Xwindow
 
-;;;;  (global-set-key (kbd "s-k") 'kill-current-buffer)
-;;;;  (global-set-key (kbd "s-s") 'save-buffer)
-;;;;  (global-set-key (kbd "s-u") 'revert-buffer)
+(global-set-key (kbd "s-k") 'kill-current-buffer)
+(global-set-key (kbd "s-s") 'save-buffer)
+(global-set-key (kbd "s-u") 'revert-buffer)
 
-;;;;  (global-set-key (kbd "s-n") 'make-frame
-;;;;  (global-set-key (kbd "s-w") 'delete-frame
-;;;;  (global-set-key (kbd "s-'") 'next-window-any-frame)
+(global-set-key (kbd "s-n") 'make-frame)
+(global-set-key (kbd "s-w") 'delete-frame)
+(global-set-key (kbd "s-'") 'next-window-any-frame) ;; 0x27 '
+(global-set-key (kbd "s-`") 'other-frame)           ;; 0x60 `
+;;(global-set-key (kbd "s-~") 'ns-prev-frame)       ;; 0x7E ~
+(global-set-key (kbd "s-~") 'ak-prev-frame)
 
-;;;;  (global-set-key (kbd "s-d") 'isearch-repeat-backward)
-;;;;  (global-set-key (kbd "s-f") 'isearch-forward)
-;;;;  (global-set-key (kbd "s-F") 'isearch-backward)
-;;;;  (global-set-key (kbd "s-g") 'isearch-repeat-forward)
-;;;;  (global-set-key (kbd "s-e") 'isearch-yank-kill)
-;;;;  (global-set-key (kbd "s-j") 'exchange-point-and-mark)
+(global-set-key (kbd "s-d") 'isearch-repeat-backward)
+(global-set-key (kbd "s-f") 'isearch-forward)
+(global-set-key (kbd "s-F") 'isearch-backward)
+(global-set-key (kbd "M-s-f") 'isearch-forward-regexp)
+(global-set-key (kbd "M-s-F") 'isearch-backward-regexp)
+(global-set-key (kbd "s-g") 'isearch-repeat-forward)
+(global-set-key (kbd "s-e") 'isearch-yank-kill)
+(global-set-key (kbd "s-j") 'exchange-point-and-mark)
 ;;      HIRAGANA key
 (global-set-key (kbd "s-ち") 'mark-whole-buffer)
+(global-set-key (kbd "s-り") 'goto-line)
+(global-set-key (kbd "s-ー") 'shell-command-on-region)
+
 (global-set-key (kbd "s-つ") 'undo)
 (global-set-key (kbd "s-さ") 'kill-region)
 (global-set-key (kbd "s-そ") 'ns-copy-including-secondary) ;;kill-ring-save)
@@ -206,10 +220,14 @@
 
 (global-set-key (kbd "s-み") 'make-frame)
 (global-set-key (kbd "s-て") 'delete-frame)
-(global-set-key (kbd "s-ゃ") 'next-window-any-frame)
+(global-set-key (kbd "s-ゃ") 'next-window-any-frame) ;; 0x27 '
+(global-set-key (kbd "s-へ") 'other-frame)	     ;; 0x60 `
+;;(global-set-key (kbd "s-゛") 'ns-prev-frame)	     ;; 0x7E ~
+(global-set-key (kbd "s-゛") 'ak-prev-frame)
 
 (global-set-key (kbd "s-し") 'isearch-repeat-backward)
 (global-set-key (kbd "s-は") 'isearch-forward)
+(global-set-key (kbd "M-s-は") 'isearch-forward-regexp)
 (global-set-key (kbd "s-き") 'isearch-repeat-forward)
 (global-set-key (kbd "s-い") 'isearch-yank-kill)
 (global-set-key (kbd "s-ま") 'exchange-point-and-mark)
@@ -241,7 +259,7 @@
 
 ;;;; iTerm2 use move tab function by C-tab
 ;;(global-set-key [C-tab] 'other-window)
-;;(global-set-key [C-S-tab] #'(lambda()(interactive)(other-window -1)))
+;;(global-set-key [C-S-tab] 'ak-prev-window)
 (global-set-key [C-tab] 'next-window-any-frame)
 (global-set-key [C-S-tab] 'previous-window-any-frame)
 
@@ -1426,3 +1444,10 @@ With prefix argument, activate previous rectangle if possible."
   (if (= (point-max) (window-end))
           t
         nil))
+
+(defun ak-prev-window ()
+  (interactive)
+  (other-window -1))
+(defun ak-prev-frame ()
+  (interactive)
+  (other-frame -1))

@@ -35,8 +35,8 @@
       (list
       '(top . 20)
       '(left . 100)
-      '(width . 151)
-      '(height . 53)))
+      '(width . 120)
+      '(height . 40)))
 (setq default-frame-alist initial-frame-alist)
 
 ;;;    M-x describe-theme    =>tab ..show themes available
@@ -162,29 +162,39 @@
   (global-set-key [end]  'end-of-buffer)
   (ak-vscode)
   )
+
+
+;; face etc.
+;; M-x list-faces-display
+;; M-x describe-face
+
 ;;;; (if (not (string= window-system "ns"))
 (if (not (display-graphic-p))
     ;;; -nw no window emacs
     (progn
-      ;; for MAC OSX iTerm2 3.4.16  same as XWindow Emacs
-      (load-theme 'deeper-blue t)
-      (custom-set-faces
-       '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
-       '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
-       '(region ((t (:extend t :background "dark red"))))
+      (cond
+       ((memq system-type '(darwin))
+	;; for MAC OSX iTerm2 3.4.16  same as XWindow Emacs
+	(load-theme 'deeper-blue t)
+	(custom-set-faces
+	 '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
+	 '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
+	 '(region ((t (:extend t :background "dark red"))))
+	 )
+	)
+       (t
+	;; for debian   TERM=xterm emacs -nw
+	(custom-set-faces
+	 ;;'(font-lock-function-name-face ((t (:foreground "blue" :weight semi-bold)))) ;;;for xterm-256color
+	 '(help-key-binding ((t (:background "blue"))))
+	 '(link ((t (:foreground "cyan" :underline t))))
+	 '(magit-section-highlight ((t (:extend t :background "blue"))))
+	 '(minibuffer-prompt ((t (:foreground "cyan"))))
+	 ;;'(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
+	 '(smerge-markers ((t (:extend t :background "blue"))))
+	 '(region ((t (:extend t :background "dark red"))))
+	 ))
        )
-
-      ;; ;; for debian   TERM=xterm emacs -nw
-      ;; (custom-set-faces
-      ;;  ;;'(font-lock-function-name-face ((t (:foreground "blue" :weight semi-bold)))) ;;;for xterm-256color
-      ;;  '(help-key-binding ((t (:background "blue"))))
-      ;;  '(link ((t (:foreground "cyan" :underline t))))
-      ;;  '(magit-section-highlight ((t (:extend t :background "blue"))))
-      ;;  '(minibuffer-prompt ((t (:foreground "cyan"))))
-      ;;  ;;'(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
-      ;;  '(smerge-markers ((t (:extend t :background "blue"))))
-      ;;  '(region ((t (:extend t :background "dark red"))))
-      ;;  )
 
       (menu-bar-mode -1)
       (global-set-key (kbd "s-c") 'kill-ring-save)
@@ -211,25 +221,30 @@
 	    (message "PuTTY terminal")))
       (message "emacs -nw"))
   ;;;else window emacs ;;;
-  (load-theme 'deeper-blue t)
   ;;;;                                $ brew tap homebrew/cask-fonts
   ;;;;                                $ brew install font-hackgen-nerd
-  (let ((installfont "HackGen Console NF-14"))
+  (let ((installfont "HackGen Console NF-18"))
     (if (x-list-fonts installfont)
 	(set-face-font 'default installfont)
       (message "%s font not installed" installfont)))
-  (custom-set-faces
-   '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
-   '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
-   '(region ((t (:extend t :background "dark red"))))
+
+  (cond
+   (t
+    (load-theme 'deeper-blue t)
+    (custom-set-faces
+     '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
+     '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
+     '(region ((t (:extend t :background "dark red"))))
+     ))
+   (t
+    (load-theme 'tango-dark t)
+    (custom-set-faces
+     '(default ((t (:inherit nil :extend nil :stipple nil :background "#010101" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Menlo"))))
+     '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
+     '(shadow ((t (:foreground "lime green"))))
+     ))
    )
-  
-  ;; (load-theme 'tango-dark t)
-  ;; (custom-set-faces
-  ;;  '(default ((t (:inherit nil :extend nil :stipple nil :background "#010101" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Menlo"))))
-  ;;  '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
-  ;;  '(shadow ((t (:foreground "lime green"))))
-  ;;  )
+
   ;;;; (define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
   (setq initial-buffer-choice "./")  ;; macOS Ventura  image-type: Invalid image type ‘svg’
   (menu-bar-mode 1)
@@ -254,10 +269,6 @@
 	  (start-process (concat "open " filepath) nil "open" filepath)
 	  ))))
   )
-
-;; face etc.
-;; M-x list-faces-display
-;; M-x describe-face
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)

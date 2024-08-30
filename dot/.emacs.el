@@ -29,3 +29,10 @@
   (if (= (point-max) (window-end))
           t
         nil))
+
+(defun ak-prev-window ()
+  (interactive)
+  (other-window -1))
+(defun ak-prev-frame ()
+  (interactive)
+  (other-frame -1))

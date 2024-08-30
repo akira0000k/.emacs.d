@@ -23,7 +23,7 @@
 
 ;;;; iTerm2 use move tab function by C-tab
 ;;(global-set-key [C-tab] 'other-window)
-;;(global-set-key [C-S-tab] #'(lambda()(interactive)(other-window -1)))
+;;(global-set-key [C-S-tab] 'ak-prev-window)
 (global-set-key [C-tab] 'next-window-any-frame)
 (global-set-key [C-S-tab] 'previous-window-any-frame)
 
