@@ -412,6 +412,7 @@
     | M-x shell-command           | M-!       | s-L       | 単発コマンド実行       |
     | M-x shell-command-on-region | M-\vert{} | s-\vert{} | +選択領域を入力        |
     | M-x man                     |           | s-M       | Man page 表示          |
+    | M-x info                    | f1 i      | s-?       | info 表示              |
     | /                           | <         |           |                        |
 
 *** コマンドに与える引数
@@ -453,7 +454,7 @@
 
     | 標準        | 代替キー |         |                                        |
     |-------------+----------+---------+----------------------------------------|
-    | M-x help    | f1       |         | help　　　　(C-h は backspace)         |
+    | f1          |          |         | M-x help　　(C-h は backspace)         |
     | C-x o       | S-f1     | C-TAB   | other-window 　　　　(順周り)          |
     | C-x 2       | f2       |         | split-window-below ー toggle           |
     | C-x 1       | f2       |         | delete-other-windows                   |

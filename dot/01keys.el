@@ -88,6 +88,7 @@
 (global-set-key (kbd "s-M") 'manual-entry)
 (global-set-key (kbd "s-L") 'shell-command)
 (global-set-key (kbd "s-|") 'shell-command-on-region)
+(global-set-key (kbd "s-?") 'info)
 
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-x") 'kill-region)
@@ -119,6 +120,7 @@
 (global-set-key (kbd "s-ち") 'mark-whole-buffer)
 (global-set-key (kbd "s-り") 'goto-line)
 (global-set-key (kbd "s-ー") 'shell-command-on-region)
+(global-set-key (kbd "s-・") 'info)
 
 (global-set-key (kbd "s-つ") 'undo)
 (global-set-key (kbd "s-さ") 'kill-region)

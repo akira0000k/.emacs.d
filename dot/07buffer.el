@@ -155,3 +155,8 @@
   "Dired and change buffer-list."
   (list-buffers-if-exist))
 (ad-activate 'dired)
+
+(defadvice info (after AK-info )
+  "Enter Info, the documentation browser."
+  (list-buffers-if-exist))
+(ad-activate 'info)
