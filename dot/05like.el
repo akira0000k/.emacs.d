@@ -60,7 +60,10 @@
 
 ;;was                 'toggle-frame-fullscreen  ==> "ESC <f11>"
 (global-set-key [f11] 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
-(global-set-key [f12] 'global-linum-mode)
+;; (require 'linum)                            ;; obsolete (emacs29)
+;; (global-set-key [f12] 'global-linum-mode)
+(global-set-key [f12] 'global-display-line-numbers-mode)
+;;(global-set-key [f12] 'display-line-numbers-mode)
 (global-set-key [S-f11] 'scroll-right)
 (global-set-key [S-f12] 'scroll-left)
 
