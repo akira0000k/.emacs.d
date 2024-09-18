@@ -6,7 +6,10 @@ export LANG=ja_JP.UTF-8
 
 alias ll='/bin/ls -laF'
 alias ls=ll
-alias em='emacs -nw'
+alias em='TERM=xterm emacs -nw'
+alias emt='TERM=vt100 VT100=yes emacs -nw'
+alias emp='TERM=xterm-256color PUTTY=yes emacs -nw'
+alias emq='TERM=xterm PUTTY=yes emacs -nw'
 
 alias ]='cd ..'
 alias ]]='cd ../..'

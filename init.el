@@ -22,7 +22,7 @@
 ;;  	    (package-install package)))
 ;;       myPackages)
 
-;;  ;; 作成するファイルやdirectoryに　グループ書き込み権限をつけaる
+;;  ;; 作成するファイルやdirectoryに　グループ書き込み権限をつける
 ;;  ;; for check
 ;;  ;;(default-file-modes)  ;;=> #o755
 ;;  (set-default-file-modes #o775)
@@ -136,31 +136,26 @@
   (global-set-key (kbd "M-.") 'end-of-buffer)
   (define-key input-decode-map (kbd "M-<") (kbd "M-S-,"))
   (define-key input-decode-map (kbd "M->") (kbd "M-S-."))
-  (global-set-key (kbd "C-M-p") 'half-page-down)
-  (global-set-key (kbd "C-M-n") 'half-page-up)
   ;;;; (define-key input-decode-map (kbd "¥") (kbd "\\"))
-  (if (boundp 'cua--cua-keys-keymap)
-      (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
-    (message "cua boundp? no."))
   )
 
 (defun ak-puttykey ()
   "PuTTY key setting"
   (interactive)
-  (define-key input-decode-map (kbd "M-O q") [end])       ;; <kp-1>
-  (define-key input-decode-map (kbd "M-O r") [down])      ;; <kp-2>
-  (define-key input-decode-map (kbd "M-O s") [next])      ;; <kp-3>
-  (define-key input-decode-map (kbd "M-O t") [left])      ;; <kp-4>
-  (define-key input-decode-map (kbd "M-O v") [right])     ;; <kp-6>
-  (define-key input-decode-map (kbd "M-O w") [home])      ;; <kp-7>
-  (define-key input-decode-map (kbd "M-O x") [up])        ;; <kp-8>
-  (define-key input-decode-map (kbd "M-O y") [prior])     ;; <kp-9>
-  (define-key input-decode-map (kbd "M-O n") [deletechar])
+  ;;(define-key input-decode-map (kbd "M-O q") [end])       ;; <kp-1>
+  ;;(define-key input-decode-map (kbd "M-O r") [down])      ;; <kp-2>
+  ;;(define-key input-decode-map (kbd "M-O s") [next])      ;; <kp-3>
+  ;;(define-key input-decode-map (kbd "M-O t") [left])      ;; <kp-4>
+  ;;(define-key input-decode-map (kbd "M-O v") [right])     ;; <kp-6>
+  ;;(define-key input-decode-map (kbd "M-O w") [home])      ;; <kp-7>
+  ;;(define-key input-decode-map (kbd "M-O x") [up])        ;; <kp-8>
+  ;;(define-key input-decode-map (kbd "M-O y") [prior])     ;; <kp-9>
+  ;;(define-key input-decode-map (kbd "M-O n") [deletechar])
   (define-key input-decode-map (kbd "M-[ 1 ; 2 ~") (kbd "S-<home>"))
   (define-key input-decode-map (kbd "M-[ 4 ; 2 ~") (kbd "S-<end>"))
   (global-set-key [home] 'beginning-of-buffer)
   (global-set-key [end]  'end-of-buffer)
-  (ak-vscode)
+  ;;(ak-vscode)
   )
 
 
@@ -168,36 +163,62 @@
 ;; M-x list-faces-display
 ;; M-x describe-face
 
+(defun ak-theme-deeper-blue()
+  (load-theme 'deeper-blue t)
+  (message "load-theme deeper-blue")
+  (custom-set-faces
+   '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))  ;;dired directory name
+   ;; '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))  ;;buffer "init.el"
+   '(region ((t (:extend t :background "dark red"))))  ;;selected region
+   ))
+(defun ak-theme-tango-dark()
+  (load-theme 'tango-dark t)
+  (message "load-theme tango-dark")
+  (custom-set-faces
+   '(default ((t (:background "#131313" :foreground "#dddddd"))))  ;;back/foreground color
+   '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))  ;;dired directory name
+   ;; '(shadow ((t (:foreground "lime green"))))  ;;dired backupfile~ name
+   ))
+(defun ak-theme-misc()
+  (custom-set-faces
+   '(default ((t (:background "#000000" :foreground "#dddddd"))))  ;;back/foreground color
+   '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))  ;;dired directory name
+   '(help-key-binding ((t (:background "blue"))))
+   '(link ((t (:foreground "cyan" :underline t))))
+   ;;'(magit-section-highlight ((t (:extend t :background "blue"))))
+   '(minibuffer-prompt ((t (:foreground "cyan"))))
+   '(shadow ((t (:foreground "#32cd32")))) ;;dired backupfile~ name
+   ;;'(smerge-markers ((t (:extend t :background "blue"))))
+   '(region ((t (:extend t :background "dark red"))))  ;;selected region
+   ))
+
 ;;;; (if (not (string= window-system "ns"))
 (if (not (display-graphic-p))
     ;;; -nw no window emacs
     (progn
       (cond
-       ((memq system-type '(darwin))
-	;; for MAC OSX iTerm2 3.4.16  same as XWindow Emacs
-	(load-theme 'deeper-blue t)
-	(custom-set-faces
-	 '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
-	 '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
-	 '(region ((t (:extend t :background "dark red"))))
-	 )
-	)
-       (t
+       ((string= (getenv "VT100") "yes")
+	;; in screen start like this. TERM=vt100 VT100=yes emacs -nw
+	(message "vt100 screen")
+	(load "~/.emacs.d/site-lisp/pc-teraconf-21.el"))
+       ((string= (getenv "PUTTY") "yes")
+	;; for PuTTY terminal start like this. PUTTY=yes emacs -nw
+	(message "PuTTY terminal")
+	(ak-puttykey)
+	(ak-theme-misc))
+       ((not (memq system-type '(darwin)))
 	;; for debian   TERM=xterm emacs -nw
-	(custom-set-faces
-	 ;;'(font-lock-function-name-face ((t (:foreground "blue" :weight semi-bold)))) ;;;for xterm-256color
-	 '(help-key-binding ((t (:background "blue"))))
-	 '(link ((t (:foreground "cyan" :underline t))))
-	 '(magit-section-highlight ((t (:extend t :background "blue"))))
-	 '(minibuffer-prompt ((t (:foreground "cyan"))))
-	 ;;'(shadow ((t (:foreground "#32cd32")))) ;;;for xterm-256color
-	 '(smerge-markers ((t (:extend t :background "blue"))))
-	 '(region ((t (:extend t :background "dark red"))))
-	 ))
+	)
+       (nil
+	;; for MAC OSX iTerm2 3.4.16  same as XWindow Emacs
+	(ak-theme-deeper-blue))
+       (t
+	(ak-theme-tango-dark))
        )
-
-      (menu-bar-mode -1)
+      ;;;; s-c (ns-copy-including-secondary) works only non terminal
       (global-set-key (kbd "s-c") 'kill-ring-save)
+      (menu-bar-mode -1)
+
       (if (string= (getenv "TERM_PROGRAM") "vscode")
 	  (progn
 	    ;;;;"terminal.integrated.macOptionIsMeta": true
@@ -205,20 +226,7 @@
 	    (ak-vscode)
 	    )
 	)
-      (if (string= (getenv "VT100") "yes")
-	  (progn
-	    ;;;; in screen start like this. TERM=vt100 VT100=yes emacs -nw
-	    (message "vt100 screen")
-	    (load "~/.emacs.d/site-lisp/pc-teraconf-21.el")
-	    (custom-set-faces
-	     '(region ((t (:extend t :background "dark red" :underline t))))
-	     )
-	    )
-	)
-      (if (string= (getenv "PUTTY") "yes")
-	  (progn
-	    (ak-puttykey)
-	    (message "PuTTY terminal")))
+
       (message "emacs -nw"))
   ;;;else window emacs ;;;
   ;;;;                                $ brew tap homebrew/cask-fonts
@@ -227,24 +235,12 @@
     (if (x-list-fonts installfont)
 	(set-face-font 'default installfont)
       (message "%s font not installed" installfont)))
-
   (cond
    (t
-    (load-theme 'deeper-blue t)
-    (custom-set-faces
-     '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
-     '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))
-     '(region ((t (:extend t :background "dark red"))))
-     ))
+    (ak-theme-deeper-blue))
    (t
-    (load-theme 'tango-dark t)
-    (custom-set-faces
-     '(default ((t (:inherit nil :extend nil :stipple nil :background "#010101" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Menlo"))))
-     '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))
-     '(shadow ((t (:foreground "lime green"))))
-     ))
+    (ak-theme-tango-dark))
    )
-
   ;;;; (define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
   (setq initial-buffer-choice "./")  ;; macOS Ventura  image-type: Invalid image type ‘svg’
   (menu-bar-mode 1)
