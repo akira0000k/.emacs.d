@@ -3,7 +3,7 @@
 
 ;; ------ 08mode.el ------
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
 
 ;;====================================
@@ -23,7 +23,6 @@
 ;;;;go-mode
 ;;====================================
 ;;(load "~/.emacs.d/site-lisp/go-mode.el")
-(require 'go-mode)
 ;;   
 ;;  (autoload 'go-mode "go-mode" nil t)
 ;;  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
@@ -32,7 +31,7 @@
 ;;====================================
 ;;;;yaml-mode
 ;;====================================
-(require 'yaml-mode)
+;;(load "~/.emacs.d/site-lisp/yaml-mode.el")
 
 
 ;;====================================
@@ -95,7 +94,7 @@
 ;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
-(require 'buffer-focus-hook)
+(load "~/.emacs.d/site-lisp/buffer-focus-hook.el")
 
 (defun ak-org-focus-in ()
   (message "no xcv."))

@@ -109,6 +109,7 @@
   (kill-current-buffer)
   (list-buffers-if-exist))
 (global-set-key [remap kill-current-buffer] 'ak-kill-current-buffer)
+(global-set-key [remap kill-this-buffer] 'ak-kill-current-buffer)
 
 (defadvice quit-window (after AK-quit-window )
   "Quit window and change buffer-list."

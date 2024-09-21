@@ -1214,6 +1214,7 @@ With prefix argument, activate previous rectangle if possible."
   (kill-current-buffer)
   (list-buffers-if-exist))
 (global-set-key [remap kill-current-buffer] 'ak-kill-current-buffer)
+(global-set-key [remap kill-this-buffer] 'ak-kill-current-buffer)
 
 (defadvice quit-window (after AK-quit-window )
   "Quit window and change buffer-list."
@@ -1270,7 +1271,7 @@ With prefix argument, activate previous rectangle if possible."
 
 ;; ------ 08mode.el ------
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
 
 ;;====================================
@@ -1290,7 +1291,6 @@ With prefix argument, activate previous rectangle if possible."
 ;;;;go-mode
 ;;====================================
 ;;(load "~/.emacs.d/site-lisp/go-mode.el")
-(require 'go-mode)
 ;;   
 ;;  (autoload 'go-mode "go-mode" nil t)
 ;;  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
@@ -1299,7 +1299,7 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;;;yaml-mode
 ;;====================================
-(require 'yaml-mode)
+;;(load "~/.emacs.d/site-lisp/yaml-mode.el")
 
 
 ;;====================================
@@ -1362,7 +1362,7 @@ With prefix argument, activate previous rectangle if possible."
 ;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
-(require 'buffer-focus-hook)
+(load "~/.emacs.d/site-lisp/buffer-focus-hook.el")
 
 (defun ak-org-focus-in ()
   (message "no xcv."))
