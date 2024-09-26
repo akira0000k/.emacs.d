@@ -250,11 +250,10 @@
 ;;;;              Table 50: Browse URL Browsers
 ;;;; |            M-x Command            |       Browser       |
 ;;;; | browse-url-default-macosx-browser | Mac OS open command |
-(if (not (memq system-type '(darwin)))
-    nil
-  (require 'dired)
-  (define-key dired-mode-map "W" 'ak-browse-url-of-dired-file)
-  (defun ak-browse-url-of-dired-file ()
+(when (memq system-type '(darwin))
+  ;;(require 'dired)
+  ;;(define-key dired-mode-map "W" 'ak-browse-url-of-dired-file)
+  (defun browse-url-of-dired-file ()
     "In Dired, ask a WWW browser to display the file named on this line."
     (interactive)
     (let ((tem (dired-get-filename t t)))

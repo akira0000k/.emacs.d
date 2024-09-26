@@ -6,7 +6,6 @@
 ;;====================================
 ;;;; shell-mode
 ;;====================================
-;; (global-set-key (kbd "M-s") 'shell) ;; M-x shell
 ;; M-x shell  ==>  M-x s
 (defalias 's 'shell)
 

@@ -6,40 +6,9 @@
 ;;====================================
 ;;;;  dired bindings
 ;;====================================
-;; edit filename in dired mode
-(require 'wdired)
-(require 'dired-x)
+
 (setq dired-clean-up-buffers-too nil)
-;; S            dired-do-symlink
-;; Y            dired-do-relsymlink
-(define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)
-(define-key dired-mode-map "h" #'(lambda()(interactive)(dired "~")))
-(define-key dired-mode-map "r" #'(lambda()(interactive)(dired "/")))
-(define-key dired-mode-map "z" #'(lambda()(interactive)(dired dired-default-directory)))
-;; avoid remapping to dired-next(previous)-line
-(defalias 'ak-dired-next-line 'next-line)
-(defalias 'ak-dired-previous-line 'previous-line)
-(define-key dired-mode-map "\C-n" 'ak-dired-next-line)
-(define-key dired-mode-map "\C-p" 'ak-dired-previous-line)
-;; keep cursor on file name
-(define-key dired-mode-map [C-up]   #'(lambda()(interactive "^")
-			     (let ( (pos0 (current-line)) )
-			       (scroll-down 1)(move-to-window-line pos0)(dired-next-line 0))))
-(define-key dired-mode-map [C-down] #'(lambda()(interactive "^")
-			     (let ( (pos0 (current-line)) )
-			       (scroll-up 1)(move-to-window-line pos0)(dired-next-line 0))))
-(define-key dired-mode-map [s-up]   #'(lambda()(interactive "^")
-			     (let ( (pos0 (current-line)) )
-			       (scroll-down 4)(move-to-window-line pos0)(dired-next-line 0))))
-(define-key dired-mode-map [s-down] #'(lambda()(interactive "^")
-			     (let ( (pos0 (current-line)) )
-			       (scroll-up 4)(move-to-window-line pos0)(dired-next-line 0))))
-(and (setq a-directory (getenv "A_DIRECTORY")) (define-key dired-mode-map "a" #'(lambda()(interactive)(dired a-directory))))
-(and (setq b-directory (getenv "B_DIRECTORY")) (define-key dired-mode-map "b" #'(lambda()(interactive)(dired b-directory))))
-(and (setq c-directory (getenv "C_DIRECTORY")) (define-key dired-mode-map "c" #'(lambda()(interactive)(dired c-directory))))
-(and (setq e-directory (getenv "E_DIRECTORY")) (define-key dired-mode-map "e" #'(lambda()(interactive)(dired e-directory))))
-;;                         ">" 'dired-next-dirline
-;;                         "<" 'dired-previous-dirline
+;; Save Z directory
 (setq dired-default-directory default-directory)
 
 ;; Auto revert files when they change
@@ -49,20 +18,61 @@
 (setq auto-revert-verbose nil)
 ;;(setq auto-revert-interval 5) ;;default
 
+;; Extra keybinds for dired mode
+
+(with-eval-after-load 'dired
+  (require 'dired-x)
+  ;;(require 'wdired)
+  (define-key dired-mode-map [right]   'ak-dired-find-file)          ;; -> f
+  (define-key dired-mode-map [left]    'ak-dired-up-directory)       ;; <- ^
+  (define-key dired-mode-map [end]     'ak-dired-end-of-buffer)
+  (define-key dired-mode-map [prior]   'ak-dired-scroll-down)
+  (define-key dired-mode-map [next]    'ak-dired-scroll-up)
+  (define-key dired-mode-map [f5]      'revert-buffer)               ;; g
+  (define-key dired-mode-map "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
+  ;; S            dired-do-symlink
+  ;; Y            dired-do-relsymlink  dired-x.el
+  ;; edit filename in wdired mode      autoload wdired.el
+  (define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)
+
+  (define-key dired-mode-map "h" #'(lambda()(interactive)(dired "~")))
+  (define-key dired-mode-map "r" #'(lambda()(interactive)(dired "/")))
+  (define-key dired-mode-map "z" #'(lambda()(interactive)(dired dired-default-directory)))
+  (and (setq a-directory (getenv "A_DIRECTORY")) (define-key dired-mode-map "a" #'(lambda()(interactive)(dired a-directory))))
+  (and (setq b-directory (getenv "B_DIRECTORY")) (define-key dired-mode-map "b" #'(lambda()(interactive)(dired b-directory))))
+  (and (setq c-directory (getenv "C_DIRECTORY")) (define-key dired-mode-map "c" #'(lambda()(interactive)(dired c-directory))))
+  (and (setq e-directory (getenv "E_DIRECTORY")) (define-key dired-mode-map "e" #'(lambda()(interactive)(dired e-directory))))
+
+  ;; avoid remapping to dired-next(previous)-line
+  (defalias 'ak-dired-next-line 'next-line)
+  (defalias 'ak-dired-previous-line 'previous-line)
+  (define-key dired-mode-map "\C-n" 'ak-dired-next-line)
+  (define-key dired-mode-map "\C-p" 'ak-dired-previous-line)
+  ;; keep cursor on file name
+  (define-key dired-mode-map [C-up]   #'(lambda()(interactive "^")
+			      (let ( (pos0 (current-line)) )
+				(scroll-down 1)(move-to-window-line pos0)(dired-next-line 0))))
+  (define-key dired-mode-map [C-down] #'(lambda()(interactive "^")
+			      (let ( (pos0 (current-line)) )
+				(scroll-up 1)(move-to-window-line pos0)(dired-next-line 0))))
+  (define-key dired-mode-map [s-up]   #'(lambda()(interactive "^")
+			      (let ( (pos0 (current-line)) )
+				(scroll-down 4)(move-to-window-line pos0)(dired-next-line 0))))
+  (define-key dired-mode-map [s-down] #'(lambda()(interactive "^")
+			      (let ( (pos0 (current-line)) )
+				(scroll-up 4)(move-to-window-line pos0)(dired-next-line 0))))
+  ;; skip files
+  (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
+  (define-key dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
+  (message "eval-after-load 'dired done.")
+  )
+
 (setq dired-mode-hook
       '(lambda ()
          ;;(dired-omit-mode 1)
          (setq truncate-lines 1)
-         (local-set-key [right]   'ak-dired-find-file)          ;; -> f
-         (local-set-key [left]    'ak-dired-up-directory)       ;; <- ^
-         (local-set-key [home]    'ak-dired-beginning-of-buffer)
-         (local-set-key [end]     'ak-dired-end-of-buffer)
-         (local-set-key [prior]   'ak-dired-scroll-down)
-         (local-set-key [next]    'ak-dired-scroll-up)
-         (local-set-key [f5]      'revert-buffer)               ;; g
-         ;; (local-set-key "\M-s" 'shell)                          ;;emacs23  override M-s prefix
-         (local-set-key "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
          ))
+
 (defun ak-dired-find-file (&optional arg)
   "find file or select char."
   (interactive "^p")
