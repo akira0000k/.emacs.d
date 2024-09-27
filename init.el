@@ -1,9 +1,31 @@
+;;
+;; How to add a timestamp to each entry in Emacs' *Messages* buffer?
+;; https://emacs.stackexchange.com/questions/32150/how-to-add-a-timestamp-to-each-entry-in-emacs-messages-buffer
+;;
+(defun my/ad-timestamp-message (FORMAT-STRING &rest args)
+  "Advice to run before `message' that prepends a timestamp to each message.
+	Activate this advice with:
+	  (advice-add 'message :before 'my/ad-timestamp-message)
+	Deactivate this advice with:
+	  (advice-remove 'message 'my/ad-timestamp-message)"
+  (if message-log-max
+      (let ((deactivate-mark nil)
+	    (inhibit-read-only t))
+	(with-current-buffer "*Messages*"
+	  (goto-char (point-max))
+	  (if (not (bolp))
+	      (newline))
+	  (insert (format-time-string "[%F %T.%3N] "))))))
+(advice-add 'message :before 'my/ad-timestamp-message)
+(message "init.el loading")
+
 ;; M-x package-refresh-contents RET
 ;; M-x package-list-package
 ;; M-x package-install RET magit RET
-(require 'package)
-(package-initialize)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;;;; comment for 0.12 sec
+;;(require 'package)
+;;(package-initialize)
+;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; (package-refresh-contents)
 ;; ;; Installs packages
@@ -92,9 +114,10 @@
 (or (getenv "C_DIRECTORY") (setenv "C_DIRECTORY" (concat (getenv "HOME") "/Documents")))
 (or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" (concat (getenv "HOME") "/Desktop")))
 
-
-;;(load "~/.emacs.d/.emacs.el")
+(message "load .emacs.el")
+;;(load "~/.emacs.d/.emacs.elc")
 (load "~/.emacs.d/dot/.emacs.el")
+(message "load .emacs.el...done")
 
 ;; Tramp
 ;; C-x d  /docker:user@container:
@@ -192,6 +215,7 @@
    '(region ((t (:extend t :background "dark red"))))  ;;selected region
    ))
 
+(message "window check")
 ;;;; (if (not (string= window-system "ns"))
 (if (not (display-graphic-p))
     ;;; -nw no window emacs
@@ -268,6 +292,9 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
-;;;;;;;;;;;;;;;;;;;;;added by emacs;;;;;;;;;;;;;;;;;;;;;;custom.el
+
+(message "init.el ...done")
+(advice-remove 'message 'my/ad-timestamp-message)
+;;;;;;;;;;;;;;;;;;;;;added by emacs;;;;;;;;;;;;;;;;;;;;;;
 (put 'scroll-left 'disabled nil)
 (put 'upcase-region 'disabled nil)

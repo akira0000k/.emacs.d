@@ -571,6 +571,7 @@ With prefix argument, activate previous rectangle if possible."
   ;;(require 'wdired)
   (define-key dired-mode-map [right]   'ak-dired-find-file)          ;; -> f
   (define-key dired-mode-map [left]    'ak-dired-up-directory)       ;; <- ^
+  (define-key dired-mode-map [home]    'ak-dired-beginning-of-buffer)
   (define-key dired-mode-map [end]     'ak-dired-end-of-buffer)
   (define-key dired-mode-map [prior]   'ak-dired-scroll-down)
   (define-key dired-mode-map [next]    'ak-dired-scroll-up)
@@ -610,7 +611,7 @@ With prefix argument, activate previous rectangle if possible."
   ;; skip files
   (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
   (define-key dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
-  (message "eval-after-load 'dired done.")
+  ;;(message "eval-after-load 'dired done.")
   )
 
 (setq dired-mode-hook
@@ -1062,29 +1063,31 @@ With prefix argument, activate previous rectangle if possible."
 ;; M-x shell  ==>  M-x s
 (defalias 's 'shell)
 
-(setq shell-mode-hook
-      '(lambda ()
-         ;; comint 関係の設定
-         (setq shell-dirstack-query "pwd")
-         (setq comint-process-echoes t)
-         (setq comint-input-autoexpand nil)
+(with-eval-after-load 'shell
+  (load "~/.emacs.d/site-lisp/tails-comint-history.el")
+  ;; comint 関係の設定
+  (setq shell-dirstack-query "pwd")
+  (setq comint-process-echoes t)
+  (setq comint-input-autoexpand nil)
                                         ;(setq comint-input-autoexpand 'input)
                                         ;(setq comint-input-autoexpand 'history)
-         (setq comint-scroll-to-bottom-on-input t)
+  (setq comint-scroll-to-bottom-on-input t)
                                         ;(setq comint-scroll-to-bottom-on-output t)
-         (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
+  (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
+  (define-key shell-mode-map  [f5]     #'(lambda()(interactive)(dirs)))
+  (define-key comint-mode-map [home]   'beginning-of-buffer)
+  (define-key comint-mode-map [end]    'end-of-buffer)
+  (define-key comint-mode-map [C-up]   #'(lambda()(interactive)(scroll-down 1)))
+  (define-key comint-mode-map [C-down] #'(lambda()(interactive)(scroll-up 1)))
+  (define-key comint-mode-map [up]     'ak-shell-up)
+  (define-key comint-mode-map [down]   'ak-shell-down)
+  )
+
+(setq shell-mode-hook
+      '(lambda ()
 	 (dirtrack-mode)
          ))
 
-(load "~/.emacs.d/site-lisp/tails-comint-history.el")
-
-(define-key shell-mode-map  [f5]     #'(lambda()(interactive)(dirs)))
-(define-key comint-mode-map [home]   'beginning-of-buffer)
-(define-key comint-mode-map [end]    'end-of-buffer)
-(define-key comint-mode-map [C-up]   #'(lambda()(interactive)(scroll-down 1)))
-(define-key comint-mode-map [C-down] #'(lambda()(interactive)(scroll-up 1)))
-(define-key comint-mode-map [up]     'ak-shell-up)
-(define-key comint-mode-map [down]   'ak-shell-down)
 (defun ak-shell-down ()
   "next command by down arrow at shell mode."
   (interactive "^")
@@ -1288,29 +1291,24 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;;;view-mode
 ;;====================================
-(require 'view)
-(define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
-
-
-;;====================================
-;;;;bash-completion
-;;====================================
-;;(load "~/.emacs.d/site-lisp/bash-completion.el")
+(with-eval-after-load 'view
+  (define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t))))
 
 
 ;;====================================
 ;;;;go-mode
 ;;====================================
-;;(load "~/.emacs.d/site-lisp/go-mode.el")
-;;   
-;;  (autoload 'go-mode "go-mode" nil t)
-;;  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+;; (autoload 'go-mode "~/.emacs.d/site-lisp/go-mode.el" nil t)
+;; ;;   
+;; (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
 
 ;;====================================
 ;;;;yaml-mode
 ;;====================================
-;;(load "~/.emacs.d/site-lisp/yaml-mode.el")
+;; (autoload 'yaml-mode "~/.emacs.d/site-lisp/yaml-mode.el" nil t)
+;; ;;
+;; (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
 
 
 ;;====================================
@@ -1351,8 +1349,9 @@ With prefix argument, activate previous rectangle if possible."
 ;; error in process sentinel: elpy-rpc--default-error-callback: peculiar error: "exited abnormally with code 1"
 ;; M-x elpy-rpc-reinstall-virtualenv
 
-(if (fboundp 'elpy-enable)
-    (elpy-enable))
+;;;; comment for 1 sec
+;; (if (fboundp 'elpy-enable)
+;;     (elpy-enable))
 
 ;;====================================
 ;;;; git
@@ -1373,7 +1372,7 @@ With prefix argument, activate previous rectangle if possible."
 ;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
-(load "~/.emacs.d/site-lisp/buffer-focus-hook.el")
+(autoload 'buffer-focus-in-callback "~/.emacs.d/site-lisp/buffer-focus-hook.el")
 
 (defun ak-org-focus-in ()
   (message "no xcv."))
@@ -1382,14 +1381,17 @@ With prefix argument, activate previous rectangle if possible."
   (message "xcv enable.")
   t)
 
-(add-hook 'org-mode-hook (lambda()
-			   (setq-local cua-enable-cua-keys nil)
-			   ;;           C-y is not cua-paste but org-yank
-			   (define-key org-mode-map (kbd "C-y") 'org-yank)
-			   ;;(define-key org-mode-map (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
-			   (buffer-focus-in-callback 'ak-org-focus-in)
-			   (buffer-focus-out-callback 'ak-org-focus-out)
-			   ))
+(with-eval-after-load 'org
+  ;;           C-y is not cua-paste but org-yank
+  (define-key org-mode-map (kbd "C-y") 'org-yank)
+  )
+
+(add-hook 'org-mode-hook
+	  (lambda()
+	    (setq-local cua-enable-cua-keys nil)
+	    (buffer-focus-in-callback 'ak-org-focus-in)
+	    (buffer-focus-out-callback 'ak-org-focus-out)
+	    ))
 
 ;; ------ 09org.el ------
 

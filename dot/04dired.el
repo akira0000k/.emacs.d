@@ -25,6 +25,7 @@
   ;;(require 'wdired)
   (define-key dired-mode-map [right]   'ak-dired-find-file)          ;; -> f
   (define-key dired-mode-map [left]    'ak-dired-up-directory)       ;; <- ^
+  (define-key dired-mode-map [home]    'ak-dired-beginning-of-buffer)
   (define-key dired-mode-map [end]     'ak-dired-end-of-buffer)
   (define-key dired-mode-map [prior]   'ak-dired-scroll-down)
   (define-key dired-mode-map [next]    'ak-dired-scroll-up)
@@ -64,7 +65,7 @@
   ;; skip files
   (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
   (define-key dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
-  (message "eval-after-load 'dired done.")
+  ;;(message "eval-after-load 'dired done.")
   )
 
 (setq dired-mode-hook

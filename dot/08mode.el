@@ -9,29 +9,24 @@
 ;;====================================
 ;;;;view-mode
 ;;====================================
-(require 'view)
-(define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
-
-
-;;====================================
-;;;;bash-completion
-;;====================================
-;;(load "~/.emacs.d/site-lisp/bash-completion.el")
+(with-eval-after-load 'view
+  (define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t))))
 
 
 ;;====================================
 ;;;;go-mode
 ;;====================================
-;;(load "~/.emacs.d/site-lisp/go-mode.el")
-;;   
-;;  (autoload 'go-mode "go-mode" nil t)
-;;  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+;; (autoload 'go-mode "~/.emacs.d/site-lisp/go-mode.el" nil t)
+;; ;;   
+;; (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
 
 ;;====================================
 ;;;;yaml-mode
 ;;====================================
-;;(load "~/.emacs.d/site-lisp/yaml-mode.el")
+;; (autoload 'yaml-mode "~/.emacs.d/site-lisp/yaml-mode.el" nil t)
+;; ;;
+;; (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
 
 
 ;;====================================
@@ -72,8 +67,9 @@
 ;; error in process sentinel: elpy-rpc--default-error-callback: peculiar error: "exited abnormally with code 1"
 ;; M-x elpy-rpc-reinstall-virtualenv
 
-(if (fboundp 'elpy-enable)
-    (elpy-enable))
+;;;; comment for 1 sec
+;; (if (fboundp 'elpy-enable)
+;;     (elpy-enable))
 
 ;;====================================
 ;;;; git
@@ -94,7 +90,7 @@
 ;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
-(load "~/.emacs.d/site-lisp/buffer-focus-hook.el")
+(autoload 'buffer-focus-in-callback "~/.emacs.d/site-lisp/buffer-focus-hook.el")
 
 (defun ak-org-focus-in ()
   (message "no xcv."))
@@ -103,11 +99,14 @@
   (message "xcv enable.")
   t)
 
-(add-hook 'org-mode-hook (lambda()
-			   (setq-local cua-enable-cua-keys nil)
-			   ;;           C-y is not cua-paste but org-yank
-			   (define-key org-mode-map (kbd "C-y") 'org-yank)
-			   ;;(define-key org-mode-map (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
-			   (buffer-focus-in-callback 'ak-org-focus-in)
-			   (buffer-focus-out-callback 'ak-org-focus-out)
-			   ))
+(with-eval-after-load 'org
+  ;;           C-y is not cua-paste but org-yank
+  (define-key org-mode-map (kbd "C-y") 'org-yank)
+  )
+
+(add-hook 'org-mode-hook
+	  (lambda()
+	    (setq-local cua-enable-cua-keys nil)
+	    (buffer-focus-in-callback 'ak-org-focus-in)
+	    (buffer-focus-out-callback 'ak-org-focus-out)
+	    ))
