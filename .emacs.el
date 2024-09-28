@@ -251,10 +251,10 @@
 ;; (global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
 ;; (global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
 ;; (global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
-(global-set-key [C-up]   #'(lambda()(interactive "^")(scroll-down 1)(previous-line 1)))
-(global-set-key [C-down] #'(lambda()(interactive "^")(scroll-up   1)(next-line     1)))
-(global-set-key [s-up]   #'(lambda()(interactive "^")(scroll-down 4)(previous-line 4)))
-(global-set-key [s-down] #'(lambda()(interactive "^")(scroll-up   4)(next-line     4)))
+(global-set-key [C-up]   #'(lambda()(interactive "^")(scroll-down 1)(forward-line -1)))
+(global-set-key [C-down] #'(lambda()(interactive "^")(scroll-up   1)(forward-line  1)))
+(global-set-key [s-up]   #'(lambda()(interactive "^")(scroll-down 4)(forward-line -4)))
+(global-set-key [s-down] #'(lambda()(interactive "^")(scroll-up   4)(forward-line  4)))
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
 
@@ -278,11 +278,11 @@
 ;; ;; MAC OSX option key + up down left right
 ;; ;;;; [M-right]   ;; previous word
 ;; ;;;; [M-left]    ;; next word
-;; (global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
-;;                             (if (eolp) (next-line))
+;; (global-set-key (kbd "<M-down>") #'(lambda()(interactive "^")
+;;                             (if (eolp) (forward-line))
 ;;                             (end-of-line)))
-;; (global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
-;;                             (if (bolp) (previous-line))
+;; (global-set-key (kbd "<M-up>")   #'(lambda()(interactive "^")
+;;                             (if (bolp) (forward-line -1))
 ;;                             (beginning-of-line)))
 
 ;; scroll other window 2 line
@@ -333,7 +333,7 @@
       ;;else
       (if (not this-command-keys-shift-translated)
 	  (progn (scroll-up )
-		 (next-line 1))
+		 (forward-line 1))
         ;;else
         (let ((po (point)))
           (move-to-window-line -1)      ;move cursor to window end
@@ -477,19 +477,23 @@
 (global-set-key [C-end]   'end-of-buffer)
 (global-set-key [home]  'ak-beginning-of-buffer)
 (global-set-key [end]   'ak-end-of-buffer)
-(defun ak-beginning-of-buffer(&optional arg)
+(defun ak-beginning-of-buffer()
   "set cursor at beginning of buffer or line(shift)"
   (interactive "^")
   (if this-command-keys-shift-translated
       (ak-home-toggle)
-    (beginning-of-buffer arg)
+    ;;(beginning-of-buffer arg) ;;Warning
+    (call-interactively 'beginning-of-buffer)
   ))
-(defun ak-end-of-buffer(&optional arg)
+;;(defun ak-end-of-buffer(&optional arg)
+(defun ak-end-of-buffer()
   "set cursor at end of buffer or line(shift)"
   (interactive "^")
   (if this-command-keys-shift-translated
-      (move-end-of-line arg)
-    (end-of-buffer arg)
+      (end-of-line)
+    ;;(end-of-buffer arg) ;;Warning
+    ;; [Byte compile] Warning: ‘end-of-buffer’ is for interactive use only; use ‘(goto-char (point-max))’ instead.
+    (call-interactively 'end-of-buffer)
   ))
 
 
@@ -528,7 +532,7 @@
 (defun ak-cua-scroll-up (&optional arg)
   (interactive "^P")
   (cua-scroll-up arg)
-  (next-line 1))
+  (forward-line 1))
 
 ;;;; org-mode 
 ;; see org-mode-hook
@@ -555,14 +559,9 @@ With prefix argument, activate previous rectangle if possible."
 
 (setq dired-clean-up-buffers-too nil)
 ;; Save Z directory
-(setq dired-default-directory default-directory)
-
-;; Auto revert files when they change
-(global-auto-revert-mode t)
-;; Also auto refresh dired, but be quiet about it
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
-;;(setq auto-revert-interval 5) ;;default
+;;(setq dired-default-directory default-directory)
+;;;;Warning: assignment to free variable ‘dired-default-directory’
+(defvar dired-default-directory default-directory)
 
 ;; Extra keybinds for dired mode
 
@@ -585,10 +584,10 @@ With prefix argument, activate previous rectangle if possible."
   (define-key dired-mode-map "h" #'(lambda()(interactive)(dired "~")))
   (define-key dired-mode-map "r" #'(lambda()(interactive)(dired "/")))
   (define-key dired-mode-map "z" #'(lambda()(interactive)(dired dired-default-directory)))
-  (and (setq a-directory (getenv "A_DIRECTORY")) (define-key dired-mode-map "a" #'(lambda()(interactive)(dired a-directory))))
-  (and (setq b-directory (getenv "B_DIRECTORY")) (define-key dired-mode-map "b" #'(lambda()(interactive)(dired b-directory))))
-  (and (setq c-directory (getenv "C_DIRECTORY")) (define-key dired-mode-map "c" #'(lambda()(interactive)(dired c-directory))))
-  (and (setq e-directory (getenv "E_DIRECTORY")) (define-key dired-mode-map "e" #'(lambda()(interactive)(dired e-directory))))
+  (and (getenv "A_DIRECTORY") (define-key dired-mode-map "a" #'(lambda()(interactive)(dired (getenv "A_DIRECTORY")))))
+  (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" #'(lambda()(interactive)(dired (getenv "B_DIRECTORY")))))
+  (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" #'(lambda()(interactive)(dired (getenv "C_DIRECTORY")))))
+  (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" #'(lambda()(interactive)(dired (getenv "E_DIRECTORY")))))
 
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
@@ -614,11 +613,11 @@ With prefix argument, activate previous rectangle if possible."
   ;;(message "eval-after-load 'dired done.")
   )
 
-(setq dired-mode-hook
-      '(lambda ()
-         ;;(dired-omit-mode 1)
-         (setq truncate-lines 1)
-         ))
+(add-hook 'dired-mode-hook
+	  (lambda ()
+            ;;(dired-omit-mode 1)
+            (setq truncate-lines 1)
+            ))
 
 (defun ak-dired-find-file (&optional arg)
   "find file or select char."
@@ -639,20 +638,20 @@ With prefix argument, activate previous rectangle if possible."
     )
   )
 
-(defun ak-dired-beginning-of-buffer(&optional arg)
+(defun ak-dired-beginning-of-buffer()
   "in dired set cursor at first file"
-  (interactive "^p")
+  (interactive "^")
   (if this-command-keys-shift-translated
-      (move-beginning-of-line arg)
+      (beginning-of-line)
     ;(setq mark-active nil)
     (goto-char (point-min))
-    (dired-next-line 4))
+    (dired-next-line 3))
   )
-(defun ak-dired-end-of-buffer(&optional arg)
+(defun ak-dired-end-of-buffer()
   "in dired set cursor at last file"
-  (interactive "^p")
+  (interactive "^")
   (if this-command-keys-shift-translated
-      (move-end-of-line arg)
+      (end-of-line)
     ;(setq mark-active nil)
     (goto-char (point-max))
     (dired-previous-line 1))
@@ -1066,15 +1065,14 @@ With prefix argument, activate previous rectangle if possible."
 (with-eval-after-load 'shell
   (load "~/.emacs.d/site-lisp/tails-comint-history.el")
   ;; comint 関係の設定
-  (setq shell-dirstack-query "pwd")
   (setq comint-process-echoes t)
   (setq comint-input-autoexpand nil)
-                                        ;(setq comint-input-autoexpand 'input)
-                                        ;(setq comint-input-autoexpand 'history)
+  ;;(setq comint-input-autoexpand 'input)
+  ;;(setq comint-input-autoexpand 'history)
   (setq comint-scroll-to-bottom-on-input t)
-                                        ;(setq comint-scroll-to-bottom-on-output t)
+  ;;(setq comint-scroll-to-bottom-on-output t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-  (define-key shell-mode-map  [f5]     #'(lambda()(interactive)(dirs)))
+  (define-key shell-mode-map  [f5]     #'(lambda()(interactive)(shell-resync-dirs)))
   (define-key comint-mode-map [home]   'beginning-of-buffer)
   (define-key comint-mode-map [end]    'end-of-buffer)
   (define-key comint-mode-map [C-up]   #'(lambda()(interactive)(scroll-down 1)))
@@ -1083,24 +1081,25 @@ With prefix argument, activate previous rectangle if possible."
   (define-key comint-mode-map [down]   'ak-shell-down)
   )
 
-(setq shell-mode-hook
-      '(lambda ()
-	 (dirtrack-mode)
-         ))
+(add-hook 'shell-mode-hook
+	  (lambda ()
+	    (dirtrack-mode)
+	    (setq shell-dirstack-query "pwd")
+            ))
 
 (defun ak-shell-down ()
   "next command by down arrow at shell mode."
   (interactive "^")
   (if (= (point-max) (point))
       (tails-comint-next-input)  ;(comint-next-input 1)
-    (next-line)))
+    (forward-line)))
 
 (defun ak-shell-up ()
   "prev command by up arrow at shell mode."
   (interactive "^")
   (if (= (point-max) (point))
       (tails-comint-previous-input)     ;(comint-previous-input 1)
-    (previous-line)))
+    (forward-line -1)))
 
 ;(setq comint-password-prompt-regexp
 ;      "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'"
@@ -1180,28 +1179,21 @@ With prefix argument, activate previous rectangle if possible."
       (string-match "^TAGS" name)
       ))
 
-;; Auto revert files when they change
-(global-auto-revert-mode t)
-;; Also auto refresh buffer list and dired, but be quiet about it
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
-;;(setq auto-revert-interval 5) ;;default
-
 ;;(defun list-buffers-if-exist()
 ;;  (and (get-buffer "*Buffer List*") (get-buffer-window (get-buffer "*Buffer List*")) (list-buffers)))
 (defun list-buffers-if-exist()
-  (let ((buflist (get-buffer "*Buffer List*"))
-	(orgint auto-revert-interval))
+  (let ((buflist (get-buffer "*Buffer List*")))
     (if buflist
 	(if (get-buffer-window buflist)
 	    (list-buffers)
 	  ;;else
 	  (if (get-buffer-window-list buflist nil t)
-	      (progn
+	      (when (fboundp 'auto-revert-set-timer)
 		;; Update Buffer List on other frame
-		(setq auto-revert-interval 0.1)
-		(auto-revert-set-timer)
-		(setq auto-revert-interval orgint))
+		(let ((orgint auto-revert-interval))
+		  (setq auto-revert-interval 0.1)
+		  (auto-revert-set-timer)
+		  (setq auto-revert-interval orgint)))
 	    )))
     ))
 
@@ -1291,8 +1283,10 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;;;view-mode
 ;;====================================
-(with-eval-after-load 'view
-  (define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t))))
+(add-hook 'view-mode-hook
+	  (lambda()
+	    (local-set-key [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
+	    ))
 
 
 ;;====================================
@@ -1320,27 +1314,26 @@ With prefix argument, activate previous rectangle if possible."
 ;;(require 'markdown-mode "markdown-mode.el" t)
 ;; M-x markdown-live-preview-mode
 ;; C-c C-c l
-(if (fboundp 'markdown-mode)
-    (progn
-      (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-      (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-      (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
-      (setq markdown-command "markdown")  ;;default legacy command
+(when (fboundp 'markdown-mode)
+  ;; (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+  ;; (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  ;; (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
-      (setq markdown-mode-hook
-	    '(lambda ()
-	       (setq markdown-command-needs-filename t)
-	       ;; markdown preview mode
-	       ;; M-x markdown-preview-mode
-	       (define-key markdown-mode-map (kbd "C-c p") 'markdown-preview-mode)
-	       (setq markdown-preview-stylesheets
-		     (list "~/.emacs.d/css/md.css")
-		     ;;(list "~/.emacs.d/markdown/Clearness.css")
-		     ;;(list "~/.emacs.d/markdown/Solarized(Dark).css")
-		     ;;(list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css")
-		     )
-	       ))))
+  (add-hook 'markdown-mode-hook
+	    (lambda ()
+	      ;;(setq markdown-command "markdown")  ;;default legacy command
+	      ;;(setq markdown-command-needs-filename nil) ;;default=nil:stdin t:filename
+	      (setq markdown-preview-stylesheets
+		    (list "~/.emacs.d/css/md.css")
+		    ;;(list "~/.emacs.d/markdown/Clearness.css")
+		    ;;(list "~/.emacs.d/markdown/Solarized(Dark).css")
+		    ;;(list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css")
+		    )
+	      ;; markdown preview mode
+	      ;; M-x markdown-preview-mode
+	      (local-set-key (kbd "C-c p") 'markdown-preview-mode)
+	      )))
 
 ;;====================================
 ;;;; elpy  python developing environment
@@ -1372,7 +1365,7 @@ With prefix argument, activate previous rectangle if possible."
 ;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
-(autoload 'buffer-focus-in-callback "~/.emacs.d/site-lisp/buffer-focus-hook.el")
+(autoload 'buffer-focus-in-callback  "~/.emacs.d/site-lisp/buffer-focus-hook.el")
 
 (defun ak-org-focus-in ()
   (message "no xcv."))
@@ -1381,16 +1374,12 @@ With prefix argument, activate previous rectangle if possible."
   (message "xcv enable.")
   t)
 
-(with-eval-after-load 'org
-  ;;           C-y is not cua-paste but org-yank
-  (define-key org-mode-map (kbd "C-y") 'org-yank)
-  )
-
 (add-hook 'org-mode-hook
 	  (lambda()
 	    (setq-local cua-enable-cua-keys nil)
 	    (buffer-focus-in-callback 'ak-org-focus-in)
 	    (buffer-focus-out-callback 'ak-org-focus-out)
+	    (local-set-key (kbd "C-y") 'org-yank)
 	    ))
 
 ;; ------ 09org.el ------
@@ -1474,3 +1463,15 @@ With prefix argument, activate previous rectangle if possible."
 (defun ak-prev-frame ()
   (interactive)
   (other-frame -1))
+
+;;====================================
+;;  auto revert setting dired/buffer
+;;====================================
+
+;; Auto revert files when they change
+(global-auto-revert-mode t) ;; comment this line if you dont need.
+ 
+;; Also auto refresh dired, but be quiet about it
+(setq global-auto-revert-non-file-buffers t) ;;default: nil
+(setq auto-revert-verbose nil) ;;default: t
+(setq auto-revert-interval 5) ;;default: 5

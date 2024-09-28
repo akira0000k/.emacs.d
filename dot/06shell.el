@@ -12,15 +12,14 @@
 (with-eval-after-load 'shell
   (load "~/.emacs.d/site-lisp/tails-comint-history.el")
   ;; comint 関係の設定
-  (setq shell-dirstack-query "pwd")
   (setq comint-process-echoes t)
   (setq comint-input-autoexpand nil)
-                                        ;(setq comint-input-autoexpand 'input)
-                                        ;(setq comint-input-autoexpand 'history)
+  ;;(setq comint-input-autoexpand 'input)
+  ;;(setq comint-input-autoexpand 'history)
   (setq comint-scroll-to-bottom-on-input t)
-                                        ;(setq comint-scroll-to-bottom-on-output t)
+  ;;(setq comint-scroll-to-bottom-on-output t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-  (define-key shell-mode-map  [f5]     #'(lambda()(interactive)(dirs)))
+  (define-key shell-mode-map  [f5]     #'(lambda()(interactive)(shell-resync-dirs)))
   (define-key comint-mode-map [home]   'beginning-of-buffer)
   (define-key comint-mode-map [end]    'end-of-buffer)
   (define-key comint-mode-map [C-up]   #'(lambda()(interactive)(scroll-down 1)))
@@ -29,24 +28,25 @@
   (define-key comint-mode-map [down]   'ak-shell-down)
   )
 
-(setq shell-mode-hook
-      '(lambda ()
-	 (dirtrack-mode)
-         ))
+(add-hook 'shell-mode-hook
+	  (lambda ()
+	    (dirtrack-mode)
+	    (setq shell-dirstack-query "pwd")
+            ))
 
 (defun ak-shell-down ()
   "next command by down arrow at shell mode."
   (interactive "^")
   (if (= (point-max) (point))
       (tails-comint-next-input)  ;(comint-next-input 1)
-    (next-line)))
+    (forward-line)))
 
 (defun ak-shell-up ()
   "prev command by up arrow at shell mode."
   (interactive "^")
   (if (= (point-max) (point))
       (tails-comint-previous-input)     ;(comint-previous-input 1)
-    (previous-line)))
+    (forward-line -1)))
 
 ;(setq comint-password-prompt-regexp
 ;      "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'"

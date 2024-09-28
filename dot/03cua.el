@@ -35,7 +35,7 @@
 (defun ak-cua-scroll-up (&optional arg)
   (interactive "^P")
   (cua-scroll-up arg)
-  (next-line 1))
+  (forward-line 1))
 
 ;;;; org-mode 
 ;; see org-mode-hook

@@ -9,14 +9,9 @@
 
 (setq dired-clean-up-buffers-too nil)
 ;; Save Z directory
-(setq dired-default-directory default-directory)
-
-;; Auto revert files when they change
-(global-auto-revert-mode t)
-;; Also auto refresh dired, but be quiet about it
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
-;;(setq auto-revert-interval 5) ;;default
+;;(setq dired-default-directory default-directory)
+;;;;Warning: assignment to free variable ‘dired-default-directory’
+(defvar dired-default-directory default-directory)
 
 ;; Extra keybinds for dired mode
 
@@ -39,10 +34,10 @@
   (define-key dired-mode-map "h" #'(lambda()(interactive)(dired "~")))
   (define-key dired-mode-map "r" #'(lambda()(interactive)(dired "/")))
   (define-key dired-mode-map "z" #'(lambda()(interactive)(dired dired-default-directory)))
-  (and (setq a-directory (getenv "A_DIRECTORY")) (define-key dired-mode-map "a" #'(lambda()(interactive)(dired a-directory))))
-  (and (setq b-directory (getenv "B_DIRECTORY")) (define-key dired-mode-map "b" #'(lambda()(interactive)(dired b-directory))))
-  (and (setq c-directory (getenv "C_DIRECTORY")) (define-key dired-mode-map "c" #'(lambda()(interactive)(dired c-directory))))
-  (and (setq e-directory (getenv "E_DIRECTORY")) (define-key dired-mode-map "e" #'(lambda()(interactive)(dired e-directory))))
+  (and (getenv "A_DIRECTORY") (define-key dired-mode-map "a" #'(lambda()(interactive)(dired (getenv "A_DIRECTORY")))))
+  (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" #'(lambda()(interactive)(dired (getenv "B_DIRECTORY")))))
+  (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" #'(lambda()(interactive)(dired (getenv "C_DIRECTORY")))))
+  (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" #'(lambda()(interactive)(dired (getenv "E_DIRECTORY")))))
 
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
@@ -68,11 +63,11 @@
   ;;(message "eval-after-load 'dired done.")
   )
 
-(setq dired-mode-hook
-      '(lambda ()
-         ;;(dired-omit-mode 1)
-         (setq truncate-lines 1)
-         ))
+(add-hook 'dired-mode-hook
+	  (lambda ()
+            ;;(dired-omit-mode 1)
+            (setq truncate-lines 1)
+            ))
 
 (defun ak-dired-find-file (&optional arg)
   "find file or select char."
@@ -93,20 +88,20 @@
     )
   )
 
-(defun ak-dired-beginning-of-buffer(&optional arg)
+(defun ak-dired-beginning-of-buffer()
   "in dired set cursor at first file"
-  (interactive "^p")
+  (interactive "^")
   (if this-command-keys-shift-translated
-      (move-beginning-of-line arg)
+      (beginning-of-line)
     ;(setq mark-active nil)
     (goto-char (point-min))
-    (dired-next-line 4))
+    (dired-next-line 3))
   )
-(defun ak-dired-end-of-buffer(&optional arg)
+(defun ak-dired-end-of-buffer()
   "in dired set cursor at last file"
-  (interactive "^p")
+  (interactive "^")
   (if this-command-keys-shift-translated
-      (move-end-of-line arg)
+      (end-of-line)
     ;(setq mark-active nil)
     (goto-char (point-max))
     (dired-previous-line 1))

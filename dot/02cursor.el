@@ -13,10 +13,10 @@
 ;; (global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
 ;; (global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
 ;; (global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
-(global-set-key [C-up]   #'(lambda()(interactive "^")(scroll-down 1)(previous-line 1)))
-(global-set-key [C-down] #'(lambda()(interactive "^")(scroll-up   1)(next-line     1)))
-(global-set-key [s-up]   #'(lambda()(interactive "^")(scroll-down 4)(previous-line 4)))
-(global-set-key [s-down] #'(lambda()(interactive "^")(scroll-up   4)(next-line     4)))
+(global-set-key [C-up]   #'(lambda()(interactive "^")(scroll-down 1)(forward-line -1)))
+(global-set-key [C-down] #'(lambda()(interactive "^")(scroll-up   1)(forward-line  1)))
+(global-set-key [s-up]   #'(lambda()(interactive "^")(scroll-down 4)(forward-line -4)))
+(global-set-key [s-down] #'(lambda()(interactive "^")(scroll-up   4)(forward-line  4)))
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
 
@@ -40,11 +40,11 @@
 ;; ;; MAC OSX option key + up down left right
 ;; ;;;; [M-right]   ;; previous word
 ;; ;;;; [M-left]    ;; next word
-;; (global-set-key (kbd "<M-down>") '(lambda()(interactive "^")
-;;                             (if (eolp) (next-line))
+;; (global-set-key (kbd "<M-down>") #'(lambda()(interactive "^")
+;;                             (if (eolp) (forward-line))
 ;;                             (end-of-line)))
-;; (global-set-key (kbd "<M-up>")   '(lambda()(interactive "^")
-;;                             (if (bolp) (previous-line))
+;; (global-set-key (kbd "<M-up>")   #'(lambda()(interactive "^")
+;;                             (if (bolp) (forward-line -1))
 ;;                             (beginning-of-line)))
 
 ;; scroll other window 2 line
@@ -95,7 +95,7 @@
       ;;else
       (if (not this-command-keys-shift-translated)
 	  (progn (scroll-up )
-		 (next-line 1))
+		 (forward-line 1))
         ;;else
         (let ((po (point)))
           (move-to-window-line -1)      ;move cursor to window end
@@ -239,17 +239,21 @@
 (global-set-key [C-end]   'end-of-buffer)
 (global-set-key [home]  'ak-beginning-of-buffer)
 (global-set-key [end]   'ak-end-of-buffer)
-(defun ak-beginning-of-buffer(&optional arg)
+(defun ak-beginning-of-buffer()
   "set cursor at beginning of buffer or line(shift)"
   (interactive "^")
   (if this-command-keys-shift-translated
       (ak-home-toggle)
-    (beginning-of-buffer arg)
+    ;;(beginning-of-buffer arg) ;;Warning
+    (call-interactively 'beginning-of-buffer)
   ))
-(defun ak-end-of-buffer(&optional arg)
+;;(defun ak-end-of-buffer(&optional arg)
+(defun ak-end-of-buffer()
   "set cursor at end of buffer or line(shift)"
   (interactive "^")
   (if this-command-keys-shift-translated
-      (move-end-of-line arg)
-    (end-of-buffer arg)
+      (end-of-line)
+    ;;(end-of-buffer arg) ;;Warning
+    ;; [Byte compile] Warning: ‘end-of-buffer’ is for interactive use only; use ‘(goto-char (point-max))’ instead.
+    (call-interactively 'end-of-buffer)
   ))

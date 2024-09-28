@@ -63,28 +63,21 @@
       (string-match "^TAGS" name)
       ))
 
-;; Auto revert files when they change
-(global-auto-revert-mode t)
-;; Also auto refresh buffer list and dired, but be quiet about it
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
-;;(setq auto-revert-interval 5) ;;default
-
 ;;(defun list-buffers-if-exist()
 ;;  (and (get-buffer "*Buffer List*") (get-buffer-window (get-buffer "*Buffer List*")) (list-buffers)))
 (defun list-buffers-if-exist()
-  (let ((buflist (get-buffer "*Buffer List*"))
-	(orgint auto-revert-interval))
+  (let ((buflist (get-buffer "*Buffer List*")))
     (if buflist
 	(if (get-buffer-window buflist)
 	    (list-buffers)
 	  ;;else
 	  (if (get-buffer-window-list buflist nil t)
-	      (progn
+	      (when (fboundp 'auto-revert-set-timer)
 		;; Update Buffer List on other frame
-		(setq auto-revert-interval 0.1)
-		(auto-revert-set-timer)
-		(setq auto-revert-interval orgint))
+		(let ((orgint auto-revert-interval))
+		  (setq auto-revert-interval 0.1)
+		  (auto-revert-set-timer)
+		  (setq auto-revert-interval orgint)))
 	    )))
     ))
 

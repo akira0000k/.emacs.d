@@ -3,11 +3,11 @@
 ;; https://emacs.stackexchange.com/questions/32150/how-to-add-a-timestamp-to-each-entry-in-emacs-messages-buffer
 ;;
 (defun my/ad-timestamp-message (FORMAT-STRING &rest args)
-  "Advice to run before `message' that prepends a timestamp to each message.
+  "Advice to run before `message\\=' that prepends a timestamp to each message.
 	Activate this advice with:
-	  (advice-add 'message :before 'my/ad-timestamp-message)
+	  (advice-add \\='message :before \\='my/ad-timestamp-message)
 	Deactivate this advice with:
-	  (advice-remove 'message 'my/ad-timestamp-message)"
+	  (advice-remove \\='message \\='my/ad-timestamp-message)"
   (if message-log-max
       (let ((deactivate-mark nil)
 	    (inhibit-read-only t))
