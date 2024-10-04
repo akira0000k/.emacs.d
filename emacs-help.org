@@ -54,8 +54,8 @@
     | g     | f5       | s-u | ディレクトリ表示更新                |
     | p     | up       |     | 前の行                              |
     | n     | down     |     | 次の行                              |
-    | <     |          |     | 前のdirectory行                     |
-    | >     |          |     | 次のdirectory行                     |
+    | <     | P        |     | 前のdirectory行                     |
+    | >     | N        |     | 次のdirectory行                     |
     | f     | right    |     | directory降下 または ファイルを開く |
     | ^     | left     |     | directory上昇                       |
     | v     |          |     | ファイル view (read only)           |
