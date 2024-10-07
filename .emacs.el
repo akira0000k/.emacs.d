@@ -251,10 +251,18 @@
 ;; (global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
 ;; (global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
 ;; (global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
-(global-set-key [C-up]   #'(lambda()(interactive "^")(scroll-down 1)(forward-line -1)))
-(global-set-key [C-down] #'(lambda()(interactive "^")(scroll-up   1)(forward-line  1)))
-(global-set-key [s-up]   #'(lambda()(interactive "^")(scroll-down 4)(forward-line -4)))
-(global-set-key [s-down] #'(lambda()(interactive "^")(scroll-up   4)(forward-line  4)))
+(defun ak-line-up()        (interactive "^")(or (ak-first-page-p)(scroll-down 1))(forward-line -1))
+(defun ak-line-down()      (interactive "^")(scroll-up   1)(forward-line  1))
+(defun ak-line-up-fast()   (interactive "^")(or (ak-first-page-p)(scroll-down 4))(forward-line -4))
+(defun ak-line-down-fast() (interactive "^")(scroll-up   4)(forward-line  4))
+(global-set-key [C-up]   'ak-line-up)
+(global-set-key [C-down] 'ak-line-down)
+(global-set-key [s-up]   'ak-line-up-fast)
+(global-set-key [s-down] 'ak-line-down-fast)
+(global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
+(global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
+;;(global-set-key (kbd "C-s-p") 'ak-line-up)
+;;(global-set-key (kbd "C-s-n") 'ak-line-down)
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
 
@@ -594,19 +602,15 @@ With prefix argument, activate previous rectangle if possible."
   (defalias 'ak-dired-previous-line 'previous-line)
   (define-key dired-mode-map "\C-n" 'ak-dired-next-line)
   (define-key dired-mode-map "\C-p" 'ak-dired-previous-line)
-  ;; keep cursor on file name
-  (define-key dired-mode-map [C-up]   #'(lambda()(interactive "^")
-			      (let ( (pos0 (current-line)) )
-				(scroll-down 1)(move-to-window-line pos0)(dired-next-line 0))))
-  (define-key dired-mode-map [C-down] #'(lambda()(interactive "^")
-			      (let ( (pos0 (current-line)) )
-				(scroll-up 1)(move-to-window-line pos0)(dired-next-line 0))))
-  (define-key dired-mode-map [s-up]   #'(lambda()(interactive "^")
-			      (let ( (pos0 (current-line)) )
-				(scroll-down 4)(move-to-window-line pos0)(dired-next-line 0))))
-  (define-key dired-mode-map [s-down] #'(lambda()(interactive "^")
-			      (let ( (pos0 (current-line)) )
-				(scroll-up 4)(move-to-window-line pos0)(dired-next-line 0))))
+
+  ;; line scroll and keep cursor on file name
+  (define-key dired-mode-map [C-up]   'ak-dired-line-up       )
+  (define-key dired-mode-map [C-down] 'ak-dired-line-down     )
+  (define-key dired-mode-map [s-up]   'ak-dired-line-up-fast  )
+  (define-key dired-mode-map [s-down] 'ak-dired-line-down-fast)
+  (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
+  (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
+
   ;; skip files
   (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
   (define-key dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
@@ -638,6 +642,8 @@ With prefix argument, activate previous rectangle if possible."
     )
   )
 
+;;(defvar dired-first-lines 4)
+(defvar dired-first-lines 3)
 (defun ak-dired-beginning-of-buffer()
   "in dired set cursor at first file"
   (interactive "^")
@@ -645,7 +651,7 @@ With prefix argument, activate previous rectangle if possible."
       (beginning-of-line)
     ;(setq mark-active nil)
     (goto-char (point-min))
-    (dired-next-line 3))
+    (dired-next-line dired-first-lines))
   )
 (defun ak-dired-end-of-buffer()
   "in dired set cursor at last file"
@@ -663,7 +669,7 @@ With prefix argument, activate previous rectangle if possible."
   (if (ak-first-page-p)
       (progn
         (move-to-window-line 0)
-        (dired-next-line 4))
+        (dired-next-line dired-first-lines))
     (scroll-down)
     (dired-previous-line 1))
   )
@@ -677,6 +683,24 @@ With prefix argument, activate previous rectangle if possible."
     (scroll-up)
     (dired-next-line 1))
   )
+
+(defun ak-dired-line-up()        (interactive "^")
+       (let ( (pos0 (current-line)) )
+	 (if (ak-first-page-p)
+	     (dired-next-line -1)
+	   (scroll-down 1)(move-to-window-line pos0)(dired-next-line 0))))
+(defun ak-dired-line-down()      (interactive "^")
+       (let ( (pos0 (current-line)) )
+	 (scroll-up   1)(move-to-window-line pos0)(dired-next-line 0)))
+(defun ak-dired-line-up-fast()   (interactive "^")
+       (let ( (pos0 (current-line)) )
+	 (if (ak-first-page-p)
+	     (dired-next-line -4)
+	   (scroll-down 4)(move-to-window-line pos0)(dired-next-line 0))))
+(defun ak-dired-line-down-fast() (interactive "^")
+       (let ( (pos0 (current-line)) )
+	 (scroll-up   4)(move-to-window-line pos0)(dired-next-line 0)))
+
 (defun ak-dired-find-file-hexl ()
   "In dired, visit the Binary file in hexl-mode named on this line."
   (interactive)

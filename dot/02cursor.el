@@ -13,10 +13,18 @@
 ;; (global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
 ;; (global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
 ;; (global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
-(global-set-key [C-up]   #'(lambda()(interactive "^")(scroll-down 1)(forward-line -1)))
-(global-set-key [C-down] #'(lambda()(interactive "^")(scroll-up   1)(forward-line  1)))
-(global-set-key [s-up]   #'(lambda()(interactive "^")(scroll-down 4)(forward-line -4)))
-(global-set-key [s-down] #'(lambda()(interactive "^")(scroll-up   4)(forward-line  4)))
+(defun ak-line-up()        (interactive "^")(or (ak-first-page-p)(scroll-down 1))(forward-line -1))
+(defun ak-line-down()      (interactive "^")(scroll-up   1)(forward-line  1))
+(defun ak-line-up-fast()   (interactive "^")(or (ak-first-page-p)(scroll-down 4))(forward-line -4))
+(defun ak-line-down-fast() (interactive "^")(scroll-up   4)(forward-line  4))
+(global-set-key [C-up]   'ak-line-up)
+(global-set-key [C-down] 'ak-line-down)
+(global-set-key [s-up]   'ak-line-up-fast)
+(global-set-key [s-down] 'ak-line-down-fast)
+(global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
+(global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
+;;(global-set-key (kbd "C-s-p") 'ak-line-up)
+;;(global-set-key (kbd "C-s-n") 'ak-line-down)
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
 

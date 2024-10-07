@@ -232,6 +232,7 @@
 	(ak-theme-misc))
        ((not (memq system-type '(darwin)))
 	;; for debian   TERM=xterm emacs -nw
+	(setq dired-first-lines 4)
 	)
        (nil
 	;; for MAC OSX iTerm2 3.4.16  same as XWindow Emacs
