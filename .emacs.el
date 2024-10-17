@@ -160,7 +160,6 @@
 (define-key input-decode-map "\es\e[1;2D" (kbd "s-S-<left>"))
 
 
-
 ;;====================================
 ;;;; MAC OSX command keys
 ;;====================================
@@ -205,37 +204,61 @@
 (global-set-key (kbd "s-e") 'isearch-yank-kill)
 (global-set-key (kbd "s-j") 'exchange-point-and-mark)
 ;;      HIRAGANA key
-(global-set-key (kbd "s-ち") 'mark-whole-buffer)
-(global-set-key (kbd "s-り") 'goto-line)
-(global-set-key (kbd "s-ー") 'shell-command-on-region)
-(global-set-key (kbd "s-・") 'info)
+(define-key input-decode-map (kbd "s-ち") (kbd "s-a"))	    ;;mark-whole-buffer
+(define-key input-decode-map (kbd "s-り") (kbd "s-l"))	    ;;goto-line
+(define-key input-decode-map (kbd "s-ー") (kbd "s-|"))	    ;;shell-command-on-region
+(define-key input-decode-map (kbd "s-・") (kbd "s-?"))	    ;;info
+							     
+(define-key input-decode-map (kbd "s-つ") (kbd "s-z"))	    ;;undo
+(define-key input-decode-map (kbd "s-さ") (kbd "s-x"))	    ;;kill-region
+(define-key input-decode-map (kbd "s-そ") (kbd "s-c"))	    ;;ns-copy-including-secondary / kill-ring-save
+(define-key input-decode-map (kbd "s-ひ") (kbd "s-v"))	    ;;yank
+(define-key input-decode-map (kbd "s-ん") (kbd "s-y"))	    ;;ns-paste-secondary
+							     
+(define-key input-decode-map (kbd "s-の") (kbd "s-k"))	    ;;kill-current-buffer
+(define-key input-decode-map (kbd "s-と") (kbd "s-s"))	    ;;save-buffer
+(define-key input-decode-map (kbd "s-な") (kbd "s-u"))	    ;;revert-buffer
+							     
+(define-key input-decode-map (kbd "s-み") (kbd "s-n"))	    ;;make-frame
+(define-key input-decode-map (kbd "s-て") (kbd "s-w"))	    ;;delete-frame
+(define-key input-decode-map (kbd "s-ゃ") (kbd "s-'"))	    ;;next-window-any-frame
+(define-key input-decode-map (kbd "s-へ") (kbd "s-`"))	    ;;other-frame
+(define-key input-decode-map (kbd "s-゛") (kbd "s-~"))	    ;;ak-prev-frame
 
-(global-set-key (kbd "s-つ") 'undo)
-(global-set-key (kbd "s-さ") 'kill-region)
-(global-set-key (kbd "s-そ") 'ns-copy-including-secondary) ;;kill-ring-save)
-(global-set-key (kbd "s-ひ") 'yank)
-(global-set-key (kbd "s-ん") 'ns-paste-secondary)
-
-(global-set-key (kbd "s-の") 'kill-current-buffer)
-(global-set-key (kbd "s-と") 'save-buffer)
-(global-set-key (kbd "s-な") 'revert-buffer)
-
-(global-set-key (kbd "s-み") 'make-frame)
-(global-set-key (kbd "s-て") 'delete-frame)
-(global-set-key (kbd "s-ゃ") 'next-window-any-frame) ;; 0x27 '
-(global-set-key (kbd "s-へ") 'other-frame)	     ;; 0x60 `
-;;(global-set-key (kbd "s-゛") 'ns-prev-frame)	     ;; 0x7E ~
-(global-set-key (kbd "s-゛") 'ak-prev-frame)
-
-(global-set-key (kbd "s-し") 'isearch-repeat-backward)
-(global-set-key (kbd "s-は") 'isearch-forward)
-(global-set-key (kbd "M-s-は") 'isearch-forward-regexp)
-(global-set-key (kbd "s-き") 'isearch-repeat-forward)
-(global-set-key (kbd "s-い") 'isearch-yank-kill)
-(global-set-key (kbd "s-ま") 'exchange-point-and-mark)
-
+(define-key input-decode-map (kbd "s-し")   (kbd "s-d"))    ;;isearch-repeat-backward
+(define-key input-decode-map (kbd "s-は")   (kbd "s-f"))    ;;isearch-forward
+(define-key input-decode-map (kbd "M-s-は") (kbd "M-s-f"))  ;;isearch-forward-regexp
+(define-key input-decode-map (kbd "s-き")   (kbd "s-g"))    ;;isearch-repeat-forward
+(define-key input-decode-map (kbd "s-い")   (kbd "s-e"))    ;;isearch-yank-kill
+(define-key input-decode-map (kbd "s-ま")   (kbd "s-j"))    ;;exchange-point-and-mark
 
 
+;;====================================
+;;;; Allow Meta key in Kana mode.
+;;====================================
+(define-key input-decode-map (kbd "M-ち") (kbd "M-a"))  ;;backward-sentence
+(define-key input-decode-map (kbd "M-こ") (kbd "M-b"))	;;backward-word
+(define-key input-decode-map (kbd "M-そ") (kbd "M-c"))	;;capitalize-word
+(define-key input-decode-map (kbd "M-し") (kbd "M-d"))	;;kill-word
+(define-key input-decode-map (kbd "M-い") (kbd "M-e"))	;;forward-sentence
+(define-key input-decode-map (kbd "M-は") (kbd "M-f"))	;;forward-word
+(define-key input-decode-map (kbd "M-く") (kbd "M-h"))	;;mark-paragraph
+(define-key input-decode-map (kbd "M-に") (kbd "M-i"))	;;tab-to-tab-stop
+(define-key input-decode-map (kbd "M-ま") (kbd "M-j"))	;;default-indent-new-line
+(define-key input-decode-map (kbd "M-の") (kbd "M-k"))	;;kill-sentence
+(define-key input-decode-map (kbd "M-り") (kbd "M-l"))	;;downcase-word
+(define-key input-decode-map (kbd "M-も") (kbd "M-m"))	;;back-to-indentation
+(define-key input-decode-map (kbd "M-み") (kbd "M-n"))	;;half-page-up
+(define-key input-decode-map (kbd "M-せ") (kbd "M-p"))	;;half-page-down
+(define-key input-decode-map (kbd "M-た") (kbd "M-q"))	;;fill-paragraph
+(define-key input-decode-map (kbd "M-す") (kbd "M-r"))	;;move-to-window-line-top-bottom
+(define-key input-decode-map (kbd "M-か") (kbd "M-t"))	;;transpose-words
+(define-key input-decode-map (kbd "M-な") (kbd "M-u"))	;;upcase-word
+(define-key input-decode-map (kbd "M-ひ") (kbd "M-v"))	;;ak-cua-scroll-up
+(define-key input-decode-map (kbd "M-て") (kbd "M-w"))	;;kill-ring-save
+(define-key input-decode-map (kbd "M-さ") (kbd "M-x"))	;;execute-extended-command
+(define-key input-decode-map (kbd "M-ん") (kbd "M-y"))	;;yank-pop
+(define-key input-decode-map (kbd "M-つ") (kbd "M-z"))	;;zap-to-char
 
 
 
@@ -261,8 +284,9 @@
 (global-set-key [s-down] 'ak-line-down-fast)
 (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
 (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
-;;(global-set-key (kbd "C-s-p") 'ak-line-up)
-;;(global-set-key (kbd "C-s-n") 'ak-line-down)
+(global-set-key [C-M-prior] 'backward-list)
+(global-set-key [C-M-next]  'forward-list)
+
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
 

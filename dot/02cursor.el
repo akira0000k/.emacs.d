@@ -23,8 +23,9 @@
 (global-set-key [s-down] 'ak-line-down-fast)
 (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
 (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
-;;(global-set-key (kbd "C-s-p") 'ak-line-up)
-;;(global-set-key (kbd "C-s-n") 'ak-line-down)
+(global-set-key [C-M-prior] 'backward-list)
+(global-set-key [C-M-next]  'forward-list)
+
 (global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
 (global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
 
