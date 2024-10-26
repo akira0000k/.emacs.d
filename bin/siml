@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# siml: make relative-symbolic link
+#
+#  siml  temp tmp
+#  siml  .. file [ file2... ]
+#  siml  /var/www/html test/index.html
+#
+putdir=${1:?usage: siml [outputdirectory/][altfilenane] targetobjects}
+target=${2:?usage: siml [outputdirectory/][altfilenane] targetobjects}
+REALPATH=/usr/local/bin/realpath
+
+nxtdir=$(cd "$putdir" 2>/dev/null && pwd)
+nxtfile=.
+if ! [ "$nxtdir" ]; then
+    nxtdir=$(cd $(dirname "$putdir") 2>/dev/null && pwd)
+    if ! [ "$nxtdir" ]; then
+	echo "no directory"
+	exit 1
+    else
+	nxtfile=$(basename "$putdir")
+    fi
+fi
+#echo next dir =$nxtdir
+#echo next file=$nxtfile
+
+# shift arguments $1 [$2..] <=== $2 [$3..]
+shift
+
+if [ "$2" ] && [ "$nxtfile" != "." ]; then
+    echo arg1 not directory
+    exit 2
+fi
+
+# target = $2 $3 ....
+while [ "$1" ]; do
+    rellink=$($REALPATH --no-symlinks --relative-to="$nxtdir" "$1")
+    #echo "rellink = " $rellink
+#    if :; then
+    set -x
+    ln -s "$rellink" "$putdir"
+    set +x
+#    else
+# 	pushd "$nxtdir"		>/dev/null
+# 	ln -s "$rellink" "$nxtfile"
+# 	popd			>/dev/null
+#    fi
+    shift
+done

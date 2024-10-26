@@ -9,14 +9,6 @@
 
 ;;              [C-up]                    ;; Start Mission Control @ MAC OSX
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-;; (global-set-key [C-down] #'(lambda()(interactive)(scroll-up 1)))
-;; (global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
-;; (global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
-;; (global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
-(defun ak-line-up()        (interactive "^")(or (ak-first-page-p)(scroll-down 1))(forward-line -1))
-(defun ak-line-down()      (interactive "^")(scroll-up   1)(forward-line  1))
-(defun ak-line-up-fast()   (interactive "^")(or (ak-first-page-p)(scroll-down 4))(forward-line -4))
-(defun ak-line-down-fast() (interactive "^")(scroll-up   4)(forward-line  4))
 (global-set-key [C-up]   'ak-line-up)
 (global-set-key [C-down] 'ak-line-down)
 (global-set-key [s-up]   'ak-line-up-fast)
@@ -123,26 +115,6 @@
 ;;====================================
 ;;;; goto top, mid, bottom
 ;;====================================
-;; (global-set-key (kbd "s-t") 'ak-goto-top-screen)
-;; (global-set-key (kbd "s-m") 'ak-goto-mid-screen)
-;; (global-set-key (kbd "s-b") 'ak-goto-bottom-screen)
-;; (defun ak-goto-top-screen ()
-;;   "goto cursor top of screen"
-;;   (interactive "^")
-;;   ;;(goto-char (window-start))
-;;   (move-to-window-line 0)
-;;   )
-;; (defun ak-goto-mid-screen ()
-;;   "goto cursor mid of screen"
-;;   (interactive "^")
-;;   (move-to-window-line nil)
-;;   )
-;; (defun ak-goto-bottom-screen ()
-;;   "goto cursor bottom of screen"
-;;   (interactive "^")
-;;   (move-to-window-line -1)
-;;   )
-
 (global-set-key (kbd "s-<left>")  'ak-cursor-top)
 (global-set-key (kbd "s-<right>") 'ak-cursor-bottom)
 (global-set-key (kbd "M-<left>")  'ak-cursor-top)
@@ -195,51 +167,11 @@
 ;; overwridden by cua mode
 (global-set-key (kbd "C-v") 'half-page-up)
 (global-set-key (kbd "M-v") 'half-page-down)
-(defun half-page-down()
-  "カーソルは画面内固定で半画面 scroll-down。"
-  (interactive "^")
-  (if(= (window-start) 1)
-      (progn
-        (beginning-of-line)
-        (forward-line (/ (window-body-height) -2))
-        )
-    (let ( (a (current-line)) )
-      (scroll-down (/ (window-body-height) 2))
-      (move-to-window-line a)
-      )))
-
-(defun half-page-up()
-  "カーソルは画面内固定で半画面 scroll-up。"
-  (interactive "^")
-  (if(= (window-end) (point-max))
-      (forward-line (/ (window-body-height) 2))
-    (let ( (a (current-line)) )
-      (if(< a 1) (setq a 1))
-      (scroll-up (/ (window-body-height) 2))
-      (move-to-window-line a)
-      )))
-
-(defun current-line()
-  "Return the vertical position of point..."
-  (cdr (nth 6 (posn-at-point))))
 
 ;;====================================
 ;;;; Home Toggle like Visual Studio
 ;;====================================
 (global-set-key (kbd "C-a") 'ak-home-toggle)
-(defun ak-home-toggle ()
-  "go and back between beginning of line and first char."
-  (interactive "^")
-  (if (not (bolp))
-      (beginning-of-line)
-    (beginning-of-line)
-    (while (and (not (eolp))
-                    (or (= (following-char) ?\t)
-                        (= (following-char) ?\ )))
-      (forward-char))
-    (if (eolp)
-        (beginning-of-line)))
-  )
 
 ;;====================================
 ;;;; begining/end of buffer/line(shift)

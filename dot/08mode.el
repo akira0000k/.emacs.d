@@ -9,11 +9,58 @@
 ;;====================================
 ;;;;view-mode
 ;;====================================
-(add-hook 'view-mode-hook
-	  (lambda()
-	    (local-set-key [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
-	    ))
+;; M-x view-mode  ==>  M-x v
+(defalias 'v 'view-mode)
+(global-set-key (kbd "ESC <f1>") #'(lambda() (interactive)(view-mode t)))
+;;  "E"     #'View-exit-and-edit
+;;  "q"     #'View-quit  --> [ak-]kill-current-buffer
+(setq view-inhibit-help-message t)
 
+(setq view-mode-hook
+      '(lambda()
+	 (when view-mode
+	   (message "View mode: type i (edit), Esc-f1 (view), :w (save), :q (kill)")
+	   )))
+
+(with-eval-after-load 'view
+  (define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
+  (define-key view-mode-map "i" #'(lambda()(interactive)(message "editing")(View-exit)))
+  (define-key view-mode-map "h" 'left-char)
+  (define-key view-mode-map "j" 'next-line)
+  (define-key view-mode-map "k" 'previous-line)
+  (define-key view-mode-map "l" 'right-char)
+  (define-key view-mode-map "a" 'ak-home-toggle)
+  (define-key view-mode-map "e" 'move-end-of-line)
+  (define-key view-mode-map "H" 'ak-goto-top-screen)   
+  (define-key view-mode-map "M" 'ak-goto-mid-screen)   
+  (define-key view-mode-map "L" 'ak-goto-bottom-screen)
+  (define-key view-mode-map "y"	'ak-line-up)
+  (define-key view-mode-map (kbd "RET") 'ak-line-down)
+  (define-key view-mode-map "K" 'ak-line-up)
+  (define-key view-mode-map "J" 'ak-line-down)
+  (define-key view-mode-map "u" 'half-page-down)
+  (define-key view-mode-map "d" 'half-page-up)
+  (define-key view-mode-map "b" 'ak-scroll-page-backward)
+  (define-key view-mode-map "f" 'ak-scroll-page-forward)
+  (define-key view-mode-map (kbd "DEL") 'ak-scroll-page-backward)
+  (define-key view-mode-map (kbd "SPC") 'ak-scroll-page-forward)
+  (define-key view-mode-map "G" 'end-of-buffer)
+  (define-key view-mode-map "N" 'View-search-last-regexp-backward)
+  (define-key view-mode-map (kbd ": w") 'save-buffer)
+  (define-key view-mode-map (kbd ": q") 'kill-current-buffer)
+  )
+;;  "E"     #'View-exit-and-edit
+;;  "q"     #'View-quit
+;;  ">"     #'end-of-buffer
+;;  "<"     #'beginning-of-buffer
+;;  "o"     #'View-scroll-to-buffer-end
+;;  "g"     #'View-goto-line
+;;  "s"     #'isearch-forward
+;;  "/"     #'View-search-regexp-forward
+;;  "p"     #'View-search-last-regexp-backward
+;;  "n"     #'View-search-last-regexp-forward
+;;  "."     #'set-mark-command
+;;  "x"     #'exchange-point-and-mark
 
 ;;====================================
 ;;;;go-mode

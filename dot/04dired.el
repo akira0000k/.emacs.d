@@ -9,19 +9,19 @@
 
 (setq dired-clean-up-buffers-too nil)
 ;; Save Z directory
-;;(setq dired-default-directory default-directory)
-;;;;Warning: assignment to free variable ‘dired-default-directory’
 (defvar dired-default-directory default-directory)
+;; t = Open like Vi by [right]
+(defvar ak-dired-view-on-right-arrow nil)
 
 ;; Extra keybinds for dired mode
 
 (with-eval-after-load 'dired
   (require 'dired-x)
   ;;(require 'wdired)
-  (define-key dired-mode-map [right]   'ak-dired-find-file)          ;; -> f
-  (define-key dired-mode-map [left]    'ak-dired-up-directory)       ;; <- ^
-  (define-key dired-mode-map [home]    'ak-dired-beginning-of-buffer)
-  (define-key dired-mode-map [end]     'ak-dired-end-of-buffer)
+  (define-key dired-mode-map [right]   'ak-dired-right-char)      ;; -> f, v
+  (define-key dired-mode-map [left]    'ak-dired-left-char)       ;; <- ^
+  (define-key dired-mode-map [home]    'ak-dired-home)
+  (define-key dired-mode-map [end]     'ak-dired-end)
   (define-key dired-mode-map [prior]   'ak-dired-scroll-down)
   (define-key dired-mode-map [next]    'ak-dired-scroll-up)
   (define-key dired-mode-map [f5]      'revert-buffer)               ;; g
@@ -38,6 +38,7 @@
   (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" #'(lambda()(interactive)(dired (getenv "B_DIRECTORY")))))
   (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" #'(lambda()(interactive)(dired (getenv "C_DIRECTORY")))))
   (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" #'(lambda()(interactive)(dired (getenv "E_DIRECTORY")))))
+  (define-key dired-mode-map (kbd "C-b") 'dired-up-directory)
 
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
@@ -56,6 +57,14 @@
   ;; skip files
   (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
   (define-key dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
+  (define-key dired-mode-map (kbd "C-,") 'ak-dired-beginning-of-buffer)
+  (define-key dired-mode-map (kbd "C-.") 'ak-dired-end-of-buffer)
+
+  ;; Vi-like
+  (define-key dired-mode-map "j" 'next-line)
+  (define-key dired-mode-map "k" 'previous-line)
+  (define-key dired-mode-map "J" 'ak-dired-line-down)
+  (define-key dired-mode-map "K" 'ak-dired-line-up)
   ;;(message "eval-after-load 'dired done.")
   )
 
@@ -65,16 +74,18 @@
             (setq truncate-lines 1)
             ))
 
-(defun ak-dired-find-file (&optional arg)
+(defun ak-dired-right-char (&optional arg)
   "find file or select char."
   (interactive "^p")
   (if this-command-keys-shift-translated
       (forward-char arg)
-    ;else
-    (dired-find-file)
+    ;;else
+    (if ak-dired-view-on-right-arrow
+	(dired-view-file)
+      (dired-find-file))
     )
   )
-(defun ak-dired-up-directory (&optional arg)
+(defun ak-dired-left-char (&optional arg)
   "up directory or select char."
   (interactive "^p")
   (if this-command-keys-shift-translated
@@ -86,23 +97,31 @@
 
 ;;(defvar dired-first-lines 4)
 (defvar dired-first-lines 3)
-(defun ak-dired-beginning-of-buffer()
-  "in dired set cursor at first file"
+(defun ak-dired-home()
+  "go to first file or select to col1"
   (interactive "^")
   (if this-command-keys-shift-translated
       (beginning-of-line)
-    ;(setq mark-active nil)
-    (goto-char (point-min))
-    (dired-next-line dired-first-lines))
+    (ak-dired-beginning-of-buffer))
+  )
+(defun ak-dired-beginning-of-buffer()
+  "in dired set cursor at first file"
+  (interactive "^")
+  (goto-char (point-min))
+  (dired-next-line dired-first-lines)
+  )
+(defun ak-dired-end()
+  "go to last file or select to end of line"
+  (interactive "^")
+  (if this-command-keys-shift-translated
+      (end-of-line)
+    (ak-dired-end-of-buffer))
   )
 (defun ak-dired-end-of-buffer()
   "in dired set cursor at last file"
   (interactive "^")
-  (if this-command-keys-shift-translated
-      (end-of-line)
-    ;(setq mark-active nil)
-    (goto-char (point-max))
-    (dired-previous-line 1))
+  (goto-char (point-max))
+  (dired-previous-line 1)
   )
 
 (defun ak-dired-scroll-down ()

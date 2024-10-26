@@ -88,6 +88,7 @@
     (add-to-list 'exec-path-from-shell-variables "B_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "C_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "E_DIRECTORY")
+    (add-to-list 'exec-path-from-shell-variables "Z_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "LANG")
     (add-to-list 'exec-path-from-shell-variables "LC_COLLATE")
     (exec-path-from-shell-initialize)
@@ -99,6 +100,7 @@
   (message "launch app")
   ;;(setenv  "PATH" (concat "/usr/local/bin:/Users/Akira/bin:/Users/Akira/go/bin:/usr/local/bin/go:" (getenv "PATH")))
   (ak-setenv)
+  (and (getenv "Z_DIRECTORY") (setq dired-default-directory (getenv "Z_DIRECTORY")))
   )
 ;;;; ls sort order error
 ;;(setenv "LC_COLLATE" "C")
@@ -276,8 +278,9 @@
 ;;;; |            M-x Command            |       Browser       |
 ;;;; | browse-url-default-macosx-browser | Mac OS open command |
 (when (memq system-type '(darwin))
+  (setq ak-dired-view-on-right-arrow t)
   ;;(require 'dired)
-  ;;(define-key dired-mode-map "W" 'ak-browse-url-of-dired-file)
+  ;;(define-key dired-mode-map "W" 'browse-url-of-dired-file)
   (defun browse-url-of-dired-file ()
     "In Dired, ask a WWW browser to display the file named on this line."
     (interactive)

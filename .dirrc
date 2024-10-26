@@ -1,33 +1,22 @@
 #  .dirrc
 #
 
-export A_DIRECTORY=~/go/src/sample/Twitter-v2-g8rswimmer/01timeline
-export C_DIRECTORY=~/go/src/sample/Twitter-v2-gotwtr/twtr-timeline
-
+export A_DIRECTORY=~/Documents
 export B_DIRECTORY=~/.emacs.d
+export C_DIRECTORY=~/DOCKER
 export E_DIRECTORY=~/Desktop
+export Z_DIRECTORY=~/Downloads
 
-#export A_DIRECTORY=
-#export B_DIRECTORY=
-#export C_DIRECTORY=
-#export E_DIRECTORY=
 
 alias cda="cd '$A_DIRECTORY'"
 alias cdb="cd '$B_DIRECTORY'"
 alias cdc="cd '$C_DIRECTORY'"
 alias cde="cd '$E_DIRECTORY'"
+alias cdz="cd '$Z_DIRECTORY'"
 
 
 # cda() { cd $A_DIRECTORY; }
-# cdb() { cd $B_DIRECTORY; }
-# cdc() { cd $C_DIRECTORY; }
-# cde() { cd $E_DIRECTORY; }
 # cda() { cd "$A_DIRECTORY"; }
-# cdb() { cd "$B_DIRECTORY"; }
-# cdc() { cd "$C_DIRECTORY"; }
-# cde() { cd "$E_DIRECTORY"; }
 # alias cda='cd $A_DIRECTORY' 
-# alias cdb='cd $B_DIRECTORY' 
-# alias cdc='cd $C_DIRECTORY' 
-# alias cde='cd $E_DIRECTORY' 
+# alias cda="cd '$A_DIRECTORY'"
 

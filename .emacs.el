@@ -270,14 +270,6 @@
 
 ;;              [C-up]                    ;; Start Mission Control @ MAC OSX
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-;; (global-set-key [C-down] #'(lambda()(interactive)(scroll-up 1)))
-;; (global-set-key [C-up]   #'(lambda()(interactive)(scroll-down 1)))
-;; (global-set-key [C-S-down] #'(lambda()(interactive)(scroll-up 4)))
-;; (global-set-key [C-S-up]   #'(lambda()(interactive)(scroll-down 4)))
-(defun ak-line-up()        (interactive "^")(or (ak-first-page-p)(scroll-down 1))(forward-line -1))
-(defun ak-line-down()      (interactive "^")(scroll-up   1)(forward-line  1))
-(defun ak-line-up-fast()   (interactive "^")(or (ak-first-page-p)(scroll-down 4))(forward-line -4))
-(defun ak-line-down-fast() (interactive "^")(scroll-up   4)(forward-line  4))
 (global-set-key [C-up]   'ak-line-up)
 (global-set-key [C-down] 'ak-line-down)
 (global-set-key [s-up]   'ak-line-up-fast)
@@ -384,26 +376,6 @@
 ;;====================================
 ;;;; goto top, mid, bottom
 ;;====================================
-;; (global-set-key (kbd "s-t") 'ak-goto-top-screen)
-;; (global-set-key (kbd "s-m") 'ak-goto-mid-screen)
-;; (global-set-key (kbd "s-b") 'ak-goto-bottom-screen)
-;; (defun ak-goto-top-screen ()
-;;   "goto cursor top of screen"
-;;   (interactive "^")
-;;   ;;(goto-char (window-start))
-;;   (move-to-window-line 0)
-;;   )
-;; (defun ak-goto-mid-screen ()
-;;   "goto cursor mid of screen"
-;;   (interactive "^")
-;;   (move-to-window-line nil)
-;;   )
-;; (defun ak-goto-bottom-screen ()
-;;   "goto cursor bottom of screen"
-;;   (interactive "^")
-;;   (move-to-window-line -1)
-;;   )
-
 (global-set-key (kbd "s-<left>")  'ak-cursor-top)
 (global-set-key (kbd "s-<right>") 'ak-cursor-bottom)
 (global-set-key (kbd "M-<left>")  'ak-cursor-top)
@@ -456,51 +428,11 @@
 ;; overwridden by cua mode
 (global-set-key (kbd "C-v") 'half-page-up)
 (global-set-key (kbd "M-v") 'half-page-down)
-(defun half-page-down()
-  "カーソルは画面内固定で半画面 scroll-down。"
-  (interactive "^")
-  (if(= (window-start) 1)
-      (progn
-        (beginning-of-line)
-        (forward-line (/ (window-body-height) -2))
-        )
-    (let ( (a (current-line)) )
-      (scroll-down (/ (window-body-height) 2))
-      (move-to-window-line a)
-      )))
-
-(defun half-page-up()
-  "カーソルは画面内固定で半画面 scroll-up。"
-  (interactive "^")
-  (if(= (window-end) (point-max))
-      (forward-line (/ (window-body-height) 2))
-    (let ( (a (current-line)) )
-      (if(< a 1) (setq a 1))
-      (scroll-up (/ (window-body-height) 2))
-      (move-to-window-line a)
-      )))
-
-(defun current-line()
-  "Return the vertical position of point..."
-  (cdr (nth 6 (posn-at-point))))
 
 ;;====================================
 ;;;; Home Toggle like Visual Studio
 ;;====================================
 (global-set-key (kbd "C-a") 'ak-home-toggle)
-(defun ak-home-toggle ()
-  "go and back between beginning of line and first char."
-  (interactive "^")
-  (if (not (bolp))
-      (beginning-of-line)
-    (beginning-of-line)
-    (while (and (not (eolp))
-                    (or (= (following-char) ?\t)
-                        (= (following-char) ?\ )))
-      (forward-char))
-    (if (eolp)
-        (beginning-of-line)))
-  )
 
 ;;====================================
 ;;;; begining/end of buffer/line(shift)
@@ -591,19 +523,19 @@ With prefix argument, activate previous rectangle if possible."
 
 (setq dired-clean-up-buffers-too nil)
 ;; Save Z directory
-;;(setq dired-default-directory default-directory)
-;;;;Warning: assignment to free variable ‘dired-default-directory’
 (defvar dired-default-directory default-directory)
+;; t = Open like Vi by [right]
+(defvar ak-dired-view-on-right-arrow nil)
 
 ;; Extra keybinds for dired mode
 
 (with-eval-after-load 'dired
   (require 'dired-x)
   ;;(require 'wdired)
-  (define-key dired-mode-map [right]   'ak-dired-find-file)          ;; -> f
-  (define-key dired-mode-map [left]    'ak-dired-up-directory)       ;; <- ^
-  (define-key dired-mode-map [home]    'ak-dired-beginning-of-buffer)
-  (define-key dired-mode-map [end]     'ak-dired-end-of-buffer)
+  (define-key dired-mode-map [right]   'ak-dired-right-char)      ;; -> f, v
+  (define-key dired-mode-map [left]    'ak-dired-left-char)       ;; <- ^
+  (define-key dired-mode-map [home]    'ak-dired-home)
+  (define-key dired-mode-map [end]     'ak-dired-end)
   (define-key dired-mode-map [prior]   'ak-dired-scroll-down)
   (define-key dired-mode-map [next]    'ak-dired-scroll-up)
   (define-key dired-mode-map [f5]      'revert-buffer)               ;; g
@@ -620,6 +552,7 @@ With prefix argument, activate previous rectangle if possible."
   (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" #'(lambda()(interactive)(dired (getenv "B_DIRECTORY")))))
   (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" #'(lambda()(interactive)(dired (getenv "C_DIRECTORY")))))
   (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" #'(lambda()(interactive)(dired (getenv "E_DIRECTORY")))))
+  (define-key dired-mode-map (kbd "C-b") 'dired-up-directory)
 
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
@@ -638,6 +571,14 @@ With prefix argument, activate previous rectangle if possible."
   ;; skip files
   (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
   (define-key dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
+  (define-key dired-mode-map (kbd "C-,") 'ak-dired-beginning-of-buffer)
+  (define-key dired-mode-map (kbd "C-.") 'ak-dired-end-of-buffer)
+
+  ;; Vi-like
+  (define-key dired-mode-map "j" 'next-line)
+  (define-key dired-mode-map "k" 'previous-line)
+  (define-key dired-mode-map "J" 'ak-dired-line-down)
+  (define-key dired-mode-map "K" 'ak-dired-line-up)
   ;;(message "eval-after-load 'dired done.")
   )
 
@@ -647,16 +588,18 @@ With prefix argument, activate previous rectangle if possible."
             (setq truncate-lines 1)
             ))
 
-(defun ak-dired-find-file (&optional arg)
+(defun ak-dired-right-char (&optional arg)
   "find file or select char."
   (interactive "^p")
   (if this-command-keys-shift-translated
       (forward-char arg)
-    ;else
-    (dired-find-file)
+    ;;else
+    (if ak-dired-view-on-right-arrow
+	(dired-view-file)
+      (dired-find-file))
     )
   )
-(defun ak-dired-up-directory (&optional arg)
+(defun ak-dired-left-char (&optional arg)
   "up directory or select char."
   (interactive "^p")
   (if this-command-keys-shift-translated
@@ -668,23 +611,31 @@ With prefix argument, activate previous rectangle if possible."
 
 ;;(defvar dired-first-lines 4)
 (defvar dired-first-lines 3)
-(defun ak-dired-beginning-of-buffer()
-  "in dired set cursor at first file"
+(defun ak-dired-home()
+  "go to first file or select to col1"
   (interactive "^")
   (if this-command-keys-shift-translated
       (beginning-of-line)
-    ;(setq mark-active nil)
-    (goto-char (point-min))
-    (dired-next-line dired-first-lines))
+    (ak-dired-beginning-of-buffer))
+  )
+(defun ak-dired-beginning-of-buffer()
+  "in dired set cursor at first file"
+  (interactive "^")
+  (goto-char (point-min))
+  (dired-next-line dired-first-lines)
+  )
+(defun ak-dired-end()
+  "go to last file or select to end of line"
+  (interactive "^")
+  (if this-command-keys-shift-translated
+      (end-of-line)
+    (ak-dired-end-of-buffer))
   )
 (defun ak-dired-end-of-buffer()
   "in dired set cursor at last file"
   (interactive "^")
-  (if this-command-keys-shift-translated
-      (end-of-line)
-    ;(setq mark-active nil)
-    (goto-char (point-max))
-    (dired-previous-line 1))
+  (goto-char (point-max))
+  (dired-previous-line 1)
   )
 
 (defun ak-dired-scroll-down ()
@@ -1331,11 +1282,58 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;;;view-mode
 ;;====================================
-(add-hook 'view-mode-hook
-	  (lambda()
-	    (local-set-key [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
-	    ))
+;; M-x view-mode  ==>  M-x v
+(defalias 'v 'view-mode)
+(global-set-key (kbd "ESC <f1>") #'(lambda() (interactive)(view-mode t)))
+;;  "E"     #'View-exit-and-edit
+;;  "q"     #'View-quit  --> [ak-]kill-current-buffer
+(setq view-inhibit-help-message t)
 
+(setq view-mode-hook
+      '(lambda()
+	 (when view-mode
+	   (message "View mode: type i (edit), Esc-f1 (view), :w (save), :q (kill)")
+	   )))
+
+(with-eval-after-load 'view
+  (define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
+  (define-key view-mode-map "i" #'(lambda()(interactive)(message "editing")(View-exit)))
+  (define-key view-mode-map "h" 'left-char)
+  (define-key view-mode-map "j" 'next-line)
+  (define-key view-mode-map "k" 'previous-line)
+  (define-key view-mode-map "l" 'right-char)
+  (define-key view-mode-map "a" 'ak-home-toggle)
+  (define-key view-mode-map "e" 'move-end-of-line)
+  (define-key view-mode-map "H" 'ak-goto-top-screen)   
+  (define-key view-mode-map "M" 'ak-goto-mid-screen)   
+  (define-key view-mode-map "L" 'ak-goto-bottom-screen)
+  (define-key view-mode-map "y"	'ak-line-up)
+  (define-key view-mode-map (kbd "RET") 'ak-line-down)
+  (define-key view-mode-map "K" 'ak-line-up)
+  (define-key view-mode-map "J" 'ak-line-down)
+  (define-key view-mode-map "u" 'half-page-down)
+  (define-key view-mode-map "d" 'half-page-up)
+  (define-key view-mode-map "b" 'ak-scroll-page-backward)
+  (define-key view-mode-map "f" 'ak-scroll-page-forward)
+  (define-key view-mode-map (kbd "DEL") 'ak-scroll-page-backward)
+  (define-key view-mode-map (kbd "SPC") 'ak-scroll-page-forward)
+  (define-key view-mode-map "G" 'end-of-buffer)
+  (define-key view-mode-map "N" 'View-search-last-regexp-backward)
+  (define-key view-mode-map (kbd ": w") 'save-buffer)
+  (define-key view-mode-map (kbd ": q") 'kill-current-buffer)
+  )
+;;  "E"     #'View-exit-and-edit
+;;  "q"     #'View-quit
+;;  ">"     #'end-of-buffer
+;;  "<"     #'beginning-of-buffer
+;;  "o"     #'View-scroll-to-buffer-end
+;;  "g"     #'View-goto-line
+;;  "s"     #'isearch-forward
+;;  "/"     #'View-search-regexp-forward
+;;  "p"     #'View-search-last-regexp-backward
+;;  "n"     #'View-search-last-regexp-forward
+;;  "."     #'set-mark-command
+;;  "x"     #'exchange-point-and-mark
 
 ;;====================================
 ;;;;go-mode
@@ -1495,7 +1493,7 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;  common functions
 ;;====================================
-
+;; query position
 (defun ak-first-page-p ()
   (if (= (point-min) (window-start))
           t
@@ -1505,12 +1503,103 @@ With prefix argument, activate previous rectangle if possible."
           t
         nil))
 
+;; reverse window move
 (defun ak-prev-window ()
-  (interactive)
-  (other-window -1))
+  (interactive) (other-window -1))
 (defun ak-prev-frame ()
-  (interactive)
-  (other-frame -1))
+  (interactive) (other-frame -1))
+
+;; Line scroll
+(defun ak-line-up() (interactive "^")
+  (or (ak-first-page-p)(scroll-down 1))
+  (forward-line -1))
+(defun ak-line-down() (interactive "^")
+  (scroll-up   1)
+  (forward-line  1))
+(defun ak-line-up-fast() (interactive "^")
+  (or (ak-first-page-p)(scroll-down 4))
+  (forward-line -4))
+(defun ak-line-down-fast() (interactive "^")
+  (scroll-up   4)
+  (forward-line  4))
+
+;; Home Toggle like Visual Studio
+(defun ak-home-toggle ()
+  "go and back between beginning of line and first char."
+  (interactive "^")
+  (if (not (bolp))
+      (beginning-of-line)
+    (beginning-of-line)
+    (while (and (not (eolp))
+                    (or (= (following-char) ?\t)
+                        (= (following-char) ?\ )))
+      (forward-char))
+    (if (eolp)
+        (beginning-of-line)))
+  )
+
+;; H M L of vi
+(defun ak-goto-top-screen () "goto cursor top of screen"
+  (interactive "^") (move-to-window-line 0))
+(defun ak-goto-mid-screen () "goto cursor mid of screen"
+  (interactive "^") (move-to-window-line nil))
+(defun ak-goto-bottom-screen () "goto cursor bottom of screen"
+  (interactive "^") (move-to-window-line -1))
+
+;; scroll half screen でらうま倶楽部
+(defun half-page-down()
+  "カーソルは画面内固定で半画面 scroll-down。"
+  (interactive "^")
+  (if(= (window-start) 1)
+      (progn
+        (beginning-of-line)
+        (forward-line (/ (window-body-height) -2))
+        )
+    (let ( (a (current-line)) )
+      (scroll-down (/ (window-body-height) 2))
+      (move-to-window-line a)
+      )))
+(defun half-page-up()
+  "カーソルは画面内固定で半画面 scroll-up。"
+  (interactive "^")
+  (if(= (window-end) (point-max))
+      (forward-line (/ (window-body-height) 2))
+    (let ( (a (current-line)) )
+      (if(< a 1) (setq a 1))
+      (scroll-up (/ (window-body-height) 2))
+      (move-to-window-line a)
+      )))
+(defun current-line()
+  "Return the vertical position of point..."
+  (cdr (nth 6 (posn-at-point))))
+
+;; basic scroll-down
+(defun ak-scroll-page-backward ()
+  "scroll down = Page Up"
+  (interactive "^")
+  (if (= (point-min) (point))
+      (message "Beginning of buffer.")
+    (if (ak-first-page-p)
+        (goto-char (point-min))
+      (scroll-down )
+      )
+    )
+  )
+;; basic scroll-up
+(defun ak-scroll-page-forward ()
+  "scroll up = Page Down"
+  (interactive "^")
+  (if (= (point-max) (point))
+      (message "End of buffer.")
+    ;;else
+    (if (ak-last-page-p)
+        (goto-char (point-max))
+      ;;else
+      (scroll-up )
+      (forward-line 1)
+      )
+    )
+  )
 
 ;;====================================
 ;;  auto revert setting dired/buffer
