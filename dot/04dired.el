@@ -59,6 +59,10 @@
   (define-key dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
   (define-key dired-mode-map (kbd "C-,") 'ak-dired-beginning-of-buffer)
   (define-key dired-mode-map (kbd "C-.") 'ak-dired-end-of-buffer)
+  (define-key dired-mode-map (kbd ",") 'ak-dired-beginning-of-buffer)
+  (define-key dired-mode-map (kbd ".") 'ak-dired-end-of-buffer)  ;;was dired-clean-directory
+  (define-key dired-mode-map (kbd "M-.") 'dired-clean-directory) ;;was xref-find-definitions
+  (define-key dired-mode-map (kbd "C-h") 'dired-unmark-backward) ;;like backspace
 
   ;; Vi-like
   (define-key dired-mode-map "j" 'next-line)

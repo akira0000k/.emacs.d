@@ -29,8 +29,10 @@
   (define-key view-mode-map "j" 'next-line)
   (define-key view-mode-map "k" 'previous-line)
   (define-key view-mode-map "l" 'right-char)
-  (define-key view-mode-map "a" 'ak-home-toggle)
-  (define-key view-mode-map "e" 'move-end-of-line)
+  (define-key view-mode-map "b" 'backward-char)
+  (define-key view-mode-map "f" 'forward-char)
+  (define-key view-mode-map "a" 'beginning-of-visual-line)
+  (define-key view-mode-map "e" 'end-of-visual-line)
   (define-key view-mode-map "H" 'ak-goto-top-screen)   
   (define-key view-mode-map "M" 'ak-goto-mid-screen)   
   (define-key view-mode-map "L" 'ak-goto-bottom-screen)
@@ -40,12 +42,16 @@
   (define-key view-mode-map "J" 'ak-line-down)
   (define-key view-mode-map "u" 'half-page-down)
   (define-key view-mode-map "d" 'half-page-up)
-  (define-key view-mode-map "b" 'ak-scroll-page-backward)
-  (define-key view-mode-map "f" 'ak-scroll-page-forward)
   (define-key view-mode-map (kbd "DEL") 'ak-scroll-page-backward)
   (define-key view-mode-map (kbd "SPC") 'ak-scroll-page-forward)
+  (define-key view-mode-map "　" 'ak-scroll-page-forward)
   (define-key view-mode-map "G" 'end-of-buffer)
-  (define-key view-mode-map "N" 'View-search-last-regexp-backward)
+  (define-key view-mode-map "o" #'(lambda () (interactive "^") (View-scroll-to-buffer-end) (goto-char (point-max))))
+  (define-key view-mode-map "/" 'isearch-forward-regexp)
+  (define-key view-mode-map "\\" 'isearch-backward-regexp)
+  (define-key view-mode-map "n" 'isearch-repeat-forward)
+  (define-key view-mode-map "N" 'isearch-repeat-backward)
+  (define-key view-mode-map "p" 'isearch-repeat-backward)
   (define-key view-mode-map (kbd ": w") 'save-buffer)
   (define-key view-mode-map (kbd ": q") 'kill-current-buffer)
   )
@@ -53,12 +59,9 @@
 ;;  "q"     #'View-quit
 ;;  ">"     #'end-of-buffer
 ;;  "<"     #'beginning-of-buffer
-;;  "o"     #'View-scroll-to-buffer-end
-;;  "g"     #'View-goto-line
+;;  "g"     #'View-goto-line  (nnn g:goto nnn / g:goto end)
 ;;  "s"     #'isearch-forward
-;;  "/"     #'View-search-regexp-forward
-;;  "p"     #'View-search-last-regexp-backward
-;;  "n"     #'View-search-last-regexp-forward
+;;  "r"     #'isearch-backward
 ;;  "."     #'set-mark-command
 ;;  "x"     #'exchange-point-and-mark
 
