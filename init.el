@@ -19,35 +19,44 @@
 (advice-add 'message :before 'my/ad-timestamp-message)
 (message "init.el loading")
 
-;; M-x package-refresh-contents RET
-;; M-x package-list-package
-;; M-x package-install RET magit RET
-;;;; comment for 0.12 sec
-;;(require 'package)
-;;(package-initialize)
-;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
-;; (package-refresh-contents)
-;; ;; Installs packages
-;; ;; myPackage contains a list of package names
-;; (defvar myPackages
-;;   '(
-;;     markdown-mode
-;;     markdown-preview-mode
-;;     elpy
-;;     )
-;;   )
-;; ;;Scans the list in myPackages
-;; ;; If the package listed is not already installed, install it
-;; (mapc #'(lambda (package)
-;;  	  (unless (package-installed-p package)
-;;  	    (package-install package)))
-;;       myPackages)
+;; Package init
+(defvar ak-package-initp nil)
+(defun ak-package-init-once()
+  (unless ak-package-initp
+    (setq ak-package-initp t)
+    (package-initialize)
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+    ;; M-x package-refresh-contents RET
+    (package-refresh-contents)
+    ))
 
-;;  ;; 作成するファイルやdirectoryに　グループ書き込み権限をつける
-;;  ;; for check
-;;  ;;(default-file-modes)  ;;=> #o755
-;;  (set-default-file-modes #o775)
+;; ;; (ak-package-init-once)
+;; ;; ;; M-x package-list-packages RET
+;; ;; (package-list-packages)
+;; ;;  
+;; ;; ;; M-x package-install RET magit RET
+;; ;; (package-install 'magit)
+
+;; Installs packages
+;; package-selected-packages contains a list of package names
+;; when some package installed manually, see ./custom.el
+(setq package-selected-packages
+      '(
+	markdown-mode
+	))
+
+;;Scans the list
+;; If the package listed is not already installed, install it
+(require 'package)       ;;for package-installed-p
+(dolist (pk package-selected-packages)
+  (if (package-installed-p pk)
+      (message "%s already installed" (symbol-name pk))
+    (message "%s not installed" (symbol-name pk))
+    (ak-package-init-once)
+    (package-install pk)
+    ))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; フレーム関連
@@ -115,6 +124,10 @@
 (or (getenv "B_DIRECTORY") (setenv "B_DIRECTORY" (concat (getenv "HOME") "/bin")))
 (or (getenv "C_DIRECTORY") (setenv "C_DIRECTORY" (concat (getenv "HOME") "/Documents")))
 (or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" (concat (getenv "HOME") "/Desktop")))
+
+;; ;; 作成するファイルやdirectoryに　グループ書き込み権限をつける
+;; ;;(default-file-modes)  ;;=> #o755
+;; (set-default-file-modes #o775)
 
 (message "load .emacs.el")
 ;;(load "~/.emacs.d/.emacs.elc")
