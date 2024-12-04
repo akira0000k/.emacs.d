@@ -41,7 +41,7 @@
 ;; Installs packages
 ;; package-selected-packages contains a list of package names
 ;; when some package installed manually, see ./custom.el
-(setq package-selected-packages
+(setq myPackage
       '(
 	markdown-mode
 	))
@@ -49,7 +49,7 @@
 ;;Scans the list
 ;; If the package listed is not already installed, install it
 (require 'package)       ;;for package-installed-p
-(dolist (pk package-selected-packages)
+(dolist (pk myPackage)
   (if (package-installed-p pk)
       (message "%s already installed" (symbol-name pk))
     (message "%s not installed" (symbol-name pk))
@@ -57,6 +57,26 @@
     (package-install pk)
     ))
 
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+(defvar need-save nil)
+(unless package-selected-packages
+  (setq package-selected-packages (package--find-non-dependencies))
+  (when package-selected-packages
+    (setq need-save t)
+    (message "non dependent package list was made."))
+  )
+(dolist (pk myPackage)
+  (unless (member pk package-selected-packages)
+    (setq need-save t)
+    (push pk package-selected-packages)
+    (message "%s added to selected package list." (symbol-name pk))
+    ))
+(when need-save
+  (customize-save-variable 'package-selected-packages package-selected-packages)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; フレーム関連
@@ -306,9 +326,6 @@
 	  ))))
   )
 
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(when (file-exists-p custom-file)
-  (load custom-file))
 
 (message "init.el ...done")
 (advice-remove 'message 'my/ad-timestamp-message)
