@@ -30,14 +30,13 @@
     ;; M-x package-refresh-contents RET
     (package-refresh-contents)
     ))
-
 ;; ;; (ak-package-init-once)
 ;; ;; ;; M-x package-list-packages RET
 ;; ;; (package-list-packages)
 ;; ;;  
 ;; ;; ;; M-x package-install RET magit RET
 ;; ;; (package-install 'magit)
-
+;;
 ;; Installs packages
 ;; package-selected-packages contains a list of package names
 ;; when some package installed manually, see ./custom.el
@@ -45,7 +44,6 @@
       '(
 	markdown-mode
 	))
-
 ;;Scans the list
 ;; If the package listed is not already installed, install it
 (require 'package)       ;;for package-installed-p
@@ -57,26 +55,6 @@
     (package-install pk)
     ))
 
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(when (file-exists-p custom-file)
-  (load custom-file))
-
-(defvar need-save nil)
-(unless package-selected-packages
-  (setq package-selected-packages (package--find-non-dependencies))
-  (when package-selected-packages
-    (setq need-save t)
-    (message "non dependent package list was made."))
-  )
-(dolist (pk myPackage)
-  (unless (member pk package-selected-packages)
-    (setq need-save t)
-    (push pk package-selected-packages)
-    (message "%s added to selected package list." (symbol-name pk))
-    ))
-(when need-save
-  (customize-save-variable 'package-selected-packages package-selected-packages)
-  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; フレーム関連
@@ -224,31 +202,26 @@
 (defun ak-theme-deeper-blue()
   (load-theme 'deeper-blue t)
   (message "load-theme deeper-blue")
-  (custom-set-faces
-   '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))  ;;dired directory name
-   ;; '(mode-line-buffer-id ((t (:foreground "dark magenta" :weight bold))))  ;;buffer "init.el"
-   '(region ((t (:extend t :background "dark red"))))  ;;selected region
-   ))
+  (set-face-attribute 'font-lock-function-name-face nil :foreground "#7a83ff")  ;;dired directory name
+  (set-face-attribute 'region nil :extend t :background "dark red")  ;;selected region
+  )
 (defun ak-theme-tango-dark()
   (load-theme 'tango-dark t)
   (message "load-theme tango-dark")
-  (custom-set-faces
-   '(default ((t (:background "#131313" :foreground "#dddddd"))))  ;;back/foreground color
-   '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))  ;;dired directory name
-   ;; '(shadow ((t (:foreground "lime green"))))  ;;dired backupfile~ name
-   ))
+  (set-face-attribute 'default nil :background "#131313" :foreground "#dddddd")  ;;back/foreground color
+  (set-face-attribute 'font-lock-function-name-face nil :foreground "#7a83ff")  ;;dired directory name
+  ;;(set-face-attribute 'shadow nil :foreground "lime green")  ;;dired backupfile~ name
+  )
 (defun ak-theme-misc()
-  (custom-set-faces
-   '(default ((t (:background "#000000" :foreground "#dddddd"))))  ;;back/foreground color
-   '(font-lock-function-name-face ((t (:foreground "#7a83ff"))))  ;;dired directory name
-   '(help-key-binding ((t (:background "blue"))))
-   '(link ((t (:foreground "cyan" :underline t))))
-   ;;'(magit-section-highlight ((t (:extend t :background "blue"))))
-   '(minibuffer-prompt ((t (:foreground "cyan"))))
-   '(shadow ((t (:foreground "#32cd32")))) ;;dired backupfile~ name
-   ;;'(smerge-markers ((t (:extend t :background "blue"))))
-   '(region ((t (:extend t :background "dark red"))))  ;;selected region
-   ))
+  (message "ak-theme-misk")
+  (set-face-attribute 'default nil :background "#000000" :foreground "#dddddd")  ;;back/foreground color
+  (set-face-attribute 'font-lock-function-name-face nil :foreground "#7a83ff")  ;;dired directory name
+  (set-face-attribute 'help-key-binding nil :background "blue")
+  (set-face-attribute 'link nil :foreground "cyan" :underline t)
+  (set-face-attribute 'minibuffer-prompt nil :foreground "cyan")
+  (set-face-attribute 'shadow nil :foreground "#32cd32") ;;dired backupfile~ name
+  (set-face-attribute 'region nil :extend t :background "dark red")  ;;selected region
+  )
 
 (message "window check")
 ;;;; (if (not (string= window-system "ns"))
@@ -326,6 +299,29 @@
 	  ))))
   )
 
+
+;; Read custom file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+;; update selected package list. if empty, add top packages.
+(defvar need-save nil)
+(unless package-selected-packages
+  (setq package-selected-packages (package--find-non-dependencies))
+  (when package-selected-packages
+    (setq need-save t)
+    (message "non dependent package list was made."))
+  )
+;; my package list member is added as manually installed.
+(dolist (pk myPackage)
+  (unless (member pk package-selected-packages)
+    (setq need-save t)
+    (push pk package-selected-packages)
+    (message "%s added to selected package list." (symbol-name pk))
+    ))
+(when need-save
+  (customize-save-variable 'package-selected-packages package-selected-packages)
+  )
 
 (message "init.el ...done")
 (advice-remove 'message 'my/ad-timestamp-message)
