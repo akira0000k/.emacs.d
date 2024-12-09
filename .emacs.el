@@ -525,7 +525,11 @@ With prefix argument, activate previous rectangle if possible."
 ;; Save Z directory
 (defvar dired-default-directory default-directory)
 ;; t = Open like Vi by [right]
-(defvar ak-dired-view-on-right-arrow nil)
+(defcustom ak-dired-view-on-right-arrow nil
+  "Non-nil means open in view mode by right arrow in dired."
+  :type 'boolean
+  :group 'dired
+  )
 
 ;; Extra keybinds for dired mode
 
@@ -613,8 +617,6 @@ With prefix argument, activate previous rectangle if possible."
     )
   )
 
-;;(defvar dired-first-lines 4)
-(defvar dired-first-lines 3)
 (defun ak-dired-home()
   "go to first file or select to col1"
   (interactive "^")
@@ -626,7 +628,11 @@ With prefix argument, activate previous rectangle if possible."
   "in dired set cursor at first file"
   (interactive "^")
   (goto-char (point-min))
-  (dired-next-line dired-first-lines)
+  (dired-goto-next-nontrivial-file)
+  ;; no valid file, first line.
+  (when (equal (point) (point-max))
+    (goto-char (point-min))
+    (dired-next-line 1))
   )
 (defun ak-dired-end()
   "go to last file or select to end of line"
@@ -646,9 +652,7 @@ With prefix argument, activate previous rectangle if possible."
   "Page up and set cursor at file"
   (interactive "^")
   (if (ak-first-page-p)
-      (progn
-        (move-to-window-line 0)
-        (dired-next-line dired-first-lines))
+      (ak-dired-beginning-of-buffer)
     (scroll-down)
     (dired-previous-line 1))
   )

@@ -240,7 +240,6 @@
 	(ak-theme-misc))
        ((not (memq system-type '(darwin)))
 	;; for debian   TERM=xterm emacs -nw
-	(setq dired-first-lines 4)
 	)
        (nil
 	;; for MAC OSX iTerm2 3.4.16  same as XWindow Emacs
@@ -284,7 +283,6 @@
 ;;;; |            M-x Command            |       Browser       |
 ;;;; | browse-url-default-macosx-browser | Mac OS open command |
 (when (memq system-type '(darwin))
-  (setq ak-dired-view-on-right-arrow t)
   ;;(require 'dired)
   ;;(define-key dired-mode-map "W" 'browse-url-of-dired-file)
   (defun browse-url-of-dired-file ()
