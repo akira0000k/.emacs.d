@@ -247,9 +247,6 @@
        (t
 	(ak-theme-tango-dark))
        )
-      ;;;; s-c (ns-copy-including-secondary) works only non terminal
-      (global-set-key (kbd "s-c") 'kill-ring-save)
-      (menu-bar-mode -1)
 
       (if (string= (getenv "TERM_PROGRAM") "vscode")
 	  (progn
@@ -259,6 +256,7 @@
 	    )
 	)
 
+      (menu-bar-mode -1)
       (message "emacs -nw"))
   ;;;else window emacs ;;;
   ;;;;                                $ brew tap homebrew/cask-fonts

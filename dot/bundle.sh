@@ -1,6 +1,18 @@
-#!/bin/bash
-{
-    cat 0[0-9]*.el
+#!/bin/sh
 
-    grep -v '^(load\|^;;;;' .emacs.el
-} > ../.emacs.el
+awk '
+/^;;;;/ {
+    next
+}
+
+/^\(load ".*"\)/ {
+    match($0, /".*"/);
+    file=substr($0, RSTART+1, RLENGTH-2)
+    comd = "cat " file
+    system(comd)
+    next
+}
+
+{
+    print
+}' .emacs.el > ../.emacs.el

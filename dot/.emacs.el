@@ -32,23 +32,77 @@
 
 ;; reverse window move
 (defun ak-prev-window ()
+  "other-window -1"
   (interactive) (other-window -1))
 (defun ak-prev-frame ()
+  "other-frame -1"
   (interactive) (other-frame -1))
 
 ;; Line scroll
-(defun ak-line-up() (interactive "^")
-  (or (ak-first-page-p)(scroll-down 1))
-  (forward-line -1))
-(defun ak-line-down() (interactive "^")
-  (scroll-up   1)
-  (forward-line  1))
-(defun ak-line-up-fast() (interactive "^")
-  (or (ak-first-page-p)(scroll-down 4))
-  (forward-line -4))
-(defun ak-line-down-fast() (interactive "^")
-  (scroll-up   4)
-  (forward-line  4))
+(defcustom ak-fast-scroll-lines 4
+  "Number of lines when scroll up/down was boosted."
+  :type 'integer
+  :group 'display)
+
+(defun ak-line-up()
+  "1 line scroll down, keeping cursor position."
+  (interactive "^")
+  (if (equal (current-window-line) 0)
+      (progn
+	(or (ak-first-page-p)(scroll-down 1))
+	(call-interactively 'previous-line))
+    ;;else
+    (call-interactively 'previous-line)
+    (or (ak-first-page-p)(scroll-down 1))
+    ))
+
+(defun ak-line-down()
+  "1 line scroll up, keeping cursor position."
+  (interactive "^")
+  (if (equal (current-window-line) 0)
+      (progn
+	(call-interactively 'next-line)
+	;;(scroll-up   1)
+	)
+    ;;else
+    (scroll-up   1)
+    (call-interactively 'next-line)
+    ))
+(defun ak-line-up-fast()
+  "Boosted line scroll down. customize 'ak-fast-scroll-lines'"
+  (interactive "^")
+  (let ( (line0 (current-window-line)) )
+    (if (ak-first-page-p)
+	(forward-line (- ak-fast-scroll-lines))
+      (scroll-down ak-fast-scroll-lines)
+      (move-to-window-line line0)
+      )))
+(defun ak-line-down-fast()
+  "Boosted line scroll up. customize 'ak-fast-scroll-lines'"
+  (interactive "^")
+  (let ( (line0 (current-window-line))
+	 (wst (window-start))
+	 (mov ak-fast-scroll-lines) )
+    (when (equal line0 0)
+      (setq line0 (1+ line0))
+      (setq mov (1- mov)))
+    (ignore-errors (scroll-up mov))
+    (if (equal wst (window-start))
+	(goto-char (point-max))
+      (move-to-window-line line0))
+    ))
+(defun ak-scroll-other-window1()
+  "1 line scroll other window."
+  (interactive)(scroll-other-window  1))
+(defun ak-scroll-other-window-1()
+  "1 line reverse scroll other window."
+  (interactive)(scroll-other-window -1))
+(defun ak-scroll-other-windowN()
+  "Boosted line scroll other window. customize 'ak-fast-scroll-lines'"
+  (interactive)(scroll-other-window  ak-fast-scroll-lines))
+(defun ak-scroll-other-window-N()
+  "Boosted line reverse scroll other window. customize 'ak-fast-scroll-lines'"
+  (interactive)(scroll-other-window (- ak-fast-scroll-lines)))
 
 ;; Home Toggle like Visual Studio
 (defun ak-home-toggle ()
@@ -82,7 +136,7 @@
         (beginning-of-line)
         (forward-line (/ (window-body-height) -2))
         )
-    (let ( (a (current-line)) )
+    (let ( (a (current-window-line)) )
       (scroll-down (/ (window-body-height) 2))
       (move-to-window-line a)
       )))
@@ -91,12 +145,12 @@
   (interactive "^")
   (if(= (window-end) (point-max))
       (forward-line (/ (window-body-height) 2))
-    (let ( (a (current-line)) )
+    (let ( (a (current-window-line)) )
       (if(< a 1) (setq a 1))
       (scroll-up (/ (window-body-height) 2))
       (move-to-window-line a)
       )))
-(defun current-line()
+(defun current-window-line()
   "Return the vertical position of point..."
   (cdr (nth 6 (posn-at-point))))
 

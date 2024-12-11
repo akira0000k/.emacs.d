@@ -48,19 +48,6 @@
 ;;====================================
 ;;;; MAC OSX command key for iTerm2
 ;;====================================
-;;;; terminal send control+option up for command up
-;;(define-key input-decode-map "\e[1;7A" (kbd "s-<up>"))
-;;(define-key input-decode-map "\e[1;8A" (kbd "s-S-<up>"))
-;;(define-key input-decode-map "\e[1;7B" (kbd "s-<down>"))
-;;(define-key input-decode-map "\e[1;8B" (kbd "s-S-<down>"))
-;;(define-key input-decode-map "\e[1;7C" (kbd "s-<right>"))
-;;(define-key input-decode-map "\e[1;8C" (kbd "s-S-<right>"))
-;;(define-key input-decode-map "\e[1;7D" (kbd "s-<left>"))
-;;(define-key input-decode-map "\e[1;8D" (kbd "s-S-<left>"))
-;;(define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
-;;(define-key input-decode-map "\e[5;8~" (kbd "s-S-<prior>"))
-;;(define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))
-;;(define-key input-decode-map "\e[6;8~" (kbd "s-S-<next>"))
 ;;;; terminal send Esc s up for command up
 (define-key input-decode-map "\es\eOA" (kbd "s-<up>"))
 (define-key input-decode-map "\es\eOB" (kbd "s-<down>"))
@@ -71,6 +58,8 @@
 (define-key input-decode-map "\es\e[1;2C" (kbd "s-S-<right>"))
 (define-key input-decode-map "\es\e[1;2D" (kbd "s-S-<left>"))
 
+(define-key input-decode-map "\es@+C-S-s-n" (kbd "C-S-s-n"))
+(define-key input-decode-map "\es@+C-S-s-p" (kbd "C-S-s-p"))
 
 ;;====================================
 ;;;; MAC OSX command keys
@@ -91,10 +80,12 @@
 
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-x") 'kill-region)
-;;;;  (global-set-key (kbd "s-c") 'kill-ring-save) ;;Terminal
-(global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;Xwindow
+(if (equal (framep-on-display) 'ns)
+    (global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;Xwindow
+  (global-set-key (kbd "s-c") 'kill-ring-save)) ;;Terminal
 (global-set-key (kbd "s-v") 'yank)
-(global-set-key (kbd "s-y") 'ns-paste-secondary) ;;Xwindow
+(if (equal (framep-on-display) 'ns)
+    (global-set-key (kbd "s-y") 'ns-paste-secondary)) ;;Xwindow
 
 (global-set-key (kbd "s-k") 'kill-current-buffer)
 (global-set-key (kbd "s-s") 'save-buffer)

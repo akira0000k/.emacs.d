@@ -136,19 +136,6 @@
 ;;====================================
 ;;;; MAC OSX command key for iTerm2
 ;;====================================
-;;;; terminal send control+option up for command up
-;;(define-key input-decode-map "\e[1;7A" (kbd "s-<up>"))
-;;(define-key input-decode-map "\e[1;8A" (kbd "s-S-<up>"))
-;;(define-key input-decode-map "\e[1;7B" (kbd "s-<down>"))
-;;(define-key input-decode-map "\e[1;8B" (kbd "s-S-<down>"))
-;;(define-key input-decode-map "\e[1;7C" (kbd "s-<right>"))
-;;(define-key input-decode-map "\e[1;8C" (kbd "s-S-<right>"))
-;;(define-key input-decode-map "\e[1;7D" (kbd "s-<left>"))
-;;(define-key input-decode-map "\e[1;8D" (kbd "s-S-<left>"))
-;;(define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
-;;(define-key input-decode-map "\e[5;8~" (kbd "s-S-<prior>"))
-;;(define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))
-;;(define-key input-decode-map "\e[6;8~" (kbd "s-S-<next>"))
 ;;;; terminal send Esc s up for command up
 (define-key input-decode-map "\es\eOA" (kbd "s-<up>"))
 (define-key input-decode-map "\es\eOB" (kbd "s-<down>"))
@@ -159,6 +146,8 @@
 (define-key input-decode-map "\es\e[1;2C" (kbd "s-S-<right>"))
 (define-key input-decode-map "\es\e[1;2D" (kbd "s-S-<left>"))
 
+(define-key input-decode-map "\es@+C-S-s-n" (kbd "C-S-s-n"))
+(define-key input-decode-map "\es@+C-S-s-p" (kbd "C-S-s-p"))
 
 ;;====================================
 ;;;; MAC OSX command keys
@@ -179,10 +168,12 @@
 
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-x") 'kill-region)
-;;;;  (global-set-key (kbd "s-c") 'kill-ring-save) ;;Terminal
-(global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;Xwindow
+(if (equal (framep-on-display) 'ns)
+    (global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;Xwindow
+  (global-set-key (kbd "s-c") 'kill-ring-save)) ;;Terminal
 (global-set-key (kbd "s-v") 'yank)
-(global-set-key (kbd "s-y") 'ns-paste-secondary) ;;Xwindow
+(if (equal (framep-on-display) 'ns)
+    (global-set-key (kbd "s-y") 'ns-paste-secondary)) ;;Xwindow
 
 (global-set-key (kbd "s-k") 'kill-current-buffer)
 (global-set-key (kbd "s-s") 'save-buffer)
@@ -276,6 +267,8 @@
 (global-set-key [s-down] 'ak-line-down-fast)
 (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
 (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
+(global-set-key (kbd "C-s-p") 'ak-line-up-fast)
+(global-set-key (kbd "C-s-n") 'ak-line-down-fast)
 (global-set-key [C-M-prior] 'backward-list)
 (global-set-key [C-M-next]  'forward-list)
 
@@ -309,15 +302,15 @@
 ;;                             (if (bolp) (forward-line -1))
 ;;                             (beginning-of-line)))
 
-;; scroll other window 2 line
-(global-set-key (kbd "M-<down>")   #'(lambda()(interactive)(scroll-other-window  1)))
-(global-set-key (kbd "ESC <down>") #'(lambda()(interactive)(scroll-other-window  1)))
-(global-set-key (kbd "M-<up>")     #'(lambda()(interactive)(scroll-other-window -1)))
-(global-set-key (kbd "ESC <up>")   #'(lambda()(interactive)(scroll-other-window -1)))
-(global-set-key (kbd "M-S-<down>")   #'(lambda()(interactive)(scroll-other-window  4)))
-(global-set-key (kbd "ESC S-<down>") #'(lambda()(interactive)(scroll-other-window  4)))
-(global-set-key (kbd "M-S-<up>")     #'(lambda()(interactive)(scroll-other-window -4)))
-(global-set-key (kbd "ESC S-<up>")   #'(lambda()(interactive)(scroll-other-window -4)))
+;; scroll other window
+(global-set-key (kbd "M-<down>")     'ak-scroll-other-window1)
+(global-set-key (kbd "ESC <down>")   'ak-scroll-other-window1)
+(global-set-key (kbd "M-<up>")       'ak-scroll-other-window-1)
+(global-set-key (kbd "ESC <up>")     'ak-scroll-other-window-1)
+(global-set-key (kbd "M-S-<down>")   'ak-scroll-other-windowN)
+(global-set-key (kbd "ESC S-<down>") 'ak-scroll-other-windowN)
+(global-set-key (kbd "M-S-<up>")     'ak-scroll-other-window-N)
+(global-set-key (kbd "ESC S-<up>")   'ak-scroll-other-window-N)
 ;;   'beginning-of-buffer-other-window  M-<home>
 ;;   'end-of-buffer-other-window        M-<end>
 ;;   'scroll-other-window-down  M-<prior>
@@ -383,7 +376,7 @@
 (defun ak-cursor-top ()
   "move cursor to middle or top of screen or scroll down(Page Up)"
   (interactive "^")
-  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-line))
+  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-window-line))
   (if (= (point-min) (point))
       (message "Beginning of buffer@")
     (if (= (window-start) (point))
@@ -391,9 +384,9 @@
           (message "scroll down")
           (scroll-down)
           )
-      (let ( (pos0 (current-line)) )
+      (let ( (pos0 (current-window-line)) )
         (move-to-window-line nil)
-        (if (>= (current-line) pos0)
+        (if (>= (current-window-line) pos0)
             (move-to-window-line 0)
           )
         )
@@ -403,15 +396,15 @@
 (defun ak-cursor-bottom ()
   "move cursor to middle or bottom of screen or scroll up(Page Down)"
   (interactive "^")
-  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-line))
+  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-window-line))
   (if (= (point-max) (point))
       (message "End of buffer@")
-    (let ( (pos0 (current-line)) )
+    (let ( (pos0 (current-window-line)) )
       (move-to-window-line nil)
-      (if (> (current-line) pos0)
+      (if (> (current-window-line) pos0)
           nil ;; ok
         (move-to-window-line -1)
-        (if (> (current-line) pos0)
+        (if (> (current-window-line) pos0)
             nil ;; ok
           (message "scroll up")
           (scroll-up)
@@ -668,21 +661,23 @@ With prefix argument, activate previous rectangle if possible."
   )
 
 (defun ak-dired-line-up()        (interactive "^")
-       (let ( (pos0 (current-line)) )
+       (let ( (pos0 (current-window-line)) )
 	 (if (ak-first-page-p)
 	     (dired-next-line -1)
 	   (scroll-down 1)(move-to-window-line pos0)(dired-next-line 0))))
 (defun ak-dired-line-down()      (interactive "^")
-       (let ( (pos0 (current-line)) )
+       (let ( (pos0 (current-window-line)) )
 	 (scroll-up   1)(move-to-window-line pos0)(dired-next-line 0)))
 (defun ak-dired-line-up-fast()   (interactive "^")
-       (let ( (pos0 (current-line)) )
+       (let ( (pos0 (current-window-line)) )
 	 (if (ak-first-page-p)
-	     (dired-next-line -4)
-	   (scroll-down 4)(move-to-window-line pos0)(dired-next-line 0))))
+	     (dired-next-line (- ak-fast-scroll-lines))
+	   (scroll-down ak-fast-scroll-lines)(move-to-window-line pos0)(dired-next-line 0))))
 (defun ak-dired-line-down-fast() (interactive "^")
-       (let ( (pos0 (current-line)) )
-	 (scroll-up   4)(move-to-window-line pos0)(dired-next-line 0)))
+       (let ( (pos0 (current-window-line)) )
+	 (if (ak-last-page-p)
+	     (dired-next-line ak-fast-scroll-lines)
+	 (scroll-up ak-fast-scroll-lines)(move-to-window-line pos0)(dired-next-line 0))))
 
 (defun ak-dired-find-file-hexl ()
   "In dired, visit the Binary file in hexl-mode named on this line."
@@ -1516,23 +1511,77 @@ With prefix argument, activate previous rectangle if possible."
 
 ;; reverse window move
 (defun ak-prev-window ()
+  "other-window -1"
   (interactive) (other-window -1))
 (defun ak-prev-frame ()
+  "other-frame -1"
   (interactive) (other-frame -1))
 
 ;; Line scroll
-(defun ak-line-up() (interactive "^")
-  (or (ak-first-page-p)(scroll-down 1))
-  (forward-line -1))
-(defun ak-line-down() (interactive "^")
-  (scroll-up   1)
-  (forward-line  1))
-(defun ak-line-up-fast() (interactive "^")
-  (or (ak-first-page-p)(scroll-down 4))
-  (forward-line -4))
-(defun ak-line-down-fast() (interactive "^")
-  (scroll-up   4)
-  (forward-line  4))
+(defcustom ak-fast-scroll-lines 4
+  "Number of lines when scroll up/down was boosted."
+  :type 'integer
+  :group 'display)
+
+(defun ak-line-up()
+  "1 line scroll down, keeping cursor position."
+  (interactive "^")
+  (if (equal (current-window-line) 0)
+      (progn
+	(or (ak-first-page-p)(scroll-down 1))
+	(call-interactively 'previous-line))
+    ;;else
+    (call-interactively 'previous-line)
+    (or (ak-first-page-p)(scroll-down 1))
+    ))
+
+(defun ak-line-down()
+  "1 line scroll up, keeping cursor position."
+  (interactive "^")
+  (if (equal (current-window-line) 0)
+      (progn
+	(call-interactively 'next-line)
+	;;(scroll-up   1)
+	)
+    ;;else
+    (scroll-up   1)
+    (call-interactively 'next-line)
+    ))
+(defun ak-line-up-fast()
+  "Boosted line scroll down. customize 'ak-fast-scroll-lines'"
+  (interactive "^")
+  (let ( (line0 (current-window-line)) )
+    (if (ak-first-page-p)
+	(forward-line (- ak-fast-scroll-lines))
+      (scroll-down ak-fast-scroll-lines)
+      (move-to-window-line line0)
+      )))
+(defun ak-line-down-fast()
+  "Boosted line scroll up. customize 'ak-fast-scroll-lines'"
+  (interactive "^")
+  (let ( (line0 (current-window-line))
+	 (wst (window-start))
+	 (mov ak-fast-scroll-lines) )
+    (when (equal line0 0)
+      (setq line0 (1+ line0))
+      (setq mov (1- mov)))
+    (ignore-errors (scroll-up mov))
+    (if (equal wst (window-start))
+	(goto-char (point-max))
+      (move-to-window-line line0))
+    ))
+(defun ak-scroll-other-window1()
+  "1 line scroll other window."
+  (interactive)(scroll-other-window  1))
+(defun ak-scroll-other-window-1()
+  "1 line reverse scroll other window."
+  (interactive)(scroll-other-window -1))
+(defun ak-scroll-other-windowN()
+  "Boosted line scroll other window. customize 'ak-fast-scroll-lines'"
+  (interactive)(scroll-other-window  ak-fast-scroll-lines))
+(defun ak-scroll-other-window-N()
+  "Boosted line reverse scroll other window. customize 'ak-fast-scroll-lines'"
+  (interactive)(scroll-other-window (- ak-fast-scroll-lines)))
 
 ;; Home Toggle like Visual Studio
 (defun ak-home-toggle ()
@@ -1566,7 +1615,7 @@ With prefix argument, activate previous rectangle if possible."
         (beginning-of-line)
         (forward-line (/ (window-body-height) -2))
         )
-    (let ( (a (current-line)) )
+    (let ( (a (current-window-line)) )
       (scroll-down (/ (window-body-height) 2))
       (move-to-window-line a)
       )))
@@ -1575,12 +1624,12 @@ With prefix argument, activate previous rectangle if possible."
   (interactive "^")
   (if(= (window-end) (point-max))
       (forward-line (/ (window-body-height) 2))
-    (let ( (a (current-line)) )
+    (let ( (a (current-window-line)) )
       (if(< a 1) (setq a 1))
       (scroll-up (/ (window-body-height) 2))
       (move-to-window-line a)
       )))
-(defun current-line()
+(defun current-window-line()
   "Return the vertical position of point..."
   (cdr (nth 6 (posn-at-point))))
 
