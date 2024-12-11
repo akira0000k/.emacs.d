@@ -15,6 +15,8 @@
 (global-set-key [s-down] 'ak-line-down-fast)
 (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
 (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
+(global-set-key (kbd "C-s-p") 'ak-line-up-fast)
+(global-set-key (kbd "C-s-n") 'ak-line-down-fast)
 (global-set-key [C-M-prior] 'backward-list)
 (global-set-key [C-M-next]  'forward-list)
 
@@ -122,7 +124,7 @@
 (defun ak-cursor-top ()
   "move cursor to middle or top of screen or scroll down(Page Up)"
   (interactive "^")
-  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-line))
+  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-window-line))
   (if (= (point-min) (point))
       (message "Beginning of buffer@")
     (if (= (window-start) (point))
@@ -130,9 +132,9 @@
           (message "scroll down")
           (scroll-down)
           )
-      (let ( (pos0 (current-line)) )
+      (let ( (pos0 (current-window-line)) )
         (move-to-window-line nil)
-        (if (>= (current-line) pos0)
+        (if (>= (current-window-line) pos0)
             (move-to-window-line 0)
           )
         )
@@ -142,15 +144,15 @@
 (defun ak-cursor-bottom ()
   "move cursor to middle or bottom of screen or scroll up(Page Down)"
   (interactive "^")
-  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-line))
+  ;;(message "height=%d body=%d current=%d" (window-height) (window-body-height) (current-window-line))
   (if (= (point-max) (point))
       (message "End of buffer@")
-    (let ( (pos0 (current-line)) )
+    (let ( (pos0 (current-window-line)) )
       (move-to-window-line nil)
-      (if (> (current-line) pos0)
+      (if (> (current-window-line) pos0)
           nil ;; ok
         (move-to-window-line -1)
-        (if (> (current-line) pos0)
+        (if (> (current-window-line) pos0)
             nil ;; ok
           (message "scroll up")
           (scroll-up)

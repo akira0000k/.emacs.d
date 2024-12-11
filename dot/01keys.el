@@ -48,19 +48,6 @@
 ;;====================================
 ;;;; MAC OSX command key for iTerm2
 ;;====================================
-;;;; terminal send control+option up for command up
-;;(define-key input-decode-map "\e[1;7A" (kbd "s-<up>"))
-;;(define-key input-decode-map "\e[1;8A" (kbd "s-S-<up>"))
-;;(define-key input-decode-map "\e[1;7B" (kbd "s-<down>"))
-;;(define-key input-decode-map "\e[1;8B" (kbd "s-S-<down>"))
-;;(define-key input-decode-map "\e[1;7C" (kbd "s-<right>"))
-;;(define-key input-decode-map "\e[1;8C" (kbd "s-S-<right>"))
-;;(define-key input-decode-map "\e[1;7D" (kbd "s-<left>"))
-;;(define-key input-decode-map "\e[1;8D" (kbd "s-S-<left>"))
-;;(define-key input-decode-map "\e[5;7~" (kbd "s-<prior>"))
-;;(define-key input-decode-map "\e[5;8~" (kbd "s-S-<prior>"))
-;;(define-key input-decode-map "\e[6;7~" (kbd "s-<next>"))
-;;(define-key input-decode-map "\e[6;8~" (kbd "s-S-<next>"))
 ;;;; terminal send Esc s up for command up
 (define-key input-decode-map "\es\eOA" (kbd "s-<up>"))
 (define-key input-decode-map "\es\eOB" (kbd "s-<down>"))
@@ -71,6 +58,8 @@
 (define-key input-decode-map "\es\e[1;2C" (kbd "s-S-<right>"))
 (define-key input-decode-map "\es\e[1;2D" (kbd "s-S-<left>"))
 
+(define-key input-decode-map "\es@+C-S-s-n" (kbd "C-S-s-n"))
+(define-key input-decode-map "\es@+C-S-s-p" (kbd "C-S-s-p"))
 
 ;;====================================
 ;;;; MAC OSX command keys

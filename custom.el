@@ -4,6 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ak-dired-view-on-right-arrow nil)
+ '(ak-fast-scroll-lines 10)
  '(package-selected-packages '(markdown-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
