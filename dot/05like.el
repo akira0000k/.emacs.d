@@ -28,7 +28,10 @@
 (global-set-key [S-f4] 'delete-window)
 
 (global-set-key [f5]  'recenter)
-(global-set-key [S-f5]  #'(lambda()(interactive)(dired ".")))
+(global-set-key [S-f5] 'ak-dired-current-dir)
+(defun ak-dired-current-dir()
+  "dired current directory" (interactive)
+  (dired "."))
 
 (global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
 (global-set-key [S-f6]   'electric-indent-mode)
@@ -42,11 +45,14 @@
 (global-set-key [S-f8] 'ak-enlarge-window2)
 
 (global-set-key [f9]  'describe-key-briefly)
-(global-set-key [S-f9] #'(lambda()(interactive)
-                          (if case-fold-search
-                              (progn (setq-default case-fold-search nil)(message "case sensitive Search mode"))
-                            (progn (setq-default case-fold-search t)(message "ignore case Search mode")))
-                          ))
+(global-set-key [S-f9] 'ak-toggle-case-fold-search)
+(defun ak-toggle-case-fold-search()
+  "Toggle search case." (interactive)
+  (if case-fold-search
+      (progn (setq-default case-fold-search nil)
+	     (message "case sensitive Search mode"))
+    (setq-default case-fold-search t)
+    (message "ignore case Search mode")))
 
 ;;was  menu-bar-open
 (global-set-key [f10] 'ak-window-swap-split)

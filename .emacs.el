@@ -271,9 +271,14 @@
 (global-set-key (kbd "C-s-n") 'ak-line-down-fast)
 (global-set-key [C-M-prior] 'backward-list)
 (global-set-key [C-M-next]  'forward-list)
+(global-set-key (kbd "ESC C-<prior>") 'backward-list)
+(global-set-key (kbd "ESC C-<next>")  'forward-list)
 
-(global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
-(global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
+
+(global-set-key (kbd "<wheel-up>")   'ak-scroll-down2)
+(global-set-key (kbd "<wheel-down>") 'ak-scroll-up2)
+(global-set-key (kbd "C-<wheel-up>")   'ak-line-up-fast)
+(global-set-key (kbd "C-<wheel-down>") 'ak-line-down-fast)
 
 
 ;;;; iTerm2 use move tab function by C-tab
@@ -303,6 +308,10 @@
 ;;                             (beginning-of-line)))
 
 ;; scroll other window
+;;   'beginning-of-buffer-other-window  M-<home>
+;;   'end-of-buffer-other-window        M-<end>
+;;   'scroll-other-window-down  M-<prior>
+;;   'scroll-other-window       M-<next>
 (global-set-key (kbd "M-<down>")     'ak-scroll-other-window1)
 (global-set-key (kbd "ESC <down>")   'ak-scroll-other-window1)
 (global-set-key (kbd "M-<up>")       'ak-scroll-other-window-1)
@@ -311,10 +320,18 @@
 (global-set-key (kbd "ESC S-<down>") 'ak-scroll-other-windowN)
 (global-set-key (kbd "M-S-<up>")     'ak-scroll-other-window-N)
 (global-set-key (kbd "ESC S-<up>")   'ak-scroll-other-window-N)
-;;   'beginning-of-buffer-other-window  M-<home>
-;;   'end-of-buffer-other-window        M-<end>
-;;   'scroll-other-window-down  M-<prior>
-;;   'scroll-other-window       M-<next>
+(defun ak-scroll-other-window1()
+  "1 line scroll other window."
+  (interactive)(scroll-other-window  1))
+(defun ak-scroll-other-window-1()
+  "1 line reverse scroll other window."
+  (interactive)(scroll-other-window -1))
+(defun ak-scroll-other-windowN()
+  "Boosted line scroll other window. customize \\='ak-fast-scroll-lines'"
+  (interactive)(scroll-other-window  ak-fast-scroll-lines))
+(defun ak-scroll-other-window-N()
+  "Boosted line reverse scroll other window. customize \\='ak-fast-scroll-lines'"
+  (interactive)(scroll-other-window (- ak-fast-scroll-lines)))
 
 ;;====================================
 ;;;; go to top or end by page down/up
@@ -542,13 +559,13 @@ With prefix argument, activate previous rectangle if possible."
   ;; edit filename in wdired mode      autoload wdired.el
   (define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)
 
-  (define-key dired-mode-map "h" #'(lambda()(interactive)(dired "~")))
-  (define-key dired-mode-map "r" #'(lambda()(interactive)(dired "/")))
-  (define-key dired-mode-map "z" #'(lambda()(interactive)(dired dired-default-directory)))
-  (and (getenv "A_DIRECTORY") (define-key dired-mode-map "a" #'(lambda()(interactive)(dired (getenv "A_DIRECTORY")))))
-  (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" #'(lambda()(interactive)(dired (getenv "B_DIRECTORY")))))
-  (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" #'(lambda()(interactive)(dired (getenv "C_DIRECTORY")))))
-  (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" #'(lambda()(interactive)(dired (getenv "E_DIRECTORY")))))
+  (define-key dired-mode-map "h" 'ak-dired-home-dir)
+  (define-key dired-mode-map "r" 'ak-dired-root-dir)
+  (define-key dired-mode-map "z" 'ak-dired-defo-dir)
+  (and (getenv "A_DIRECTORY") (define-key dired-mode-map "a" 'ak-dired-a-dir))
+  (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" 'ak-dired-b-dir))
+  (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" 'ak-dired-c-dir))
+  (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" 'ak-dired-e-dir))
   (define-key dired-mode-map (kbd "C-b") 'dired-up-directory)
 
   ;; avoid remapping to dired-next(previous)-line
@@ -582,6 +599,14 @@ With prefix argument, activate previous rectangle if possible."
   (define-key dired-mode-map "K" 'ak-dired-line-up)
   ;;(message "eval-after-load 'dired done.")
   )
+
+(defun ak-dired-home-dir()(interactive)(dired "~"))
+(defun ak-dired-root-dir()(interactive)(dired "/"))
+(defun ak-dired-defo-dir()(interactive)(dired dired-default-directory))
+(defun ak-dired-a-dir()(interactive)(dired (getenv "A_DIRECTORY")))
+(defun ak-dired-b-dir()(interactive)(dired (getenv "B_DIRECTORY")))
+(defun ak-dired-c-dir()(interactive)(dired (getenv "C_DIRECTORY")))
+(defun ak-dired-e-dir()(interactive)(dired (getenv "E_DIRECTORY")))
 
 (add-hook 'dired-mode-hook
 	  (lambda ()
@@ -783,7 +808,10 @@ With prefix argument, activate previous rectangle if possible."
 (global-set-key [S-f4] 'delete-window)
 
 (global-set-key [f5]  'recenter)
-(global-set-key [S-f5]  #'(lambda()(interactive)(dired ".")))
+(global-set-key [S-f5] 'ak-dired-current-dir)
+(defun ak-dired-current-dir()
+  "dired current directory" (interactive)
+  (dired "."))
 
 (global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
 (global-set-key [S-f6]   'electric-indent-mode)
@@ -797,11 +825,14 @@ With prefix argument, activate previous rectangle if possible."
 (global-set-key [S-f8] 'ak-enlarge-window2)
 
 (global-set-key [f9]  'describe-key-briefly)
-(global-set-key [S-f9] #'(lambda()(interactive)
-                          (if case-fold-search
-                              (progn (setq-default case-fold-search nil)(message "case sensitive Search mode"))
-                            (progn (setq-default case-fold-search t)(message "ignore case Search mode")))
-                          ))
+(global-set-key [S-f9] 'ak-toggle-case-fold-search)
+(defun ak-toggle-case-fold-search()
+  "Toggle search case." (interactive)
+  (if case-fold-search
+      (progn (setq-default case-fold-search nil)
+	     (message "case sensitive Search mode"))
+    (setq-default case-fold-search t)
+    (message "ignore case Search mode")))
 
 ;;was  menu-bar-open
 (global-set-key [f10] 'ak-window-swap-split)
@@ -1074,11 +1105,11 @@ With prefix argument, activate previous rectangle if possible."
   (setq comint-scroll-to-bottom-on-input t)
   ;;(setq comint-scroll-to-bottom-on-output t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-  (define-key shell-mode-map  [f5]     #'(lambda()(interactive)(shell-resync-dirs)))
+  (define-key shell-mode-map  [f5]     'ak-do-resync-dirs)
   (define-key comint-mode-map [home]   'beginning-of-buffer)
   (define-key comint-mode-map [end]    'end-of-buffer)
-  (define-key comint-mode-map [C-up]   #'(lambda()(interactive)(scroll-down 1)))
-  (define-key comint-mode-map [C-down] #'(lambda()(interactive)(scroll-up 1)))
+  (define-key comint-mode-map [C-up]   'ak-scroll-down1)
+  (define-key comint-mode-map [C-down] 'ak-scroll-up1)
   (define-key comint-mode-map [up]     'ak-shell-up)
   (define-key comint-mode-map [down]   'ak-shell-down)
   )
@@ -1102,6 +1133,10 @@ With prefix argument, activate previous rectangle if possible."
   (if (= (point-max) (point))
       (tails-comint-previous-input)     ;(comint-previous-input 1)
     (forward-line -1)))
+
+(defun ak-do-resync-dirs()
+  "resync current directory with pwd command. same as M-x dirs." (interactive)
+  (shell-resync-dirs))
 
 ;(setq comint-password-prompt-regexp
 ;      "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'"
@@ -1285,11 +1320,16 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;;;view-mode
 ;;====================================
-;; M-x view-mode  ==>  M-x v
-(defalias 'v 'view-mode)
-(global-set-key (kbd "ESC <f1>") #'(lambda() (interactive)(view-mode t)))
-;;  "E"     #'View-exit-and-edit
-;;  "q"     #'View-quit  --> [ak-]kill-current-buffer
+;;  "ESC f1"  view mode
+(global-set-key (kbd "ESC <f1>") 'ak-View-mode)
+(defun ak-View-mode()
+  "make current file view mode." (interactive)
+  (view-mode t))
+;;  "i"     editing
+(defun ak-View-exit()
+  "make current file editable." (interactive)
+  (message "editing")(View-exit))
+
 (setq view-inhibit-help-message t)
 
 (setq view-mode-hook
@@ -1299,8 +1339,8 @@ With prefix argument, activate previous rectangle if possible."
 	   )))
 
 (with-eval-after-load 'view
-  (define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
-  (define-key view-mode-map "i" #'(lambda()(interactive)(message "editing")(View-exit)))
+  (define-key view-mode-map [f5] 'ak-revert-buffer-noconfirm)
+  (define-key view-mode-map "i" 'ak-View-exit)
   (define-key view-mode-map "h" 'left-char)
   (define-key view-mode-map "j" 'next-line)
   (define-key view-mode-map "k" 'previous-line)
@@ -1322,7 +1362,7 @@ With prefix argument, activate previous rectangle if possible."
   (define-key view-mode-map (kbd "SPC") 'ak-scroll-page-forward)
   (define-key view-mode-map "　" 'ak-scroll-page-forward)
   (define-key view-mode-map "G" 'end-of-buffer)
-  (define-key view-mode-map "o" #'(lambda () (interactive "^") (View-scroll-to-buffer-end) (goto-char (point-max))))
+  (define-key view-mode-map "o" 'ak-View-scroll-to-buffer-end)
   (define-key view-mode-map "/" 'isearch-forward-regexp)
   (define-key view-mode-map "\\" 'isearch-backward-regexp)
   (define-key view-mode-map "n" 'isearch-repeat-forward)
@@ -1340,6 +1380,15 @@ With prefix argument, activate previous rectangle if possible."
 ;;  "r"     #'isearch-backward
 ;;  "."     #'set-mark-command
 ;;  "x"     #'exchange-point-and-mark
+
+(defun ak-revert-buffer-noconfirm()
+  "read file into buffer again without confirm." (interactive)
+  (revert-buffer nil t t))
+;;;;(revert-buffer &optional IGNORE-AUTO NOCONFIRM PRESERVE-MODES)
+
+(defun ak-View-scroll-to-buffer-end()
+  "scroll to buffer end and go to point max." (interactive "^")
+  (View-scroll-to-buffer-end) (goto-char (point-max)))
 
 ;;====================================
 ;;;;go-mode
@@ -1518,11 +1567,15 @@ With prefix argument, activate previous rectangle if possible."
   (interactive) (other-frame -1))
 
 ;; Line scroll
+(defun ak-scroll-down1() (interactive) (scroll-down 1))
+(defun ak-scroll-down2() (interactive) (scroll-down 2))
+(defun ak-scroll-up1() (interactive) (scroll-up 1))
+(defun ak-scroll-up2() (interactive) (scroll-up 2))
+
 (defcustom ak-fast-scroll-lines 4
   "Number of lines when scroll up/down was boosted."
   :type 'integer
   :group 'display)
-
 (defun ak-line-up()
   "1 line scroll down, keeping cursor position."
   (interactive "^")
@@ -1534,7 +1587,6 @@ With prefix argument, activate previous rectangle if possible."
     (call-interactively 'previous-line)
     (or (ak-first-page-p)(scroll-down 1))
     ))
-
 (defun ak-line-down()
   "1 line scroll up, keeping cursor position."
   (interactive "^")
@@ -1548,7 +1600,7 @@ With prefix argument, activate previous rectangle if possible."
     (call-interactively 'next-line)
     ))
 (defun ak-line-up-fast()
-  "Boosted line scroll down. customize 'ak-fast-scroll-lines'"
+  "Boosted line scroll down. customize \\='ak-fast-scroll-lines'"
   (interactive "^")
   (let ( (line0 (current-window-line)) )
     (if (ak-first-page-p)
@@ -1557,7 +1609,7 @@ With prefix argument, activate previous rectangle if possible."
       (move-to-window-line line0)
       )))
 (defun ak-line-down-fast()
-  "Boosted line scroll up. customize 'ak-fast-scroll-lines'"
+  "Boosted line scroll up. customize \\='ak-fast-scroll-lines'"
   (interactive "^")
   (let ( (line0 (current-window-line))
 	 (wst (window-start))
@@ -1570,18 +1622,6 @@ With prefix argument, activate previous rectangle if possible."
 	(goto-char (point-max))
       (move-to-window-line line0))
     ))
-(defun ak-scroll-other-window1()
-  "1 line scroll other window."
-  (interactive)(scroll-other-window  1))
-(defun ak-scroll-other-window-1()
-  "1 line reverse scroll other window."
-  (interactive)(scroll-other-window -1))
-(defun ak-scroll-other-windowN()
-  "Boosted line scroll other window. customize 'ak-fast-scroll-lines'"
-  (interactive)(scroll-other-window  ak-fast-scroll-lines))
-(defun ak-scroll-other-window-N()
-  "Boosted line reverse scroll other window. customize 'ak-fast-scroll-lines'"
-  (interactive)(scroll-other-window (- ak-fast-scroll-lines)))
 
 ;; Home Toggle like Visual Studio
 (defun ak-home-toggle ()

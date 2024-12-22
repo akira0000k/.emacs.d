@@ -9,11 +9,16 @@
 ;;====================================
 ;;;;view-mode
 ;;====================================
-;; M-x view-mode  ==>  M-x v
-(defalias 'v 'view-mode)
-(global-set-key (kbd "ESC <f1>") #'(lambda() (interactive)(view-mode t)))
-;;  "E"     #'View-exit-and-edit
-;;  "q"     #'View-quit  --> [ak-]kill-current-buffer
+;;  "ESC f1"  view mode
+(global-set-key (kbd "ESC <f1>") 'ak-View-mode)
+(defun ak-View-mode()
+  "make current file view mode." (interactive)
+  (view-mode t))
+;;  "i"     editing
+(defun ak-View-exit()
+  "make current file editable." (interactive)
+  (message "editing")(View-exit))
+
 (setq view-inhibit-help-message t)
 
 (setq view-mode-hook
@@ -23,8 +28,8 @@
 	   )))
 
 (with-eval-after-load 'view
-  (define-key view-mode-map [f5] #'(lambda()(interactive)(revert-buffer nil t t)))
-  (define-key view-mode-map "i" #'(lambda()(interactive)(message "editing")(View-exit)))
+  (define-key view-mode-map [f5] 'ak-revert-buffer-noconfirm)
+  (define-key view-mode-map "i" 'ak-View-exit)
   (define-key view-mode-map "h" 'left-char)
   (define-key view-mode-map "j" 'next-line)
   (define-key view-mode-map "k" 'previous-line)
@@ -46,7 +51,7 @@
   (define-key view-mode-map (kbd "SPC") 'ak-scroll-page-forward)
   (define-key view-mode-map "　" 'ak-scroll-page-forward)
   (define-key view-mode-map "G" 'end-of-buffer)
-  (define-key view-mode-map "o" #'(lambda () (interactive "^") (View-scroll-to-buffer-end) (goto-char (point-max))))
+  (define-key view-mode-map "o" 'ak-View-scroll-to-buffer-end)
   (define-key view-mode-map "/" 'isearch-forward-regexp)
   (define-key view-mode-map "\\" 'isearch-backward-regexp)
   (define-key view-mode-map "n" 'isearch-repeat-forward)
@@ -64,6 +69,15 @@
 ;;  "r"     #'isearch-backward
 ;;  "."     #'set-mark-command
 ;;  "x"     #'exchange-point-and-mark
+
+(defun ak-revert-buffer-noconfirm()
+  "read file into buffer again without confirm." (interactive)
+  (revert-buffer nil t t))
+;;;;(revert-buffer &optional IGNORE-AUTO NOCONFIRM PRESERVE-MODES)
+
+(defun ak-View-scroll-to-buffer-end()
+  "scroll to buffer end and go to point max." (interactive "^")
+  (View-scroll-to-buffer-end) (goto-char (point-max)))
 
 ;;====================================
 ;;;;go-mode

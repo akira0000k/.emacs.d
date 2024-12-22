@@ -19,9 +19,14 @@
 (global-set-key (kbd "C-s-n") 'ak-line-down-fast)
 (global-set-key [C-M-prior] 'backward-list)
 (global-set-key [C-M-next]  'forward-list)
+(global-set-key (kbd "ESC C-<prior>") 'backward-list)
+(global-set-key (kbd "ESC C-<next>")  'forward-list)
 
-(global-set-key (kbd "<wheel-up>")  #'(lambda()(interactive)(scroll-down 2)))
-(global-set-key (kbd "<wheel-down>")  #'(lambda()(interactive)(scroll-up 2)))
+
+(global-set-key (kbd "<wheel-up>")   'ak-scroll-down2)
+(global-set-key (kbd "<wheel-down>") 'ak-scroll-up2)
+(global-set-key (kbd "C-<wheel-up>")   'ak-line-up-fast)
+(global-set-key (kbd "C-<wheel-down>") 'ak-line-down-fast)
 
 
 ;;;; iTerm2 use move tab function by C-tab
@@ -51,6 +56,10 @@
 ;;                             (beginning-of-line)))
 
 ;; scroll other window
+;;   'beginning-of-buffer-other-window  M-<home>
+;;   'end-of-buffer-other-window        M-<end>
+;;   'scroll-other-window-down  M-<prior>
+;;   'scroll-other-window       M-<next>
 (global-set-key (kbd "M-<down>")     'ak-scroll-other-window1)
 (global-set-key (kbd "ESC <down>")   'ak-scroll-other-window1)
 (global-set-key (kbd "M-<up>")       'ak-scroll-other-window-1)
@@ -59,10 +68,18 @@
 (global-set-key (kbd "ESC S-<down>") 'ak-scroll-other-windowN)
 (global-set-key (kbd "M-S-<up>")     'ak-scroll-other-window-N)
 (global-set-key (kbd "ESC S-<up>")   'ak-scroll-other-window-N)
-;;   'beginning-of-buffer-other-window  M-<home>
-;;   'end-of-buffer-other-window        M-<end>
-;;   'scroll-other-window-down  M-<prior>
-;;   'scroll-other-window       M-<next>
+(defun ak-scroll-other-window1()
+  "1 line scroll other window."
+  (interactive)(scroll-other-window  1))
+(defun ak-scroll-other-window-1()
+  "1 line reverse scroll other window."
+  (interactive)(scroll-other-window -1))
+(defun ak-scroll-other-windowN()
+  "Boosted line scroll other window. customize \\='ak-fast-scroll-lines'"
+  (interactive)(scroll-other-window  ak-fast-scroll-lines))
+(defun ak-scroll-other-window-N()
+  "Boosted line reverse scroll other window. customize \\='ak-fast-scroll-lines'"
+  (interactive)(scroll-other-window (- ak-fast-scroll-lines)))
 
 ;;====================================
 ;;;; go to top or end by page down/up

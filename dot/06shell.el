@@ -19,11 +19,11 @@
   (setq comint-scroll-to-bottom-on-input t)
   ;;(setq comint-scroll-to-bottom-on-output t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-  (define-key shell-mode-map  [f5]     #'(lambda()(interactive)(shell-resync-dirs)))
+  (define-key shell-mode-map  [f5]     'ak-do-resync-dirs)
   (define-key comint-mode-map [home]   'beginning-of-buffer)
   (define-key comint-mode-map [end]    'end-of-buffer)
-  (define-key comint-mode-map [C-up]   #'(lambda()(interactive)(scroll-down 1)))
-  (define-key comint-mode-map [C-down] #'(lambda()(interactive)(scroll-up 1)))
+  (define-key comint-mode-map [C-up]   'ak-scroll-down1)
+  (define-key comint-mode-map [C-down] 'ak-scroll-up1)
   (define-key comint-mode-map [up]     'ak-shell-up)
   (define-key comint-mode-map [down]   'ak-shell-down)
   )
@@ -47,6 +47,10 @@
   (if (= (point-max) (point))
       (tails-comint-previous-input)     ;(comint-previous-input 1)
     (forward-line -1)))
+
+(defun ak-do-resync-dirs()
+  "resync current directory with pwd command. same as M-x dirs." (interactive)
+  (shell-resync-dirs))
 
 ;(setq comint-password-prompt-regexp
 ;      "\\(\\([Ee]nter \\|[Oo]ld \\|[Nn]ew \\|'s \\|login \\|Kerberos \\|CVS \\|UNIX \\| SMB \\|LDAP \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|パスワード\\|\\(Enter \\|Repeat \\|Bad \\)?[Pp]assphrase\\)\\(, try again\\)?\\( for [^:]+\\)?:\\s *\\'"

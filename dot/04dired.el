@@ -35,13 +35,13 @@
   ;; edit filename in wdired mode      autoload wdired.el
   (define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)
 
-  (define-key dired-mode-map "h" #'(lambda()(interactive)(dired "~")))
-  (define-key dired-mode-map "r" #'(lambda()(interactive)(dired "/")))
-  (define-key dired-mode-map "z" #'(lambda()(interactive)(dired dired-default-directory)))
-  (and (getenv "A_DIRECTORY") (define-key dired-mode-map "a" #'(lambda()(interactive)(dired (getenv "A_DIRECTORY")))))
-  (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" #'(lambda()(interactive)(dired (getenv "B_DIRECTORY")))))
-  (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" #'(lambda()(interactive)(dired (getenv "C_DIRECTORY")))))
-  (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" #'(lambda()(interactive)(dired (getenv "E_DIRECTORY")))))
+  (define-key dired-mode-map "h" 'ak-dired-home-dir)
+  (define-key dired-mode-map "r" 'ak-dired-root-dir)
+  (define-key dired-mode-map "z" 'ak-dired-defo-dir)
+  (and (getenv "A_DIRECTORY") (define-key dired-mode-map "a" 'ak-dired-a-dir))
+  (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" 'ak-dired-b-dir))
+  (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" 'ak-dired-c-dir))
+  (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" 'ak-dired-e-dir))
   (define-key dired-mode-map (kbd "C-b") 'dired-up-directory)
 
   ;; avoid remapping to dired-next(previous)-line
@@ -75,6 +75,14 @@
   (define-key dired-mode-map "K" 'ak-dired-line-up)
   ;;(message "eval-after-load 'dired done.")
   )
+
+(defun ak-dired-home-dir()(interactive)(dired "~"))
+(defun ak-dired-root-dir()(interactive)(dired "/"))
+(defun ak-dired-defo-dir()(interactive)(dired dired-default-directory))
+(defun ak-dired-a-dir()(interactive)(dired (getenv "A_DIRECTORY")))
+(defun ak-dired-b-dir()(interactive)(dired (getenv "B_DIRECTORY")))
+(defun ak-dired-c-dir()(interactive)(dired (getenv "C_DIRECTORY")))
+(defun ak-dired-e-dir()(interactive)(dired (getenv "E_DIRECTORY")))
 
 (add-hook 'dired-mode-hook
 	  (lambda ()

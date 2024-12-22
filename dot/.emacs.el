@@ -39,11 +39,15 @@
   (interactive) (other-frame -1))
 
 ;; Line scroll
+(defun ak-scroll-down1() (interactive) (scroll-down 1))
+(defun ak-scroll-down2() (interactive) (scroll-down 2))
+(defun ak-scroll-up1() (interactive) (scroll-up 1))
+(defun ak-scroll-up2() (interactive) (scroll-up 2))
+
 (defcustom ak-fast-scroll-lines 4
   "Number of lines when scroll up/down was boosted."
   :type 'integer
   :group 'display)
-
 (defun ak-line-up()
   "1 line scroll down, keeping cursor position."
   (interactive "^")
@@ -55,7 +59,6 @@
     (call-interactively 'previous-line)
     (or (ak-first-page-p)(scroll-down 1))
     ))
-
 (defun ak-line-down()
   "1 line scroll up, keeping cursor position."
   (interactive "^")
@@ -69,7 +72,7 @@
     (call-interactively 'next-line)
     ))
 (defun ak-line-up-fast()
-  "Boosted line scroll down. customize 'ak-fast-scroll-lines'"
+  "Boosted line scroll down. customize \\='ak-fast-scroll-lines'"
   (interactive "^")
   (let ( (line0 (current-window-line)) )
     (if (ak-first-page-p)
@@ -78,7 +81,7 @@
       (move-to-window-line line0)
       )))
 (defun ak-line-down-fast()
-  "Boosted line scroll up. customize 'ak-fast-scroll-lines'"
+  "Boosted line scroll up. customize \\='ak-fast-scroll-lines'"
   (interactive "^")
   (let ( (line0 (current-window-line))
 	 (wst (window-start))
@@ -91,18 +94,6 @@
 	(goto-char (point-max))
       (move-to-window-line line0))
     ))
-(defun ak-scroll-other-window1()
-  "1 line scroll other window."
-  (interactive)(scroll-other-window  1))
-(defun ak-scroll-other-window-1()
-  "1 line reverse scroll other window."
-  (interactive)(scroll-other-window -1))
-(defun ak-scroll-other-windowN()
-  "Boosted line scroll other window. customize 'ak-fast-scroll-lines'"
-  (interactive)(scroll-other-window  ak-fast-scroll-lines))
-(defun ak-scroll-other-window-N()
-  "Boosted line reverse scroll other window. customize 'ak-fast-scroll-lines'"
-  (interactive)(scroll-other-window (- ak-fast-scroll-lines)))
 
 ;; Home Toggle like Visual Studio
 (defun ak-home-toggle ()
