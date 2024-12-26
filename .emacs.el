@@ -1096,7 +1096,7 @@ With prefix argument, activate previous rectangle if possible."
 (defalias 's 'shell)
 
 (with-eval-after-load 'shell
-  (load "~/.emacs.d/site-lisp/tails-comint-history.el")
+  (load "~/.emacs.d/site-lisp/tails-comint-history")
   ;; comint 関係の設定
   (setq comint-process-echoes t)
   (setq comint-input-autoexpand nil)
@@ -1466,7 +1466,7 @@ With prefix argument, activate previous rectangle if possible."
 ;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
-(autoload 'buffer-focus-in-callback  "~/.emacs.d/site-lisp/buffer-focus-hook.el")
+(autoload 'buffer-focus-in-callback  "~/.emacs.d/site-lisp/buffer-focus-hook")
 
 (defun ak-org-focus-in ()
   (message "no xcv."))

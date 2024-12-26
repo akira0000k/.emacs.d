@@ -10,7 +10,7 @@
 (defalias 's 'shell)
 
 (with-eval-after-load 'shell
-  (load "~/.emacs.d/site-lisp/tails-comint-history.el")
+  (load "~/.emacs.d/site-lisp/tails-comint-history")
   ;; comint 関係の設定
   (setq comint-process-echoes t)
   (setq comint-input-autoexpand nil)

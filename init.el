@@ -90,7 +90,7 @@
 ;;  exec-path
 ;;====================================
 (defun ak-setenv()
-    (load "~/.emacs.d/site-lisp/exec-path-from-shell.el")
+    (load "~/.emacs.d/site-lisp/exec-path-from-shell")
     (add-to-list 'exec-path-from-shell-variables "A_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "B_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "C_DIRECTORY")
@@ -103,7 +103,7 @@
 
 ;; emacs.app?  shell emacs?
 (if (getenv "PWD")
-    (message "shell start")
+    (message "started in diretory %s" (getenv "PWD"))
   (message "launch app")
   ;;(setenv  "PATH" (concat "/usr/local/bin:/Users/Akira/bin:/Users/Akira/go/bin:/usr/local/bin/go:" (getenv "PATH")))
   (ak-setenv)
@@ -128,9 +128,10 @@
 ;; (set-default-file-modes #o775)
 
 (message "load .emacs.el")
-;;(load "~/.emacs.d/.emacs.elc")
-(load "~/.emacs.d/dot/.emacs.el")
-(message "load .emacs.el...done")
+(if (load "~/.emacs.d/.emacs.elc" t t t)
+    (message "load .emacs.elc...done")
+  (load "~/.emacs.d/dot/.emacs")
+  (message "load dot/.emacs...done"))
 
 ;; Tramp
 ;; C-x d  /docker:user@container:
@@ -299,7 +300,7 @@
 ;; Read custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
-  (load custom-file))
+  (load-file custom-file))
 ;; update selected package list. if empty, add top packages.
 (defvar need-save nil)
 (unless package-selected-packages

@@ -155,7 +155,7 @@
 ;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
-(autoload 'buffer-focus-in-callback  "~/.emacs.d/site-lisp/buffer-focus-hook.el")
+(autoload 'buffer-focus-in-callback  "~/.emacs.d/site-lisp/buffer-focus-hook")
 
 (defun ak-org-focus-in ()
   (message "no xcv."))

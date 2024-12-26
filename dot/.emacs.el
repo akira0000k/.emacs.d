@@ -1,17 +1,17 @@
 ;;;; comment out with ;; if some function not necessary.
 ;;;; like
-;;;; ;;(load "~/.emacs.d/dot/03cua.el")
+;;;; ;;(load "~/.emacs.d/dot/03cua")
 ;;;;
-(load "~/.emacs.d/dot/00misc.el")
-(load "~/.emacs.d/dot/01keys.el")
-(load "~/.emacs.d/dot/02cursor.el")
-(load "~/.emacs.d/dot/03cua.el")
-(load "~/.emacs.d/dot/04dired.el")
-(load "~/.emacs.d/dot/05like.el")
-(load "~/.emacs.d/dot/06shell.el")
-(load "~/.emacs.d/dot/07buffer.el")
-(load "~/.emacs.d/dot/08mode.el")
-(load "~/.emacs.d/dot/09org.el")
+(load "~/.emacs.d/dot/00misc")
+(load "~/.emacs.d/dot/01keys")
+(load "~/.emacs.d/dot/02cursor")
+(load "~/.emacs.d/dot/03cua")
+(load "~/.emacs.d/dot/04dired")
+(load "~/.emacs.d/dot/05like")
+(load "~/.emacs.d/dot/06shell")
+(load "~/.emacs.d/dot/07buffer")
+(load "~/.emacs.d/dot/08mode")
+(load "~/.emacs.d/dot/09org")
 
 
 
