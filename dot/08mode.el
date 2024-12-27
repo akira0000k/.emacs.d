@@ -47,8 +47,8 @@
   (define-key view-mode-map "J" 'ak-line-down)
   (define-key view-mode-map "u" 'half-page-down)
   (define-key view-mode-map "d" 'half-page-up)
-  (define-key view-mode-map (kbd "DEL") 'ak-scroll-page-backward)
-  (define-key view-mode-map (kbd "SPC") 'ak-scroll-page-forward)
+  (define-key view-mode-map [remap View-scroll-page-backward] #'ak-scroll-page-backward);; DEL, S-SPC
+  (define-key view-mode-map [remap View-scroll-page-forward]  #'ak-scroll-page-forward) ;; SPC
   (define-key view-mode-map "　" 'ak-scroll-page-forward)
   (define-key view-mode-map "G" 'end-of-buffer)
   (define-key view-mode-map "o" 'ak-View-scroll-to-buffer-end)

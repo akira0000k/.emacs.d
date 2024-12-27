@@ -19,6 +19,9 @@
 ;;  C-S-DEL kill-whole-line
 (define-key input-decode-map "\e[3;6~" (kbd "C-S-<backspace>")) ;;was C-S-<delete>
 
+;;  S-SPC is backward SPC.
+(define-key input-decode-map "\e[32;2u" (kbd "S-SPC"))
+(define-key input-decode-map "\e[27;2;32~" (kbd "S-SPC"))
 
 ;;====================================
 ;;;; Another modifier key after ESC 
