@@ -146,28 +146,28 @@
   (cdr (nth 6 (posn-at-point))))
 
 ;; basic scroll-down
-(defun ak-scroll-page-backward ()
+(defun ak-scroll-page-backward (&optional arg)
   "scroll down = Page Up"
-  (interactive "^")
+  (interactive "^P")
   (if (= (point-min) (point))
       (message "Beginning of buffer.")
     (if (ak-first-page-p)
         (goto-char (point-min))
-      (scroll-down )
+      (scroll-down arg)
       )
     )
   )
 ;; basic scroll-up
-(defun ak-scroll-page-forward ()
+(defun ak-scroll-page-forward (&optional arg)
   "scroll up = Page Down"
-  (interactive "^")
+  (interactive "^P")
   (if (= (point-max) (point))
       (message "End of buffer.")
     ;;else
     (if (ak-last-page-p)
         (goto-char (point-max))
       ;;else
-      (scroll-up )
+      (scroll-up arg)
       (forward-line 1)
       )
     )

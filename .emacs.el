@@ -1262,56 +1262,49 @@ With prefix argument, activate previous rectangle if possible."
 
 (setq ad-redefinition-action 'accept)
 
-(defadvice quit-window (after AK-quit-window )
+;;(defadvice quit-window (after AK-quit-window )
+;;  "Quit window and change buffer-list."
+;;  (list-buffers-if-exist))
+;;(ad-activate 'quit-window)
+(defun ak-quit-window (&optional kill window)
   "Quit window and change buffer-list."
+  ;;(message "quit window done")
   (list-buffers-if-exist))
-(ad-activate 'quit-window)
+(advice-add 'quit-window :after #'ak-quit-window)
 
-(defadvice bury-buffer (after AK-bury-buffer )
-  "Quit window and change buffer-list."
+(defun ak-bury-buffer (&optional buffer-or-name)
+  "Bury buffer and change buffer-list."
+  ;;(message "bury buffer done")
   (list-buffers-if-exist))
-(ad-activate 'bury-buffer)
+(advice-add 'bury-buffer :after #'ak-bury-buffer)
 
-(defadvice switch-to-buffer (after AK-switch-to-buffer )
+(defun ak-switch-to-buffer (buffer-or-name &optional norecord force-same-window)
   "Switch window and change buffer-list."
+  ;;(message "switch to buffer done")
   (list-buffers-if-exist))
-(ad-activate 'switch-to-buffer)
+(advice-add 'switch-to-buffer :after #'ak-switch-to-buffer)
 
-;; (defadvice delete-window (after AK-delete-window )
-;;   "Delete window and change buffer-list."
-;;   (list-buffers-if-exist))
-;; (ad-activate 'delete-window)
-
-(defadvice find-file (after AK-find-file )
+(defun ak-find-file (filename &optional wildcards)
   "Find-File and change buffer-list."
+  ;;(message "find file done")
   (list-buffers-if-exist))
-(ad-activate 'find-file)
-
-;; (defadvice view-file (after AK-view-file )
-;;   "View-File and change buffer-list."
-;;   (list-buffers-if-exist))
-;; (ad-activate 'view-file)
+(advice-add 'find-file :after #'ak-find-file)
 
 ;;(setq ad-redefinition-action 'accept)
-(defadvice shell (after AK-shell)
+(defun ak-shell (&optional buffer file-name)
   "M-x shell"
   (list-buffers-if-exist))
-(ad-activate 'shell)
+(advice-add 'shell :after #'ak-shell)
 
-;; (defadvice dired-find-file-hexl (after AK-dired-find-file-hexl )
-;;   "Find-File-Hexl and change buffer-list."
-;;   (list-buffers-if-exist))
-;; (ad-activate 'dired-find-file-hexl)
-
-(defadvice dired (after AK-dired )
+(defun ak-dired (dirname &optional switches)
   "Dired and change buffer-list."
   (list-buffers-if-exist))
-(ad-activate 'dired)
+(advice-add 'dired :after #'ak-dired)
 
-(defadvice info (after AK-info )
+(defun ak-info (&optional file-or-node buffer)
   "Enter Info, the documentation browser."
   (list-buffers-if-exist))
-(ad-activate 'info)
+(advice-add 'info :after #'ak-info)
 
 
 
@@ -1677,28 +1670,28 @@ With prefix argument, activate previous rectangle if possible."
   (cdr (nth 6 (posn-at-point))))
 
 ;; basic scroll-down
-(defun ak-scroll-page-backward ()
+(defun ak-scroll-page-backward (&optional arg)
   "scroll down = Page Up"
-  (interactive "^")
+  (interactive "^P")
   (if (= (point-min) (point))
       (message "Beginning of buffer.")
     (if (ak-first-page-p)
         (goto-char (point-min))
-      (scroll-down )
+      (scroll-down arg)
       )
     )
   )
 ;; basic scroll-up
-(defun ak-scroll-page-forward ()
+(defun ak-scroll-page-forward (&optional arg)
   "scroll up = Page Down"
-  (interactive "^")
+  (interactive "^P")
   (if (= (point-max) (point))
       (message "End of buffer.")
     ;;else
     (if (ak-last-page-p)
         (goto-char (point-max))
       ;;else
-      (scroll-up )
+      (scroll-up arg)
       (forward-line 1)
       )
     )
