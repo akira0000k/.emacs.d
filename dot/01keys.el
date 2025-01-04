@@ -23,6 +23,19 @@
 (define-key input-decode-map "\e[32;2u" (kbd "S-SPC"))
 (define-key input-decode-map "\e[27;2;32~" (kbd "S-SPC"))
 
+;;  MAC OSX iTerm2
+;;  C-SPC:0x00 C-@:M-[27;5;64~ for set-mark
+;;  C-7:0x1f   C-_;M-[27;5;95~ for undo
+(define-key input-decode-map "\e[27;5;64~" (kbd "C-@"))
+(define-key input-decode-map "\e[27;5;94~" (kbd "C-^"))
+(define-key input-decode-map "\e[27;5;95~" (kbd "C-_"))
+(define-key input-decode-map "\e[27;6;61~" (kbd "C-="))
+(define-key input-decode-map "\e[27;6;96~" (kbd "C-`"))
+(define-key input-decode-map "\e[27;6;123~" (kbd "C-{"))
+(define-key input-decode-map "\e[27;6;124~" (kbd "C-|"))
+(define-key input-decode-map "\e[27;6;125~" (kbd "C-}"))
+(define-key input-decode-map "\e[27;6;126~" (kbd "C-~"))
+
 ;;====================================
 ;;;; Another modifier key after ESC 
 ;;====================================
