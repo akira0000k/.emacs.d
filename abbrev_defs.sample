@@ -1,0 +1,16 @@
+;;-*-coding: utf-8;-*-
+(define-abbrev-table 'emacs-lisp-mode-abbrev-table
+  '(
+    ("rfm" "read-from-minibuffer" nil :count 2)
+   ))
+
+(define-abbrev-table 'global-abbrev-table
+  '(
+    ("llw" "longlongword" nil :count 4)
+   ))
+
+(define-abbrev-table 'text-mode-abbrev-table
+  '(
+    ("llw" "longlongword" nil :count 3)
+   ))
+

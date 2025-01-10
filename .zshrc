@@ -53,3 +53,6 @@ fi
 ## use
 #  docker-compose --ansi=never up -d
 #
+
+##export DICTIONARY=en_US
+####export DICPATH=~/Library/Spelling

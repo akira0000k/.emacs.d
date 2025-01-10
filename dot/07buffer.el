@@ -149,3 +149,9 @@
   "Enter Info, the documentation browser."
   (list-buffers-if-exist))
 (advice-add 'info :after #'ak-info)
+
+;; s-^ kill-some-buffers use it.  see files.el
+(defun ak-before-kill-buffer-ask (buffer)
+  "Show buffer."
+  (switch-to-buffer buffer))
+(advice-add 'kill-buffer-ask :before #'ak-before-kill-buffer-ask)

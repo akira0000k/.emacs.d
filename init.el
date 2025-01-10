@@ -98,6 +98,8 @@
     (add-to-list 'exec-path-from-shell-variables "Z_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "LANG")
     (add-to-list 'exec-path-from-shell-variables "LC_COLLATE")
+    ;;(add-to-list 'exec-path-from-shell-variables "DICTIONARY")
+    ;;;;(add-to-list 'exec-path-from-shell-variables "DICPATH")
     (exec-path-from-shell-initialize)
     )
 

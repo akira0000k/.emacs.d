@@ -4,21 +4,21 @@
   s-,		customize
 - s--		text-scale-adjust
 - s-0		text-scale-adjust
-  s-:		ispell
+* s-:		ispell
   s-=		text-scale-adjust
 * s-?		info
   s-C		ns-popup-color-panel
 * s-D		dired
-  s-E		edit-abbrevs
+* s-E		edit-abbrevs
 * s-F		isearch-backward
   s-H		ns-do-hide-others
 * s-L		shell-command
 * s-M		manual-entry
   s-S		ns-write-file-using-panel
-  s-^		kill-some-buffers
+* s-^		kill-some-buffers
 * s-`		other-frame
 * s-a		mark-whole-buffer
-* s-c		ns-copy-including-secondary  ;;kill-ring-save
+* s-c		ns-copy-including-secondary / kill-ring-save(nw)
 * s-d		isearch-repeat-backward
 * s-e		isearch-yank-kill
 * s-f		isearch-forward
@@ -41,7 +41,7 @@
 - s-y		ns-paste-secondary (NG iTerm2)
 * s-z		undo
 * s-|		shell-command-on-region
-* s-~		ns-prev-frame
+* s-~		ns-prev-frame => ak-prev-frame
 
 ;;     same as default
 (global-set-key (kbd "s-a") 'mark-whole-buffer)
@@ -53,7 +53,7 @@
 
 
   s-&		kill-current-buffer
-  s-^		kill-some-buffers
+* s-^		kill-some-buffers
 * s-a		mark-whole-buffer
 * s-k		kill-current-buffer
 * s-s		save-buffer
@@ -88,17 +88,17 @@
   s-t		ns-popup-font-panel
   
   s-,		customize
-  s-:		ispell
+* s-:		ispell
 * s-?		info
 * s-D		dired
-  s-E		edit-abbrevs
+* s-E		edit-abbrevs
 * s-M		manual-entry
 * s-l		goto-line
   
 * s-L		shell-command
 * s-|		shell-command-on-region
 
-* s-c		ns-copy-including-secondary
+* s-c		ns-copy-including-secondary / kill-ring-save(nw)
 * s-v		yank
 * s-x		kill-region
 - s-y		ns-paste-secondary (NG iTerm2)

@@ -60,7 +60,7 @@
 (global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
 
 ;;                    M-f10       'toggle-frame-maximized
-;;                    f11         'toggle-frame-fullscreen  ;; -> M-f11
+;;                    M-f11       'toggle-frame-fullscreen  ;; <- f11
 ;;                    C-x C-c     'save-buffers-kill-terminal
 ;;                    C-x C-z     'suspend-frame            ;; <- C-z
 ;;                    C-x 5 2     'make-frame-command
@@ -1319,6 +1319,12 @@ With prefix argument, activate previous rectangle if possible."
   (list-buffers-if-exist))
 (advice-add 'info :after #'ak-info)
 
+;; s-^ kill-some-buffers use it.  see files.el
+(defun ak-before-kill-buffer-ask (buffer)
+  "Show buffer."
+  (switch-to-buffer buffer))
+(advice-add 'kill-buffer-ask :before #'ak-before-kill-buffer-ask)
+
 
 
 ;; ------ 08mode.el ------
@@ -1398,6 +1404,49 @@ With prefix argument, activate previous rectangle if possible."
 (defun ak-View-scroll-to-buffer-end()
   "scroll to buffer end and go to point max." (interactive "^")
   (View-scroll-to-buffer-end) (goto-char (point-max)))
+
+;;====================================
+;;;; s-: ispell
+;;====================================
+;; brew install hunspell
+;; download "en_US.dic" and "en_US.aff" from
+;; https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/
+(setq-default ispell-program-name "hunspell")
+
+(or (getenv "DICTIONARY") (setenv "DICTIONARY" "en_US")) ;;default dictionary
+;;(or (getenv "DICPATH")
+;;    (setenv "DICPATH" (concat (getenv "HOME") "/Library/Spelling")))
+
+(with-eval-after-load "ispell"
+  (setq ispell-dictionary (getenv "DICTIONARY"))
+  (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
+
+;;(add-hook 'latex-mode-hook 'flyspell-mode)
+
+;;====================================
+;;;;abbrev-mode
+;;====================================
+;; s-E  edit-abbrevs
+;;(setq save-abbrevs 'silently)
+(setq save-abbrevs t)
+(global-set-key (kbd "C-'") 'expand-abbrev)
+;; 1. from in-file words.
+;; M-/    dabbrev-expand        autoM-/ M-/ M-/..
+;;
+;; 2. register words
+;; longlongwordC-x a l  add-mode-abbrev    or   C-x a g   add-global-abbrev
+;; Mode abbrev that expands into "longlongword": llw
+;; llwC-x '  =>  llwC-'    expand-abbrev
+;;
+;; M-x define-mode-abbrev   or M-x define-global-abbrev
+;; Define mode abbrev: rfm
+;; Expansion for rfm: read-from-minibuffer
+;; rfmC-'
+;;
+;; 3. M-x abbev-mode
+;; llwSPACE
+;; rfmSPACE
+;; https://www.math.s.chiba-u.ac.jp/~matsu/emacs/emacs21/abbrev.html
 
 ;;====================================
 ;;;;go-mode

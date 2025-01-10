@@ -60,7 +60,7 @@
 (global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
 
 ;;                    M-f10       'toggle-frame-maximized
-;;                    f11         'toggle-frame-fullscreen  ;; -> M-f11
+;;                    M-f11       'toggle-frame-fullscreen  ;; <- f11
 ;;                    C-x C-c     'save-buffers-kill-terminal
 ;;                    C-x C-z     'suspend-frame            ;; <- C-z
 ;;                    C-x 5 2     'make-frame-command
