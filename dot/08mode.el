@@ -106,6 +106,7 @@
 (global-set-key (kbd "C-'") 'expand-abbrev)
 ;; 1. from in-file words.
 ;; M-/    dabbrev-expand        autoM-/ M-/ M-/..
+;; C-M-/  dabbrev-completion    too short: "Selecting deleted buffer" message(bug?)
 ;;
 ;; 2. register words
 ;; longlongwordC-x a l  add-mode-abbrev    or   C-x a g   add-global-abbrev

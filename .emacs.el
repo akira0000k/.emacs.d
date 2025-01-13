@@ -115,6 +115,7 @@
 ;;  C-SPC:0x00 C-@:M-[27;5;64~ for set-mark
 ;;  C-7:0x1f   C-_;M-[27;5;95~ for undo
 (define-key input-decode-map "\e[27;5;64~" (kbd "C-@"))
+(define-key input-decode-map "\e[27;5;77~" (kbd "C-M-RET")) ;;iTerm?
 (define-key input-decode-map "\e[27;5;94~" (kbd "C-^"))
 (define-key input-decode-map "\e[27;5;95~" (kbd "C-_"))
 (define-key input-decode-map "\e[27;6;61~" (kbd "C-="))
@@ -123,6 +124,10 @@
 (define-key input-decode-map "\e[27;6;124~" (kbd "C-|"))
 (define-key input-decode-map "\e[27;6;125~" (kbd "C-}"))
 (define-key input-decode-map "\e[27;6;126~" (kbd "C-~"))
+
+(define-key input-decode-map "\e[27;7;64~" (kbd "C-M-@"))
+(define-key input-decode-map "\e[27;7;95~" (kbd "C-M-_"))
+(define-key input-decode-map "\e[27;8;61~" (kbd "C-M-="))
 
 ;;====================================
 ;;;; Another modifier key after ESC 
@@ -266,6 +271,7 @@
 (define-key input-decode-map (kbd "M-さ") (kbd "M-x"))	;;execute-extended-command
 (define-key input-decode-map (kbd "M-ん") (kbd "M-y"))	;;yank-pop
 (define-key input-decode-map (kbd "M-つ") (kbd "M-z"))	;;zap-to-char
+(define-key input-decode-map (kbd "M-め") (kbd "M-/"))	;;dabbrev-expand
 
 
 
@@ -1432,6 +1438,7 @@ With prefix argument, activate previous rectangle if possible."
 (global-set-key (kbd "C-'") 'expand-abbrev)
 ;; 1. from in-file words.
 ;; M-/    dabbrev-expand        autoM-/ M-/ M-/..
+;; C-M-/  dabbrev-completion    too short: "Selecting deleted buffer" message(bug?)
 ;;
 ;; 2. register words
 ;; longlongwordC-x a l  add-mode-abbrev    or   C-x a g   add-global-abbrev
