@@ -117,20 +117,33 @@
 ;;  MAC OSX iTerm2
 ;;  C-SPC:0x00 C-@:M-[27;5;64~ for set-mark
 ;;  C-7:0x1f   C-_;M-[27;5;95~ for undo
+
+;; 5: Control
+;;(define-key input-decode-map "\e[27;5;58~" (kbd "C-:")) ;;ja?
 (define-key input-decode-map "\e[27;5;64~" (kbd "C-@"))
-(define-key input-decode-map "\e[27;5;77~" (kbd "C-M-RET")) ;;iTerm?
 (define-key input-decode-map "\e[27;5;94~" (kbd "C-^"))
 (define-key input-decode-map "\e[27;5;95~" (kbd "C-_"))
-(define-key input-decode-map "\e[27;6;61~" (kbd "C-="))
+;; 6: Control + shift
+;;(define-key input-decode-map "\e[27;6;39~" (kbd "C-'")) ;;ja?
+;;(define-key input-decode-map "\e[27;6;61~" (kbd "C-=")) ;;ja?
 (define-key input-decode-map "\e[27;6;96~" (kbd "C-`"))
 (define-key input-decode-map "\e[27;6;123~" (kbd "C-{"))
 (define-key input-decode-map "\e[27;6;124~" (kbd "C-|"))
 (define-key input-decode-map "\e[27;6;125~" (kbd "C-}"))
 (define-key input-decode-map "\e[27;6;126~" (kbd "C-~"))
-
+;; 7: Control + Meta
+;;(define-key input-decode-map "\e[27;7;58~" (kbd "C-M-:")) ;;ja?
 (define-key input-decode-map "\e[27;7;64~" (kbd "C-M-@"))
+(define-key input-decode-map "\e[27;7;94~" (kbd "C-M-^"))
 (define-key input-decode-map "\e[27;7;95~" (kbd "C-M-_"))
-(define-key input-decode-map "\e[27;8;61~" (kbd "C-M-="))
+;; 8: Control + Meta + Shift
+;;(define-key input-decode-map "\e[27;8;39~" (kbd "C-M-'")) ;;ja?
+;;(define-key input-decode-map "\e[27;8;61~" (kbd "C-M-=")) ;;ja?
+(define-key input-decode-map "\e[27;8;96~" (kbd "C-M-`"))
+(define-key input-decode-map "\e[27;8;123~" (kbd "C-M-{"))
+(define-key input-decode-map "\e[27;8;124~" (kbd "C-M-|"))
+(define-key input-decode-map "\e[27;8;125~" (kbd "C-M-}"))
+(define-key input-decode-map "\e[27;8;126~" (kbd "C-M-~"))
 
 ;;====================================
 ;;;; Another modifier key after ESC 
