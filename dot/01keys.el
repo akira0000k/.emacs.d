@@ -15,13 +15,14 @@
 (define-key input-decode-map (kbd "M-¥") (kbd "M-\\"))
 ;;      for emacs.app    terminal->no need
 (define-key input-decode-map (kbd "C-¥") (kbd "C-\\"))
+(define-key input-decode-map (kbd "s-¥") (kbd "s-\\"))
 
 ;;  C-S-DEL kill-whole-line
 (define-key input-decode-map "\e[3;6~" (kbd "C-S-<backspace>")) ;;was C-S-<delete>
 
 ;;  S-SPC is backward SPC.
-(define-key input-decode-map "\e[32;2u" (kbd "S-SPC"))
-(define-key input-decode-map "\e[27;2;32~" (kbd "S-SPC"))
+(define-key input-decode-map "\e[27;2;32~" (kbd "S-SPC")) ;;ak-scroll-page-backward(view)
+(define-key input-decode-map "\e[27;6;32~" (kbd "C-S-SPC")) ;;cua-toggle-global-mark
 
 ;;  MAC OSX iTerm2
 ;;  C-SPC:0x00 C-@:M-[27;5;64~ for set-mark
@@ -111,6 +112,8 @@
 (global-set-key (kbd "s-L") 'shell-command)
 (global-set-key (kbd "s-|") 'shell-command-on-region)
 (global-set-key (kbd "s-?") 'info)
+(global-set-key (kbd "s-:") 'ispell)
+(global-set-key (kbd "s-E") 'edit-abbrevs)
 
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-x") 'kill-region)
@@ -124,6 +127,7 @@
 (global-set-key (kbd "s-k") 'kill-current-buffer)
 (global-set-key (kbd "s-s") 'save-buffer)
 (global-set-key (kbd "s-u") 'revert-buffer)
+(global-set-key (kbd "s-^") 'kill-some-buffers)
 
 (global-set-key (kbd "s-n") 'make-frame)
 (global-set-key (kbd "s-w") 'delete-frame)
@@ -145,6 +149,8 @@
 (define-key input-decode-map (kbd "s-り") (kbd "s-l"))	    ;;goto-line
 (define-key input-decode-map (kbd "s-ー") (kbd "s-|"))	    ;;shell-command-on-region
 (define-key input-decode-map (kbd "s-・") (kbd "s-?"))	    ;;info
+(define-key input-decode-map (kbd "s-け") (kbd "s-:"))	    ;;ispell
+(define-key input-decode-map (kbd "s-ぃ") (kbd "s-E"))	    ;;edit-abbrevs
 							     
 (define-key input-decode-map (kbd "s-つ") (kbd "s-z"))	    ;;undo
 (define-key input-decode-map (kbd "s-さ") (kbd "s-x"))	    ;;kill-region
@@ -155,12 +161,12 @@
 (define-key input-decode-map (kbd "s-の") (kbd "s-k"))	    ;;kill-current-buffer
 (define-key input-decode-map (kbd "s-と") (kbd "s-s"))	    ;;save-buffer
 (define-key input-decode-map (kbd "s-な") (kbd "s-u"))	    ;;revert-buffer
+(define-key input-decode-map (kbd "s-へ") (kbd "s-^"))	    ;;kill-some-buffers
 							     
 (define-key input-decode-map (kbd "s-み") (kbd "s-n"))	    ;;make-frame
 (define-key input-decode-map (kbd "s-て") (kbd "s-w"))	    ;;delete-frame
 (define-key input-decode-map (kbd "s-ゃ") (kbd "s-'"))	    ;;next-window-any-frame
-(define-key input-decode-map (kbd "s-へ") (kbd "s-`"))	    ;;other-frame
-(define-key input-decode-map (kbd "s-゛") (kbd "s-~"))	    ;;ak-prev-frame
+(define-key input-decode-map (kbd "s-゛") (kbd "s-`"))	    ;;other-frame
 
 (define-key input-decode-map (kbd "s-し")   (kbd "s-d"))    ;;isearch-repeat-backward
 (define-key input-decode-map (kbd "s-は")   (kbd "s-f"))    ;;isearch-forward
