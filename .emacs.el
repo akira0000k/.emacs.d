@@ -108,12 +108,55 @@
 (define-key input-decode-map (kbd "C-¥") (kbd "C-\\"))
 (define-key input-decode-map (kbd "s-¥") (kbd "s-\\"))
 
-;;  C-S-DEL kill-whole-line
-(define-key input-decode-map "\e[3;6~" (kbd "C-S-<backspace>")) ;;was C-S-<delete>
+;;;; delete key sequence is...
+;;(define-key input-decode-map "\e[3~" (kbd "<deletechar>")) ;;delete-forward-char
+;;(define-key input-decode-map "\e[3;2~" (kbd "S-<delete>")) ;;kill-region
+;;(define-key input-decode-map "\e[3;3~" (kbd "M-<delete>"))
+;;(define-key input-decode-map "\e[3;4~" (kbd "M-S-<delete>"))
+;;(define-key input-decode-map "\e[3;5~" (kbd "C-<delete>")) ;;kill-word
+;;(define-key input-decode-map "\e[3;6~" (kbd "C-S-<delete>"))
+;;(define-key input-decode-map "\e[3;7~" (kbd "C-M-<delete>")) ;;backword-kill-sexp
+;;(define-key input-decode-map "\e[3;8~" (kbd "C-M-S-<delete>"))
+
+;;;; new BackSpace key sequence.
+;; DEL (127) backward-delete-char-untabify
+(define-key input-decode-map "\e[27;2;127~" (kbd "S-<backspace>"))
+;; M-DEL (255) backward-kill-word
+(define-key input-decode-map "\e[27;4;127~" (kbd "M-S-DEL"))
+(define-key input-decode-map "\e[27;5;127~" (kbd "C-<backspace>")) ;;backword-kill-word
+(define-key input-decode-map "\e[27;6;127~" (kbd "C-S-<backspace>")) ;;kill-whole-line
+(define-key input-decode-map "\e[27;7;127~" (kbd "C-M-<backspace>")) ;;backword-kill-sexp
+(define-key input-decode-map "\e[27;8;127~" (kbd "C-M-S-<backspace>"))
+
+;;;; TAB
+;; TAB (9)             indent-for-tab-command              ;;magit-section-toggle
+;; S-TAB     M-[ Z     <backtab>                           ;;magit-section-cycle-global
+(define-key input-decode-map "\e[27;3;9~" (kbd "M-<tab>")) ;;magit-section-cycle-diffs
+(define-key input-decode-map "\e[27;4;9~" (kbd "M-S-<tab>"))
+;;efine-key input-decode-map "\e[27;5;9~" (kbd "C-<tab>")) ;;magit-section-cycle
+;;efine-key input-decode-map "\e[27;6;9~" (kbd "C-S-<tab>")) ;;previous-window-any-frame(me)
+;;efine-key input-decode-map "\e[27;7;9~" (kbd "C-M-<tab>"))
+(define-key input-decode-map "\e[27;8;9~" (kbd "C-M-S-<tab>"))
+
+;;;; RET
+;; RET (13)       newline
+;;efine-key input-decode-map "\e[27;2;13~" (kbd "S-<return>"))
+;; M-RET (141)
+(define-key input-decode-map "\e[27;4;13~" (kbd "M-S-RET"))
+;;efine-key input-decode-map "\e[27;5;13~" (kbd "C-<return>")) ;;cua-set-rectangle-mark~
+;;efine-key input-decode-map "\e[27;6;13~" (kbd "C-S-<return>"))
+;;efine-key input-decode-map "\e[27;7;13~" (kbd "C-M-<return>"))
+(define-key input-decode-map "\e[27;8;13~" (kbd "C-M-S-<return>"))
 
 ;;  S-SPC is backward SPC.
+;; SPC (32)
 (define-key input-decode-map "\e[27;2;32~" (kbd "S-SPC")) ;;ak-scroll-page-backward(view)
+;; M-SPC (160)
+(define-key input-decode-map "\e[27;4;32~" (kbd "M-S-SPC"))
+;; C-SPC    C-@ (0)                                         ;;set-mark
 (define-key input-decode-map "\e[27;6;32~" (kbd "C-S-SPC")) ;;cua-toggle-global-mark
+;;efine-key input-decode-map "\e[27;7;32~" (kbd "C-M-SPC")) ;;mark-sexp
+(define-key input-decode-map "\e[27;8;32~" (kbd "C-M-S-SPC"))
 
 ;;  MAC OSX iTerm2
 ;;  C-SPC:0x00 C-@:M-[27;5;64~ for set-mark
