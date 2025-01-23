@@ -133,6 +133,7 @@
 (if (load "~/.emacs.d/.emacs.elc" t t t)
     (message "load .emacs.elc...done")
   (load "~/.emacs.d/dot/.emacs")
+  (setq initial-buffer-choice "~/.emacs.d/dot")
   (message "load dot/.emacs...done"))
 
 ;; Tramp
@@ -275,7 +276,7 @@
     (ak-theme-tango-dark))
    )
   ;;;; (define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
-  (setq initial-buffer-choice "./")  ;; macOS Ventura  image-type: Invalid image type ‘svg’
+  ;; (setq initial-buffer-choice "./")  ;; macOS Ventura  image-type: Invalid image type ‘svg’
   (menu-bar-mode 1)
   (message "emacs Xwindow"))
 
