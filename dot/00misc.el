@@ -46,6 +46,9 @@
 (global-set-key (kbd "C-r") 'query-replace) ;; M-% aaa bbb
 (global-set-key (kbd "C-M-r") 'query-replace-regexp) ;; C-M-% aaa bbb
 
+;; Insert key .. toggle overwrite-mode
+(global-set-key (kbd "M-o") 'overwrite-mode)
+
 ;; no cua-mode  cut/copy/paste=C-w C-S-w C-y
 (global-set-key (kbd "C-S-w") 'kill-ring-save) ;; M-w
 (global-set-key (kbd "C-x r W") 'copy-rectangle-as-kill)  ;; C-x r M-w

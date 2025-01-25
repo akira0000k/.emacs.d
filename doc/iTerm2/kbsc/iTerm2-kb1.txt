@@ -16,7 +16,7 @@ Send ^[ [27;6;34~                                               ^⬆️ "
 Send ^[ [27;8;34~                                               ^ opt ⬆️ "
 Send ^[ [27;5;39~                                               ^⬆️ '
 Send ^[ [27;7;39~                                               ^ opt ⬆️ '
-Send ^[ [27;9;39~                                               ⬆️ command '
+Send Hex Codes: 0x18 0x40 0x73 0x27                             ⬆️ command '
 Page.2
 Send ^[ [27;5;44~                                               ^,
 Send ^[ [27;7;45~                                               ^ opt -
@@ -32,7 +32,7 @@ Send Hex Codes: Ox1f                                            ^7
 Send Hex Codes: 0x7f                                            ^8
 Send ^[ [27;6;58~                                               ^:
 Send ^[ [27;8;58~                                               ^ opt :
-Send ^[ [27;10;58~                                              command :
+Send Hex Codes: 0x18 0x40 0x73 0x3A                             command :
 Send ^[ [27;6;60~                                               ^⬆️ <
 Send ^[ [27;8;60~                                               ^ opt ⬆️ <
 Send ^[ [27;5;61~                                               ^⬆️ =
@@ -40,77 +40,77 @@ Page.3
 Send ^[ [27;7;61~                                               ^ opt ⬆️ =
 Send ^[ [27;6;62~                                               ^⬆️ >
 Send ^[ [27;8;62~                                               ^ opt ⬆️ >
-Send ^[ [27;10;63~                                              ⬆️ command ?
-Send ^[ [27;6;97~                                               ^⬆️ А
-Send ^[ [27;8;97~                                               ^ opt ⬆️ А
-Send ^[ [27;6;98~                                               ^⬆️ B
-Send ^[ [27;8;98~                                               ^ opt ⬆️ B
-Send ^[ [27;8;100~                                              ^ opt ⬆️ D
-Send ^[ [27;10;100~                                             ⬆️ command D
-Send ^[ [27;6;101~                                              ^⬆️ E
-Send ^[ [27;8;101~                                              ^ opt ⬆️ E
-Send ^[ [27;10;101~                                             ⬆️ command E
-Send ^[ [27;6;102~                                              ^⬆️ F
-Send ^[ [27;8;102~                                              ^ opt ⬆️ F
-Send ^[ [27;10;102~                                             ⬆️ command F
-Send ^[ [27;12;102~                                             opt ⬆️ command F
-Send ^[ [27;6;107~                                              ^⬆️ K
+Send Hex Codes: 0x18 0x40 0x73 0x3F                             ⬆️ command ?
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x01                        ^⬆️ А
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x01                   ^ opt ⬆️ А
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x02                        ^⬆️ B
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x02                   ^ opt ⬆️ B
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x04                   ^ opt ⬆️ D
+Send Hex Codes: 0x18 0x40 0x73 0x44                             ⬆️ command D
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x05                        ^⬆️ E
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x05                   ^ opt ⬆️ E
+Send Hex Codes: 0x18 0x40 0x73 0x45                             ⬆️ command E
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x06                        ^⬆️ F
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x06                   ^ opt ⬆️ F
+Send: "\es@sF"                                                  ⬆️ command F
+Send: "\e\es@sF"                                                opt ⬆️ command F
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x0B                        ^⬆️ K
 Page.4
-Send ^[ 27;8;108~                                               ^ opt ⬆️ L
-Send ^[ 27;10;108~                                              ⬆️ command L
-Send ^[ 27;10;109~                                              ⬆️ command M
-Send ^[ 27;6;110~                                               ^⬆️ N
-Send ^[ 27;8;110~                                               ^ opt ⬆️ N
-Send ^[ 27;14;110~                                              ^⬆️ command N
-Send ^[ 27;6;112~                                               ^⬆️ P
-Send ^[ 27;8;112~                                               ^ opt ⬆️ P
-Send ^[ 27;14;112~                                              ^⬆️ command P
-Send ^[ 27;8;117~                                               ^ opt ⬆️ U
-Send ^[ 27;6;118~                                               ^⬆️ V
-Send ^[ 27;8;118~                                               ^ opt ⬆️ V
-Send ^[ 27;6;119~                                               ^⬆️ W
-Send ^[ 27;9;94~                                                command ^
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x0c                   ^ opt ⬆️ L
+Send Hex Codes: 0x18 0x40 0x73 0x4C                             ⬆️ command L
+Send Hex Codes: 0x18 0x40 0x73 0x4D                             ⬆️ command M
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x0E                        ^⬆️ N
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x0e                   ^ opt ⬆️ N
+Send: "\es@+C-S-s-n"                                            ^⬆️ command N
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x10                        ^⬆️ P
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x10                   ^ opt ⬆️ P
+Send: "\es@+C-S-s-p"                                            ^⬆️ command P
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x15                   ^ opt ⬆️ U
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x16                        ^⬆️ V
+Send Hex Codes: 0x1b 0x1b 0x73 0x40 0x53 0x16                   ^ opt ⬆️ V
+Send Hex Codes: 0x1B 0x73 0x40 0x53 0x17                        ^⬆️ W
+Send Hex Codes: 0x18 0x40 0x73 0x5E                             command ^
 Send ^[ [27;6;96~                                               ^⬆️ `
 Send ^[ [27;8;96~                                               ^ opt ⬆️ `
-Send ^[ [27;10;96~                                              ⬆️ command `
-Send ^[ [27;9;97~                                               command a
+Send Hex Codes: 0x18 0x40 0x73 0x60                             ⬆️ command `
+Send Hex Codes: 0x18 0x40 0x73 0x61                             command a
 Page.5
-Send ^[ [27;9;99~                                               command c
-Send ^[ [27;9;100~                                              command d
-Send ^[ [27;9;101~                                              command e
-Send ^[ [27;9;102~                                              command f
-Send ^[ [27;11;102~                                             opt command f
-Send ^[ [27;9;103~                                              command g
-Send ^[ [27;9;106~                                              command j
-Send ^[ [27;9;107~                                              command k
-Send ^[ [27;9;108~                                              command l
-Send ^[ [27;9;110~                                              command n
-Send ^[ [27;13;110~                                             ^command n
-Send ^[ [27;13;112~                                             ^command p
+Send Hex Codes: 0x18 0x40 0x73 0x63                             command c
+Send Hex Codes: 0x18 0x40 0x73 0x64                             command d
+Send Hex Codes: 0x18 0x40 0x73 0x65                             command e
+Send: "\es@sf"                                                  command f
+Send: "\ee\es@sf"                                               opt command f
+Send Hex Codes: 0x18 0x40 0x73 0x67                             command g
+Send Hex Codes: 0x18 0x40 0x73 0x6A                             command j
+Send Hex Codes: 0x18 0x40 0x73 0x6B                             command k
+Send Hex Codes: 0x18 0x40 0x73 0x6C                             command l
+Send Hex Codes: 0x18 0x40 0x73 0x6E                             command n
+Send Hex Codes: 0x18 0x40 0x73 0x0e                             ^command n
+Send Hex Codes: 0x18 0x40 0x73 0x10                             ^command p
 Send: "\<C-x>\<C-c>"                                            opt command q
 Ignore                                                          command r
-Send ^[ [27;9;115~                                              command s
-Send ^[ [27;9;117~                                              command u
-Send ^[ [27;9;118~                                              command v
-Send ^[ [27;9;119~                                              command w
+Send Hex Codes: 0x18 0x40 0x73 0x73                             command s
+Send Hex Codes: 0x18 0x40 0x73 0x75                             command u
+Send Hex Codes: 0x18 0x40 0x73 0x76                             command v
+Send Hex Codes: 0x18 0x40 0x73 0x77                             command w
 Page.6
-Send ^[ [27;9;120~                                              command x
+Send Hex Codes: 0x18 0x40 0x73 0x78                             command x
 Ignore                                                          command y
-Send ^[ [27;9;122~                                              command z
-Sehd ^[ [27;6;123~                                              ^⬆️ {
-Sehd ^[ [27;8;123~                                              ^ opt ⬆️ {
-Sehd ^[ [27;8;124~                                              ^ opt ⬆️ |
-Send ^[ [27;10;124~                                             ⬆️ command |
-Send ^[ [27;6;125~                                              ^⬆️ }
-Send ^[ [27;8;125~                                              ^ opt ⬆️ }
-Send ^[ [27;8;126~                                              ^ opt ⬆️ ~
-Send ^[ [27;10;126~                                             ⬆️ command ~
-Send ^[ [27;2;127~                                              ⬆️ ← delete
-Send ^[ [27;5;127~                                              ^️← delete
-Send ^[ [27;6;127~                                              ^⬆️ ← delete
-Send ^[ [27;4;127~                                              opt ⬆️ ← delete
-Send ^[ [27;7;127~                                              ^ opt ← delete
-Send ^[ [27;8;127~                                              ^ opt ⬆️ ← delete
+Send Hex Codes: 0x18 0x40 0x73 0x7a                             command z
+Sehd ^[ [27:6:123~                                              ^⬆️ {
+Sehd ^[ [27:8:123~                                              ^ opt ⬆️ {
+Sehd ^[ [27:8:124~                                              ^ opt ⬆️ |
+Send Hex Codes: 0x18 0x40 0x73 0x7C                             ⬆️ command |
+Send ^[ [27:6:125~                                              ^⬆️ }
+Send ^[ [27:8:125~                                              ^ opt ⬆️ }
+Send ^[ [27:8:126~                                              ^ opt ⬆️ ~
+Send Hex Codes: 0x18 0x40 0x73 0x7E                             ⬆️ command ~
+Send ^[ [27:2:127~                                              ⬆️ ← delete
+Send ^[ [27:5:127~                                              ^️← delete
+Send ^[ [27:6:127~                                              ^⬆️ ← delete
+Send ^[ [27:4:127~                                              opt ⬆️ ← delete
+Send ^[ [27:7:127~                                              ^ opt ← delete
+Send ^[ [27:8:127~                                              ^ opt ⬆️ ← delete
 Send ^[ \                                                       opt ¥
 Page.7
 Send ^[ [1;2A                                                   ⬆️ ↑
@@ -120,8 +120,8 @@ Send ^[ [1;3A                                                   opt ↑
 Send ^[ [1;4A                                                   opt ⬆️ ↑
 Send ^[ [1;7A                                                   ^opt ↑
 Send ^[ [1;8A                                                   ^opt ⬆️ ↑
-Send ^[ [1;9A                                                   command ↑
-Send ^[ [1;10A                                                  ⬆️ command ↑
+Send "\es\eOA"                                                  command ↑
+Send "\es\e[1;2A"                                               ⬆️ command ↑
 Send ^[ [1;2B                                                   ⬆️ ↓
 Send ^[ [1;5B                                                   ^↓
 Send ^[ [1;6B                                                   ^⬆️ ↓
@@ -129,8 +129,8 @@ Send ^[ [1;3B                                                   opt ↓
 Send ^[ [1;4B                                                   opt ⬆️ ↓
 Send ^[ [1;7B                                                   ^opt ↓
 Send ^[ [1;8B                                                   ^opt ⬆️ ↓
-Send ^[ [1;9B                                                   command ↓
-Send ^[ [1;10B                                                  ⬆️ command ↓
+Send "\es\eOB"                                                  command ↓
+Send "\es\e[1;2B"                                               ⬆️ command ↓
 Page.8
 Send ^[ [1;2D                                                   ⬆️ ←
 Send ^[ [1;5D                                                   ^←
@@ -139,8 +139,8 @@ Send ^[ [1;3D                                                   opt ←
 Send ^[ [1;4D                                                   opt ⬆️ ←
 Send ^[ [1;7D                                                   ^opt ←
 Send ^[ [1;8D                                                   ^opt ⬆️ ←
-Send ^[ [1;9D                                                   command ←
-Send ^[ [1;10D                                                  ⬆️ command ←
+Send "\es\eOD"                                                  command ←
+Send "\es\e[1;2D"                                               ⬆️ command ←
 Send ^[ [1;2C                                                   ⬆️ →
 Send ^[ [1;5C                                                   ^️→
 Send ^[ [1;6C                                                   ^⬆️ →
@@ -148,8 +148,8 @@ Send ^[ [1;3C                                                   opt →
 Send ^[ [1;4C                                                   opt ⬆️ →
 Send ^[ [1;7C                                                   ^opt →
 Send ^[ [1;8C                                                   ^opt ⬆️ →
-Send ^[ [1;9C                                                   command →
-Send ^[ [1;10C                                                  ⬆️ command →
+Send "\es\eOC"                                                  command →
+Send "\es\e[1;2C"                                               ⬆️ command →
 Page.9
 Send ^[ [1;2P                                                   ⬆️ F1
 Send Hex Codes: 0x1c 0x09                                       opt F1

@@ -92,9 +92,9 @@ User5=1863,1,$1B[1;6H
 ;                         M-<home>
 User6=2375,1,$1B[1;3H
 ;                         C-M-<home>
-User7=?2375,1,$1B[1;3H
+User7=3399,1,$1B[1;7H
 ;                         C-M-S-<home>
-User8=?2375,1,$1B[1;3H
+User8=3911,1,$1B[1;8H
 
 ;                         S-<end>
 User9=847,1,$1B[1;2F
@@ -105,9 +105,9 @@ User11=1871,1,$1B[1;6F
 ;                         M-<end>
 User12=2383,1,$1B[1;3F
 ;                         C-M-<end>
-User13=?2383,1,$1B[1;3F
+User13=3407,1,$1B[1;7F
 ;                         C-M-S-<end>
-User14=?2383,1,$1B[1;3F
+User14=3919,1,$1B[1;8F
 
 ;                         S-<prior>
 User15=841,1,$1B[5;2~
@@ -134,9 +134,9 @@ User24=2376,1,$1B[1;3A
 ;                         M-S-<up>
 User25=2888,1,$1B[1;4A
 ;                         C-M-<up>
-User26=?2888,1,$1B[1;4A
+User26=3400,1,$1B[1;7A
 ;                         C-M-S-<up>
-User27=?2888,1,$1B[1;4A
+User27=3912,1,$1B[1;8A
 
 ;                         S-<down>
 User28=848,1,$1B[1;2B
@@ -149,9 +149,9 @@ User31=2384,1,$1B[1;3B
 ;                         M-S-<down>
 User32=2896,1,$1B[1;4B
 ;                         C-M-<down>
-User33=?2896,1,$1B[1;4B
+User33=3408,1,$1B[1;7B
 ;                         C-M-S-<down>
-User34=?2896,1,$1B[1;4B
+User34=3920,1,$1B[1;8B
 
 ;                         S-<left>
 User35=843,1,$1B[1;2D
@@ -164,9 +164,9 @@ User38=2379,1,$1B[1;3D
 ;                         M-S-<left>
 User39=2891,1,$1B[1;4D
 ;                         C-M-<left>
-User40=?2891,1,$1B[1;4D
+User40=3403,1,$1B[1;7D
 ;                         C-M-S-<left>
-User41=?2891,1,$1B[1;4D
+User41=3915,1,$1B[1;8D
 
 ;                         S-<right>
 User42=845,1,$1B[1;2C
@@ -179,9 +179,9 @@ User45=2381,1,$1B[1;3C
 ;                         M-S-<right>
 User46=2893,1,$1B[1;4C
 ;                         C-M-<right>
-User47=?2893,1,$1B[1;4C
+User47=3405,1,$1B[1;7C
 ;                         C-M-S-<right>
-User48=?2893,1,$1B[1;4C
+User48=3917,1,$1B[1;8C
 
 
 
@@ -192,18 +192,18 @@ User49=1039,1,$1B[27;5;9~
 User50=1551,1,$1B[27;6;9~
 
 ;                         C-,
-User51=1075,1,$1B[44;5u
+User51=1075,1,$1B[27;5;44~
 ;                         C-.
-User52=1076,1,$1B[46;5u
+User52=1076,1,$1B[27;5;46~
 ;                         C-<
-User53=1587,1,$1B[60;6u
+User53=1587,1,$1B[27;6;60~
 ;                         C->
-User54=1588,1,$1B[62;6u
+User54=1588,1,$1B[27;6;62~
 
 ;                         C-<return>
 User55=1052,1,$1B[27;5;13~
 ;                         C-S-<backspace>
-User56=1550,1,$1B[3;6~
+User56=1550,1,$1B[27;6;127~
 ;                         S-<delete> cut ?????
 User57=851,1,$1B[3;2~
 ;                         C-<delete> ?????
@@ -244,58 +244,42 @@ User73=599,1,$1B[23;2~
 User74=600,1,$1B[24;2~
 
 
-;;  ;                         C-S-a => C-x @ S C-a ????
-;;  User83=1566,1,$18@S$01
+;                         C-S-a => C-x @ S C-a ????
+User75=1566,1,$18@S$01
 ;                         C-S-b => C-x @ S C-b
-User75=1584,1,$18@S$02
+User76=1584,1,$18@S$02
 ;                         C-S-e => C-x @ S C-e
-User76=1554,1,$18@S$05
+User77=1554,1,$18@S$05
 ;                         C-S-f => C-x @ S C-f
-User77=1569,1,$18@S$06
-;;  ;                         C-S-k => C-x @ S C-k NEW ????
-;;  User87=1573,1,$18@S$0B
+User78=1569,1,$18@S$06
+;                         C-S-k => C-x @ S C-k NEW ????
+User79=1573,1,$18@S$0B
 ;                         C-S-n => C-x @ S C-n
-User78=1585,1,$18@S$0E
+User80=1585,1,$18@S$0E
 ;                         C-S-p => C-x @ S C-p
-User79=1561,1,$18@S$10
+User81=1561,1,$18@S$10
 ;                         C-S-v => C-x @ S C-v
-User80=1583,1,$18@S$16
+User82=1583,1,$18@S$16
 
-;                         C-M-a => C-x @ S C-a
-User81=?1566,1,$18@S$01
-;                         C-M-b => C-x @ S C-b
-User82=?1584,1,$18@S$02
-;                         C-M-e => C-x @ S C-e
-User83=?1554,1,$18@S$05
-;                         C-M-f => C-x @ S C-f
-User84=?1569,1,$18@S$06
-;                         C-M-l => C-x @ S C-l
-User85=?1585,1,$18@S$0E
-;                         C-M-n => C-x @ S C-n
-User86=?1585,1,$18@S$0E
-;                         C-M-p => C-x @ S C-p
-User87=?1561,1,$18@S$10
-;                         C-M-v => C-x @ S C-v
-User88=?1583,1,$18@S$16
 
 ;                         C-M-S-a => Esc Esc s @ S ^A
-User89=?1566,1,$1B$1Bs@S$01
+User83=3614,1,$1B$1Bs@S$01
 ;                         C-M-S-b => Esc Esc s @ S ^B
-User90=?1584,1,$1B$1Bs@S$02
+User84=3632,1,$1B$1Bs@S$02
 ;                         C-M-S-e => Esc Esc s @ S ^E
-User91=?1554,1,$1B$1Bs@S$05
+User85=3602,1,$1B$1Bs@S$05
 ;                         C-M-S-f => Esc Esc s @ S ^F
-User92=?1569,1,$1B$1Bs@S$06
+User86=3617,1,$1B$1Bs@S$06
 ;                         C-M-S-l => Esc Esc s @ S ^L
-User93=?1585,1,$1B$1Bs@S$0C
+User87=3622,1,$1B$1Bs@S$0C
 ;                         C-M-S-n => Esc Esc s @ S ^N
-User94=?1585,1,$1B$1Bs@S$0E
+User88=3633,1,$1B$1Bs@S$0E
 ;                         C-M-S-p => Esc Esc s @ S ^P
-User95=?1561,1,$1B$1Bs@S$10
+User89=3609,1,$1B$1Bs@S$10
 ;                         C-M-S-v => Esc Esc s @ S ^V
-User96=?1583,1,$1B$1Bs@S$16
+User90=3631,1,$1B$1Bs@S$16
 
 ;                         S-<insert> paste
-User97=850,1,$1B[2;2~
+User91=850,1,$1B[2;2~
 ;                         C-<insert> copy
-User98=1362,1,$1B[2;5~
+User92=1362,1,$1B[2;5~
