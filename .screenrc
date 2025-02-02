@@ -1,3 +1,9 @@
+#term screen-256color
+#term xterm-256color
+
+# login shell (-)
+shell -${SHELL}
+
 autodetach on
 
 escape ^\^\

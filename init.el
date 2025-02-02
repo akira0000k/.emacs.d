@@ -74,6 +74,7 @@
 ;;(load-theme 'misterioso       t)
 ;;(load-theme 'modus-vivendi    t)
 ;;(load-theme 'tango-dark       t)
+;;(load-theme 'leuven-dark      t)
 ;;(load-theme 'tsdh-dark        t)
 ;;(load-theme 'wheatgrass       t)
 ;;(load-theme 'wombat	        t)
@@ -98,18 +99,20 @@
     (add-to-list 'exec-path-from-shell-variables "Z_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "LANG")
     (add-to-list 'exec-path-from-shell-variables "LC_COLLATE")
-    ;;(add-to-list 'exec-path-from-shell-variables "DICTIONARY")
-    ;;;;(add-to-list 'exec-path-from-shell-variables "DICPATH")
+    (add-to-list 'exec-path-from-shell-variables "DICTIONARY")
+    (add-to-list 'exec-path-from-shell-variables "DICPATH")
     (exec-path-from-shell-initialize)
     )
-
+(defun ak-validstrp(str)
+  (and str (> (length str) 0)))
 ;; emacs.app?  shell emacs?
 (if (getenv "PWD")
     (message "started in diretory %s" (getenv "PWD"))
   (message "launch app")
   ;;(setenv  "PATH" (concat "/usr/local/bin:/Users/Akira/bin:/Users/Akira/go/bin:/usr/local/bin/go:" (getenv "PATH")))
   (ak-setenv)
-  (and (getenv "Z_DIRECTORY") (setq dired-default-directory (getenv "Z_DIRECTORY")))
+  (and (ak-validstrp (getenv "Z_DIRECTORY"))
+       (setq dired-default-directory (getenv "Z_DIRECTORY")))
   )
 ;;;; ls sort order error
 ;;(setenv "LC_COLLATE" "C")
@@ -216,6 +219,13 @@
   (set-face-attribute 'font-lock-function-name-face nil :foreground "#7a83ff")  ;;dired directory name
   ;;(set-face-attribute 'shadow nil :foreground "lime green")  ;;dired backupfile~ name
   )
+(defun ak-theme-manoj-dark()
+  (load-theme 'manoj-dark t)
+  (message "load-theme manoj-dark")
+  (set-face-attribute 'region t :extend nil :background "blue3" :underline t)
+  (set-face-attribute 'isearch t :background "palevioletred2" :foreground "brown4" :underline t :weight 'bold)
+  (set-face-attribute 'query-replace t :background "palevioletred2" :foreground "brown4" :weight 'bold)
+  )  
 (defun ak-theme-misc()
   (message "ak-theme-misk")
   (set-face-attribute 'default nil :background "#000000" :foreground "#dddddd")  ;;back/foreground color
@@ -233,9 +243,18 @@
     ;;; -nw no window emacs
     (progn
       (cond
+       ((string= (getenv "SCREEN") "yes")
+	;; in screen xterm env.  SCREEN=yes emacs -nw
+	;; Selected region IS TRANSPARENT!
+	;; MacOSX + screen-5.0.0(homeblew) + iTerm2 Transparency: 50%
+	;;   Keep background colors opaque,  Use transparency.
+	(message "load-theme wheatgrass")
+	(load-theme 'wheatgrass t))
        ((string= (getenv "VT100") "yes")
 	;; in screen start like this. TERM=vt100 VT100=yes emacs -nw
+	;; MacOSX + screen + iTerm2 Transparency: 0%
 	(message "vt100 screen")
+	(ak-theme-manoj-dark)
 	(load "~/.emacs.d/site-lisp/pc-teraconf-21.el"))
        ((string= (getenv "PUTTY") "yes")
 	;; for PuTTY terminal start like this. PUTTY=yes emacs -nw
@@ -244,8 +263,11 @@
 	(ak-theme-misc))
        ((not (memq system-type '(darwin)))
 	;; for debian   TERM=xterm emacs -nw
+	(message "No Color setting for linux")
 	)
-       (nil
+       ((string= (getenv "PLAIN") "yes")
+	(message "No Theme test"))
+       ((string= (getenv "BLUE") "yes")
 	;; for MAC OSX iTerm2 3.4.16  same as XWindow Emacs
 	(ak-theme-deeper-blue))
        (t

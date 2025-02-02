@@ -1566,8 +1566,8 @@ With prefix argument, activate previous rectangle if possible."
 ;; https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/
 (setq-default ispell-program-name "hunspell")
 
-(or (getenv "DICTIONARY") (setenv "DICTIONARY" "en_US")) ;;default dictionary
-;;(or (getenv "DICPATH")
+(or (ak-validstrp (getenv "DICTIONARY")) (setenv "DICTIONARY" "en_US")) ;;default dictionary
+;; (or (ak-validstrp (getenv "DICPATH"))
 ;;    (setenv "DICPATH" (concat (getenv "HOME") "/Library/Spelling")))
 
 (with-eval-after-load "ispell"
@@ -1760,6 +1760,10 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;  common functions
 ;;====================================
+;; string valid?
+(defun ak-validstrp(str)
+  (and str (> (length str) 0)))
+
 ;; query position
 (defun ak-first-page-p ()
   (if (= (point-min) (window-start))

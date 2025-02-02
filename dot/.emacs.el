@@ -20,6 +20,10 @@
 ;;====================================
 ;;  common functions
 ;;====================================
+;; string valid?
+(defun ak-validstrp(str)
+  (and str (> (length str) 0)))
+
 ;; query position
 (defun ak-first-page-p ()
   (if (= (point-min) (window-start))

@@ -15,9 +15,10 @@ typeset -U path PATH
 alias ls='ls -laF'
 
 export emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
-alias emacs='$emacs &!'   #disown
+alias emax='$emacs &!'   #disown
 
 alias emx='TERM=xterm $emacs -nw'
+alias ems='SCREEN=yes $emacs -nw'
 alias emt='TERM=vt100 VT100=yes $emacs -nw'
 alias emv='TERM_PROGRAM=vscode $emacs -nw'
 alias empu='PUTTY=yes $emacs -nw'

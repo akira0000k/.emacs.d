@@ -279,7 +279,24 @@ User89=3609,1,$1B$1Bs@S$10
 ;                         C-M-S-v => Esc Esc s @ S ^V
 User90=3631,1,$1B$1Bs@S$16
 
-;                         S-<insert> paste
-User91=850,1,$1B[2;2~
-;                         C-<insert> copy
-User92=1362,1,$1B[2;5~
+;; Meta Shift alphabet  (really need?)
+;                         M-S-a  M-A
+User91=2590,1,$1BA
+;                         M-S-b  M-B
+User92=2608,1,$1BB
+;                         M-S-e  M-E
+User93=2578,1,$1BE
+;                         M-S-f  M-F
+User94=2593,1,$1BF
+;                         M-S-n  M-N
+User95=2609,1,$1BN
+;                         M-S-p  M-P
+User96=2585,1,$1BP
+;                         M-S-v  M-V
+User97=2607,1,$1BV
+
+;; ;                         S-<insert> paste
+;; User92=850,1,$1B[2;2~
+;; ;                         C-<insert> copy
+;; User93=1362,1,$1B[2;5~
+
