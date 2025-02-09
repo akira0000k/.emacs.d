@@ -23,7 +23,7 @@
 ;;(define-key input-decode-map "\e[3;3~" (kbd "M-<delete>"))
 ;;(define-key input-decode-map "\e[3;4~" (kbd "M-S-<delete>"))
 ;;(define-key input-decode-map "\e[3;5~" (kbd "C-<delete>")) ;;kill-word
-;;(define-key input-decode-map "\e[3;6~" (kbd "C-S-<delete>"))
+;;(define-key input-decode-map "\e[3;6~" (kbd "C-S-<delete>")) ;;kill-whole-line(me)
 ;;(define-key input-decode-map "\e[3;7~" (kbd "C-M-<delete>")) ;;backword-kill-sexp
 ;;(define-key input-decode-map "\e[3;8~" (kbd "C-M-S-<delete>"))
 

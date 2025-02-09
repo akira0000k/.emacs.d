@@ -197,8 +197,25 @@
 ;;====================================
 (global-set-key [C-home]  'beginning-of-buffer)
 (global-set-key [C-end]   'end-of-buffer)
-(global-set-key [home]  'ak-beginning-of-buffer)
-(global-set-key [end]   'ak-end-of-buffer)
+(global-set-key [home]  'ak-beginning-of-buffer2)
+(global-set-key [end]   'ak-end-of-buffer2)
+(defun ak-beginning-of-buffer2()
+  "set cursor at beginning of line or buffer."
+  (interactive "^")
+  (let ((stp (point)))
+    (beginning-of-line)
+    (if (= stp (point))
+	(call-interactively 'beginning-of-buffer))
+  ))
+(defun ak-end-of-buffer2()
+  "set cursor at end of line or buffer."
+  (interactive "^")
+  (let ((stp (point)))
+    (end-of-line)
+    (if (= stp (point))
+	(call-interactively 'end-of-buffer))
+  ))
+
 (defun ak-beginning-of-buffer()
   "set cursor at beginning of buffer or line(shift)"
   (interactive "^")

@@ -72,6 +72,8 @@
 ;;                    C-x 5 2     'make-frame-command
 ;;                    s-n         'make-frame
 
+;; like C-S-<backspace>
+(global-set-key (kbd "C-S-<delete>") 'kill-whole-line)
 
 ;;====================================
 ;;;; kill region or kill line. (MAC OSX style)
@@ -117,7 +119,7 @@
 ;;(define-key input-decode-map "\e[3;3~" (kbd "M-<delete>"))
 ;;(define-key input-decode-map "\e[3;4~" (kbd "M-S-<delete>"))
 ;;(define-key input-decode-map "\e[3;5~" (kbd "C-<delete>")) ;;kill-word
-;;(define-key input-decode-map "\e[3;6~" (kbd "C-S-<delete>"))
+;;(define-key input-decode-map "\e[3;6~" (kbd "C-S-<delete>")) ;;kill-whole-line(me)
 ;;(define-key input-decode-map "\e[3;7~" (kbd "C-M-<delete>")) ;;backword-kill-sexp
 ;;(define-key input-decode-map "\e[3;8~" (kbd "C-M-S-<delete>"))
 
@@ -618,8 +620,25 @@
 ;;====================================
 (global-set-key [C-home]  'beginning-of-buffer)
 (global-set-key [C-end]   'end-of-buffer)
-(global-set-key [home]  'ak-beginning-of-buffer)
-(global-set-key [end]   'ak-end-of-buffer)
+(global-set-key [home]  'ak-beginning-of-buffer2)
+(global-set-key [end]   'ak-end-of-buffer2)
+(defun ak-beginning-of-buffer2()
+  "set cursor at beginning of line or buffer."
+  (interactive "^")
+  (let ((stp (point)))
+    (beginning-of-line)
+    (if (= stp (point))
+	(call-interactively 'beginning-of-buffer))
+  ))
+(defun ak-end-of-buffer2()
+  "set cursor at end of line or buffer."
+  (interactive "^")
+  (let ((stp (point)))
+    (end-of-line)
+    (if (= stp (point))
+	(call-interactively 'end-of-buffer))
+  ))
+
 (defun ak-beginning-of-buffer()
   "set cursor at beginning of buffer or line(shift)"
   (interactive "^")

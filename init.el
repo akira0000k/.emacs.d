@@ -224,8 +224,10 @@
   (message "load-theme manoj-dark")
   (set-face-attribute 'region t :extend nil :background "blue3" :underline t)
   (set-face-attribute 'isearch t :background "palevioletred2" :foreground "brown4" :underline t :weight 'bold)
+  (set-face-attribute 'lazy-highlight t :background "paleturquoise4" :underline t)
+  (set-face-attribute 'show-paren-match t :background "steelblue3" :underline t)
   (set-face-attribute 'query-replace t :background "palevioletred2" :foreground "brown4" :weight 'bold)
-  )  
+  )
 (defun ak-theme-misc()
   (message "ak-theme-misk")
   (set-face-attribute 'default nil :background "#000000" :foreground "#dddddd")  ;;back/foreground color

@@ -72,6 +72,8 @@
 ;;                    C-x 5 2     'make-frame-command
 ;;                    s-n         'make-frame
 
+;; like C-S-<backspace>
+(global-set-key (kbd "C-S-<delete>") 'kill-whole-line)
 
 ;;====================================
 ;;;; kill region or kill line. (MAC OSX style)

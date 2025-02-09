@@ -27,6 +27,11 @@ alias em='$emacs -nw'
 
 alias emd='$emacs -nw --debug-init'
 
+alias profd="printf '\033]1337;SetProfile=Default\a'"
+alias proft="printf '\033]1337;SetProfile=Default Transparent\a'"
+alias profm="printf '\033]1337;SetProfile=tmux\a'"
+alias scren="proft; screen"
+
 alias python=python3
 alias pip=pip3
 
