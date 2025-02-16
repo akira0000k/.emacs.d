@@ -379,6 +379,7 @@
 (define-key input-decode-map (kbd "s-い")   (kbd "s-e"))    ;;isearch-yank-kill
 (define-key input-decode-map (kbd "s-ま")   (kbd "s-j"))    ;;exchange-point-and-mark
 
+(define-key input-decode-map (kbd "M-s-た") (kbd "M-s-q")) ;;C-x C-c save-buffers-kill-emacs
 
 ;;====================================
 ;;;; Allow Meta key in Kana mode.
