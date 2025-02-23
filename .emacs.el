@@ -621,43 +621,28 @@
 ;;====================================
 (global-set-key [C-home]  'beginning-of-buffer)
 (global-set-key [C-end]   'end-of-buffer)
-(global-set-key [home]  'ak-beginning-of-buffer2)
-(global-set-key [end]   'ak-end-of-buffer2)
-(defun ak-beginning-of-buffer2()
-  "set cursor at beginning of line or buffer."
-  (interactive "^")
-  (let ((stp (point)))
-    (beginning-of-line)
-    (if (= stp (point))
-	(call-interactively 'beginning-of-buffer))
-  ))
-(defun ak-end-of-buffer2()
-  "set cursor at end of line or buffer."
-  (interactive "^")
-  (let ((stp (point)))
-    (end-of-line)
-    (if (= stp (point))
-	(call-interactively 'end-of-buffer))
-  ))
-
+(global-set-key [home]  'ak-beginning-of-buffer)
+(global-set-key [end]   'ak-end-of-buffer)
 (defun ak-beginning-of-buffer()
-  "set cursor at beginning of buffer or line(shift)"
+  "Set cursor at beginning of buffer.(unshift)
+Set cursor at beginning of 1line/2buffer.(shift)"
   (interactive "^")
   (if this-command-keys-shift-translated
-      (ak-home-toggle)
-    ;;(beginning-of-buffer arg) ;;Warning
-    (call-interactively 'beginning-of-buffer)
-  ))
-;;(defun ak-end-of-buffer(&optional arg)
+      (let ((stp (point)))
+	(beginning-of-line)
+	(if (= stp (point))
+	    (call-interactively 'beginning-of-buffer)))
+    (call-interactively 'beginning-of-buffer)))
 (defun ak-end-of-buffer()
-  "set cursor at end of buffer or line(shift)"
+  "Set cursor at end of buffer.(unshift)
+Set cursor at end of 1line/2buffer.(shift)"
   (interactive "^")
   (if this-command-keys-shift-translated
-      (end-of-line)
-    ;;(end-of-buffer arg) ;;Warning
-    ;; [Byte compile] Warning: ‘end-of-buffer’ is for interactive use only; use ‘(goto-char (point-max))’ instead.
-    (call-interactively 'end-of-buffer)
-  ))
+      (let ((stp (point)))
+	(end-of-line)
+	(if (= stp (point))
+	    (call-interactively 'end-of-buffer)))
+    (call-interactively 'end-of-buffer)))
 
 
 
