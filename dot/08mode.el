@@ -7,6 +7,35 @@
 
 
 ;;====================================
+;;;; skk かな漢字変換
+;;====================================
+;; (ak-package-init-once)
+;; M-x package-install RET ddskk RET
+;; M-x package-install RET ddskk-posframe RET
+(require 'package)       ;;for package-installed-p
+(when (package-installed-p 'ddskk)
+  (setq default-input-method "japanese-skk")
+  )
+
+(with-eval-after-load "skk"
+  (message "skk loaded")
+  ;; isearch と統合。
+  (load "~/.emacs.d/site-lisp/skk-setup")
+  ;; x 以外でも前候補。
+  (if (display-graphic-p)
+      (define-key skk-j-mode-map (kbd "S-SPC") 'skk-previous-candidate)) ;;emacs.app
+  (define-key skk-j-mode-map (kbd "M-DEL") 'skk-previous-candidate) ;;iTerm2 -nw
+  ;; 辞書登録ミニバッファから、前候補(x,S-SPC,M-DEL) で抜けるように関数変更。
+  (load "~/.emacs.d/site-lisp/ak-skk-patch")
+  ;; 候補表示をかっこよく。
+  (when (and (package-installed-p 'ddskk-posframe) (display-graphic-p))
+    (ddskk-posframe-mode t))
+  ;; 日本語モードで終了した時辞書登録。
+  (global-set-key (kbd "C-x C-c") 'skk-kill-emacs-without-saving-jisyo)
+  (define-key skk-j-mode-map (kbd "C-x C-c") 'save-buffers-kill-terminal)
+  )
+
+;;====================================
 ;;;;view-mode
 ;;====================================
 ;;  "ESC f1"  view mode

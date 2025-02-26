@@ -18,10 +18,9 @@
 
 ;; C-x SPC     start emacs24 rectangle mark mode
 
-;;  ;; cut/paste=C-w C-v  copy/paste=M-w M-v   possible
-;;  (if (boundp 'cua--cua-keys-keymap)
-;;      (define-key cua--cua-keys-keymap (kbd "M-v") 'yank))
-;;  ;;was     M-v runs the command delete-selection-repeat-replace-region
+;; s-j  (command-j)  cua-exchange-point-and-mark
+;; 上から選択したか、下から選択したかを切り替え。
+;; 矩形選択時は、文字挿入が矩形の前/後に変わる。
 
 ;;====================================
 ;;;; Page Down/Page Up  =  M-v M-u

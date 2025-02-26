@@ -55,8 +55,6 @@
 
 ;; for MAC OSX
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
-;; like iTerm M-s-q ==> send <C-x><C-c>
-(global-set-key (kbd "M-s-q") 'save-buffers-kill-emacs)
 
 
 ;; overwridden by cua-mode
@@ -132,6 +130,9 @@
 (define-key input-decode-map "\e[27;6;127~" (kbd "C-S-<backspace>")) ;;kill-whole-line
 (define-key input-decode-map "\e[27;7;127~" (kbd "C-M-<backspace>")) ;;backword-kill-sexp
 (define-key input-decode-map "\e[27;8;127~" (kbd "C-M-S-<backspace>"))
+
+;;(define-key input-decode-map "\xff" (kbd "M-DEL")) ;; M-DEL (255) backward-kill-word
+;;(define-key input-decode-map "\x09" "T")TT
 
 ;;;; TAB
 ;; TAB (9)             indent-for-tab-command              ;;magit-section-toggle
@@ -379,7 +380,9 @@
 (define-key input-decode-map (kbd "s-い")   (kbd "s-e"))    ;;isearch-yank-kill
 (define-key input-decode-map (kbd "s-ま")   (kbd "s-j"))    ;;exchange-point-and-mark
 
-(define-key input-decode-map (kbd "M-s-た") (kbd "M-s-q")) ;;C-x C-c save-buffers-kill-emacs
+;; like iTerm M-s-q ==> send <C-x><C-c>
+(define-key input-decode-map (kbd "M-s-q") (kbd "C-x C-c"))
+(define-key input-decode-map (kbd "M-s-た") (kbd "C-x C-c"))
 
 ;;====================================
 ;;;; Allow Meta key in Kana mode.
@@ -663,10 +666,9 @@ Set cursor at end of 1line/2buffer.(shift)"
 
 ;; C-x SPC     start emacs24 rectangle mark mode
 
-;;  ;; cut/paste=C-w C-v  copy/paste=M-w M-v   possible
-;;  (if (boundp 'cua--cua-keys-keymap)
-;;      (define-key cua--cua-keys-keymap (kbd "M-v") 'yank))
-;;  ;;was     M-v runs the command delete-selection-repeat-replace-region
+;; s-j  (command-j)  cua-exchange-point-and-mark
+;; 上から選択したか、下から選択したかを切り替え。
+;; 矩形選択時は、文字挿入が矩形の前/後に変わる。
 
 ;;====================================
 ;;;; Page Down/Page Up  =  M-v M-u
@@ -1489,6 +1491,35 @@ With prefix argument, activate previous rectangle if possible."
 
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
+
+;;====================================
+;;;; skk かな漢字変換
+;;====================================
+;; (ak-package-init-once)
+;; M-x package-install RET ddskk RET
+;; M-x package-install RET ddskk-posframe RET
+(require 'package)       ;;for package-installed-p
+(when (package-installed-p 'ddskk)
+  (setq default-input-method "japanese-skk")
+  )
+
+(with-eval-after-load "skk"
+  (message "skk loaded")
+  ;; isearch と統合。
+  (load "~/.emacs.d/site-lisp/skk-setup")
+  ;; x 以外でも前候補。
+  (if (display-graphic-p)
+      (define-key skk-j-mode-map (kbd "S-SPC") 'skk-previous-candidate)) ;;emacs.app
+  (define-key skk-j-mode-map (kbd "M-DEL") 'skk-previous-candidate) ;;iTerm2 -nw
+  ;; 辞書登録ミニバッファから、前候補(x,S-SPC,M-DEL) で抜けるように関数変更。
+  (load "~/.emacs.d/site-lisp/ak-skk-patch")
+  ;; 候補表示をかっこよく。
+  (when (and (package-installed-p 'ddskk-posframe) (display-graphic-p))
+    (ddskk-posframe-mode t))
+  ;; 日本語モードで終了した時辞書登録。
+  (global-set-key (kbd "C-x C-c") 'skk-kill-emacs-without-saving-jisyo)
+  (define-key skk-j-mode-map (kbd "C-x C-c") 'save-buffers-kill-terminal)
+  )
 
 ;;====================================
 ;;;;view-mode

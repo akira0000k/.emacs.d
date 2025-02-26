@@ -37,6 +37,9 @@
 (define-key input-decode-map "\e[27;7;127~" (kbd "C-M-<backspace>")) ;;backword-kill-sexp
 (define-key input-decode-map "\e[27;8;127~" (kbd "C-M-S-<backspace>"))
 
+;;(define-key input-decode-map "\xff" (kbd "M-DEL")) ;; M-DEL (255) backward-kill-word
+;;(define-key input-decode-map "\x09" "T")TT
+
 ;;;; TAB
 ;; TAB (9)             indent-for-tab-command              ;;magit-section-toggle
 ;; S-TAB     M-[ Z     <backtab>                           ;;magit-section-cycle-global
@@ -283,7 +286,9 @@
 (define-key input-decode-map (kbd "s-い")   (kbd "s-e"))    ;;isearch-yank-kill
 (define-key input-decode-map (kbd "s-ま")   (kbd "s-j"))    ;;exchange-point-and-mark
 
-(define-key input-decode-map (kbd "M-s-た") (kbd "M-s-q")) ;;C-x C-c save-buffers-kill-emacs
+;; like iTerm M-s-q ==> send <C-x><C-c>
+(define-key input-decode-map (kbd "M-s-q") (kbd "C-x C-c"))
+(define-key input-decode-map (kbd "M-s-た") (kbd "C-x C-c"))
 
 ;;====================================
 ;;;; Allow Meta key in Kana mode.

@@ -55,8 +55,6 @@
 
 ;; for MAC OSX
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
-;; like iTerm M-s-q ==> send <C-x><C-c>
-(global-set-key (kbd "M-s-q") 'save-buffers-kill-emacs)
 
 
 ;; overwridden by cua-mode
