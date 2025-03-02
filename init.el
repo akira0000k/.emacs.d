@@ -36,10 +36,11 @@
 ;; ;;  
 ;; ;; ;; M-x package-install RET magit RET
 ;; ;; (package-install 'magit)
-;;
-;; Installs packages
-;; package-selected-packages contains a list of package names
-;; when some package installed manually, see ./custom.el
+;; ;;
+;; ;; ;; M-x package-delete RET somepkg RET
+;; ;; ;; M-x package-autoremove
+
+;; Pre install packages
 (setq myPackage
       '(
 	markdown-mode
@@ -328,7 +329,8 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load-file custom-file))
-;; update selected package list. if empty, add top packages.
+;; package-selected-packages contains a list of packages installed manually. see ./custom.el
+;; Update package-selected-packages. If empty, add non-dependent packages.
 (defvar need-save nil)
 (unless package-selected-packages
   (setq package-selected-packages (package--find-non-dependencies))
@@ -336,7 +338,7 @@
     (setq need-save t)
     (message "non dependent package list was made."))
   )
-;; my package list member is added as manually installed.
+;; myPackage member is added as manually installed.
 (dolist (pk myPackage)
   (unless (member pk package-selected-packages)
     (setq need-save t)

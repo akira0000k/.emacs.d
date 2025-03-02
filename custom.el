@@ -5,6 +5,10 @@
  ;; If there is more than one, they won't work right.
  '(ak-dired-view-on-right-arrow nil)
  '(ak-fast-scroll-lines 10)
+ '(package-archives
+   '(("gnu" . "https://elpa.gnu.org/packages/")
+     ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+     ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages '(markdown-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
