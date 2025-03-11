@@ -95,24 +95,16 @@
          (setq n (skk-henkan-show-candidate-subr candidate-keys henkan-list))
          (when (> n 0)
            (condition-case nil
-               ;;(let* ((event (read-event))
-	       ;; 	      (char (event-to-character event))
-	       ;; 	      (key (skk-event-key event))
-	       ;; 	      num)
-               (let* ((key (read-key))
-		      (char key)
-		      event
+               (let* ((char (read-key-sequence nil))
+		      key
 		      num)
-		 ;; (message "event:%s" event)
-		 ;; (message "char :%s" char)
-		 ;; (message "key  :%s" key)
-
-		 ;; read-key function read ESC of M-DEL
-		 (when (= key 27)
-		   ;;(message "set ESC key to DEL")
-		   (setq key 127))
-		 (setq key (skk-event-key key)) ;;[ ]
-		 ;;
+		 ;;(message "char :%s" char)
+		 (if (stringp char)
+		     (setq char (string-to-char char))
+		   (setq char nil))
+	         (setq key (this-command-keys-vector))
+		 ;;(message "char-> :%s" char)
+		 ;;(message "key--> :%s" key)
 		 
                  ;; clear out candidates in echo area
                  (message "")
