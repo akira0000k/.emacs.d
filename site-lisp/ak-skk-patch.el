@@ -95,24 +95,31 @@
          (setq n (skk-henkan-show-candidate-subr candidate-keys henkan-list))
          (when (> n 0)
            (condition-case nil
-               (let* ((event (read-event))
-                      (char (event-to-character event))
-                      (key (skk-event-key event))
-                      num)
-               ;;(let* ((key (read-key))
-               ;;       (char key)
-               ;;       (event key)
-               ;;       num)
-                 ;; ;;debug
-                 ;; (message "event:%s" event)
-                 ;; (message "char :%s" char)
-                 ;; (message "key  :%s" key)
-                 ;; ;;gubed
+               ;;(let* ((event (read-event))
+	       ;; 	      (char (event-to-character event))
+	       ;; 	      (key (skk-event-key event))
+	       ;; 	      num)
+               (let* ((key (read-key))
+		      (char key)
+		      event
+		      num)
+		 ;; (message "event:%s" event)
+		 ;; (message "char :%s" char)
+		 ;; (message "key  :%s" key)
+
+		 ;; read-key function read ESC of M-DEL
+		 (when (= key 27)
+		   ;;(message "set ESC key to DEL")
+		   (setq key 127))
+		 (setq key (skk-event-key key)) ;;[ ]
+		 ;;
+		 
                  ;; clear out candidates in echo area
                  (message "")
                  (if (and (null char)
                           (null key))
-                     (skk-unread-event event)
+                     nil;;(skk-unread-event event)
+		   ;;else
                    (setq key-num-alist (nthcdr (- max-candidates n)
                                                key-num-alist1))
                    (when (and key-num-alist
@@ -148,9 +155,9 @@
                          ;; skk-henkan-list の最後の候補の次 (存在しない
                          ;; --- nil)を指す。
                          (setq skk-henkan-count (+ last-showed-index n))
-                         (setq loop nil))))
+                         (setq loop nil)))) ;;end SPC
 
-                    ((eq char skk-force-registration-mode-char)
+                    ((eq char skk-force-registration-mode-char);;46 period(.)
                      (let ((last-showed-index (+ nth-henkan (* loop max-candidates))))
                        (setq skk-exit-show-candidates
                              ;; cdr 部は、辞書登録に入る前に最後に表示し
@@ -159,7 +166,7 @@
                        (setq skk-henkan-count last-showed-index)
                        (setq loop nil)))
 
-                    ((eq char skk-show-candidates-toggle-display-place-char)
+                    ((eq char skk-show-candidates-toggle-display-place-char);;6 C-f
                      (setq skk-show-candidates-always-pop-to-buffer
                            (not skk-show-candidates-always-pop-to-buffer)))
 
@@ -177,7 +184,7 @@
                         ;; 一つ前の候補群をエコーエリアに表示する。
                         (setq reverse t))))
 
-                    ((eq char skk-annotation-toggle-display-char)
+                    ((eq char skk-annotation-toggle-display-char);;94 ^
                      (skk-annotation-toggle-display-p))
 
                     ((skk-key-binding-member key skk-quit-commands
@@ -191,8 +198,11 @@
                                   (or (key-description key)
                                       (key-description char)))
                      (sit-for 1)
-                     )
-                    )))
+                     );;t
+		    
+                    ) ;;end cond
+		   ) ;;end if
+		 ) ;;end let
              (quit
               ;; skk-previous-candidate へ
               (skk-escape-from-show-candidates 0)))))) ; end of while loop
@@ -212,23 +222,37 @@
     
     ((not (eq skk-henkan-mode 'active))
      ;;(message "condA-noactive command:%s event:%s" last-command last-command-event);;
-     (if (or (eq last-command 'kill-region)
-	     ;;(eq last-command 'skk-previous-candidate)
-	     (eq last-command 'delete-backward-char)
-	     (eq last-command 'backward-delete-char-untabify)
-	     (eq last-command 'delete-char)
-	     (eq last-command 'skk-insert))
-         (exit-minibuffer)
-       ;;else
-       (if (not (eq last-command 'skk-kakutei-henkan))
-           (when (and last-command-event
-                      (characterp last-command-event))
-             ;;(message "skk-kana-input %s" arg);;x
-             (skk-kana-input arg))
-	 ;;else
-         (message "skk-undo-kakutei-subr");;
-         (skk-undo-kakutei-subr))
-       )) ;;end not
+     (cond
+      ((eq last-command 'skk-kakutei-henkan)
+       (message "(skk-undo-kakutei-subr)");;
+       (skk-undo-kakutei-subr))
+      
+      ((= last-command-event 120)
+	     ;;(message "x event");;x
+	     (skk-kana-input arg))
+      
+      ((or (eq last-command 'kill-region)
+	  ;;(eq last-command 'skk-previous-candidate)
+	  (eq last-command 'delete-backward-char)
+	  (eq last-command 'backward-delete-char-untabify)
+	  (eq last-command 'delete-char)
+	  (eq last-command 'skk-insert))
+       ;;(message "(exit-minibuffer)")
+       (exit-minibuffer))
+
+      ;; C-p S-SPC M-DEL
+      (t (skk-kana-input arg))
+      
+      ;; ((= last-command-event 127)
+      ;;  ;;(message "DEL event")
+      ;;  (skk-kana-input arg))
+      ;;  
+      ;; ((equal (skk-event-key last-command-event) (kbd "M-DEL"))
+      ;;  ;;(message "M-DEL event")
+      ;;  (skk-kana-input arg)
+      ;;  )
+      ) ;;end cond
+     ) ;;end not
     
     ((string= skk-henkan-key "")
      (message "condB-blankkey");;
