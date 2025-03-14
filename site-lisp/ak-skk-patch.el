@@ -202,6 +202,12 @@
      (or (cdr-safe new-one)
          new-one))))
 
+;; (defun whatis (arg)
+;;   (string-join (list
+;; 		(when (characterp arg) "character ")
+;; 		(when (stringp arg) "string ")
+;; 		(when (commandp arg) "command ")
+;; 		)))
 
 (defun skk-previous-candidate (&optional arg)
   "▼モードであれば、一つ前の候補を表示する。
@@ -213,37 +219,48 @@
    (cond
     
     ((not (eq skk-henkan-mode 'active))
-     ;;(message "condA-noactive command:%s event:%s" last-command last-command-event);;
-     (cond
-      ((eq last-command 'skk-kakutei-henkan)
-       (message "(skk-undo-kakutei-subr)");;
-       (skk-undo-kakutei-subr))
-      
-      ((= last-command-event 120)
-	     ;;(message "x event");;x
-	     (skk-kana-input arg))
-      
-      ((or (eq last-command 'kill-region)
-	  ;;(eq last-command 'skk-previous-candidate)
-	  (eq last-command 'delete-backward-char)
-	  (eq last-command 'backward-delete-char-untabify)
-	  (eq last-command 'delete-char)
-	  (eq last-command 'skk-insert))
-       ;;(message "(exit-minibuffer)")
-       (exit-minibuffer))
+     ;; (message "condA-noactive")
+     ;; (message "last-command:%s %s" last-command (whatis last-command))
+     ;; (message "last-command-event:%s %s" last-command-event (whatis last-command-event))
+     (let (char key)
+       (if (characterp last-command-event)
+	   (setq char last-command-event)
+	 (setq char nil))
+       (setq key (this-command-keys-vector))
+       ;; (message "this-command-keys-vector:%s %s" key (whatis key))
+       ;; (message "char-> :%s" char)
+       ;; (message "key--> :%s" key)
 
-      ;; C-p S-SPC M-DEL
-      (t (skk-kana-input arg))
-      
-      ;; ((= last-command-event 127)
-      ;;  ;;(message "DEL event")
-      ;;  (skk-kana-input arg))
-      ;;  
-      ;; ((equal (skk-event-key last-command-event) (kbd "M-DEL"))
-      ;;  ;;(message "M-DEL event")
-      ;;  (skk-kana-input arg)
-      ;;  )
-      ) ;;end cond
+       (cond
+
+	((eq last-command 'skk-kakutei-henkan)
+	 (message "(skk-undo-kakutei-subr)");;
+	 (skk-undo-kakutei-subr))
+	
+	((eq char 120)
+	 ;; (message "x event");;x
+	 (skk-kana-input arg))
+	
+	((or (eq last-command 'kill-region)
+	     ;;(eq last-command 'skk-previous-candidate)
+	     (eq last-command 'delete-backward-char)
+	     (eq last-command 'backward-delete-char-untabify)
+	     (eq last-command 'delete-char)
+	     (eq last-command 'skk-insert))
+	 ;; (message "(exit-minibuffer)")
+	 (exit-minibuffer))
+
+	;; C-p S-SPC M-DEL up
+	((equal key (kbd "<up>"))
+	 ;; (message "<up> event")
+	 ;; (message "(skk-emulate-original-map arg)")
+	 (skk-emulate-original-map arg))
+	(t
+	 ;; (message "(skk-kana-input arg)")
+	 (skk-kana-input arg))
+
+	) ;;end cond
+       ) ;;end let
      ) ;;end not
     
     ((string= skk-henkan-key "")
@@ -307,4 +324,6 @@
     ) ;;end cond
    
    ;; verbose message
-   (skk-henkan-on-message)))
+   (skk-henkan-on-message)
+   ) ;;end skk-with-point-move
+  ) ;;end defun

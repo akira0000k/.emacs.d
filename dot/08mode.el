@@ -24,6 +24,7 @@
   ;; x 以外でも前候補。
   (define-key skk-j-mode-map (kbd "S-SPC") 'skk-previous-candidate)
   (define-key skk-j-mode-map (kbd "M-DEL") 'skk-previous-candidate) ;;iTerm2 -nw
+  (define-key skk-j-mode-map (kbd "<up>") 'skk-previous-candidate) ;;test
   ;; 辞書登録ミニバッファから、前候補(x,S-SPC,M-DEL) で抜けるように関数変更。
   (load "~/.emacs.d/site-lisp/ak-skk-patch")
   ;; 候補表示をかっこよく。
