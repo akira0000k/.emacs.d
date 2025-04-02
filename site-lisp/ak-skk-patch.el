@@ -222,6 +222,12 @@
      ;; (message "condA-noactive")
      ;; (message "last-command:%s %s" last-command (whatis last-command))
      ;; (message "last-command-event:%s %s" last-command-event (whatis last-command-event))
+     ;; (if (> (minibuffer-depth) 0)
+     ;;  	 (message "in MiniBuffer.")
+     ;;   (message "Out of minibuffer."))
+     ;; (message "Minibuffer prompt=%s" (minibuffer-prompt))
+     ;; (message "minibuffer prompt width=%s" (minibuffer-prompt-width))
+     ;; (message "Current Point=%s" (point))
      (let (char key)
        (if (characterp last-command-event)
 	   (setq char last-command-event)
@@ -240,16 +246,10 @@
 	((eq char 120)
 	 ;; (message "x event");;x
 	 (skk-kana-input arg))
-	
-	((or (eq last-command 'kill-region)
-	     ;;(eq last-command 'skk-previous-candidate)
-	     (eq last-command 'delete-backward-char)
-	     (eq last-command 'backward-delete-char-untabify)
-	     (eq last-command 'delete-char)
-	     (eq last-command 'skk-insert))
-	 ;; (message "(exit-minibuffer)")
-	 (exit-minibuffer))
 
+	((and (minibuffer-prompt) (<= (point) (+ (minibuffer-prompt-width) 1)))
+	 (exit-minibuffer))
+	
 	;; C-p S-SPC M-DEL up
 	((equal key (kbd "<up>"))
 	 ;; (message "<up> event")
