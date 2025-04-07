@@ -1503,16 +1503,36 @@ With prefix argument, activate previous rectangle if possible."
   (setq default-input-method "japanese-skk")
   )
 
+;;(global-set-key (kbd "S-SPC") 'backward-kill-word)
+(define-key minibuffer-mode-map (kbd "S-SPC") 'backward-kill-word)
+
 (with-eval-after-load "skk"
   (message "skk loaded")
   ;; isearch と統合。
   (load "~/.emacs.d/site-lisp/skk-setup")
+  ;;; Dictionary.
+  (let ((dicfile "~/.emacs.d/SKK-DIC/SKK-JISYO.L"))
+    (if (file-exists-p dicfile)
+	(setq skk-large-jisyo dicfile)
+      (message "no skk dictionary. use lisp/leim/ja-dic/ja-dic.el instead")))
+  ;; 確定を戻す
+  (define-key skk-j-mode-map (kbd "C-/") 'skk-undo-kakutei)
   ;; x 以外でも前候補。
   (define-key skk-j-mode-map (kbd "S-SPC") 'skk-previous-candidate)
-  (define-key skk-j-mode-map (kbd "M-DEL") 'skk-previous-candidate) ;;iTerm2 -nw
+  (define-key skk-j-mode-map (kbd "M-DEL") 'skk-previous-candidate)
+  (define-key skk-j-mode-map (kbd "C-<backspace>") 'skk-previous-candidate)
   (define-key skk-j-mode-map (kbd "<up>") 'skk-previous-candidate) ;;test
-  ;; 辞書登録ミニバッファから、前候補(x,S-SPC,M-DEL) で抜けるように関数変更。
+  ;; 辞書登録ミニバッファから、前候補(x,S-SPC,M-DEL)
   (load "~/.emacs.d/site-lisp/ak-skk-patch")
+  ;; BS(DEL, C-h) で抜けるように関数変更。
+  (defun skk-delete-backward-char-with-quit (oldfnc &rest arg)
+    "ミニバッファ先頭ならミニバッファから抜ける。そうでなければ skk-delete-backward-char を呼び出す。"
+    (interactive "*P")
+    (if (and (minibuffer-prompt) (= (point-max) (+ (minibuffer-prompt-width) 1)))
+	(exit-minibuffer)
+      (apply oldfnc arg)))
+  (advice-add 'skk-delete-backward-char :around #'skk-delete-backward-char-with-quit)
+
   ;; 候補表示をかっこよく。
   ;; (when (and (package-installed-p 'ddskk-posframe) (display-graphic-p))
   ;;   (ddskk-posframe-mode t))

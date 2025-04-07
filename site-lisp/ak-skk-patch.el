@@ -1,4 +1,4 @@
-
+;;198
 (defun skk-kill-emacs-without-saving-jisyo (&optional query)
   "個人辞書を保存せずに Emacs を終了する。"
   (interactive "P")
@@ -18,7 +18,7 @@
   ;; )
   )
 
-
+;;1835
 (defun skk-henkan-show-candidates ()
   "変換した候補群をエコーエリアに表示する。"
   (skk-save-point
@@ -208,7 +208,7 @@
 ;; 		(when (stringp arg) "string ")
 ;; 		(when (commandp arg) "command ")
 ;; 		)))
-
+;;2444
 (defun skk-previous-candidate (&optional arg)
   "▼モードであれば、一つ前の候補を表示する。
 ▼モード以外ではカレントバッファにタイプした文字を挿入する。
@@ -227,7 +227,7 @@
      ;;   (message "Out of minibuffer."))
      ;; (message "Minibuffer prompt=%s" (minibuffer-prompt))
      ;; (message "minibuffer prompt width=%s" (minibuffer-prompt-width))
-     ;; (message "Current Point=%s" (point))
+     ;; (message "Current Point=%s  Max=%s" (point) (point-max))
      (let (char key)
        (if (characterp last-command-event)
 	   (setq char last-command-event)
@@ -247,7 +247,7 @@
 	 ;; (message "x event");;x
 	 (skk-kana-input arg))
 
-	((and (minibuffer-prompt) (<= (point) (+ (minibuffer-prompt-width) 1)))
+	((and (minibuffer-prompt) (= (point-max) (+ (minibuffer-prompt-width) 1)))
 	 (exit-minibuffer))
 	
 	;; C-p S-SPC M-DEL up

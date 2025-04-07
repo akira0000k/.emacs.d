@@ -35,9 +35,9 @@
 ;;(global-set-key "\C-xt" 'skk-tutorial)
 
 ;;; Dictionaries.
-;;(defvar skk-large-jisyo "@DIC@")
-;;(defvar skk-aux-large-jisyo "@AUXDIC@")
-;;(defvar skk-tut-file "@TUT@")
+(defvar skk-large-jisyo "@DIC@")
+(defvar skk-aux-large-jisyo "@AUXDIC@")
+(defvar skk-tut-file "@TUT@")
 
 ;;; Isearch setting.
 (defun skk-isearch-setup-maybe ()
