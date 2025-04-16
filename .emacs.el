@@ -729,6 +729,7 @@ With prefix argument, activate previous rectangle if possible."
   (define-key dired-mode-map [prior]   'ak-dired-scroll-down)
   (define-key dired-mode-map [next]    'ak-dired-scroll-up)
   (define-key dired-mode-map [f5]      'revert-buffer)               ;; g
+  (define-key dired-mode-map [S-f5]    'revert-buffer)               ;; g
   (define-key dired-mode-map "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
   ;; S            dired-do-symlink
   ;; Y            dired-do-relsymlink  dired-x.el
@@ -950,9 +951,10 @@ With prefix argument, activate previous rectangle if possible."
 (defun kill-buffer-and-dired()
   "kill this buffer and show current directory."
   ;;(interactive)
-  (if (string= major-mode "dired-mode")
-      (kill-buffer nil)
-    (find-alternate-file "."))
+  (unless (minibuffer-prompt)
+    (if (string= major-mode "dired-mode")
+	(kill-buffer nil)
+      (find-alternate-file ".")))
   )
 
 
@@ -983,11 +985,11 @@ With prefix argument, activate previous rectangle if possible."
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 (global-set-key [S-f4] 'delete-window)
 
-(global-set-key [f5]  'recenter)
-(global-set-key [S-f5] 'ak-dired-current-dir)
-(defun ak-dired-current-dir()
-  "dired current directory" (interactive)
-  (dired "."))
+(global-set-key [S-f5] 'recenter)
+(global-set-key [f5] 'ak-dired-current-dir-other-window)
+(defun ak-dired-current-dir-other-window()
+  "Dired current directory other window." (interactive)
+  (dired-other-window "."))
 
 (global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
 (global-set-key [S-f6]   'electric-indent-mode)
@@ -1281,7 +1283,7 @@ With prefix argument, activate previous rectangle if possible."
   (setq comint-scroll-to-bottom-on-input t)
   ;;(setq comint-scroll-to-bottom-on-output t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-  (define-key shell-mode-map  [f5]     'ak-do-resync-dirs)
+  (define-key shell-mode-map  [S-f5]     'ak-do-resync-dirs)
   (define-key comint-mode-map [home]   'beginning-of-buffer)
   (define-key comint-mode-map [end]    'end-of-buffer)
   (define-key comint-mode-map [C-up]   'ak-scroll-down1)
@@ -1560,10 +1562,12 @@ With prefix argument, activate previous rectangle if possible."
       '(lambda()
 	 (when view-mode
 	   (message "View mode: type i (edit), Esc-f1 (view), :w (save), :q (kill)")
+	   (when current-input-method
+	     (toggle-input-method nil))
 	   )))
 
 (with-eval-after-load 'view
-  (define-key view-mode-map [f5] 'ak-revert-buffer-noconfirm)
+  (define-key view-mode-map [S-f5] 'ak-revert-buffer-noconfirm)
   (define-key view-mode-map "i" 'ak-View-exit)
   (define-key view-mode-map "h" 'left-char)
   (define-key view-mode-map "j" 'next-line)

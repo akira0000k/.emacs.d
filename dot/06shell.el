@@ -19,7 +19,7 @@
   (setq comint-scroll-to-bottom-on-input t)
   ;;(setq comint-scroll-to-bottom-on-output t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-  (define-key shell-mode-map  [f5]     'ak-do-resync-dirs)
+  (define-key shell-mode-map  [S-f5]     'ak-do-resync-dirs)
   (define-key comint-mode-map [home]   'beginning-of-buffer)
   (define-key comint-mode-map [end]    'end-of-buffer)
   (define-key comint-mode-map [C-up]   'ak-scroll-down1)

@@ -9,7 +9,8 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
- '(package-selected-packages '(markdown-mode)))
+ '(package-selected-packages '(markdown-mode))
+ '(skk-delete-implies-kakutei nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

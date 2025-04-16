@@ -50,7 +50,8 @@
 
     | 標準  | 代替キー |     |                                     |
     |-------+----------+-----+-------------------------------------|
-    | C-x d | S-f5     | s-D | ディレクトリリスト表示              |
+    | C-x d |          | s-D | ディレクトリリスト表示              |
+    |       | f5       |     | カレントディレクトを別画面表示      |
     | g     | f5       | s-u | ディレクトリ表示更新                |
     | p     | up       | k   | 前の行                              |
     | n     | down     | j   | 次の行                              |
@@ -295,7 +296,7 @@
     |---------------+----------+------+------------------------------|
     | M-x view-file | v(dired) |      | ファイルを View モードで開く |
     | M-x view-mode | ESC-f1   |      | バッファを View モードに     |
-    |               | f5       |      | 変更を読み込む               |
+    |               | S-f5     |      | 変更を読み込む               |
     | E             | i        |      | View モードから通常モードに  |
     | q             | :q       |      | View バッファを削除          |
     |               | :w       |      | 上書き保存                   |
@@ -327,7 +328,7 @@
     | p             | N        |      | 逆方向再検索                 |
     | .             |          |      | 選択開始                     |
     | +             |          |      | 領域の開始点と終了点を逆に   |
-    |               | f5       |      | 外部でのファイル変更を反映   |
+    |               | S-f5     |      | 外部でのファイル変更を反映   |
     | /             | <        |      |                              |
 
     Read only の View モードでは vi 的なキー操作もできる。\\
@@ -340,7 +341,7 @@
     | 標準 | 代替キー |                                      |
     |------+----------+--------------------------------------|
     | C-l  |          | 画面再表示、カーソル行を中央、上、下 |
-    |      | f5       | 画面再表示                           |
+    |      | S-f5     | 画面再表示                           |
     | /    | <        |                                      |
 
     
@@ -489,18 +490,18 @@
 
 *** 内部シェルの起動
 
-    | 標準      | 代替キー |    |                                 |
-    |-----------+----------+----+---------------------------------|
-    | M-x shell | M-x s    |    | シェル起動                      |
-    | M-p       | up       |    | history 前                      |
-    | M-n       | down     |    | history 次                      |
-    | string up |          |    | 先頭文字列から始まる history 前 |
-    | M-x dirs  | M-RET    | f5 | ディレクトリ認識ズレ修正        |
-    | C-p       |          |    | カーソル上                      |
-    | C-n       |          |    | カーソル下                      |
-    | C-d       |          |    | EOF (promptのところで)          |
-    | C-c C-c   |          |    | シェル中断                      |
-    | /         | <        |    |                                 |
+    | 標準      | 代替キー |      |                                 |
+    |-----------+----------+------+---------------------------------|
+    | M-x shell | M-x s    |      | シェル起動                      |
+    | M-p       | up       |      | history 前                      |
+    | M-n       | down     |      | history 次                      |
+    | string up |          |      | 先頭文字列から始まる history 前 |
+    | M-x dirs  | M-RET    | S-f5 | ディレクトリ認識ズレ修正        |
+    | C-p       |          |      | カーソル上                      |
+    | C-n       |          |      | カーソル下                      |
+    | C-d       |          |      | EOF (promptのところで)          |
+    | C-c C-c   |          |      | シェル中断                      |
+    | /         | <        |      |                                 |
     
 ** 終了、中断
 
@@ -526,11 +527,11 @@
     | C-s C-r C-r | S-f3     | s-d     | isearch-repeat-backward                |
     | C-x k       | f4       | s-k     | kill-current-buffer                    |
     | C-x 0       | S-f4     |         | delete-window                          |
+    | C-x d       | f5       | s-D     | dired                                  |
     | g           | f5       | s-u     | revert-buffer (dired mode)             |
-    |             | f5       | s-u     | revert-buffer (view mode)              |
-    | M-x dirs    | f5       | M-RET   | shell-resync-dirs (shell mode)         |
-    | C-l         | f5       |         | recenter                               |
-    | C-x d       | S-f5     | s-D     | dired                                  |
+    |             | S-f5     | s-u     | revert-buffer (view mode)              |
+    | M-x dirs    | S-f5     | M-RET   | shell-resync-dirs (shell mode)         |
+    | C-l         | S-f5     |         | recenter                               |
     | C-x RET c   | f6       |         | select coding system                   |
     |             | S-f6     |         | toggle electric-indent-mode            |
     |             | ESC-f6   |         | macro start                            |

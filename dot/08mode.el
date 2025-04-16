@@ -74,10 +74,12 @@
       '(lambda()
 	 (when view-mode
 	   (message "View mode: type i (edit), Esc-f1 (view), :w (save), :q (kill)")
+	   (when current-input-method
+	     (toggle-input-method nil))
 	   )))
 
 (with-eval-after-load 'view
-  (define-key view-mode-map [f5] 'ak-revert-buffer-noconfirm)
+  (define-key view-mode-map [S-f5] 'ak-revert-buffer-noconfirm)
   (define-key view-mode-map "i" 'ak-View-exit)
   (define-key view-mode-map "h" 'left-char)
   (define-key view-mode-map "j" 'next-line)

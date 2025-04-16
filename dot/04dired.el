@@ -29,6 +29,7 @@
   (define-key dired-mode-map [prior]   'ak-dired-scroll-down)
   (define-key dired-mode-map [next]    'ak-dired-scroll-up)
   (define-key dired-mode-map [f5]      'revert-buffer)               ;; g
+  (define-key dired-mode-map [S-f5]    'revert-buffer)               ;; g
   (define-key dired-mode-map "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
   ;; S            dired-do-symlink
   ;; Y            dired-do-relsymlink  dired-x.el
@@ -250,7 +251,8 @@
 (defun kill-buffer-and-dired()
   "kill this buffer and show current directory."
   ;;(interactive)
-  (if (string= major-mode "dired-mode")
-      (kill-buffer nil)
-    (find-alternate-file "."))
+  (unless (minibuffer-prompt)
+    (if (string= major-mode "dired-mode")
+	(kill-buffer nil)
+      (find-alternate-file ".")))
   )

@@ -27,11 +27,11 @@
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 (global-set-key [S-f4] 'delete-window)
 
-(global-set-key [f5]  'recenter)
-(global-set-key [S-f5] 'ak-dired-current-dir)
-(defun ak-dired-current-dir()
-  "dired current directory" (interactive)
-  (dired "."))
+(global-set-key [S-f5] 'recenter)
+(global-set-key [f5] 'ak-dired-current-dir-other-window)
+(defun ak-dired-current-dir-other-window()
+  "Dired current directory other window." (interactive)
+  (dired-other-window "."))
 
 (global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
 (global-set-key [S-f6]   'electric-indent-mode)
