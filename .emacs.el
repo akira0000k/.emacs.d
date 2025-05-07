@@ -1,3 +1,10 @@
+;;====================================
+;;  common functions
+;;====================================
+;; string valid?
+(defun ak-validstrp(str)
+  (and str (> (length str) 0)))
+
 ;; ------ 00misc.el ------
 
 ;; Erase Menu bar
@@ -1820,10 +1827,6 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;  common functions
 ;;====================================
-;; string valid?
-(defun ak-validstrp(str)
-  (and str (> (length str) 0)))
-
 ;; query position
 (defun ak-first-page-p ()
   (if (= (point-min) (window-start))

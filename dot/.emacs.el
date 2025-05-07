@@ -2,6 +2,13 @@
 ;;;; like
 ;;;; ;;(load "~/.emacs.d/dot/03cua")
 ;;;;
+;;====================================
+;;  common functions
+;;====================================
+;; string valid?
+(defun ak-validstrp(str)
+  (and str (> (length str) 0)))
+
 (load "~/.emacs.d/dot/00misc")
 (load "~/.emacs.d/dot/01keys")
 (load "~/.emacs.d/dot/02cursor")
@@ -20,10 +27,6 @@
 ;;====================================
 ;;  common functions
 ;;====================================
-;; string valid?
-(defun ak-validstrp(str)
-  (and str (> (length str) 0)))
-
 ;; query position
 (defun ak-first-page-p ()
   (if (= (point-min) (window-start))
