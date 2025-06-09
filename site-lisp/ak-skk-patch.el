@@ -1,23 +1,3 @@
-;;198
-(defun skk-kill-emacs-without-saving-jisyo (&optional query)
-  "個人辞書を保存せずに Emacs を終了する。"
-  (interactive "P")
-  ;; format を引数に持たせた場合は、skk-yes-or-no-p を使うとかえって冗長にな
-  ;; る。
-  ;;(when (yes-or-no-p
-  ;;       (if skk-japanese-message-and-error
-  ;;           "個人辞書を保存せずに Emacs を終了します。良いですか？ "
-  ;;         "Do you really wish to kill Emacs without saving Jisyo? "))
-    (let ((buff (skk-get-jisyo-buffer skk-jisyo 'nomsg)))
-      (remove-hook 'kill-emacs-hook 'skk-save-jisyo)
-      (when buff
-        (set-buffer buff)
-        (set-buffer-modified-p nil)
-        (kill-buffer buff))
-      (save-buffers-kill-emacs query))
-  ;; )
-  )
-
 ;;1835
 (defun skk-henkan-show-candidates ()
   "変換した候補群をエコーエリアに表示する。"
@@ -327,3 +307,45 @@
    (skk-henkan-on-message)
    ) ;;end skk-with-point-move
   ) ;;end defun
+
+;;3492
+(defun skk-save-jisyo-original2 (&optional quiet)
+  "SKK の辞書バッファをセーブする。
+オプショナル引数 QUIET が non-nil であれば、辞書セーブ時のメッセージを出さない。"
+  (let ((jisyo-buffer (skk-get-jisyo-buffer skk-jisyo 'nomsg)))
+    (if (not (and jisyo-buffer
+                  (buffer-modified-p jisyo-buffer)))
+        (unless t ;;quiet
+          (skk-message "SKK 辞書を保存する必要はありません"
+                       "No need to save SKK jisyo")
+          (sit-for 1))
+      ;;
+      (with-current-buffer jisyo-buffer
+        (when (skk-share-private-jisyo-p)
+          (lock-buffer (skk-jisyo))
+          (when (skk-jisyo-is-shared-p)
+            (skk-update-shared-jisyo)))
+        (let ((inhibit-quit t)
+              (tempo-file (make-temp-file "skk")))
+          (unless quiet
+            (skk-message "SKK 辞書を保存しています..."
+                         "Saving SKK jisyo..."))
+          (skk-save-jisyo-as tempo-file)
+          (skk-check-size-and-do-save-jisyo tempo-file)
+          ;; 辞書のセーブに成功して初めて modified フラグを nil にする。
+          (cond
+           ((skk-share-private-jisyo-p)
+            (skk-init-shared-jisyo)
+            ;; `set-buffer-modified-p' は不要な lock を解除する。ただし、
+            ;; バッファとファイル名が関連付けられている必要がある。
+            (let ((buffer-file-name (expand-file-name (skk-jisyo)))
+                  (buffer-file-truename (file-truename (skk-jisyo))))
+              (set-buffer-modified-p nil)))
+           (t
+            (set-buffer-modified-p nil)))
+          (unless quiet
+            (skk-message "SKK 辞書を保存しています...完了！"
+                         "Saving SKK jisyo...done")
+            (sit-for 0.5)
+	    )))))
+  (setq skk-update-jisyo-count 0))

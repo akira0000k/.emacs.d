@@ -36,9 +36,10 @@
   (define-key skk-j-mode-map (kbd "M-DEL") 'skk-previous-candidate)
   (define-key skk-j-mode-map (kbd "C-<backspace>") 'skk-previous-candidate)
   (define-key skk-j-mode-map (kbd "<up>") 'skk-previous-candidate) ;;test
-  ;; 辞書登録ミニバッファから、前候補(x,S-SPC,M-DEL)
+  ;; 辞書登録ミニバッファから、前候補(S-SPC,M-DEL,etc)で抜ける
   (load "~/.emacs.d/site-lisp/ak-skk-patch")
-  ;; BS(DEL, C-h) で抜けるように関数変更。
+  
+  ;; BS(DEL, C-h) でミニバッファから抜けるように関数変更。
   (defun skk-delete-backward-char-with-quit (oldfnc &rest arg)
     "ミニバッファ先頭ならミニバッファから抜ける。そうでなければ skk-delete-backward-char を呼び出す。"
     (interactive "*P")
@@ -46,13 +47,15 @@
 	(exit-minibuffer)
       (apply oldfnc arg)))
   (advice-add 'skk-delete-backward-char :around #'skk-delete-backward-char-with-quit)
+  ;; BSで変換候補を削ることはせず、前候補
+  (setq skk-delete-implies-kakutei nil)
 
-  ;; 候補表示をかっこよく。
+  ;; ;; 候補表示をかっこよく。
   ;; (when (and (package-installed-p 'ddskk-posframe) (display-graphic-p))
   ;;   (ddskk-posframe-mode t))
-  ;; 日本語モードで終了した時辞書登録。
-  (global-set-key (kbd "C-x C-c") 'skk-kill-emacs-without-saving-jisyo)
-  (define-key skk-j-mode-map (kbd "C-x C-c") 'save-buffers-kill-terminal)
+  
+  ;; 辞書登録不要のときメッセージを出さずに終了。
+  (setq skk-save-jisyo-function 'skk-save-jisyo-original2)
   )
 
 ;;====================================

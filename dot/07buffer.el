@@ -145,6 +145,11 @@
   (list-buffers-if-exist))
 (advice-add 'dired :after #'ak-dired)
 
+(defun ak-dired-other-window (dirname &optional switches)
+  "Dired other Window and change buffer-list."
+  (list-buffers-if-exist))
+(advice-add 'dired-other-window :after #'ak-dired-other-window)
+
 (defun ak-info (&optional file-or-node buffer)
   "Enter Info, the documentation browser."
   (list-buffers-if-exist))
