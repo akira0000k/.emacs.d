@@ -195,15 +195,21 @@
 (define-key input-decode-map "\e[27;8;124~" (kbd "C-M-|"))
 (define-key input-decode-map "\e[27;8;125~" (kbd "C-M-}"))
 (define-key input-decode-map "\e[27;8;126~" (kbd "C-M-~"))
-;; 9: Super
+;; 9: super
 (define-key input-decode-map "\e[27;9;39~" (kbd "s-'"))
 (define-key input-decode-map "\e[27;9;94~" (kbd "s-^"))
-;; 10: Shift + Super
+;; 10: Shift + super
 (define-key input-decode-map "\e[27;10;58~" (kbd "s-:"))
 (define-key input-decode-map "\e[27;10;63~" (kbd "s-?"))
 (define-key input-decode-map "\e[27;10;96~" (kbd "s-`"))
 (define-key input-decode-map "\e[27;10;124~" (kbd "s-|"))
 (define-key input-decode-map "\e[27;10;126~" (kbd "s-~"))
+;; 11: Meta + super
+;; 12: Meta + Shift + super
+;; 13: Control + super
+;; 14: Control + Shift + super
+;; 15: Control + Meta + super
+;; 16: Control + Meta + Shift + super
 ;; US keyboard style    down(5 7 9) [' =]    shift(6 8 10) [:] 
 
 ;;====================================
@@ -303,10 +309,14 @@
 (define-key input-decode-map "\e[1;9B" (kbd "s-<down>"))
 (define-key input-decode-map "\e[1;9C" (kbd "s-<right>"))
 (define-key input-decode-map "\e[1;9D" (kbd "s-<left>"))
-(define-key input-decode-map "\e[1;10A" (kbd "s-S-<up>"))
-(define-key input-decode-map "\e[1;10B" (kbd "s-S-<down>"))
-(define-key input-decode-map "\e[1;10C" (kbd "s-S-<right>"))
-(define-key input-decode-map "\e[1;10D" (kbd "s-S-<left>"))
+(define-key input-decode-map "\e[1;10A" (kbd "S-s-<up>"))
+(define-key input-decode-map "\e[1;10B" (kbd "S-s-<down>"))
+(define-key input-decode-map "\e[1;10C" (kbd "S-s-<right>"))
+(define-key input-decode-map "\e[1;10D" (kbd "S-s-<left>"))
+(define-key input-decode-map "\e[1;13A" (kbd "C-s-<up>"))
+(define-key input-decode-map "\e[1;13B" (kbd "C-s-<down>"))
+(define-key input-decode-map "\e[1;14A" (kbd "C-S-s-<up>"))
+(define-key input-decode-map "\e[1;14B" (kbd "C-S-s-<down>"))
 
 ;;====================================
 ;;;; MAC OSX command keys
@@ -445,8 +455,8 @@
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
 (global-set-key [C-up]   'ak-line-up)
 (global-set-key [C-down] 'ak-line-down)
-(global-set-key [s-up]   'ak-line-up-fast)
-(global-set-key [s-down] 'ak-line-down-fast)
+(global-set-key [C-s-up]   'ak-line-up-fast)
+(global-set-key [C-s-down] 'ak-line-down-fast)
 (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
 (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
 (global-set-key (kbd "C-s-p") 'ak-line-up-fast)
@@ -568,8 +578,8 @@
 ;;====================================
 ;;;; goto top, mid, bottom
 ;;====================================
-(global-set-key (kbd "s-<left>")  'ak-cursor-top)
-(global-set-key (kbd "s-<right>") 'ak-cursor-bottom)
+;; (global-set-key (kbd "s-<left>")  'ak-cursor-top)
+;; (global-set-key (kbd "s-<right>") 'ak-cursor-bottom)
 (global-set-key (kbd "M-<left>")  'ak-cursor-top)
 (global-set-key (kbd "M-<right>") 'ak-cursor-bottom)
 (defun ak-cursor-top ()
@@ -761,8 +771,8 @@ With prefix argument, activate previous rectangle if possible."
   ;; line scroll and keep cursor on file name
   (define-key dired-mode-map [C-up]   'ak-dired-line-up       )
   (define-key dired-mode-map [C-down] 'ak-dired-line-down     )
-  (define-key dired-mode-map [s-up]   'ak-dired-line-up-fast  )
-  (define-key dired-mode-map [s-down] 'ak-dired-line-down-fast)
+  (define-key dired-mode-map [C-s-up]   'ak-dired-line-up-fast  )
+  (define-key dired-mode-map [C-s-down] 'ak-dired-line-down-fast)
   (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
   (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
 

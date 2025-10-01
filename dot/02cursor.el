@@ -11,8 +11,8 @@
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
 (global-set-key [C-up]   'ak-line-up)
 (global-set-key [C-down] 'ak-line-down)
-(global-set-key [s-up]   'ak-line-up-fast)
-(global-set-key [s-down] 'ak-line-down-fast)
+(global-set-key [C-s-up]   'ak-line-up-fast)
+(global-set-key [C-s-down] 'ak-line-down-fast)
 (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
 (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
 (global-set-key (kbd "C-s-p") 'ak-line-up-fast)
@@ -134,8 +134,8 @@
 ;;====================================
 ;;;; goto top, mid, bottom
 ;;====================================
-(global-set-key (kbd "s-<left>")  'ak-cursor-top)
-(global-set-key (kbd "s-<right>") 'ak-cursor-bottom)
+;; (global-set-key (kbd "s-<left>")  'ak-cursor-top)
+;; (global-set-key (kbd "s-<right>") 'ak-cursor-bottom)
 (global-set-key (kbd "M-<left>")  'ak-cursor-top)
 (global-set-key (kbd "M-<right>") 'ak-cursor-bottom)
 (defun ak-cursor-top ()

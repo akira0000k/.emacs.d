@@ -94,15 +94,21 @@
 (define-key input-decode-map "\e[27;8;124~" (kbd "C-M-|"))
 (define-key input-decode-map "\e[27;8;125~" (kbd "C-M-}"))
 (define-key input-decode-map "\e[27;8;126~" (kbd "C-M-~"))
-;; 9: Super
+;; 9: super
 (define-key input-decode-map "\e[27;9;39~" (kbd "s-'"))
 (define-key input-decode-map "\e[27;9;94~" (kbd "s-^"))
-;; 10: Shift + Super
+;; 10: Shift + super
 (define-key input-decode-map "\e[27;10;58~" (kbd "s-:"))
 (define-key input-decode-map "\e[27;10;63~" (kbd "s-?"))
 (define-key input-decode-map "\e[27;10;96~" (kbd "s-`"))
 (define-key input-decode-map "\e[27;10;124~" (kbd "s-|"))
 (define-key input-decode-map "\e[27;10;126~" (kbd "s-~"))
+;; 11: Meta + super
+;; 12: Meta + Shift + super
+;; 13: Control + super
+;; 14: Control + Shift + super
+;; 15: Control + Meta + super
+;; 16: Control + Meta + Shift + super
 ;; US keyboard style    down(5 7 9) [' =]    shift(6 8 10) [:] 
 
 ;;====================================
@@ -202,10 +208,14 @@
 (define-key input-decode-map "\e[1;9B" (kbd "s-<down>"))
 (define-key input-decode-map "\e[1;9C" (kbd "s-<right>"))
 (define-key input-decode-map "\e[1;9D" (kbd "s-<left>"))
-(define-key input-decode-map "\e[1;10A" (kbd "s-S-<up>"))
-(define-key input-decode-map "\e[1;10B" (kbd "s-S-<down>"))
-(define-key input-decode-map "\e[1;10C" (kbd "s-S-<right>"))
-(define-key input-decode-map "\e[1;10D" (kbd "s-S-<left>"))
+(define-key input-decode-map "\e[1;10A" (kbd "S-s-<up>"))
+(define-key input-decode-map "\e[1;10B" (kbd "S-s-<down>"))
+(define-key input-decode-map "\e[1;10C" (kbd "S-s-<right>"))
+(define-key input-decode-map "\e[1;10D" (kbd "S-s-<left>"))
+(define-key input-decode-map "\e[1;13A" (kbd "C-s-<up>"))
+(define-key input-decode-map "\e[1;13B" (kbd "C-s-<down>"))
+(define-key input-decode-map "\e[1;14A" (kbd "C-S-s-<up>"))
+(define-key input-decode-map "\e[1;14B" (kbd "C-S-s-<down>"))
 
 ;;====================================
 ;;;; MAC OSX command keys

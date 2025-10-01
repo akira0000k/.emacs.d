@@ -123,16 +123,20 @@ Send ^[ [1;7A                                                   ^opt ↑
 Send ^[ [1;8A                                                   ^opt ⬆️ ↑
 Send ^[ [1;9A                                                   command ↑
 Send ^[ [1;10A                                                  ⬆️ command ↑
+Send ^[ [1;13A                                                  ^command ↑
+Send ^[ [1;14A                                                  ^⬆️ command ↑
 Send ^[ [1;2B                                                   ⬆️ ↓
 Send ^[ [1;5B                                                   ^↓
 Send ^[ [1;6B                                                   ^⬆️ ↓
 Send ^[ [1;3B                                                   opt ↓
 Send ^[ [1;4B                                                   opt ⬆️ ↓
 Send ^[ [1;7B                                                   ^opt ↓
+Page. 8
 Send ^[ [1;8B                                                   ^opt ⬆️ ↓
 Send ^[ [1;9B                                                   command ↓
-Page. 8
 Send ^[ [1;10B                                                  ⬆️ command ↓
+Send ^[ [1;13B                                                  ^command ↓
+Send ^[ [1;14B                                                  ^⬆️ command ↓
 Send ^[ [1;2D                                                   ⬆️ ←
 Send ^[ [1;5D                                                   ^←
 Send ^[ [1;6D                                                   ^⬆️ ←
@@ -146,11 +150,11 @@ Send ^[ [1;2C                                                   ⬆️ →
 Send ^[ [1;5C                                                   ^️→
 Send ^[ [1;6C                                                   ^⬆️ →
 Send ^[ [1;3C                                                   opt →
+Page. 9
 Send ^[ [1;4C                                                   opt ⬆️ →
 Send ^[ [1;7C                                                   ^opt →
 Send ^[ [1;8C                                                   ^opt ⬆️ →
 Send ^[ [1;9C                                                   command →
-Page. 9
 Send ^[ [1;10C                                                  ⬆️ command →
 Send ^[ [1;2P                                                   ⬆️ F1
 Send Hex Codes: 0x1c 0x09                                       opt F1
@@ -165,11 +169,11 @@ Send ^[ [1;2S                                                   ⬆️ F4
 Send Hex Codes: 0x1c 0x58                                       opt F4
 Send ^[ [15;2~                                                  ⬆️ F5
 Send ^[ [17;2~                                                  ⬆️ F6
+Page. 10
 Send ^[ [18;2~                                                  ⬆️ F7
 Send ^[ [19;2~                                                  ⬆️ F8
 Send ^[ [20;2~                                                  ⬆️ F9
 Send ^[ [21;2~                                                  ⬆️ F10
-Page. 10
 Send ^[ [23;2~                                                  ⬆️ F11
 Send ^[ [24;2~                                                  ⬆️ F12
 Ignore                                                          F13
@@ -184,11 +188,11 @@ Send ^[ [1;2F                                                   ⬆️ End
 Send ^[ [1;5F                                                   ^End
 Send ^[ 11;3F                                                   opt End
 Send ^[ [1;7F                                                   ^opt End
+Page. 11
 Send ^[ [1;8F                                                   ^opt ⬆️ End
 Send ^[ [5;2~                                                   ⬆️ Page Up
 Send ^[ [5;5~                                                   ^Page Up
 Send ^[ [5;3~                                                   opt Page Up
-Page. 11
 Send ^[ [5;7~                                                   ^opt Page Up
 Send ^[ [5;8~                                                   ^opt ⬆️ Page Up
 Send ^[ [6;2~                                                   ⬆️ Page Down

@@ -54,8 +54,8 @@
   ;; line scroll and keep cursor on file name
   (define-key dired-mode-map [C-up]   'ak-dired-line-up       )
   (define-key dired-mode-map [C-down] 'ak-dired-line-down     )
-  (define-key dired-mode-map [s-up]   'ak-dired-line-up-fast  )
-  (define-key dired-mode-map [s-down] 'ak-dired-line-down-fast)
+  (define-key dired-mode-map [C-s-up]   'ak-dired-line-up-fast  )
+  (define-key dired-mode-map [C-s-down] 'ak-dired-line-down-fast)
   (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
   (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
 
