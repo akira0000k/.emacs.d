@@ -110,7 +110,7 @@
 (if (getenv "PWD")
     (message "started in diretory %s" (getenv "PWD"))
   (message "launch app")
-  ;;(setenv  "PATH" (concat "/usr/local/bin:/Users/Akira/bin:/Users/Akira/go/bin:/usr/local/bin/go:" (getenv "PATH")))
+  ;;(setenv  "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
   (ak-setenv)
   (and (ak-validstrp (getenv "Z_DIRECTORY"))
        (setq dired-default-directory (getenv "Z_DIRECTORY")))
@@ -137,8 +137,10 @@
 (if (load "~/.emacs.d/.emacs.elc" t t t)
     (message "load .emacs.elc...done")
   (load "~/.emacs.d/dot/.emacs")
-  (setq initial-buffer-choice "~/.emacs.d/dot")
-  (message "load dot/.emacs...done"))
+  (message "load dot/.emacs...done")
+  (if (eq 1 (length command-line-args))
+      (setq initial-buffer-choice "~/.emacs.d/dot"))
+  )
 
 ;; Tramp
 ;; C-x d  /docker:user@container:
@@ -295,7 +297,7 @@
 	(set-face-font 'default installfont)
       (message "%s font not installed" installfont)))
   (cond
-   (t
+   (nil
     (ak-theme-deeper-blue))
    (t
     (ak-theme-tango-dark))
