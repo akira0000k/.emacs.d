@@ -267,5 +267,6 @@
 	    (setq-local cua-enable-cua-keys nil)
 	    (buffer-focus-in-callback 'ak-org-focus-in)
 	    (buffer-focus-out-callback 'ak-org-focus-out)
+	    (add-hook 'kill-buffer-hook 'ak-org-focus-out nil 'local)
 	    (local-set-key (kbd "C-y") 'org-yank)
 	    ))

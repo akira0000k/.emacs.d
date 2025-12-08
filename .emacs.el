@@ -1443,10 +1443,6 @@ With prefix argument, activate previous rectangle if possible."
 
 (defun ak-kill-current-buffer()
   (interactive)
-  ;; enabling focus-out hook of org-mode
-  (if (string= major-mode "org-mode")
-      (if (fboundp 'ak-org-focus-out)
-	  (ak-org-focus-out)))
   (kill-current-buffer)
   (list-buffers-if-exist))
 (global-set-key [remap kill-current-buffer] 'ak-kill-current-buffer)
@@ -1777,6 +1773,7 @@ With prefix argument, activate previous rectangle if possible."
 	    (setq-local cua-enable-cua-keys nil)
 	    (buffer-focus-in-callback 'ak-org-focus-in)
 	    (buffer-focus-out-callback 'ak-org-focus-out)
+	    (add-hook 'kill-buffer-hook 'ak-org-focus-out nil 'local)
 	    (local-set-key (kbd "C-y") 'org-yank)
 	    ))
 
