@@ -760,7 +760,7 @@ With prefix argument, activate previous rectangle if possible."
   (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" 'ak-dired-b-dir))
   (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" 'ak-dired-c-dir))
   (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" 'ak-dired-e-dir))
-  (define-key dired-mode-map (kbd "C-b") 'dired-up-directory)
+  (define-key dired-mode-map (kbd "C-b") 'ak-dired-left-char)
 
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
