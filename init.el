@@ -21,16 +21,13 @@
 
 
 ;; Package init
-(defvar ak-package-initp nil)
-(defun ak-package-init-once()
-  (unless ak-package-initp
-    (setq ak-package-initp t)
-    (package-initialize)
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-    ;; M-x package-refresh-contents RET
-    (package-refresh-contents)
-    ))
-;; ;; (ak-package-init-once)
+(defun ak-package-init()
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  ;; M-x package-refresh-contents RET
+  (package-refresh-contents))
+
+;; ;; (ak-package-init)
 ;; ;; ;; M-x package-list-packages RET
 ;; ;; (package-list-packages)
 ;; ;;  
@@ -47,15 +44,18 @@
 	))
 ;;Scans the list
 ;; If the package listed is not already installed, install it
-(require 'package)       ;;for package-installed-p
-(dolist (pk myPackage)
-  (if (package-installed-p pk)
-      (message "%s already installed" (symbol-name pk))
-    (message "%s not installed" (symbol-name pk))
-    (ak-package-init-once)
-    (package-install pk)
-    ))
-
+(require 'package)
+(let ((package-initp nil))
+  (dolist (pk myPackage)
+    (if (package-installed-p pk)
+	(message "%s already installed" (symbol-name pk))
+      (message "%s not installed" (symbol-name pk))
+      (unless package-initp
+	(setq package-initp t)
+	(ak-package-init))
+      (package-install pk)
+      ))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; フレーム関連
@@ -333,23 +333,24 @@
   (load-file custom-file))
 ;; package-selected-packages contains a list of packages installed manually. see ./custom.el
 ;; Update package-selected-packages. If empty, add non-dependent packages.
-(defvar need-save nil)
-(unless package-selected-packages
-  (setq package-selected-packages (package--find-non-dependencies))
-  (when package-selected-packages
-    (setq need-save t)
-    (message "non dependent package list was made."))
-  )
-;; myPackage member is added as manually installed.
-(dolist (pk myPackage)
-  (unless (member pk package-selected-packages)
-    (setq need-save t)
-    (push pk package-selected-packages)
-    (message "%s added to selected package list." (symbol-name pk))
-    ))
-(when need-save
-  (customize-save-variable 'package-selected-packages package-selected-packages)
-  )
+(let ((need-save nil))
+  (unless package-selected-packages
+    (setq package-selected-packages (package--find-non-dependencies))
+    (when package-selected-packages
+      (setq need-save t)
+      (message "non dependent package list was made."))
+    )
+  ;; myPackage member is added as manually installed.
+  (dolist (pk myPackage)
+    (unless (member pk package-selected-packages)
+      (setq need-save t)
+      (push pk package-selected-packages)
+      (message "%s added to selected package list." (symbol-name pk))
+      ))
+  (when need-save
+    (customize-save-variable 'package-selected-packages package-selected-packages)
+    )
+)
 
 (message "init.el ...done")
 (advice-remove 'message 'my/ad-timestamp-message)
