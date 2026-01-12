@@ -1,0 +1,83 @@
+Key	keycode	keycode+2048	withMeta
+home	327	2375	M-home
+S-home	839	2887	M-S-home
+C-home	1351	3399	C-M-home
+C-S-home	1863	3911	C-M-S-home
+end	335	2383	M-end
+S-end	847	2895	M-S-end
+C-end	1359	3407	C-M-end
+C-S-end	1871	3919	C-M-S-end
+prior	329	2377	M-prior
+S-prior	841	2889	M-S-prior
+C-prior	1353	3401	C-M-prior
+C-S-prior	1865	3913	C-M-S-prior
+next	337	2385	M-next
+S-next	849	2897	M-S-next
+C-next	1361	3409	C-M-next
+C-S-next	1873	3921	C-M-S-next
+up	328	2376	M-up
+S-up	840	2888	M-S-up
+C-up	1352	3400	C-M-up
+C-S-up	1864	3912	C-M-S-up
+down	336	2384	M-down
+S-down	848	2896	M-S-down
+C-down	1360	3408	C-M-down
+C-S-down	1872	3920	C-M-S-down
+left	331	2379	M-left
+S-left	843	2891	M-S-left
+C-left	1355	3403	C-M-left
+C-S-left	1867	3915	C-M-S-left
+right	333	2381	M-right
+S-right	845	2893	M-S-right
+C-right	1357	3405	C-M-right
+C-S-right	1869	3917	C-M-S-right
+tab	15	2063	
+S-tab	527	2575	
+C-tab	1039	3087	
+C-S-tab	1551	3599	
+return	28	2076	
+S-return	540	2588	
+C-return	1052	3100	
+C-S-return	1564	3612	
+backspace	14	2062	
+S-backspace	526	2574	
+C-backspace	1038	3086	
+C-S-backspace	1550	3598	
+delete	339	2387	
+S-delete	851	2899	
+C-delete	1363	3411	
+C-S-delete	1875	3923	
+C-,	1075	3123	
+.	52	2100	
+C-.	1076	3124	
+<	563	2611	
+C-<	1587	3635	
+>	564	2612	
+C->	1588	3636	
+a	30	2078	M-a
+S-a	542	2590	M-S-a
+C-S-a	1566	3614	C-M-S-a
+b	48	2096	M-b
+S-b	560	2608	M-S-b
+C-S-b	1584	3632	C-M-S-b
+e	18	2066	M-e
+S-e	530	2578	M-S-e
+C-S-e	1554	3602	C-M-S-e
+f	33	2081	M-f
+S-f	545	2593	M-S-f
+C-S-f	1569	3617	C-M-S-f
+k	37	2085	M-k
+S-k	549	2597	M-S-k
+C-S-k	1573	3621	C-M-S-k
+l	38	2086	M-l
+S-l	550	2598	M-S-l
+C-S-l	1574	3622	C-M-S-l
+n	49	2097	M-n
+S-n	561	2609	M-S-n
+C-S-n	1585	3633	C-M-S-n
+p	25	2073	M-p
+S-p	537	2585	M-S-p
+C-S-p	1561	3609	C-M-S-p
+v	47	2095	M-v
+S-v	559	2607	M-S-v
+C-S-v	1583	3631	C-M-S-v
