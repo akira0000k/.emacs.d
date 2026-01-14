@@ -1,0 +1,127 @@
+#
+# KOSMAX2 auto user no generating source.
+# Meta + Control (+ Shift)   (not tested)
+# usage: cvt.sh
+# input: this file
+# output: KOSMAX-UserKeys.txt
+#
+[User keys]
+User=839,1,$1B[1;2H	S-<home>
+User=1351,1,$1B[1;5H	C-<home>
+User=1863,1,$1B[1;6H	C-S-<home>
+User=2375,1,$1B[1;3H	M-<home>
+User=3399,1,$1B[1;7H	C-M-<home>
+User=3911,1,$1B[1;8H	C-M-S-<home>
+
+User=847,1,$1B[1;2F	S-<end>
+User=1359,1,$1B[1;5F	C-<end>
+User=1871,1,$1B[1;6F	C-S-<end>
+User=2383,1,$1B[1;3F	M-<end>
+User=3407,1,$1B[1;7F	C-M-<end>
+User=3919,1,$1B[1;8F	C-M-S-<end>
+
+User=841,1,$1B[5;2~	S-<prior>
+User=1353,1,$1B[5;5~	C-<prior>
+User=2377,1,$1B[5;3~	M-<prior>
+User=3401,1,$1B[5;7~	C-M-<prior>
+User=3913,1,$1B[5;8~	C-M-S-<prior>
+
+User=849,1,$1B[6;2~	S-<next>
+User=1361,1,$1B[6;5~	C-<next>
+User=2385,1,$1B[6;3~	M-<next>
+User=3409,1,$1B[6;7~	C-M-<next>
+User=3921,1,$1B[6;8~	C-M-S-<next>
+
+User=840,1,$1B[1;2A	S-<up>
+User=1352,1,$1B[1;5A	C-<up>
+User=1864,1,$1B[1;6A	C-S-<up>
+User=2376,1,$1B[1;3A	M-<up>
+User=2888,1,$1B[1;4A	M-S-<up>
+User=3400,1,$1B[1;7A	C-M-<up>
+User=3912,1,$1B[1;8A	C-M-S-<up>
+
+User=848,1,$1B[1;2B	S-<down>
+User=1360,1,$1B[1;5B	C-<down>
+User=1872,1,$1B[1;6B	C-S-<down>
+User=2384,1,$1B[1;3B	M-<down>
+User=2896,1,$1B[1;4B	M-S-<down>
+User=3408,1,$1B[1;7B	C-M-<down>
+User=3920,1,$1B[1;8B	C-M-S-<down>
+
+User=843,1,$1B[1;2D	S-<left>
+User=1355,1,$1B[1;5D	C-<left>
+User=1867,1,$1B[1;6D	C-S-<left>
+User=2379,1,$1B[1;3D	M-<left> NEW
+User=2891,1,$1B[1;4D	M-S-<left> NEW
+User=3403,1,$1B[1;7D	C-M-<left>
+User=3915,1,$1B[1;8D	C-M-S-<left>
+
+User=845,1,$1B[1;2C	S-<right>
+User=1357,1,$1B[1;5C	C-<right>
+User=1869,1,$1B[1;6C	C-S-<right>
+User=2381,1,$1B[1;3C	M-<right> NEW
+User=2893,1,$1B[1;4C	M-S-<right> NEW
+User=3405,1,$1B[1;7C	C-M-<right>
+User=3917,1,$1B[1;8C	C-M-S-<right>
+
+User=59,1,$1BOP	<f1>
+User=60,1,$1BOQ	<f2>
+User=61,1,$1BOR	<f3>
+User=62,1,$1BOS	<f4>
+User=571,1,$1B[1;2P 	S-<f1>
+User=572,1,$1B[1;2Q	S-<f2>
+User=573,1,$1B[1;2R	S-<f3>
+User=574,1,$1B[1;2S	S-<f4>
+User=575,1,$1B[15;2~	<f17> => S-<f5>
+User=576,1,$1B[17;2~	<f18> => S-<f6>
+User=577,1,$1B[18;2~	<f19> => S-<f7>
+User=578,1,$1B[19;2~	<f20> => S-<f8>
+User=579,1,$1B[20;2~	<f21> => S-<f9>
+User=580,1,$1B[21;2~	<f22> => S-<f10>
+User=599,1,$1B[23;2~	<f23> => S-<f11>
+User=600,1,$1B[24;2~	<f24> => S-<f12>
+
+User=1566,1,$1B[27;6;97~	C-S-a ?????
+User=1584,1,$1B[27;6;98~	C-S-b
+User=1554,1,$1B[27;6;101~	C-S-e
+User=1569,1,$1B[27;6;102~	C-S-f
+User=1573,1,$1B[27;6;107~	C-S-k ?????
+User=1585,1,$1B[27;6;110~	C-S-n
+User=1561,1,$1B[27;6;112~	C-S-p
+User=1583,1,$1B[27;6;118~	C-S-v
+
+User=2590,1,$1BA	M-S-a  M-A ?????
+User=2608,1,$1BB	M-S-b  M-B
+User=2578,1,$1BE	M-S-e  M-E
+User=2593,1,$1BF	M-S-f  M-F
+User=2609,1,$1BN	M-S-n  M-N
+User=2585,1,$1BP	M-S-p  M-P
+User=2607,1,$1BV	M-S-v  M-V
+
+User=3614,1,$1B[27;8;97~	C-M-S-a
+User=3632,1,$1B[27;8;98~	C-M-S-b
+User=3602,1,$1B[27;8;101~	C-M-S-e
+User=3617,1,$1B[27;8;102~	C-M-S-f
+User=3622,1,$1B[27;8;107~	C-M-S-l
+User=3633,1,$1B[27;8;110~	C-M-S-n
+User=3609,1,$1B[27;8;112~	C-M-S-p
+User=3631,1,$1B[27;8;118~	C-M-S-v
+
+User=1075,1,$1B[27;5;44~	C-,
+User=1076,1,$1B[27;5;46~	C-.
+User=1587,1,$1B[27;6;60~	C-<
+User=1588,1,$1B[27;6;62~	C->
+
+User=1039,1,$1B[27;5;9~	C-<tab>
+User=1551,1,$1B[27;6;9~	C-S-<tab>
+User=1052,1,$1B[27;5;13~	C-<return>
+User=1550,1,$1B[27;6;127~	C-S-<backspace> kill-whole-line NEW
+#User=1038,1,$1B[27;5;127~	C-<backspace>  backward-kill-word ?????
+User=1363,1,$1B[3;5~	C-<delete> kill-word
+
+# keys below are not important
+User=335,1,$1BOF	<end>  not <select>
+User=327,1,$1BOH	<home>
+User=851,1,$1B[3;2~	S-<delete> cut    kill-region
+User=850,1,$1B[2;2~	S-<insert> paste
+User=1362,1,$1B[2;5~	C-<insert> copy
