@@ -91,7 +91,9 @@
   (define-key view-mode-map "b" 'backward-char)
   (define-key view-mode-map "f" 'forward-char)
   (define-key view-mode-map "a" 'beginning-of-visual-line)
-  (define-key view-mode-map "e" 'end-of-visual-line)
+  (define-key view-mode-map "e" 'ak-end-of-visual-line)
+  (define-key view-mode-map "0" 'beginning-of-line)
+  (define-key view-mode-map "$" 'end-of-line)
   (define-key view-mode-map "H" 'ak-goto-top-screen)   
   (define-key view-mode-map "M" 'ak-goto-mid-screen)   
   (define-key view-mode-map "L" 'ak-goto-bottom-screen)
@@ -101,6 +103,8 @@
   (define-key view-mode-map "J" 'ak-line-down)
   (define-key view-mode-map "u" 'half-page-down)
   (define-key view-mode-map "d" 'half-page-up)
+  (define-key view-mode-map "^" 'half-page-down)
+  (define-key view-mode-map "v" 'half-page-up)
   (define-key view-mode-map [remap View-scroll-page-backward] #'ak-scroll-page-backward);; DEL, S-SPC
   (define-key view-mode-map [remap View-scroll-page-forward]  #'ak-scroll-page-forward) ;; SPC
   (define-key view-mode-map "　" 'ak-scroll-page-forward)
@@ -118,7 +122,7 @@
 ;;  "q"     #'View-quit
 ;;  ">"     #'end-of-buffer
 ;;  "<"     #'beginning-of-buffer
-;;  "g"     #'View-goto-line  (nnn g:goto nnn / g:goto end)
+;;  "g"     #'View-goto-line  (nnn g:goto nnn / g:beginning-of-buffer / G:end-of-buffer)
 ;;  "s"     #'isearch-forward
 ;;  "r"     #'isearch-backward
 ;;  "."     #'set-mark-command
@@ -133,6 +137,13 @@
   "scroll to buffer end and go to point max." (interactive "^")
   (View-scroll-to-buffer-end) (goto-char (point-max)))
 
+(defun ak-end-of-visual-line()
+  "go to end of line or screen end." (interactive "^")
+  (let ((a (current-window-line)))
+    (end-of-visual-line)
+    (when (< a (current-window-line))
+      (backward-char))))
+  
 ;;====================================
 ;;;; s-: ispell
 ;;====================================

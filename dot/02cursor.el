@@ -43,6 +43,8 @@
 ;; Shift-Control-Period.  select to fileend
 (define-key key-translation-map (kbd "C-<") (kbd "C-S-,"))
 (define-key key-translation-map (kbd "C->") (kbd "C-S-."))
+;; Shift-Control-^,       select to previous page
+(define-key key-translation-map (kbd "C-~") (kbd "C-S-^"))
 
 
 ;; ;; MAC OSX option key + up down left right
@@ -186,6 +188,7 @@
 ;; overwridden by cua mode
 (global-set-key (kbd "C-v") 'half-page-up)
 (global-set-key (kbd "M-v") 'half-page-down)
+(global-set-key (kbd "C-^") 'half-page-down)
 
 ;;====================================
 ;;;; Home Toggle like Visual Studio

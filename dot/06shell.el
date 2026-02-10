@@ -8,6 +8,8 @@
 ;;====================================
 ;; M-x shell  ==>  M-x s
 (defalias 's 'shell)
+;;            ==>  M-s M-s
+(global-set-key (kbd "M-s M-s") 'shell)
 
 (with-eval-after-load 'shell
   (load "~/.emacs.d/site-lisp/tails-comint-history")
