@@ -1,0 +1,3668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-02-21 Sat 14:28 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>簡単なEmacs 使用法</title>
+<meta name="author" content="Akira" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="./css/org.css">
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">簡単なEmacs 使用法</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org8467ad8">1. はじめに</a>
+<ul>
+<li><a href="#org08ad6e1">1.1. 起動と終了</a></li>
+<li><a href="#orga513df3">1.2. キー表記方法</a></li>
+</ul>
+</li>
+<li><a href="#org20ff00c">2. dired ファイラー表示</a></li>
+<li><a href="#orga0ce255">3. ファイルを開く/閉じる</a></li>
+<li><a href="#org406c68d">4. カーソル移動</a>
+<ul>
+<li><a href="#orgbbda50a">4.1. Windows流</a></li>
+<li><a href="#orgec99002">4.2. Mac流</a></li>
+<li><a href="#org11ade73">4.3. emacs流</a></li>
+</ul>
+</li>
+<li><a href="#orgf0af896">5. 検索</a></li>
+<li><a href="#orgaa9c429">6. 編集</a></li>
+<li><a href="#orgcdb9299">7. 選択</a>
+<ul>
+<li><a href="#org81ed0b4">7.1. ターミナルの機能</a></li>
+<li><a href="#org1add76c">7.2. Shiftキーをつかった選択</a></li>
+<li><a href="#org7d6a37f">7.3. Emacsの機能</a></li>
+<li><a href="#org08f0a3b">7.4. コピー&amp;ペースト</a></li>
+</ul>
+</li>
+<li><a href="#orgc5c0865">8. View モード (read only)</a></li>
+<li><a href="#orgb816540">9. 再表示</a></li>
+<li><a href="#orgb18c3c4">10. マルチ画面</a>
+<ul>
+<li><a href="#org686c781">10.1. 画面分割</a></li>
+<li><a href="#org6a381f2">10.2. 次画面の操作</a></li>
+<li><a href="#org330ccca">10.3. フレーム</a></li>
+</ul>
+</li>
+<li><a href="#org9620932">11. 文字コードの指定</a>
+<ul>
+<li><a href="#orgb0ca706">11.1. コマンド実行の前に指定</a></li>
+<li><a href="#org7c4a93b">11.2. 読み込んだファイルの変更</a></li>
+<li><a href="#org68c5056">11.3. 文字コード表示</a></li>
+</ul>
+</li>
+<li><a href="#org2c65203">12. 文字サイズの変更</a></li>
+<li><a href="#org6d07dc6">13. いろいろなコマンド</a>
+<ul>
+<li><a href="#orgaa20f39">13.1. コマンドに与える引数</a></li>
+<li><a href="#orgc50db57">13.2. 内部シェルの起動</a></li>
+</ul>
+</li>
+<li><a href="#orgdff1780">14. 終了、中断</a></li>
+<li><a href="#org5a1ba29">15. function key 設定一覧</a></li>
+<li><a href="#orgd366bca">16. help</a>
+<ul>
+<li><a href="#org85d56e4">16.1. ヘルプ画面集</a>
+<ul>
+<li><a href="#org3970f52">16.1.1. メニュー</a></li>
+<li><a href="#org49f75f7">16.1.2. tutorial</a></li>
+<li><a href="#orgc73fe6e">16.1.3. info</a></li>
+<li><a href="#orgb28c5df">16.1.4. 初期画面</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8e70e0e">17. コンソール起動する時の設定</a>
+<ul>
+<li><a href="#orgcb00210">17.1. iTerm2 設定 (Mac OSX)</a></li>
+<li><a href="#org0a5f77a">17.2. teraterm 設定 (Windows)</a></li>
+<li><a href="#orgbfb298d">17.3. 左Cntl キーの位置について</a></li>
+</ul>
+</li>
+<li><a href="#orga2fac34">18. 方針</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8467ad8" class="outline-2">
+<h2 id="org8467ad8"><span class="section-number-2">1.</span> はじめに</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org08ad6e1" class="outline-3">
+<h3 id="org08ad6e1"><span class="section-number-3">1.1.</span> 起動と終了</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+カレントディレクトリ "." をパラメタに指定して起動する場合
+</p>
+
+<blockquote>
+<p>
+$ emacs .
+</p>
+</blockquote>
+
+<pre class="example" id="org0abd5fb">
+ /home/user:
+ used 352 available 53380644
+ drwxr-xr-x   22 user   users        4096 Mar  4 18:06 .
+ drwxrwsr-x    5 root   staff        4096 Feb 26 14:21 ..
+ drwxr-xr-x    3 user   users        4096 Feb 26 11:37 .emacs.d
+-EEE:%%-F1  ~             6:27午後   (Dired by name)--L5--C58--Top-----
+</pre>
+<p>
+C-x C-c　　　　　Control を押したまま x c  で終了する
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga513df3" class="outline-3">
+<h3 id="orga513df3"><span class="section-number-3">1.2.</span> キー表記方法</h3>
+<div class="outline-text-3" id="text-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">表記</th>
+<th scope="col" class="org-left">押し方</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x</td>
+<td class="org-left">Control + x</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x</td>
+<td class="org-left">Escape x</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x</td>
+<td class="org-left">Alt + x</td>
+<td class="org-left">(IME表示が 'A')</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x</td>
+<td class="org-left">option + x</td>
+<td class="org-left">(IME表示が 'A') (Mac)</td>
+</tr>
+
+<tr>
+<td class="org-left">S-x</td>
+<td class="org-left">Shift + x</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">s-x</td>
+<td class="org-left">command + x</td>
+<td class="org-left">(Mac)</td>
+</tr>
+</tbody>
+</table>
+<p>
+    M- は「メタ」キーで Alt または option と同時押しか、Escape で代用する。<br />
+    s- は 「スーパー」キーで Mac OSX では command キーに割り当てられている。<br />
+<br />
+    例
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">コマンド</th>
+<th scope="col" class="org-left">押し方</th>
+<th scope="col" class="org-left">機能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-g</td>
+<td class="org-left">Control + g</td>
+<td class="org-left">動作のキャンセル</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x d</td>
+<td class="org-left">Control + x  (放して) d</td>
+<td class="org-left">dired ファイラー表示</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C-b</td>
+<td class="org-left">Controlを押したまま x b</td>
+<td class="org-left">バッファリスト表示</td>
+</tr>
+
+<tr>
+<td class="org-left">s-a</td>
+<td class="org-left">command + a</td>
+<td class="org-left">全選択    (Mac)</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x shell</td>
+<td class="org-left">Alt + x (Altを放して) "shell"</td>
+<td class="org-left">内部shell 起動</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org20ff00c" class="outline-2">
+<h2 id="org20ff00c"><span class="section-number-2">2.</span> dired ファイラー表示</h2>
+<div class="outline-text-2" id="text-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x d</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-D</td>
+<td class="org-left">ディレクトリリスト表示</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">f5</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カレントディレクトを別画面表示</td>
+</tr>
+
+<tr>
+<td class="org-left">g</td>
+<td class="org-left">f5</td>
+<td class="org-left">s-u</td>
+<td class="org-left">ディレクトリ表示更新</td>
+</tr>
+
+<tr>
+<td class="org-left">p</td>
+<td class="org-left">up</td>
+<td class="org-left">k</td>
+<td class="org-left">前の行</td>
+</tr>
+
+<tr>
+<td class="org-left">n</td>
+<td class="org-left">down</td>
+<td class="org-left">j</td>
+<td class="org-left">次の行</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-up</td>
+<td class="org-left">K</td>
+<td class="org-left">１行上スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-down</td>
+<td class="org-left">J</td>
+<td class="org-left">１行下スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;</td>
+<td class="org-left">P</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">前のdirectory行</td>
+</tr>
+
+<tr>
+<td class="org-left">&gt;</td>
+<td class="org-left">N</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">次のdirectory行</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">home</td>
+<td class="org-left">,</td>
+<td class="org-left">先頭行へ</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">end</td>
+<td class="org-left">.</td>
+<td class="org-left">最終行へ</td>
+</tr>
+
+<tr>
+<td class="org-left">f</td>
+<td class="org-left">right</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">directory降下 または ファイルを開く</td>
+</tr>
+
+<tr>
+<td class="org-left">^</td>
+<td class="org-left">left</td>
+<td class="org-left">C-b</td>
+<td class="org-left">directory上昇</td>
+</tr>
+
+<tr>
+<td class="org-left">v</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">View モード (read only) で開く</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">H</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ヘキサモードでファイルを表示</td>
+</tr>
+
+<tr>
+<td class="org-left">+</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ディレクトリ作成</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">日付順ソート toggle</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">E</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ファイル名直接編集 (C-c C-c で終了)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">a</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">A_DIRECTORY へ移動 (.dirrc で定義)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">b</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">B_DIRECTORY へ移動</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">c</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C_DIRECTORY へ移動</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">e</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">E_DIRECTORY へ移動</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">h</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ホームディレクトリ ~ へ移動</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">r</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ルートディレクトリ / へ移動</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">z</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">emacs 起動ディレクトリへ移動</td>
+</tr>
+</tbody>
+</table>
+<p>
+<br />
+    単独ファイルに対して (大文字)
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">D</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ファイル削除</td>
+</tr>
+
+<tr>
+<td class="org-left">C</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ファイルcopy</td>
+</tr>
+
+<tr>
+<td class="org-left">R</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">リネーム、移動</td>
+</tr>
+
+<tr>
+<td class="org-left">S</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">シンボリックリンク 作成</td>
+</tr>
+
+<tr>
+<td class="org-left">Y</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">相対シンボリックリンク 作成</td>
+</tr>
+
+<tr>
+<td class="org-left">M</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">chmod</td>
+</tr>
+
+<tr>
+<td class="org-left">W</td>
+<td class="org-left">! open</td>
+<td class="org-left">OS標準のアプリで開く(Mac)</td>
+</tr>
+</tbody>
+</table>
+<p>
+<br />
+    マークをつけて、複数ファイルに対して実行
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">　　</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">d d..x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">削除選択し実行</td>
+</tr>
+
+<tr>
+<td class="org-left">~ x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">(チルダx) ~付きバックアップファイルを全て選択し削除</td>
+</tr>
+
+<tr>
+<td class="org-left">m</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">マーク * をつける</td>
+</tr>
+
+<tr>
+<td class="org-left">m m..D</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">複数選択し削除</td>
+</tr>
+
+<tr>
+<td class="org-left">m m..C</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">複数選択し別directoryに copy</td>
+</tr>
+
+<tr>
+<td class="org-left">m m..R</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">複数選択し別directoryに 移動</td>
+</tr>
+
+<tr>
+<td class="org-left">m m..S</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">複数選択し別directoryに シンボリックリンクを作成</td>
+</tr>
+
+<tr>
+<td class="org-left">m m..Y</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">複数選択し別directoryに 相対シンボリックリンクを作成</td>
+</tr>
+
+<tr>
+<td class="org-left">m m..M</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">複数選択しchmod</td>
+</tr>
+
+<tr>
+<td class="org-left">u</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">マークを消して下へ</td>
+</tr>
+
+<tr>
+<td class="org-left">DEL</td>
+<td class="org-left">C-h</td>
+<td class="org-left">(Backspace) マークを消して上へ</td>
+</tr>
+
+<tr>
+<td class="org-left">M-DEL</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">(Alt + Backspace)  すべのマークを消す</td>
+</tr>
+
+<tr>
+<td class="org-left">t</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">マーク反転</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orga0ce255" class="outline-2">
+<h2 id="orga0ce255"><span class="section-number-2">3.</span> ファイルを開く/閉じる</h2>
+<div class="outline-text-2" id="text-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x C-f</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ファイル名指定し開く / 新ファイル作成</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>Find file: ~/</code> 　　&lt;&#x2014; ファイル名入力</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">left</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ファイル先頭で左は、編集の終了</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C-w</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">名前を付けて保存</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>Write file: ~/</code> 　&lt;&#x2014;Enter / ファイル名入力</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>File `~/xxx' exists; overwrite?</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>(y or n)</code>　　　　　&lt;&#x2014;y:上書き保存  n:中止</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>Wrote /home/user/xxx</code></td>
+</tr>
+
+<tr>
+<td class="org-left">C-x k</td>
+<td class="org-left">f4</td>
+<td class="org-left">s-k</td>
+<td class="org-left">保存せずに終了</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>Buffer xxx modified; kill anyway?</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">~(yes/no/save and then kill) &lt;&#x2014;yes:修正破棄</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C-s</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-s</td>
+<td class="org-left">上書き保存</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>Wrote /home/user/xxx</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+<div id="outline-container-org406c68d" class="outline-2">
+<h2 id="org406c68d"><span class="section-number-2">4.</span> カーソル移動</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgbbda50a" class="outline-3">
+<h3 id="orgbbda50a"><span class="section-number-3">4.1.</span> Windows流</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<code>→　←　↑　↓　PageUp　PageDown　Cntl+Home　Cntl+End</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgec99002" class="outline-3">
+<h3 id="orgec99002"><span class="section-number-3">4.2.</span> Mac流</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<code>C-f　C-b　C-p　C-n　 fn+up　fn+down　Home　End</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org11ade73" class="outline-3">
+<h3 id="org11ade73"><span class="section-number-3">4.3.</span> emacs流</h3>
+<div class="outline-text-3" id="text-4-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-n</td>
+<td class="org-left">down</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一行下</td>
+</tr>
+
+<tr>
+<td class="org-left">C-p</td>
+<td class="org-left">up</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一行上</td>
+</tr>
+
+<tr>
+<td class="org-left">C-f</td>
+<td class="org-left">right</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一文字右</td>
+</tr>
+
+<tr>
+<td class="org-left">C-b</td>
+<td class="org-left">left</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一文字左(先頭ではファイルを閉じる)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-a</td>
+<td class="org-left">(S-home)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">行頭と先頭文字のトグル　(選択時)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-e</td>
+<td class="org-left">(S-end)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">行末　　　　　　　　　　(選択時)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-left</td>
+<td class="org-left">行頭</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-right</td>
+<td class="org-left">行末</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">next</td>
+<td class="org-left">M-v</td>
+<td class="org-left">下画面     (PageDown)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">prior</td>
+<td class="org-left">M-V</td>
+<td class="org-left">上画面     (PageUp)</td>
+</tr>
+
+<tr>
+<td class="org-left">(C-v)</td>
+<td class="org-left">M-n</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">半画面下　　(org-mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">(M-v)</td>
+<td class="org-left">M-p</td>
+<td class="org-left">C-^</td>
+<td class="org-left">半画面上　　(org-mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">(home)</td>
+<td class="org-left">C-home</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファ先頭　　　　　(非選択時)</td>
+</tr>
+
+<tr>
+<td class="org-left">(end)</td>
+<td class="org-left">C-end</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファ末尾　　　　　(非選択時)</td>
+</tr>
+
+<tr>
+<td class="org-left">M-&lt;</td>
+<td class="org-left">C-,</td>
+<td class="org-left">s-up</td>
+<td class="org-left">バッファ先頭</td>
+</tr>
+
+<tr>
+<td class="org-left">M-&gt;</td>
+<td class="org-left">C-.</td>
+<td class="org-left">s-down</td>
+<td class="org-left">バッファ末尾</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-&lt;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファ先頭まで選択</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-&gt;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファ末尾まで選択</td>
+</tr>
+
+<tr>
+<td class="org-left">M-f</td>
+<td class="org-left">C-right</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一語右</td>
+</tr>
+
+<tr>
+<td class="org-left">M-b</td>
+<td class="org-left">C-left</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一語左</td>
+</tr>
+
+<tr>
+<td class="org-left">M-}</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">次の段落　　(C-down廃止)</td>
+</tr>
+
+<tr>
+<td class="org-left">M-{</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">前の段落　　(C-up廃止)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-M-n</td>
+<td class="org-left">C-down</td>
+<td class="org-left">１行下スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-M-p</td>
+<td class="org-left">C-up</td>
+<td class="org-left">１行上スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-s-n</td>
+<td class="org-left">C-s-down</td>
+<td class="org-left">Ｎ行下高速スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-s-p</td>
+<td class="org-left">C-s-up</td>
+<td class="org-left">Ｎ行上高速スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">M-r</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを画面の中、上、下</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M-right</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを画面の中、下、下画面</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M-left</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを画面の中、上、上画面</td>
+</tr>
+
+<tr>
+<td class="org-left">M-g M-g</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-l</td>
+<td class="org-left">行番号を入力してその行に移動</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-a</td>
+<td class="org-left">C-M-home</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">beginning-of-defun</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-e</td>
+<td class="org-left">C-M-end</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">end-of-defun</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-f</td>
+<td class="org-left">C-M-right</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">forward-sexp</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-b</td>
+<td class="org-left">C-M-left</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">backward-sexp</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-d</td>
+<td class="org-left">C-M-down</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">down-list</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-u</td>
+<td class="org-left">C-M-up</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">backward-up-list</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-M-next</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">forward-list　(C-M-n廃止)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-M-prior</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">backward-list (C-M-p廃止)</td>
+</tr>
+</tbody>
+</table>
+<p>
+    高速スクロール行数は ak-fast-scroll-lines で設定する。<br />
+<br />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf0af896" class="outline-2">
+<h2 id="orgf0af896"><span class="section-number-2">5.</span> 検索</h2>
+<div class="outline-text-2" id="text-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー　</th>
+<th scope="col" class="org-left">　　</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-s str</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-f</td>
+<td class="org-left">インクリメンタルサーチ</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-s C-r str</td>
+<td class="org-left">s-F</td>
+<td class="org-left">逆方向インクリメンタルサーチ</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-s reg</td>
+<td class="org-left">C-s M-r reg</td>
+<td class="org-left">M-s-f</td>
+<td class="org-left">正規表現検索</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-s C-r M-r reg</td>
+<td class="org-left">M-s-F</td>
+<td class="org-left">逆方向正規表現検索</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s M-e</td>
+<td class="org-left">C-s C-k</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ミニバッファで入力</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s C-w..</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソル後の単語を検索する</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s C-s..</td>
+<td class="org-left">f3</td>
+<td class="org-left">s-g</td>
+<td class="org-left">再検索　　　　C-s (str) C-s..</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s C-r..</td>
+<td class="org-left">S-f3</td>
+<td class="org-left">s-d</td>
+<td class="org-left">逆方向再検索　C-s C-r (str) C-r..</td>
+</tr>
+
+<tr>
+<td class="org-left">M-%</td>
+<td class="org-left">C-r</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">置換　　(C-r逆方向iサーチは廃止)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-%</td>
+<td class="org-left">C-M-r</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">正規表現置換</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s C-y</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-e</td>
+<td class="org-left">copy してあった内容で検索</td>
+</tr>
+
+<tr>
+<td class="org-left">C-g</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">検索終了</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgaa9c429" class="outline-2">
+<h2 id="orgaa9c429"><span class="section-number-2">6.</span> 編集</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+viのような入力モード切替はない。入力文字はそのままテキストに追加される。
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">　　</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-d</td>
+<td class="org-left">delete</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Delete</td>
+</tr>
+
+<tr>
+<td class="org-left">M-d</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一語削除 (cut)</td>
+</tr>
+
+<tr>
+<td class="org-left">DEL</td>
+<td class="org-left">C-h</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Backspace　　　　　(C-h:helpは、f1)</td>
+</tr>
+
+<tr>
+<td class="org-left">M-DEL</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一語前を削除 (cut)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-k</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルより後(又は選択領域)を cut (後述)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-S-k</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルより後(又は選択領域)を copy</td>
+</tr>
+
+<tr>
+<td class="org-left">C-y</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">paste</td>
+</tr>
+
+<tr>
+<td class="org-left">C-i</td>
+<td class="org-left">TAB</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">インデント調整など</td>
+</tr>
+
+<tr>
+<td class="org-left">M-i</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">タブ挿入</td>
+</tr>
+
+<tr>
+<td class="org-left">C-m</td>
+<td class="org-left">RET</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">改行</td>
+</tr>
+
+<tr>
+<td class="org-left">C-j</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">改行してインデント</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-j</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">改行して賢くインデント</td>
+</tr>
+
+<tr>
+<td class="org-left">C-o</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを残して改行</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-o</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを残して真下に改行</td>
+</tr>
+
+<tr>
+<td class="org-left">C-t</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルの前の文字を後ろに移動</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x u</td>
+<td class="org-left">C-z</td>
+<td class="org-left">s-z</td>
+<td class="org-left">undo　　(C-z:suspendは、C-x C-z)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-_</td>
+<td class="org-left">C-/</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">undo　　(使えないかも)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-g</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">undo の中断。次から undo は redo</td>
+</tr>
+
+<tr>
+<td class="org-left">Insert</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">上書きモード .. Ovwrt 表示 (Windows)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-\</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">emacs の日本語入力on-off</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+ホスト側の日本語入力を使うときは、emacsの日本語入力on-off は不要。ただし<br />
+日本語モードでは M- キーが使えないことがある。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcdb9299" class="outline-2">
+<h2 id="orgcdb9299"><span class="section-number-2">7.</span> 選択</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-org81ed0b4" class="outline-3">
+<h3 id="org81ed0b4"><span class="section-number-3">7.1.</span> ターミナルの機能</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+マウスで選択&#x2013;&gt; copy されている<br />
+右クリック  &#x2013;&gt; paste
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1add76c" class="outline-3">
+<h3 id="org1add76c"><span class="section-number-3">7.2.</span> Shiftキーをつかった選択</h3>
+<div class="outline-text-3" id="text-7-2">
+<pre class="example" id="org4bcab3a">
+S-left    S-right      S-C-left      S-C-right
+S-up      S-down
+S-Home    S-End        S-C-Home      S-C-End
+S-PageUp  S-PageDown
+C-S-b     C-S-f        M-S-b         M-S-f
+C-S-p     C-S-n
+C-S-a     C-S-e        C-&lt;           C-&gt;
+M-S-p     M-S-n
+</pre>
+<p>
+Shiftキーを放してカーソル移動すると選択解除
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7d6a37f" class="outline-3">
+<h3 id="org7d6a37f"><span class="section-number-3">7.3.</span> Emacsの機能</h3>
+<div class="outline-text-3" id="text-7-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">　　</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-SPC</td>
+<td class="org-left">C-@</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">(Control+Space) 選択開始</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">以後カーソル移動で 選択領域が拡大</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x SPC</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">(Control+x Space) 標準矩形選択開始</td>
+</tr>
+
+<tr>
+<td class="org-left">C-RET</td>
+<td class="org-left">C-c C-SPC</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">(Control+Return) cua矩形選択開始</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">以後カーソル移動で 矩形領域が拡大</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-mouse1drag</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">マウスで矩形選択</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x h</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-a</td>
+<td class="org-left">バッファ全選択</td>
+</tr>
+
+<tr>
+<td class="org-left">C-g</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">選択解除</td>
+</tr>
+
+<tr>
+<td class="org-left">C-d</td>
+<td class="org-left">delete</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">選択領域の削除</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-j</td>
+<td class="org-left">領域の開始点と終了点を逆にする</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org08f0a3b" class="outline-3">
+<h3 id="org08f0a3b"><span class="section-number-3">7.4.</span> コピー&amp;ペースト</h3>
+<div class="outline-text-3" id="text-7-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">　　</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-w</td>
+<td class="org-left">C-x</td>
+<td class="org-left">s-x</td>
+<td class="org-left">選択領域を cut　　(C-x は cua-mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">M-w</td>
+<td class="org-left">C-c</td>
+<td class="org-left">s-c</td>
+<td class="org-left">選択領域を copy　 (C-c は cua-mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-S-w</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">選択領域を copy</td>
+</tr>
+
+<tr>
+<td class="org-left">C-y</td>
+<td class="org-left">C-v</td>
+<td class="org-left">s-v</td>
+<td class="org-left">paste　　　　　　 (C-v は cua-mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-y</td>
+<td class="org-left">s-c でcopyしたものをpaste (ターミナル不可)</td>
+</tr>
+
+<tr>
+<td class="org-left">M-y</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">yank-pop</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M-y TAB　　　(kill-ringから選択)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-y M-y M-y..　(kill-ringからpop)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-k</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルより後(又は選択領域)を cut (Mac風)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-S-k</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルより後(又は選択領域)を copy</td>
+</tr>
+
+<tr>
+<td class="org-left">C-S-DEL</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一行 cut</td>
+</tr>
+
+<tr>
+<td class="org-left">M-d</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一語 cut</td>
+</tr>
+
+<tr>
+<td class="org-left">M-DEL</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一語前を cut</td>
+</tr>
+
+<tr>
+<td class="org-left">M-k</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一文 cut</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-k</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一lisp要素 cut</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+copy 後、領域選択は解除、<br />
+paste 時、領域が選択されていれば上書き、<br />
+選択領域がない時は、C-x と C-c は複数キーのコマンドを構成する。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc5c0865" class="outline-2">
+<h2 id="orgc5c0865"><span class="section-number-2">8.</span> View モード (read only)</h2>
+<div class="outline-text-2" id="text-8">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">　　</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">M-x view-file</td>
+<td class="org-left">v(dired)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ファイルを View モードで開く</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x view-mode</td>
+<td class="org-left">ESC-f1</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファを View モードに</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f5</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">変更を読み込む</td>
+</tr>
+
+<tr>
+<td class="org-left">E</td>
+<td class="org-left">i</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">View モードから通常モードに</td>
+</tr>
+
+<tr>
+<td class="org-left">q</td>
+<td class="org-left">:q</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">View バッファを削除</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">:w</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">上書き保存</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">h</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを一文字左</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">j</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを一行上</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">k</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを一行下</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">l</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを一文字右</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">a</td>
+<td class="org-left">0</td>
+<td class="org-left">画面上の行頭へ</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">e</td>
+<td class="org-left">$</td>
+<td class="org-left">画面上の行末へ</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">f</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを一文字進める</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">b</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを一文字戻す</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">H</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを画面上</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを画面中央</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">L</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソルを画面下</td>
+</tr>
+
+<tr>
+<td class="org-left">u</td>
+<td class="org-left">^</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">半画面上スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">d</td>
+<td class="org-left">v</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">半画面下スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">DEL</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">1画面上スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">SPC</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">1画面下スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">y</td>
+<td class="org-left">K</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">１行上スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">RET</td>
+<td class="org-left">J</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">１行下スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;</td>
+<td class="org-left">g</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ファイル先頭へ</td>
+</tr>
+
+<tr>
+<td class="org-left">&gt;</td>
+<td class="org-left">G</td>
+<td class="org-left">o</td>
+<td class="org-left">ファイル末尾へ</td>
+</tr>
+
+<tr>
+<td class="org-left">数値 g</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">指定行へ</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">C-s</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">インクリメンタルサーチ</td>
+</tr>
+
+<tr>
+<td class="org-left">r</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">逆方向クリメンタルサーチ</td>
+</tr>
+
+<tr>
+<td class="org-left">/</td>
+<td class="org-left">C-M-s</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">正規表現検索</td>
+</tr>
+
+<tr>
+<td class="org-left">\</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">逆方向正規表現検索</td>
+</tr>
+
+<tr>
+<td class="org-left">n</td>
+<td class="org-left">f3</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">再検索</td>
+</tr>
+
+<tr>
+<td class="org-left">p</td>
+<td class="org-left">S-f3</td>
+<td class="org-left">N</td>
+<td class="org-left">逆方向再検索</td>
+</tr>
+
+<tr>
+<td class="org-left">.</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">選択開始</td>
+</tr>
+
+<tr>
+<td class="org-left">+</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">領域の開始点と終了点を逆に</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f5</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">外部でのファイル変更を反映</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Read only の View モードでは vi 的なキー操作もできる。<br />
+書き込み可能な通常モードへの遷移は "i" と "ESC-f1"。<br />
+ファイルを変更して ":q" で終了するとき破棄確認 yes/no/save される。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgb816540" class="outline-2">
+<h2 id="orgb816540"><span class="section-number-2">9.</span> 再表示</h2>
+<div class="outline-text-2" id="text-9">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-l</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">画面再表示、カーソル行を中央、上、下</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f5</td>
+<td class="org-left">画面再表示</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-orgb18c3c4" class="outline-2">
+<h2 id="orgb18c3c4"><span class="section-number-2">10.</span> マルチ画面</h2>
+<div class="outline-text-2" id="text-10">
+</div>
+<div id="outline-container-org686c781" class="outline-3">
+<h3 id="org686c781"><span class="section-number-3">10.1.</span> 画面分割</h3>
+<div class="outline-text-3" id="text-10-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x 2</td>
+<td class="org-left">f2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">画面分割 上下 (一画面の時) / 分割解除</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 3</td>
+<td class="org-left">S-f2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">画面分割 左右 (一画面の時)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 1</td>
+<td class="org-left">f2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">分割解除 (選択中の画面だけ残す)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x o</td>
+<td class="org-left">S-f1</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">次の画面へ移動</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">前の画面へ移動 (分割時)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-TAB</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">次の画面へ移動 (1フレームの時)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-S-TAB</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">前の画面へ移動 (1フレームの時)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x k</td>
+<td class="org-left">f4</td>
+<td class="org-left">s-k</td>
+<td class="org-left">バッファの削除。修正中なら確認</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 0</td>
+<td class="org-left">S-f4</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">分割解除 (選択中の画面を閉じる)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C-left</td>
+<td class="org-left">C-next</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファ切替 奥へ (Ctrl + PageDown)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C-right</td>
+<td class="org-left">C-prior</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファ切替 戻る (Ctrl + PageUp)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">f7</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">画面縮小 f(自動又は) 上下</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x ^</td>
+<td class="org-left">f8</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">画面拡大 f(自動又は) 上下</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x {</td>
+<td class="org-left">S-f7</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">画面縮小 f(自動又は) 左右</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x }</td>
+<td class="org-left">S-f8</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">画面拡大 f(自動又は) 左右</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C-b</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファリスト表示</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">f10</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">分割時、上下または左右を交換</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f10</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">分割時、画面しきりを回転する</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org6a381f2" class="outline-3">
+<h3 id="org6a381f2"><span class="section-number-3">10.2.</span> 次画面の操作</h3>
+<div class="outline-text-3" id="text-10-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-M-v</td>
+<td class="org-left">M-next</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">下画面</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-S-v</td>
+<td class="org-left">M-prior</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">上画面</td>
+</tr>
+
+<tr>
+<td class="org-left">M-home</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファ先頭</td>
+</tr>
+
+<tr>
+<td class="org-left">M-end</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">バッファ末尾</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M-down</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">１行下スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M-up</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">１行上スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M-S-down</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Ｎ行下高速スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M-S-up</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Ｎ行上高速スクロール</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-S-l</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">画面再表示、カーソル行を中央、上、下</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org330ccca" class="outline-3">
+<h3 id="org330ccca"><span class="section-number-3">10.3.</span> フレーム</h3>
+<div class="outline-text-3" id="text-10-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x 5 2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-n</td>
+<td class="org-left">フレーム作成</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 5 0</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-w</td>
+<td class="org-left">フレーム削除</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 5 o</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-`</td>
+<td class="org-left">次のフレーム</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-~</td>
+<td class="org-left">前のフレーム</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-TAB</td>
+<td class="org-left">s-'</td>
+<td class="org-left">次の画面またはフレームへ移動</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-S-TAB</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">前の画面またはフレームへ移動</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org9620932" class="outline-2">
+<h2 id="org9620932"><span class="section-number-2">11.</span> 文字コードの指定</h2>
+<div class="outline-text-2" id="text-11">
+</div>
+<div id="outline-container-orgb0ca706" class="outline-3">
+<h3 id="orgb0ca706"><span class="section-number-3">11.1.</span> コマンド実行の前に指定</h3>
+<div class="outline-text-3" id="text-11-1">
+<p>
+<code>M-x universal-coding-system-argument</code>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x RET c</td>
+<td class="org-left">f6</td>
+<td class="org-left">コーディングシステムを指定しコマンド実行</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<code>Coding system for following command (default utf-8-unix): sjis-dos</code><br />
+<code>Command to execute with sjis-dos:</code>　　　　ここで C-x C-w などコマンド実行
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7c4a93b" class="outline-3">
+<h3 id="org7c4a93b"><span class="section-number-3">11.2.</span> 読み込んだファイルの変更</h3>
+<div class="outline-text-3" id="text-11-2">
+<p>
+<code>M-x set-buffer-file-coding-system</code>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">　　　</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x RET f</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">読み込みバッファ内コーディングシステムの変更</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<code>Coding system for saving file (default iso-2022-jp):</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org68c5056" class="outline-3">
+<h3 id="org68c5056"><span class="section-number-3">11.3.</span> 文字コード表示</h3>
+<div class="outline-text-3" id="text-11-3">
+<p>
+改行と文字コードの指定方法
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">改行 \ 文字</th>
+<th scope="col" class="org-left">UTF-8</th>
+<th scope="col" class="org-left">S-JISC</th>
+<th scope="col" class="org-left">EUC</th>
+<th scope="col" class="org-left">JIS</th>
+<th scope="col" class="org-left">改行表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">lf</td>
+<td class="org-left">utf-8-unix</td>
+<td class="org-left">sjis-unix</td>
+<td class="org-left">euc-jp-unix</td>
+<td class="org-left">junet-unix</td>
+<td class="org-left">:</td>
+</tr>
+
+<tr>
+<td class="org-left">crlf</td>
+<td class="org-left">utf-8-dos</td>
+<td class="org-left">sjis-dos</td>
+<td class="org-left">euc-jp-dos</td>
+<td class="org-left">junet-dos</td>
+<td class="org-left">(DOS)</td>
+</tr>
+
+<tr>
+<td class="org-left">cr</td>
+<td class="org-left">utf-8-mac</td>
+<td class="org-left">sjis-mac</td>
+<td class="org-left">euc-jp-mac</td>
+<td class="org-left">junet-mac</td>
+<td class="org-left">(Mac)</td>
+</tr>
+
+<tr>
+<td class="org-left">文字コード表示</td>
+<td class="org-left">U</td>
+<td class="org-left">S</td>
+<td class="org-left">E</td>
+<td class="org-left">J</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<pre class="example" id="org6243b93">
+例
+-UUU:**--F1  emacs-help.org   52% (300,85)   (Org) 2:02PM 1.68 ----------------------
+-UUS(DOS)----F1  KOSMAX.CNF     Top (1,0)     Git-main  (Fundamental) 2:03PM 1.17 ---
+</pre>
+
+<p>
+lf (¥n) は unix と Mac OSX, crlf (¥r¥n) は Windows で使われる。<br />
+cr (¥r) は古い Macで使われていた。
+</p>
+
+<p>
+通常はファイル読込時、文字コードを自動認識するが、誤認識する場合は f6 で指定する。
+</p>
+
+<p>
+強制的に eucで読み込む場合 (半角カナによる文字化け対策)<br />
+	  <code>f6 euc Enter C-x C-f filename</code>
+</p>
+
+<p>
+EUC+cr で上書き保存<br />
+	  <code>f6 euc-jp-unix Enter C-x C-s</code>
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org2c65203" class="outline-2">
+<h2 id="org2c65203"><span class="section-number-2">12.</span> 文字サイズの変更</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+画面が細かい時、文字サイズを大きくしたりできる。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x C-+</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-+</td>
+<td class="org-left">文字を大きく</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C--</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s--</td>
+<td class="org-left">文字を小さく</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C-0</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-0</td>
+<td class="org-left">デフォルトの大きさに</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+<div id="outline-container-org6d07dc6" class="outline-2">
+<h2 id="org6d07dc6"><span class="section-number-2">13.</span> いろいろなコマンド</h2>
+<div class="outline-text-2" id="text-13">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">M-x diff</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ファイル比較</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x compile</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">メーク実行</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x gdb</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">デバッガ起動</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x grep</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">grep 実行</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x grep-find</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">find し grep実行</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x occur</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">表示内容を検索しリスト</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x shell</td>
+<td class="org-left">M-s M-s</td>
+<td class="org-left">M-x s</td>
+<td class="org-left">内部シェル起動</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x shell-command</td>
+<td class="org-left">M-!</td>
+<td class="org-left">s-L</td>
+<td class="org-left">単発コマンド実行</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x shell-command-on-region</td>
+<td class="org-left">M-&vert;</td>
+<td class="org-left">s-&vert;</td>
+<td class="org-left">+選択領域を入力</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x man</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-M</td>
+<td class="org-left">Man page 表示</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x info</td>
+<td class="org-left">f1 i</td>
+<td class="org-left">s-?</td>
+<td class="org-left">info 表示</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgaa20f39" class="outline-3">
+<h3 id="orgaa20f39"><span class="section-number-3">13.1.</span> コマンドに与える引数</h3>
+<div class="outline-text-3" id="text-13-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">M-3 a</td>
+<td class="org-left">aaa 入力</td>
+</tr>
+
+<tr>
+<td class="org-left">C-u 3 a</td>
+<td class="org-left">aaa 入力</td>
+</tr>
+
+<tr>
+<td class="org-left">M-5 M-x occur</td>
+<td class="org-left">前後5行表示</td>
+</tr>
+
+<tr>
+<td class="org-left">C-u 5 M-x occur</td>
+<td class="org-left">前後5行表示</td>
+</tr>
+
+<tr>
+<td class="org-left">C-u -5 M-x occur</td>
+<td class="org-left">前5行表示</td>
+</tr>
+
+<tr>
+<td class="org-left">C-u C-f</td>
+<td class="org-left">前へ4文字進む</td>
+</tr>
+
+<tr>
+<td class="org-left">C-u C-u C-f</td>
+<td class="org-left">前へ16文字進む</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc50db57" class="outline-3">
+<h3 id="orgc50db57"><span class="section-number-3">13.2.</span> 内部シェルの起動</h3>
+<div class="outline-text-3" id="text-13-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">M-x shell</td>
+<td class="org-left">M-s M-s</td>
+<td class="org-left">M-x s</td>
+<td class="org-left">シェル起動</td>
+</tr>
+
+<tr>
+<td class="org-left">M-p</td>
+<td class="org-left">up</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">history 前</td>
+</tr>
+
+<tr>
+<td class="org-left">M-n</td>
+<td class="org-left">down</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">history 次</td>
+</tr>
+
+<tr>
+<td class="org-left">string up</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">先頭文字列から始まる history 前</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x dirs</td>
+<td class="org-left">M-RET</td>
+<td class="org-left">S-f5</td>
+<td class="org-left">ディレクトリ認識ズレ修正</td>
+</tr>
+
+<tr>
+<td class="org-left">C-p</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソル上</td>
+</tr>
+
+<tr>
+<td class="org-left">C-n</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">カーソル下</td>
+</tr>
+
+<tr>
+<td class="org-left">C-d</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">EOF (promptのところで)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-c C-c</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">シェル中断</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdff1780" class="outline-2">
+<h2 id="orgdff1780"><span class="section-number-2">14.</span> 終了、中断</h2>
+<div class="outline-text-2" id="text-14">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x C-c</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-q</td>
+<td class="org-left">emacs の終了</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C-z</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-m</td>
+<td class="org-left">suspend　　　　　　　(C-z はundo)</td>
+</tr>
+
+<tr>
+<td class="org-left">fg</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">(コマンド) シェルからEmacsに復帰する</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-org5a1ba29" class="outline-2">
+<h2 id="org5a1ba29"><span class="section-number-2">15.</span> function key 設定一覧</h2>
+<div class="outline-text-2" id="text-15">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">f1</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M-x help　　(C-h は backspace)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x o</td>
+<td class="org-left">S-f1</td>
+<td class="org-left">C-TAB</td>
+<td class="org-left">other-window 　　　　(順周り)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 2</td>
+<td class="org-left">f2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">split-window-below ー toggle</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 1</td>
+<td class="org-left">f2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">delete-other-windows</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 3</td>
+<td class="org-left">S-f2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">split-window-right &vert;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f2</td>
+<td class="org-left">C-S-TAB</td>
+<td class="org-left">other-window 　　　　(逆回り)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s C-s</td>
+<td class="org-left">f3</td>
+<td class="org-left">s-g</td>
+<td class="org-left">isearch-repeat-forward</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s C-r C-r</td>
+<td class="org-left">S-f3</td>
+<td class="org-left">s-d</td>
+<td class="org-left">isearch-repeat-backward</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x k</td>
+<td class="org-left">f4</td>
+<td class="org-left">s-k</td>
+<td class="org-left">kill-current-buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 0</td>
+<td class="org-left">S-f4</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">delete-window</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x d</td>
+<td class="org-left">f5</td>
+<td class="org-left">s-D</td>
+<td class="org-left">dired</td>
+</tr>
+
+<tr>
+<td class="org-left">g</td>
+<td class="org-left">f5</td>
+<td class="org-left">s-u</td>
+<td class="org-left">revert-buffer (dired mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f5</td>
+<td class="org-left">s-u</td>
+<td class="org-left">revert-buffer (view mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">M-x dirs</td>
+<td class="org-left">S-f5</td>
+<td class="org-left">M-RET</td>
+<td class="org-left">shell-resync-dirs (shell mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-l</td>
+<td class="org-left">S-f5</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">recenter</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x RET c</td>
+<td class="org-left">f6</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">select coding system</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f6</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">toggle electric-indent-mode</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ESC-f6</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">macro start</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C-f6</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">macro end/call macro</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">f7</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">shrink window</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x ^</td>
+<td class="org-left">f8</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">enlarge-window</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x {</td>
+<td class="org-left">S-f7</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">shrink-window-horizontally</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x }</td>
+<td class="org-left">S-f8</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">enlarge-window-horizontally</td>
+</tr>
+
+<tr>
+<td class="org-left">f1 k</td>
+<td class="org-left">f9</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">describe-key-briefly</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f9</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">toggle case sensitive (search / occur)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">f10</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">swap split window</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f10</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">toggle vertical / horizontal split</td>
+</tr>
+
+<tr>
+<td class="org-left">M-f10</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">toggle-frame-maximized</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">M-f11</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">toggle-frame-fullscreen</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">f11</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">toggle-trancate-lines</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">f12</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">global-display-line-numbers-mode</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f11</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">scroll-right</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">S-f12</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">scroll-left</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-orgd366bca" class="outline-2">
+<h2 id="orgd366bca"><span class="section-number-2">16.</span> help</h2>
+<div class="outline-text-2" id="text-16">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">標準</th>
+<th scope="col" class="org-left">代替キー</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">f1</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">ヘルプメニューで選択</td>
+</tr>
+
+<tr>
+<td class="org-left">f1 a</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">command-apropos : 似たコマンド名表示</td>
+</tr>
+
+<tr>
+<td class="org-left">f1 b</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">describe-bindings : キーバインド一覧</td>
+</tr>
+
+<tr>
+<td class="org-left">f1 f</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">describe-function : 関数説明</td>
+</tr>
+
+<tr>
+<td class="org-left">f1 k&lt;key&gt;</td>
+<td class="org-left">f9&lt;key&gt;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">describe-key : キーの割り当て関数表示</td>
+</tr>
+
+<tr>
+<td class="org-left">f1 i</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">s-?</td>
+<td class="org-left">info : info 表示</td>
+</tr>
+
+<tr>
+<td class="org-left">f1 m</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">describe-mode : モード説明</td>
+</tr>
+
+<tr>
+<td class="org-left">f1 v</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">describe-variable : 変数説明</td>
+</tr>
+
+<tr>
+<td class="org-left">f1 w</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">where-is : 関数の割り当てキー表示</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org85d56e4" class="outline-3">
+<h3 id="org85d56e4"><span class="section-number-3">16.1.</span> ヘルプ画面集</h3>
+<div class="outline-text-3" id="text-16-1">
+</div>
+<div id="outline-container-org3970f52" class="outline-4">
+<h4 id="org3970f52"><span class="section-number-4">16.1.1.</span> メニュー</h4>
+<div class="outline-text-4" id="text-16-1-1">
+<p>
+f1
+</p>
+
+<pre class="example" id="org70cea19">
+You have typed , the help character.  Type a Help option:
+(Use SPC or DEL to scroll through this text.  Type q to exit the Help command.)
+
+a PATTERN   Show commands whose name matches the PATTERN (a list of words
+              or a regexp).  See also the ‘apropos’ command.
+b           Display all key bindings.
+c KEYS      Display the command name run by the given key sequence.
+C CODING    Describe the given coding system, or RET for current ones.
+d PATTERN   Show a list of functions, variables, and other items whose
+              documentation matches the PATTERN (a list of words or a regexp).
+e           Go to the *Messages* buffer which logs echo-area messages.
+f FUNCTION  Display documentation for the given function.
+F COMMAND   Show the Emacs manual’s section that describes the command.
+g           Display information about the GNU project.
+h           Display the HELLO file which illustrates various scripts.
+i           Start the Info documentation reader: read included manuals.
+I METHOD    Describe a specific input method, or RET for current.
+k KEYS      Display the full documentation for the key sequence.
+K KEYS      Show the Emacs manual’s section for the command bound to KEYS.
+l           Show last 300 input keystrokes (lossage).
+L LANG-ENV  Describe a specific language environment, or RET for current.
+m           Display documentation of current minor modes and current major mode,
+              including their special commands.
+n           Display news of recent Emacs changes.
+o SYMBOL    Display the given function or variable’s documentation and value.
+p TOPIC     Find packages matching a given topic keyword.
+P PACKAGE   Describe the given Emacs Lisp package.
+r           Display the Emacs manual in Info mode.
+s           Display contents of current syntax table, plus explanations.
+S SYMBOL    Show the section for the given symbol in the Info manual
+              for the programming language used in this buffer.
+t           Start the Emacs learn-by-doing tutorial.
+v VARIABLE  Display the given variable’s documentation and value.
+w COMMAND   Display which keystrokes invoke the given command (where-is).
+.           Display any available local help at point in the echo area.
+
+C-a         Information about Emacs.
+C-c         Emacs copying permission (GNU General Public License).
+C-d         Instructions for debugging GNU Emacs.
+C-e         External packages and information about Emacs.
+C-f         Emacs FAQ.
+C-m         How to order printed Emacs manuals.
+C-n         News of recent Emacs changes.
+C-o         Emacs ordering and distribution information.
+C-p         Info about known Emacs problems.
+C-s         Search forward "help window".
+C-t         Emacs TODO list.
+C-w         Information on absence of warranty for GNU Emacs.
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org49f75f7" class="outline-4">
+<h4 id="org49f75f7"><span class="section-number-4">16.1.2.</span> tutorial</h4>
+<div class="outline-text-4" id="text-16-1-2">
+<p>
+f1 t
+</p>
+
+<pre class="example" id="org6e1ac2c">
+--------------------Tutorial  画面の例---------------------------------
+Copyright (c) 1985 Free Software Foundation, Inc;  ファイル最後を参照のこと
+       あなたが現在見ているのは Emacs 入門ガイドです。
+
+Emacs のコマンドを入力するには、一般にコントロールキー（キートップに
+CTRL とか CTL と書いてある）やメタキー（キートップに META とか ALT と
+書いてある）を使います。そこで、CONTROL とか META とか書く代わりに、次
+のような記号を使うことにします。
+
+ C-&lt;文字&gt;   コントロールキーを押したまま、&lt;文字&gt;キーを押します。例えば、
+     	C-f はコントロールキーを押しながら f のキーを押すことです。
+
+ M-&lt;文字&gt;   メタキーを押したまま、&lt;文字&gt;キーを押します。もしメタキーがな
+     	い場合は、エスケープキーを押してから離し、それから&lt;文字&gt;キー
+     	を押します。以降エスケープキーのことを &lt;ESC&gt; と書きます。
+
+！重要！: Emacsを終了するには、C-x C-c をタイプします。
+
+"&gt;&gt;" で始まる行は、その時何をすべきかを指示しています。例えば、
+........
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgc73fe6e" class="outline-4">
+<h4 id="orgc73fe6e"><span class="section-number-4">16.1.3.</span> info</h4>
+<div class="outline-text-4" id="text-16-1-3">
+<p>
+f1 i
+</p>
+<pre class="example" id="org4e948cf">
+--------------------Info 画面の例--------------------------------------
+File: dir,	Node: Top	This is the top of the INFO tree
+
+The Info Directory
+******************
+
+  The Info Directory is the top-level menu of major Info topics.
+  Type "d" in Info to return to the Info Directory.  Type "q" to exit Info.
+  Type "?" for a list of Info commands, or "h" to visit an Info tutorial.
+  Type "m" to choose a menu item--for instance,
+    "mEmacs&lt;Return&gt;" visits the Emacs manual.
+  In Emacs Info, you can click mouse button 2 on a menu item
+  or cross reference to follow it to its target.
+  Each menu line that starts with a * is a topic you can select with "m".
+  You can also select a topic by typing its ordinal number.
+  Every third topic has a red * to help pick the right number to type.
+
+* Menu:
+
+Texinfo documentation system
+* Info: (info).                 How to use the documentation browsing system.
+
+Emacs
+* Emacs: (emacs).               The extensible self-documenting text editor.
+* Emacs FAQ: (efaq).            Frequently Asked Questions about Emacs.
+* Elisp: (elisp).               The Emacs Lisp Reference Manual.
+* Emacs Lisp Intro: (eintr).    A simple introduction to Emacs Lisp programming.
+* CC Mode: (ccmode).            Emacs mode for editing C, C++, Objective-C,
+                                  Java, Pike, AWK, and CORBA IDL code.
+.............
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb28c5df" class="outline-4">
+<h4 id="orgb28c5df"><span class="section-number-4">16.1.4.</span> 初期画面</h4>
+<div class="outline-text-4" id="text-16-1-4">
+<p>
+f1 C-a
+</p>
+
+<pre class="example" id="orgd8b1f52">
+Welcome to GNU Emacs, a part of the GNU operating system.
+
+Get help           C-h  (Hold down CTRL and press h)
+Emacs manual       C-h r        Browse manuals     C-h i
+Emacs tutorial     C-h t        Undo changes       C-x u
+Buy manuals        C-h RET      Exit Emacs         C-x C-c
+Activate menubar   M-`
+(‘C-’ means use the CTRL key.  ‘M-’ means use the Meta (or Alt) key.
+If you have no Meta key, you may instead type ESC followed by the character.)
+Useful tasks:
+Visit New File                  Open Home Directory
+Customize Startup               Open *scratch* buffer
+
+GNU Emacs 27.2 (build 1, x86_64-apple-darwin18.7.0, NS appkit-1671.60 Version 10.14.6 (Build 18G95))
+ of 2021-03-28
+Copyright (C) 2021 Free Software Foundation, Inc.
+
+GNU Emacs comes with ABSOLUTELY NO WARRANTY; type C-h C-w for full details.
+Emacs is Free Software--Free as in Freedom--so you can redistribute copies
+of Emacs and modify it; type C-h C-c to see the conditions.
+Type C-h C-o for information on getting the latest version.
+
+If an Emacs session crashed recently, type M-x recover-session RET
+to recover the files you were editing.
+(C-h は f1 と読み替えてください)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8e70e0e" class="outline-2">
+<h2 id="org8e70e0e"><span class="section-number-2">17.</span> コンソール起動する時の設定</h2>
+<div class="outline-text-2" id="text-17">
+</div>
+<div id="outline-container-orgcb00210" class="outline-3">
+<h3 id="orgcb00210"><span class="section-number-3">17.1.</span> iTerm2 設定 (Mac OSX)</h3>
+<div class="outline-text-3" id="text-17-1">
+<p>
+<code>.emacs.d/doc/iTerm2/Iterm2-default.itermkeymap</code> を
+</p>
+
+<p>
+iTerm2 &gt; Preferences &gt; Profiles &gt; Keys &gt; Presets &gt; Import<br />
+から読み込ませる。
+</p>
+
+<p>
+fn キーを押さなくても f1..f12が使えるようにする。
+</p>
+
+<p>
+macの ¥ キーは \ に変更し、fn + ¥ で ¥ にする。<br />
+(Mac OSX では "¥" は2バイトUTF-8で "\" が本来の1バイト文字)
+</p>
+
+<p>
+C-up C-down などの Mission Controlキーとの競合問題を解決する。
+</p>
+
+<p>
+C-TAB C-S-TAB は iTerm2のタブ切り替えに使っても良い。
+</p>
+
+<p>
+M-C- はmagnet で使うのでemacsでは使わず、s-up などを M-C-up に読み替えて戻している。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org0a5f77a" class="outline-3">
+<h3 id="org0a5f77a"><span class="section-number-3">17.2.</span> teraterm 設定 (Windows)</h3>
+<div class="outline-text-3" id="text-17-2">
+<p>
+<code>.emacs.d/TERA/KOSMAX.CNF</code>   (xterm用)<br />
+をteraterm install directory に置き、KEYBOARD.CNF のかわりに使う。
+</p>
+
+<p>
+テラターム設定 メニュー
+</p>
+<ul class="org-ul">
+<li>Setup
+<ul class="org-ul">
+<li>Terminal
+<ul class="org-ul">
+<li>端末ID  VT100              (この設定はダミー)</li>
+<li>Kanji(receive)   UTF-8</li>
+<li>Kanji(transmit)  UTF-8</li>
+</ul></li>
+<li>Keyboard
+<ul class="org-ul">
+<li>Backspace Key    on       (Redhat では不要)</li>
+<li>Delete Key       off</li>
+<li>Send Meta Key    check    (Altで Meta-key)</li>
+</ul></li>
+<li>Save Setup</li>
+</ul></li>
+</ul>
+
+<p>
+テラターム iniファイル
+     TermType=xterm               (iniファイルでxtermにする)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbfb298d" class="outline-3">
+<h3 id="orgbfb298d"><span class="section-number-3">17.3.</span> 左Cntl キーの位置について</h3>
+<div class="outline-text-3" id="text-17-3">
+<p>
+Emacsのキー定義では、'A' キーの左が Cntl キーであると操作しやすい。<br />
+Windows の Caps Lock キーと 左Cntl キーを入れ替えるとよい。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga2fac34" class="outline-2">
+<h2 id="orga2fac34"><span class="section-number-2">18.</span> 方針</h2>
+<div class="outline-text-2" id="text-18">
+<p>
+Windows や Mac OSX のキー操作を取り入れてemacsの敷居を低くすることに努めた。<br />
+基本的な emacsのキーバインドは残している。Mac OSX ではemacs流のキーバインドが
+取り入れられているため、違和感はないと思う。
+</p>
+
+<p>
+本来のemacsキーバインドを変えたところは、次の通り。
+</p>
+
+<ul class="org-ul">
+<li>C-h はヘルプでなく、backspace</li>
+<li>C-r は逆方向検索でなく、置換</li>
+<li>C-z はサスペンドでなく、undo</li>
+<li>C-x は選択領域があるときだけ、切り取り</li>
+<li>C-c は選択領域があるときだけ、コピー</li>
+<li>C-v は画面スクロールでなくて貼り付け</li>
+<li>M-v は画面順方向スクロール。M-S-v が逆方向</li>
+<li>C-x, C-c, C-v, M-v は org-mode では標準どおり</li>
+</ul>
+
+<p>
+おわり
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Akira</p>
+<p class="date">Created: 2026-02-21 Sat 14:28</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

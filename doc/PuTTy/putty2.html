@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-02-21 Sat 14:36 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Putty でemacsを使うとき</title>
+<meta name="author" content="Akira" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="./css/org.css">
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Putty でemacsを使うとき</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orge5773a6">1. Putty は使えるか。</a></li>
+<li><a href="#org4a3ca48">2. 設定</a></li>
+<li><a href="#org601f74c">3. 使えるキー</a></li>
+<li><a href="#org2431c90">4. init.el に書くPutty用の初期化コード</a></li>
+<li><a href="#org5c06d1c">5. VSCode の設定が便利なので借りてくる。</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge5773a6" class="outline-2">
+<h2 id="orge5773a6"><span class="section-number-2">1.</span> Putty は使えるか。</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+MacOSX (Ventura) の wine64 で windowsの putty.exe を起動した。Windowsの PuTTY は未検証。
+</p>
+
+<ul class="org-ul">
+<li>メタは Esc を使う。</li>
+<li>シフトセレクションは一部しか使えない。</li>
+<li>fn キーは使える</li>
+<li>日本語の表示が乱れる</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4a3ca48" class="outline-2">
+<h2 id="org4a3ca48"><span class="section-number-2">2.</span> 設定</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>PuTTY設定 &gt; 端末 &gt; キーボード</code>
+</p>
+
+<p>
+"ファンクションキーとキーパッド" の Xterm 216+ を選択
+</p>
+
+<p>
+"Shift/Ctrl/Alt + 矢印キー" の xterm風ビットフラグ を選択
+</p>
+
+
+<div id="org115df58" class="figure">
+<p><img src="./PuTTy-fn-config.png" alt="PuTTy-fn-config.png" />
+</p>
+</div>
+
+<p>
+<code>PuTTY設定 &gt; 端末 &gt; 高度な設定</code>
+</p>
+
+<p>
+"アプリケーションキーパッドモードを無効にする" をチェック
+</p>
+
+<p>
+"アプリケーションカーソルキーモードを無効にする" をチェック
+</p>
+
+
+<div id="org78f6965" class="figure">
+<p><img src="PuTTy-ignore-kp-mode.png" alt="PuTTy-ignore-kp-mode.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org601f74c" class="outline-2">
+<h2 id="org601f74c"><span class="section-number-2">3.</span> 使えるキー</h2>
+<div class="outline-text-2" id="text-3">
+<pre class="example" id="orgb048420">
+&lt;up&gt;           M-[ A
+&lt;down&gt;         M-[ B
+&lt;right&gt;        M-[ C
+&lt;left&gt;         M-[ D
+S-&lt;up&gt;         M-[ 1 ; 2 A
+S-&lt;down&gt;       M-[ 1 ; 2 B
+S-&lt;right&gt;      M-[ 1 ; 2 C
+S-&lt;left&gt;       M-[ 1 ; 2 D
+C-&lt;up&gt;         M-[ 1 ; 5 A
+C-&lt;down&gt;       M-[ 1 ; 5 B
+C-&lt;right&gt;      M-[ 1 ; 5 C
+C-&lt;left&gt;       M-[ 1 ; 5 D
+C-S-&lt;up&gt;       M-[ 1 ; 6 A
+C-S-&lt;down&gt;     M-[ 1 ; 6 B
+C-S-&lt;right&gt;    M-[ 1 ; 6 C
+C-S-&lt;left&gt;     M-[ 1 ; 6 D
+&lt;home&gt;         M-[ 1 ~
+&lt;end&gt;          M-[ 4 ~
+&lt;prior&gt;        M-[ 5 ~
+&lt;next&gt;         M-[ 6 ~
+&lt;deletechar&gt;   M-[ 3 ~
+S-&lt;home&gt;       M-[ 1 ; 2 ~
+S-&lt;end&gt;        M-[ 4 ; 2 ~
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2431c90" class="outline-2">
+<h2 id="org2431c90"><span class="section-number-2">4.</span> init.el に書くPutty用の初期化コード</h2>
+<div class="outline-text-2" id="text-4">
+<pre class="example" id="orge70de34">
+(defun ak-puttykey ()
+  "PuTTY key setting"
+  (interactive)
+  (define-key input-decode-map (kbd "M-[ 1 ; 2 ~") (kbd "S-&lt;home&gt;"))
+  (define-key input-decode-map (kbd "M-[ 4 ; 2 ~") (kbd "S-&lt;end&gt;"))
+  (global-set-key [home] 'beginning-of-buffer)
+  (global-set-key [end]  'end-of-buffer)
+  (ak-vscode)
+  )
+
+ (if (string= (getenv "PUTTY") "yes")
+  (progn
+    (ak-puttykey)
+    (message "PuTTY terminal")))
+
+alias empu='PUTTY=yes emacs -nw'
+</pre>
+
+
+<p>
+S-&lt;home&gt; と S-&lt;end&gt; は設定が必要だった。この系統。
+</p>
+<pre class="example" id="orgd78772e">
+S-&lt;insert&gt;     M-[ 2 ; 2 ~
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org5c06d1c" class="outline-2">
+<h2 id="org5c06d1c"><span class="section-number-2">5.</span> VSCode の設定が便利なので借りてくる。</h2>
+<div class="outline-text-2" id="text-5">
+<pre class="example" id="orgb01156a">
+(defun ak-vscode ()
+  "vscode key setting"
+  (interactive)
+  (global-set-key (kbd "M-,") 'beginning-of-buffer)
+  (global-set-key (kbd "M-.") 'end-of-buffer)
+  (define-key input-decode-map (kbd "M-&lt;") (kbd "M-S-,"))
+  (define-key input-decode-map (kbd "M-&gt;") (kbd "M-S-."))
+  (global-set-key (kbd "C-M-p") 'half-page-down)
+  (global-set-key (kbd "C-M-n") 'half-page-up)
+  ;;;; (define-key input-decode-map (kbd "¥") (kbd "\\"))
+  (if (boundp 'cua--cua-keys-keymap)
+      (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
+    (message "cua boundp? no."))
+  )
+</pre>
+
+<pre class="example" id="orgf8e931f">
+Esc n  Esc p  Esc N  Esc P
+
+Esc ,  Esc .  Esc &lt;  Esc &gt;
+
+C-x SPACE で cua-modeの矩形選択開始
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Akira</p>
+<p class="date">Created: 2026-02-21 Sat 14:36</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
