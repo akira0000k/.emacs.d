@@ -108,6 +108,6 @@
 
     Esc ,  Esc .  Esc <  Esc >
 
-    C-x SPACE で cua-modeの矩形選択開始
+    cua-modeの矩形選択開始は C-c C-SPACE で代替する
     #+end_example
 

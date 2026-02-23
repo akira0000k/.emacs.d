@@ -62,7 +62,7 @@ C-x SPACE で矩形始点をマーク   (標準の矩形選択開始)
 上の二つは微妙に違う
 
 Code内ターミナルからEmacs
-C-x SPACE                  (これで cua-mode の矩形選択開始)
+cua-modeの矩形選択開始は C-c C-SPACE で代替する
 
 カーソル移動で矩形領域を選択
 C-x/C-c  C-v で カット/コビー ペースト

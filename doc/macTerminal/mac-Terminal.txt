@@ -16,10 +16,10 @@ MacOSX のターミナルを少しましに使う。
      alias emv='TERM_PROGRAM=vscode $emacs -nw'
 
   で起動すると、
-  cua-modeの矩形選択は C-x SPACE
   ファイル端へは M-, M-. 選択しながら M-< M->
   カーソル上中下は M-<left> M-<right>
   で行えるようになる。
+  cua-modeの矩形選択開始は C-c C-SPACE で代替する
   
 2. 削除したキー
    S-f5 から S-f13 に f13からf20が割り当てられていたが変更。
