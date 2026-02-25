@@ -32,6 +32,12 @@
 ;;====================================
 (define-key isearch-mode-map "\C-k" 'isearch-edit-string)
 (define-key isearch-mode-map "\C-h" 'isearch-delete-char)
+;; ;; incremental search 中に C-j を改行にマッチさせる。(default動作)
+;; (define-key isearch-mode-map (kbd "C-j") 'isearch-printing-char) ;;default
+;; isearch-edit-string と replace の minibuffer内で C-j を単純改行挿入にする
+(define-key minibuffer-local-isearch-map (kbd "C-j") 'electric-indent-just-newline)
+;;                                                  C-h を単純バックスペースにする
+(define-key minibuffer-local-isearch-map (kbd "C-h") 'delete-backward-char)
 ;;   frequently used
 ;;   C-k                isearch-edit-string       ex. C-s C-k
 ;;   M-e                isearch-edit-string
@@ -62,6 +68,7 @@
 
 ;; for MAC OSX
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
+;;(global-set-key (kbd "C-h") 'delete-backward-char)
 
 
 ;; overwridden by cua-mode
@@ -1526,6 +1533,7 @@ With prefix argument, activate previous rectangle if possible."
 (require 'package)       ;;for package-installed-p
 (when (package-installed-p 'ddskk)
   (setq default-input-method "japanese-skk")
+  ;;(global-set-key "\C-x\C-j" 'skk-mode)
   )
 
 ;;(global-set-key (kbd "S-SPC") 'backward-kill-word)

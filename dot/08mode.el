@@ -15,6 +15,7 @@
 (require 'package)       ;;for package-installed-p
 (when (package-installed-p 'ddskk)
   (setq default-input-method "japanese-skk")
+  ;;(global-set-key "\C-x\C-j" 'skk-mode)
   )
 
 ;;(global-set-key (kbd "S-SPC") 'backward-kill-word)
