@@ -45,6 +45,11 @@
   (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" 'ak-dired-e-dir))
   (define-key dired-mode-map (kbd "C-b") 'ak-dired-left-char)
 
+  ;; search only filename
+  ;;;;(setq dired-isearch-filenames t) ;;turns isearch-forward to search filename only
+  (define-key dired-mode-map (kbd "C-s") 'dired-isearch-filenames)
+  ;;01keys.el(global-set-key (kbd "s-f") 'isearch-forward) ;;command s = search username
+
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
   (defalias 'ak-dired-previous-line 'previous-line)
