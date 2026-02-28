@@ -1537,7 +1537,7 @@ With prefix argument, activate previous rectangle if possible."
 ;; M-x package-install RET ddskk-posframe RET
 (require 'package)       ;;for package-installed-p
 (when (package-installed-p 'ddskk)
-  (setq default-input-method "japanese-skk")
+  (setq default-input-method "japanese-skk") ;;C-\ toggle
   ;;(global-set-key "\C-x\C-j" 'skk-mode)
   )
 
@@ -1548,11 +1548,6 @@ With prefix argument, activate previous rectangle if possible."
   (message "skk loaded")
   ;; isearch と統合。
   (load "~/.emacs.d/site-lisp/skk-setup")
-  ;;; Dictionary.
-  (let ((dicfile "~/.emacs.d/SKK-DIC/SKK-JISYO.L"))
-    (if (file-exists-p dicfile)
-	(setq skk-large-jisyo dicfile)
-      (message "no skk dictionary. use lisp/leim/ja-dic/ja-dic.el instead")))
   ;; 確定を戻す
   (define-key skk-j-mode-map (kbd "C-/") 'skk-undo-kakutei)
   ;; x 以外でも前候補。
@@ -1580,6 +1575,11 @@ With prefix argument, activate previous rectangle if possible."
   
   ;; 辞書登録不要のときメッセージを出さずに終了。
   (setq skk-save-jisyo-function 'skk-save-jisyo-original2)
+  ;;; Customize dictionary path. example: "~/.emacs.d/SKK-DIC/SKK-DIC.L". see.custom.el
+  (if (and skk-large-jisyo (file-exists-p skk-large-jisyo))
+      (message "skk dictionary: %s" skk-large-jisyo)
+    (setq skk-large-jisyo nil)  
+    (message "no skk dictionary. use lisp/leim/ja-dic/ja-dic.el instead"))
   )
 
 ;;====================================
