@@ -60,5 +60,5 @@ fi
 #  docker-compose --ansi=never up -d
 #
 
-##export DICTIONARY=en_US
-####export DICPATH=~/Library/Spelling
+export DICTIONARY=en_US
+export DICPATH=~/.emacs.d/Spelling

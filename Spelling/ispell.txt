@@ -1,0 +1,16 @@
+ispell (command :) dictionary 
+
+
+     /Users/myuser/.emacs.d/Spelling:
+     drwxr-xr-x  6 myuser staff     192  2  2  2025 .
+     drwxr-xr-x 64 myuser staff    2048  3 13 20:16 ..
+     -rw-r--r--  1 myuser staff   35287  1 12  2025 en_GB.aff
+     -rw-r--r--  1 myuser staff 1234208  1 12  2025 en_GB.dic
+     -rw-r--r--  1 myuser staff    3205  1 11  2025 en_US.aff
+     -rw-r--r--  1 myuser staff  551762  1 11  2025 en_US.dic
+
+   download "en_US.dic" and "en_US.aff" from
+   https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/
+
+   brew install hunspell
+

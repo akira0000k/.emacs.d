@@ -1677,8 +1677,8 @@ With prefix argument, activate previous rectangle if possible."
 (setq-default ispell-program-name "hunspell")
 
 (or (ak-validstrp (getenv "DICTIONARY")) (setenv "DICTIONARY" "en_US")) ;;default dictionary
-;; (or (ak-validstrp (getenv "DICPATH"))
-;;    (setenv "DICPATH" (concat (getenv "HOME") "/Library/Spelling")))
+(or (ak-validstrp (getenv "DICPATH"))
+   (setenv "DICPATH" (concat (getenv "HOME") "/.emacs.d/Spelling")))
 
 (with-eval-after-load "ispell"
   (setq ispell-dictionary (getenv "DICTIONARY"))
