@@ -81,31 +81,38 @@
 	    )))
     ))
 
+;; avoid warning to redefined advice.
+(setq ad-redefinition-action 'accept)
+
 ;;;;buffer delete in *Buffer List* ddddd x works only 1 buffer.
 ;;;;    ;;; see --> buff-list.el
+;;;;    ;;; old "defadvice" style.
 ;;;;    (defadvice kill-buffer (after AK-kill-buffer )
 ;;;;      "Kill buffer and change buffer-list."
 ;;;;      (list-buffers-if-exist))
 ;;;;    (ad-activate 'kill-buffer)
-;; (defun ak-kill-buffer()
-;;   (interactive)
-;;   (kill-buffer)
-;;   (list-buffers-if-exist))
-;; (global-set-key [remap kill-buffer] 'ak-kill-buffer)
 
+;; kill current buffer.
+;; kill top buffer of bufferlist and show "next" buffer.
 (defun ak-kill-current-buffer()
   (interactive)
-  (kill-current-buffer)
-  (list-buffers-if-exist))
+  (if (minibufferp)
+      (abort-recursive-edit)
+    (let ((cb (current-buffer)))
+      (ak-next-buffer)
+      (ak-last-buffer)
+      (kill-buffer cb))
+    (list-buffers-if-exist)))
 (global-set-key [remap kill-current-buffer] 'ak-kill-current-buffer)
-(global-set-key [remap kill-this-buffer] 'ak-kill-current-buffer)
+(global-set-key [remap kill-buffer] 'ak-kill-current-buffer)
 
-(setq ad-redefinition-action 'accept)
+;; kill buffer from menu, Close.
+(defun ak-kill-this-buffer ()
+  "Menu: File >Close, affecting buffer list imediately."
+  ;;(message "kill this buffer done")
+  (list-buffers-if-exist))
+(advice-add 'kill-this-buffer :after #'ak-kill-this-buffer)
 
-;;(defadvice quit-window (after AK-quit-window )
-;;  "Quit window and change buffer-list."
-;;  (list-buffers-if-exist))
-;;(ad-activate 'quit-window)
 (defun ak-quit-window (&optional kill window)
   "Quit window and change buffer-list."
   ;;(message "quit window done")

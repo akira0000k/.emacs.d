@@ -24,7 +24,6 @@
 
 ;;was                    kmacro-end-or-call-macro
 (global-set-key [f4]    'kill-current-buffer)
-(global-set-key (kbd "C-x k") 'kill-current-buffer)
 (global-set-key [S-f4] 'delete-window)
 
 (global-set-key [S-f5] 'recenter)
