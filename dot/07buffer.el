@@ -63,23 +63,18 @@
       (string-match "^TAGS" name)
       ))
 
-;;(defun list-buffers-if-exist()
-;;  (and (get-buffer "*Buffer List*") (get-buffer-window (get-buffer "*Buffer List*")) (list-buffers)))
 (defun list-buffers-if-exist()
   (let ((buflist (get-buffer "*Buffer List*")))
     (if buflist
 	(if (get-buffer-window buflist)
+	    ;; exists in same frame, refresh as C-x C-b
 	    (list-buffers)
 	  ;;else
-	  (if (get-buffer-window-list buflist nil t)
-	      (when (fboundp 'auto-revert-set-timer)
-		;; Update Buffer List on other frame
-		(let ((orgint auto-revert-interval))
-		  (setq auto-revert-interval 0.1)
-		  (auto-revert-set-timer)
-		  (setq auto-revert-interval orgint)))
-	    )))
-    ))
+	  (when (get-buffer-window-list buflist nil t)
+	    ;; in other frame.
+	    (list-buffers-noselect)
+	    ))
+      )))
 
 ;; avoid warning to redefined advice.
 (setq ad-redefinition-action 'accept)
