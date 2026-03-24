@@ -5,8 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(ak-dired-view-on-right-arrow nil)
  '(ak-fast-scroll-lines 10)
+ '(ak-lr-scroll-chars 40)
  '(grep-command "grep --color=auto -nH --null -i -e ")
- '(skk-user-directory "~/.emacs.d/.ddskk/")
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")

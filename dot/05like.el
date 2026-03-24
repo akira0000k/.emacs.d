@@ -71,6 +71,8 @@
 ;;(global-set-key [f12] 'display-line-numbers-mode)
 (global-set-key [S-f11] 'scroll-right)
 (global-set-key [S-f12] 'scroll-left)
+(global-set-key [remap scroll-right] 'ak-scroll-right)
+(global-set-key [remap scroll-left] 'ak-scroll-left)
 
 
 ;;======================================

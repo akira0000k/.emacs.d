@@ -102,6 +102,33 @@
       (move-to-window-line line0))
     ))
 
+;; customize left-right scroll 
+(defcustom ak-lr-scroll-chars 20
+  "Number of characters for scroll right/left (S-f11/S-f12)."
+  :type 'integer
+  :group 'display)
+(defvar ak-lr nil)
+(defun ak-set-scroll-value(arg)
+  (unless ak-lr (setq ak-lr ak-lr-scroll-chars))
+  (cond ((not arg)) ;; "arg is nil"
+	((or (listp arg)(= arg 0)) (setq ak-lr ak-lr-scroll-chars)) ;; "arg is list or 0"
+	(t (setq ak-lr arg)) ;;"arg is value"
+	 ))
+(defun ak-scroll-right(&optional arg)
+  "Scroll-right (move left) ak-lr-scroll-chars coloms."
+  (interactive "P")
+  (ak-set-scroll-value arg)
+  ;;(message "<== %s %s" arg ak-lr)
+  (scroll-right ak-lr)
+  )
+(defun ak-scroll-left(&optional arg)
+  "Scroll-left (move right) ak-lr-scroll-chars coloms."
+  (interactive "P")
+  (ak-set-scroll-value arg)
+  ;;(message "==> %s %s" arg ak-lr)
+  (scroll-left ak-lr)
+  )
+
 ;; Home Toggle like Visual Studio
 (defun ak-home-toggle ()
   "go and back between beginning of line and first char."
