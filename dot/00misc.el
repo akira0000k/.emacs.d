@@ -29,6 +29,10 @@
 ;; (define-key isearch-mode-map (kbd "C-j") 'isearch-printing-char) ;;default
 ;; isearch-edit-string と replace の minibuffer内で C-j を単純改行挿入にする
 (define-key minibuffer-local-isearch-map (kbd "C-j") 'electric-indent-just-newline)
+(with-eval-after-load "replace"
+  (load "~/.emacs.d/site-lisp/replace-patch")
+  (define-key minibuffer-local-replace-map (kbd "C-j") 'electric-indent-just-newline)
+  )
 ;;                                                  C-h を単純バックスペースにする
 (define-key minibuffer-local-isearch-map (kbd "C-h") 'delete-backward-char)
 ;;   frequently used

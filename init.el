@@ -312,8 +312,7 @@
 ;;;; |            M-x Command            |       Browser       |
 ;;;; | browse-url-default-macosx-browser | Mac OS open command |
 (when (memq system-type '(darwin))
-  ;;(require 'dired)
-  ;;(define-key dired-mode-map "W" 'browse-url-of-dired-file)
+  ;; replace function in net/browse-url-of-dired-file.el.gz
   (defun browse-url-of-dired-file ()
     "In Dired, ask a WWW browser to display the file named on this line."
     (interactive)
