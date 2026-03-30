@@ -287,7 +287,6 @@
 	    )
 	)
 
-      (menu-bar-mode -1)
       (message "emacs -nw"))
   ;;;else window emacs ;;;
   ;;;;                                $ brew tap homebrew/cask-fonts
@@ -304,7 +303,6 @@
    )
   ;;;; (define-key input-decode-map (kbd "¥") (kbd "\\"))  ;; macOS Monterey 12.5
   ;; (setq initial-buffer-choice "./")  ;; macOS Ventura  image-type: Invalid image type ‘svg’
-  (menu-bar-mode 1)
   (message "emacs Xwindow"))
 
 ;;;; https://www2.lib.uchicago.edu/keith/emacs/

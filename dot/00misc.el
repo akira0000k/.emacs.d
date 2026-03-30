@@ -1,8 +1,8 @@
 ;; ------ 00misc.el ------
 
 ;; Erase Menu bar
-(menu-bar-mode -1)
-;;(menu-bar-mode 1)
+(unless (display-graphic-p) (menu-bar-mode -1))
+;;(menu-bar-mode 1) ;;default
 ;;;; M-x tmm-menubar
 ;;;; ESC `
 
