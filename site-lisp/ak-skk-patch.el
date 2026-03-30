@@ -1,3 +1,135 @@
+(defvar-keymap minibuffer-local-skk-map
+  :doc "Keymap for editting kanji in the minibuffer."
+  :parent minibuffer-local-map
+  ;;"S-SPC"   #'backward-kill-word
+  )
+
+;;436
+;;;; C-j skk-kakutei remains in minibuffer keybind... deleted.
+(defun skk-define-minibuffer-maps ()
+  ;; (unless (eq (lookup-key minibuffer-local-map skk-kakutei-key) 'skk-kakutei)
+  ;; (define-key minibuffer-local-map skk-kakutei-key #'skk-kakutei)
+  ;; (define-key minibuffer-local-completion-map skk-kakutei-key #'skk-kakutei)
+  ;; (define-key minibuffer-local-ns-map skk-kakutei-key #'skk-kakutei))
+  )
+
+;;2256
+;;;###autoload
+(defun skk-henkan-in-minibuff ()
+  "辞書登録モードに入り、登録した単語の文字列を返す。"
+  (unless (numberp skk-henkan-in-minibuff-nest-level)
+    (setq skk-henkan-in-minibuff-nest-level (minibuffer-depth)))
+  (when (and window-system skk-show-tooltip)
+    (tooltip-hide))
+  (when skk-show-inline
+    (skk-inline-show "↓辞書登録中↓" 'skk-jisyo-registration-badge-face))
+  (save-match-data
+    (let ((enable-recursive-minibuffers t)
+          (depth (- (1+ (minibuffer-depth)) skk-henkan-in-minibuff-nest-level))
+          ;; XEmacs では次の変数が再帰的ミニバッファの可否に影響する。
+          minibuffer-max-depth
+          ;; From skk-henkan()
+          ;; we use mark to go back to the correct position after henkan
+          (mark (unless (eobp)
+                  (skk-save-point
+                   (forward-char 1)
+                   (point-marker))))
+          skk-isearch-message   ; 変換中に isearch message が出ないようにする
+          orglen new-one pair)
+      (add-hook 'minibuffer-setup-hook 'skk-j-mode-on)
+      (add-hook 'minibuffer-setup-hook 'skk-add-skk-pre-command)
+      (save-window-excursion
+        (skk-show-num-type-info)
+        (condition-case nil
+            ;;@@
+            (setq new-one (read-from-minibuffer
+
+                           (format "%s辞書登録%s %s: "
+                                   (make-string depth ?\[)
+                                   (make-string depth ?\])
+                                   (or (and (skk-numeric-p)
+                                            (skk-num-henkan-key))
+                                       (if skk-okuri-char
+                                           (skk-compute-henkan-key2)
+                                         skk-henkan-key)))
+                           
+                           (when (and (not skk-okuri-char)
+                                      skk-read-from-minibuffer-function)
+                             (funcall skk-read-from-minibuffer-function))
+
+                           minibuffer-local-skk-map ;;test
+                           ))
+          (quit
+           (skk-delete-overlay skk-inline-overlays)
+           (setq new-one ""))))
+      (when (and skk-check-okurigana-on-touroku
+                 ;; 送りあり変換でも skk-okuri-char だけだと判断できない。
+                 skk-henkan-okurigana new-one)
+        (setq new-one (skk-remove-redundant-okurigana new-one)))
+      (cond
+       ((string= new-one "")
+        (skk-delete-overlay skk-inline-overlays)
+        (if skk-exit-show-candidates
+            ;; エコーエリアに表示した候補が尽きて辞書登録に入ったが、空文字
+            ;; 列が登録された場合。最後にエコーエリアに表示した候補群を再表
+            ;; 示する。
+            (progn
+              (setq skk-henkan-count (cdr skk-exit-show-candidates))
+              (skk-henkan))
+          ;; skk-henkan-show-candidates に入る前に候補が尽きた場合
+          (setq skk-henkan-count (1- skk-henkan-count))
+          (if (= skk-henkan-count -1)
+              ;; 送りありの変換で辞書登録に入り、空文字を登録した後、その
+              ;; まま再度送りなしとして変換した場合は
+              ;; skk-henkan-okurigana, skk-okuri-char の値を nil にしなけ
+              ;; れば、それぞれの値に古い送り仮名が入ったままで検索に失敗
+              ;; する。
+              (progn
+                (setq skk-henkan-okurigana nil
+                      skk-okurigana nil
+                      skk-okuri-char nil)
+                (skk-change-marker-to-white))
+            ;; 辞書登録に入る直前の候補に注釈がある可能性を考え、再表示する。
+            ;;   skk-insert-new-word(), skk-henkan-candidate-list() 内の
+            ;;   注釈加工処理を独立した関数にして、
+            ;;   それを利用するようにしたほうが良さそう。
+            (setq pair (skk-insert-new-word (skk-get-current-candidate)))
+            ;; From skk-henkan()
+            ;; 送りあり変換の際の point の位置を、辞書登録モードに入る前の
+            ;; 位置に戻す。
+            (if mark
+                (progn
+                  (goto-char mark)
+                  (skk-set-marker mark nil)
+                  (backward-char 1))
+              (goto-char (point-max)))
+            ;;
+            (when skk-show-annotation
+              (skk-annotation-find-and-show pair)))))
+       (t
+        (when (string-match "[ 　]+$" new-one)
+          (setq new-one (substring new-one 0 (match-beginning 0))))
+        (setq skk-henkan-list (nconc skk-henkan-list
+                                     (list new-one)))
+        (when (skk-numeric-p)
+          (setq orglen (length skk-henkan-list))
+          (skk-num-convert skk-henkan-count)
+          (setq new-one (cdr (skk-get-current-candidate-1))))
+        (when (or (not orglen)
+                  (= orglen (length skk-henkan-list)))
+          (setq skk-kakutei-flag t))
+        (setq skk-henkan-in-minibuff-flag t
+              skk-touroku-count (1+ skk-touroku-count))))
+      ;; (nth skk-henkan-count skk-henkan-list) が nil だから辞書登録に
+      ;; 入っている。skk-henkan-count をインクリメントする必要はない。
+      ;; new-one が空文字列だったら nil を返す。
+      (unless (string= new-one "")
+        (setq skk-jisyo-updated t)  ; skk-update-jisyo で参照
+        new-one))))
+
+
+
+
 ;;1835
 (defun skk-henkan-show-candidates ()
   "変換した候補群をエコーエリアに表示する。"

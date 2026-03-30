@@ -18,9 +18,6 @@
   ;;(global-set-key "\C-x\C-j" 'skk-mode)
   )
 
-;;(global-set-key (kbd "S-SPC") 'backward-kill-word)
-(define-key minibuffer-mode-map (kbd "S-SPC") 'backward-kill-word)
-
 (with-eval-after-load "skk"
   (message "skk loaded")
   ;; isearch と統合。
@@ -34,6 +31,7 @@
   (define-key skk-j-mode-map (kbd "<up>") 'skk-previous-candidate) ;;test
   ;; 辞書登録ミニバッファから、前候補(S-SPC,M-DEL,etc)で抜ける
   (load "~/.emacs.d/site-lisp/ak-skk-patch")
+  (define-key minibuffer-local-skk-map (kbd "S-SPC") 'backward-kill-word)
   
   ;; BS(DEL, C-h) でミニバッファから抜けるように関数変更。
   (defun skk-delete-backward-char-with-quit (oldfnc &rest arg)
