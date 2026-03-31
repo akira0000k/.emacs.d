@@ -28,6 +28,11 @@
 (setq use-dialog-box nil)
 
 ;;====================================
+;;;; grep case insensitive
+;;====================================
+(setq grep-command "grep --color=auto -nH --null -i -e ")
+
+;;====================================
 ;;;; keybinding while Isearch.  ex. C-s C-w ..yank word
 ;;====================================
 (define-key isearch-mode-map "\C-k" 'isearch-edit-string)

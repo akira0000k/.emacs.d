@@ -310,19 +310,19 @@
 ;;;; |            M-x Command            |       Browser       |
 ;;;; | browse-url-default-macosx-browser | Mac OS open command |
 (when (memq system-type '(darwin))
-  ;; replace function in net/browse-url-of-dired-file.el.gz
-  (defun browse-url-of-dired-file ()
-    "In Dired, ask a WWW browser to display the file named on this line."
-    (interactive)
-    (let ((tem (dired-get-filename t t)))
-      (if (not tem)
-	  (error "No file on this line")
-	(let ((filepath (expand-file-name tem)))
-	  ;;(message "dired W %s" filepath)
-	  (start-process (concat "open " filepath) nil "open" filepath)
-	  ))))
-  )
-
+  (with-eval-after-load "browse-url"
+    ;; replace function in net/browse-url.el.gz
+    (defun browse-url-of-dired-file ()
+      "In Dired, ask a WWW browser to display the file named on this line."
+      (interactive)
+      (let ((tem (dired-get-filename t t)))
+	(if (not tem)
+	    (error "No file on this line")
+	  (let ((filepath (expand-file-name tem)))
+	    ;;(message "dired W %s" filepath)
+	    (start-process (concat "open " filepath) nil "open" filepath)
+	    ))))
+    ))
 
 ;; Read custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
