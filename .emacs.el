@@ -1542,6 +1542,38 @@ With prefix argument, activate previous rectangle if possible."
 
 
 ;;====================================
+;;;; defaultの quail japanese かな漢字変換
+;; にゃおみん さん 雑記帳
+;; PCの日本語入力について個人的メモ より
+;; https://rn.nyaomin.info/entry/2024/02/08/230020
+;;====================================
+;; C-\ toggle-input-method
+;; 入力中
+(use-package quail
+  :bind
+  (:map quail-conversion-keymap
+	("C-h" . quail-conversion-backward-delete-char)
+	("C-j" . quail-no-conversion)
+	("<f1>" . quail-translation-help))
+  :config
+  (setq quail-japanese-use-double-n t)  ;nを二回入力したら「ん」となるようにする
+  )
+;; 変換中
+(use-package kkc
+  :bind
+  (:map kkc-keymap
+	("C-h" . kkc-cancel)
+	("C-j" . kkc-terminate)
+	("S-SPC" . kkc-prev)
+	("<f1>" . kkc-help))
+  :config
+  (setq kkc-init-file-name "~/.emacs.d/.kkc/kkcrc")
+  ;; (unless (load "~/.emacs.d/LEIM/ja-dic/ja-dic.elc" t nil t)
+  ;;   (message "load personal ja-dic failed."))
+  :load-path "LEIM"
+  )
+
+;;====================================
 ;;;; skk かな漢字変換
 ;;====================================
 ;; (ak-package-init-once)
@@ -1549,8 +1581,8 @@ With prefix argument, activate previous rectangle if possible."
 ;; M-x package-install RET ddskk-posframe RET
 (require 'package)       ;;for package-installed-p
 (when (package-installed-p 'ddskk)
-  (setq default-input-method "japanese-skk") ;;C-\ toggle
-  ;;(global-set-key "\C-x\C-j" 'skk-mode)
+  ;;(setq default-input-method "japanese-skk") ;;C-\ toggle
+  (global-set-key "\C-x\C-j" 'skk-mode)
   )
 
 (with-eval-after-load "skk"

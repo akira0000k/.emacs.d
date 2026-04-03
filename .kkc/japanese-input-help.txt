@@ -1,0 +1,75 @@
+C-\  toggle-input-method defaultの日本語変換キーバインド
+
+ひらがな入力中のキーバインド
+Converting string "このたびは" by input method "japanese".
+-----------------------
+Key             Binding
+
+SPC		quail-japanese-kanji-kkc
+K		quail-japanese-toggle-kana
+
+C-a		quail-conversion-beginning-of-region
+C-e		quail-conversion-end-of-region
+C-b		quail-conversion-backward-char
+C-f		quail-conversion-forward-char
+
+C-d		quail-conversion-delete-char
+C-k		quail-conversion-delete-tail
+C-h*		quail-conversion-backward-delete-char
+DEL		quail-conversion-backward-delete-char
+<backspace>	quail-conversion-backward-delete-char
+<delete>	quail-conversion-backward-delete-char
+
+<f1>*		quail-translation-help
+
+C-j*		quail-no-conversion
+C-m(RET)	quail-no-conversion
+<return>	quail-no-conversion
+
+asciiモード切り替え
+かなモード <----- qq -----> 半角asciiモード
+
+かなモード ------ qz -----> 全角ａｓｃｉｉモード <----- qq -----> 半角asciiモード
+かなモード <----- qh -----/
+
+
+
+
+SPCで変換を開始した後のキーバインド
+-----------------------
+Key             Binding
+
+SPC		kkc-next
+S-SPC*		kkc-prev
+C-n		kkc-next
+C-p		kkc-prev
+
+C-f		kkc-next-phrase
+H		kkc-hiragana
+K		kkc-katakana
+C-@(C-SPC)	kkc-first-char-only
+
+C-i(TAB)	kkc-shorter
+C-o		kkc-longer
+I		kkc-shorter-conversion
+O		kkc-longer-phrase
+
+0 .. 9		kkc-select-from-list
+L		kkc-show-conversion-list-or-prev-group
+l		kkc-show-conversion-list-or-next-group
+
+ひらがな入力中に戻る
+C-c		kkc-cancel
+C-h*		kkc-cancel
+DEL		kkc-cancel
+<delete>	kkc-cancel
+
+<f1>*		kkc-help
+
+変換を確定する
+C-j*		kkc-terminate
+C-m(RET)	kkc-terminate
+<return>	kkc-terminate
+
+
+* は設定変更してある。

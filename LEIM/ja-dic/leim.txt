@@ -1,0 +1,31 @@
+日本語辞書ライブラリのカスタマイズ。
+C-\ toggle-input-method で起動されるデフォルトの日本語入力で使用。
+
+コピー元。
+/Applications/Emacs.app/Contents/Resources/lisp/leim/ja-dic:
+  drwxr-xr-x@ 4 User  admin      128  4  2 21:22 .
+  drwxr-xr-x@ 5 User  admin      160  4  2 21:20 ..
+* -rw-r--r--@ 1 User  admin  1438164  6 22  2024 ja-dic.el.gz
+  -rw-r--r--@ 1 User  admin  4535697  6 22  2024 ja-dic.elc
+
+ja-dic.el を個人用に編集してバイトコンパイル(diredでB) する。
+差異の例
+  /Users/User/.emacs.d/LEIM/ja-dic:
+  drwxr-xr-x@  7 User  staff      224  4  4 14:07 .
+  drwxr-xr-x@ 63 User  staff     2016  4  4 12:55 ..
+* -rw-r--r--@  1 User  staff  4798930  4  4 14:05 ja-dic.el
+* -r--r--r--@  1 User  staff  4798866  6 22  2024 ja-dic.el.original
+  -rw-r--r--@  1 User  staff  4535773  4  4 14:06 ja-dic.elc
+  -rw-r--r--@  1 User  staff  4798940  4  4 13:14 ja-dic.el~
+  -rw-r--r--@  1 User  staff      317  4  4 14:07 leim.txt
+
+diff *
+38446c38446
+< "かんじ 完児 冠辞 換字 官寺 完治 完爾 莞爾 寛治 感じ 監事 幹事 勘次 漢字"
+---
+> "かんじ 完児 冠辞 換字 官寺 完治 完爾 莞爾 寛治 感じ 監事 幹事 漢字"
+115729d115728
+< "はくれいれいむ 博麗霊夢"
+148646d148644
+< "をみな 嬢 女"
+
