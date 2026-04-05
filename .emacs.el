@@ -28,6 +28,11 @@
 (setq use-dialog-box nil)
 
 ;;====================================
+;;;; 削除はゴミ箱にいれる
+;;====================================
+(setq delete-by-moving-to-trash t)
+
+;;====================================
 ;;;; grep case insensitive
 ;;====================================
 (setq grep-command "grep --color=auto -nH --null -i -e ")
