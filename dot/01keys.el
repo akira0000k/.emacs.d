@@ -72,7 +72,7 @@
 
 ;;  MAC OSX iTerm2
 ;;  C-SPC:0x00 C-@:M-[27;5;64~ for set-mark
-;;  C-7:0x1f   C-_;M-[27;5;95~ for undo
+;;  C-7:0x1f   C-_:M-[27;5;95~ for undo
 
 ;; 5: Control
 (define-key input-decode-map "\e[27;5;64~" (kbd "C-@"))
