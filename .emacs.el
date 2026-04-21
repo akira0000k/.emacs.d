@@ -1,4 +1,18 @@
 ;;====================================
+;;  auto revert setting dired/buffer
+;;====================================
+;; Auto revert files when they change
+(global-auto-revert-mode t) ;; comment this line if you dont need.
+ 
+;; Also auto refresh dired, but be quiet about it
+(setq global-auto-revert-non-file-buffers t) ;;default: nil
+(setq auto-revert-verbose nil) ;;default: t
+
+;;(setq auto-revert-interval 5) ;;default: 5
+
+;;(setq auto-revert-use-notify t) ;;default: t
+
+;;====================================
 ;;  common functions
 ;;====================================
 ;; string valid?
@@ -1481,11 +1495,13 @@ With prefix argument, activate previous rectangle if possible."
   (interactive)
   (if (minibufferp)
       (abort-recursive-edit)
-    (let ((cb (current-buffer)))
-      (ak-next-buffer)
-      (ak-last-buffer)
-      (kill-buffer cb))
-    (list-buffers-if-exist)))
+    (if (string-match "^\\*Buffer List\\*" (buffer-name))
+	(kill-buffer)
+      (let ((cb (current-buffer)))
+	(ak-next-buffer)
+	(ak-last-buffer)
+	(kill-buffer cb)
+	(list-buffers-if-exist)))))
 (global-set-key [remap kill-current-buffer] 'ak-kill-current-buffer)
 (global-set-key [remap kill-buffer] 'ak-kill-current-buffer)
 
@@ -1546,6 +1562,36 @@ With prefix argument, activate previous rectangle if possible."
   "Show buffer."
   (switch-to-buffer buffer))
 (advice-add 'kill-buffer-ask :before #'ak-before-kill-buffer-ask)
+
+
+;; Auto Revert Interval 60 if Buffer Menu focused.
+
+(with-eval-after-load 'autorevert
+  (message "autorevert after load")
+  (defvar auto-revert-interval-default nil)
+  (defun ak-buffer-menu-focus-in ()
+    (unless auto-revert-interval-default
+      (setq auto-revert-interval-default auto-revert-interval))
+    (setq auto-revert-interval 60)
+    ;;(message "in  auto-revert-interval %d" auto-revert-interval)
+    (auto-revert-set-timer)
+    )
+  (defun ak-buffer-menu-focus-out ()
+    (setq auto-revert-interval auto-revert-interval-default)
+    ;;(message "out auto-revert-interval %d" auto-revert-interval)
+    (auto-revert-set-timer)
+    t)
+
+  (autoload 'buffer-focus-in-callback  "~/.emacs.d/site-lisp/buffer-focus-hook")
+  (add-hook 'Buffer-menu-mode-hook
+	    (lambda()
+	      (buffer-focus-in-callback 'ak-buffer-menu-focus-in)
+	      (buffer-focus-out-callback 'ak-buffer-menu-focus-out)
+	      (add-hook 'kill-buffer-hook 'ak-buffer-menu-focus-out nil 'local)
+	      ))
+  ;;;;check exact revert timing
+  ;;(setq auto-revert-use-notify nil)
+)
 
 
 
@@ -2105,15 +2151,3 @@ With prefix argument, activate previous rectangle if possible."
       )
     )
   )
-
-;;====================================
-;;  auto revert setting dired/buffer
-;;====================================
-
-;; Auto revert files when they change
-(global-auto-revert-mode t) ;; comment this line if you dont need.
- 
-;; Also auto refresh dired, but be quiet about it
-(setq global-auto-revert-non-file-buffers t) ;;default: nil
-(setq auto-revert-verbose nil) ;;default: t
-(setq auto-revert-interval 5) ;;default: 5

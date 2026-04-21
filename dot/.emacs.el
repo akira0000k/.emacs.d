@@ -3,6 +3,22 @@
 ;;;; ;;(load "~/.emacs.d/dot/03cua")
 ;;;;
 ;;====================================
+;;  auto revert setting dired/buffer
+;;====================================
+;; Auto revert files when they change
+(global-auto-revert-mode t) ;; comment this line if you dont need.
+ 
+;; Also auto refresh dired, but be quiet about it
+(setq global-auto-revert-non-file-buffers t) ;;default: nil
+(setq auto-revert-verbose nil) ;;default: t
+
+;;;; polling interval second
+;;(setq auto-revert-interval 5) ;;default: 5
+
+;;;; use notification from file system immediately.
+;;(setq auto-revert-use-notify t) ;;default: t
+
+;;====================================
 ;;  common functions
 ;;====================================
 ;; string valid?
@@ -206,15 +222,3 @@
       )
     )
   )
-
-;;====================================
-;;  auto revert setting dired/buffer
-;;====================================
-
-;; Auto revert files when they change
-(global-auto-revert-mode t) ;; comment this line if you dont need.
- 
-;; Also auto refresh dired, but be quiet about it
-(setq global-auto-revert-non-file-buffers t) ;;default: nil
-(setq auto-revert-verbose nil) ;;default: t
-(setq auto-revert-interval 5) ;;default: 5
