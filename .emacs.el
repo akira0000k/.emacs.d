@@ -1764,10 +1764,9 @@ With prefix argument, activate previous rectangle if possible."
 
 (defun ak-end-of-visual-line()
   "go to end of line or screen end." (interactive "^")
-  (let ((a (current-window-line)))
-    (end-of-visual-line)
-    (when (< a (current-window-line))
-      (backward-char))))
+  (end-of-visual-line)
+  (unless (eolp)
+    (backward-char)))
   
 ;;====================================
 ;;;; s-: ispell
