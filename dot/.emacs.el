@@ -123,11 +123,17 @@
   "Number of characters for scroll right/left (S-f11/S-f12)."
   :type 'integer
   :group 'display)
+(defvar ak-lr-default nil)
 (defvar ak-lr nil)
 (defun ak-set-scroll-value(arg)
+  (unless ak-lr-default (setq ak-lr-default ak-lr-scroll-chars))
   (unless ak-lr (setq ak-lr ak-lr-scroll-chars))
-  (cond ((not arg)) ;; "arg is nil"
-	((or (listp arg)(= arg 0)) (setq ak-lr ak-lr-scroll-chars)) ;; "arg is list or 0"
+  (cond ((/= ak-lr-default ak-lr-scroll-chars) ;;defcustom value changed
+	 (setq ak-lr-default ak-lr-scroll-chars)
+	 (setq ak-lr ak-lr-scroll-chars))
+	((not arg)) ;; "arg is nil"
+	((or (listp arg)(= arg 0)) ;; arg is list "C-u S-<f11>" or 0 "C-u 0 S-<f11>"
+	 (setq ak-lr ak-lr-scroll-chars))
 	(t (setq ak-lr arg)) ;;"arg is value"
 	 ))
 (defun ak-scroll-right(&optional arg)
