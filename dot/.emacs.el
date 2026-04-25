@@ -62,10 +62,50 @@
   (interactive) (other-frame -1))
 
 ;; Line scroll
-(defun ak-scroll-down1() (interactive) (scroll-down 1))
-(defun ak-scroll-down2() (interactive) (scroll-down 2))
-(defun ak-scroll-up1() (interactive) (scroll-up 1))
-(defun ak-scroll-up2() (interactive) (scroll-up 2))
+(defun ak-scroll-down1()
+  "1 line scroll down, move cursor to top."
+  (interactive "^")
+  (if (ak-first-page-p)
+      (if (= 0 (current-window-line))
+	  (move-beginning-of-line nil)
+	(previous-line))
+    (scroll-down 1))
+  )
+(defun ak-scroll-up1()
+  "1 line scroll up, at lease show 1 line."
+  (interactive "^")
+  (if (and (ak-first-page-p)
+	   (= 0 (current-window-line)))
+      (next-line)
+    ;;else
+    (scroll-up   1)
+    (if (= 0 (current-window-line))
+	(next-line)))
+  )
+(defun ak-scroll-down2()
+  "1 line scroll down, move cursor to top."
+  (interactive "^")
+  (if (ak-first-page-p)
+      (if (= 0 (current-window-line))
+	  (move-beginning-of-line nil)
+	(previous-line 2))
+    (scroll-down 2))
+  )
+(defun ak-scroll-up2()
+  "1 line scroll up, at lease show 1 line."
+  (interactive "^")
+  (if (and (ak-first-page-p)
+	   (= 0 (current-window-line)))
+      (next-line 2)
+    ;;else
+    (scroll-up   2)
+    (if (= 0 (current-window-line))
+	(next-line 2)))
+  )
+;;(defun ak-scroll-down1() (interactive) (scroll-down 1))
+;;(defun ak-scroll-down2() (interactive) (scroll-down 2))
+;;(defun ak-scroll-up1() (interactive) (scroll-up 1))
+;;(defun ak-scroll-up2() (interactive) (scroll-up 2))
 
 (defcustom ak-fast-scroll-lines 4
   "Number of lines when scroll up/down was boosted."

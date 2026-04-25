@@ -496,10 +496,10 @@
 
 ;;              [C-up]                    ;; Start Mission Control @ MAC OSX
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key [C-up]   'ak-line-up)
-(global-set-key [C-down] 'ak-line-down)
-(global-set-key [C-s-up]   'ak-line-up-fast)
-(global-set-key [C-s-down] 'ak-line-down-fast)
+(global-set-key [C-up]   'ak-scroll-down1)
+(global-set-key [C-down] 'ak-scroll-up1)
+(global-set-key [C-s-up]   'ak-scroll-down2)
+(global-set-key [C-s-down] 'ak-scroll-up2)
 (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
 (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
 (global-set-key (kbd "C-s-p") 'ak-line-up-fast)
@@ -2025,10 +2025,50 @@ With prefix argument, activate previous rectangle if possible."
   (interactive) (other-frame -1))
 
 ;; Line scroll
-(defun ak-scroll-down1() (interactive) (scroll-down 1))
-(defun ak-scroll-down2() (interactive) (scroll-down 2))
-(defun ak-scroll-up1() (interactive) (scroll-up 1))
-(defun ak-scroll-up2() (interactive) (scroll-up 2))
+(defun ak-scroll-down1()
+  "1 line scroll down, move cursor to top."
+  (interactive "^")
+  (if (ak-first-page-p)
+      (if (= 0 (current-window-line))
+	  (move-beginning-of-line nil)
+	(previous-line))
+    (scroll-down 1))
+  )
+(defun ak-scroll-up1()
+  "1 line scroll up, at lease show 1 line."
+  (interactive "^")
+  (if (and (ak-first-page-p)
+	   (= 0 (current-window-line)))
+      (next-line)
+    ;;else
+    (scroll-up   1)
+    (if (= 0 (current-window-line))
+	(next-line)))
+  )
+(defun ak-scroll-down2()
+  "1 line scroll down, move cursor to top."
+  (interactive "^")
+  (if (ak-first-page-p)
+      (if (= 0 (current-window-line))
+	  (move-beginning-of-line nil)
+	(previous-line 2))
+    (scroll-down 2))
+  )
+(defun ak-scroll-up2()
+  "1 line scroll up, at lease show 1 line."
+  (interactive "^")
+  (if (and (ak-first-page-p)
+	   (= 0 (current-window-line)))
+      (next-line 2)
+    ;;else
+    (scroll-up   2)
+    (if (= 0 (current-window-line))
+	(next-line 2)))
+  )
+;;(defun ak-scroll-down1() (interactive) (scroll-down 1))
+;;(defun ak-scroll-down2() (interactive) (scroll-down 2))
+;;(defun ak-scroll-up1() (interactive) (scroll-up 1))
+;;(defun ak-scroll-up2() (interactive) (scroll-up 2))
 
 (defcustom ak-fast-scroll-lines 4
   "Number of lines when scroll up/down was boosted."
