@@ -115,14 +115,6 @@
 ;; like C-S-<backspace>
 (global-set-key (kbd "C-S-<delete>") 'kill-whole-line)
 
-;; ignore IM change key C-S-l (Ａ), C-S-j (ち), C-+ (A)
-(global-set-key (kbd "C-S-j") 'ignore)
-(global-set-key (kbd "C-S-l") 'ignore)
-(global-set-key (kbd "C-+") 'ignore)
-;; ignore IM cyclic change key command-[, command-{  (ex C-M-SPC, C-SPC)
-;;lobal-set-key (kbd "s-[") 'ignore)
-;;lobal-set-key (kbd "s-{") 'ignore)
-
 ;;====================================
 ;;;; kill region or kill line. (MAC OSX style)
 ;;====================================
@@ -486,6 +478,16 @@
 (define-key input-decode-map (kbd "M-る") (kbd "M-."))	;;xref-find-definitions
 (define-key input-decode-map (kbd "M-・") (kbd "M-?"))	;;xref-find-references
 
+;;====================================
+;;;; ignore IM change key C-S-l (Ａ), C-S-j (ち), C-+ (A)
+;;====================================
+(global-set-key (kbd "C-S-j") 'ignore)
+(global-set-key (kbd "C-S-l") 'ignore)
+(global-set-key (kbd "C-+") 'ignore)
+;; ignore IM cyclic change key command-[, command-{  (ex C-M-SPC, C-SPC)
+;;lobal-set-key (kbd "s-[") 'ignore)
+;;lobal-set-key (kbd "s-{") 'ignore)
+
 
 
 ;; ------ 02cursor.el ------
@@ -751,18 +753,23 @@ Set cursor at end of 1line/2buffer.(shift)"
 
 ;; ------ 03cua.el ------
 
+;;;; Toggle hilighting area after mark(C-SPC) + move(<left>)
+;;(transient-mark-mode 'toggle) ;; nil)* -1)
+
+;;;; start shift-selection set mark. cancel(C-g)
+;;(setq shift-select-mode 'permanent) ;; t)* nil)
+
+;;;; toggle deleting select area with C-d, or overwriting.
+;;(delete-selection-mode 'toggle) ;; nil) -1)*
+
 ;;;誘惑の甘い罠
 ;;; MAC OSX ではスーパー+xcv がつかえるのでそちらを使う?
 (setq cua-prefix-override-inhibit-delay 0.01)
 (setq cua-enable-cua-keys t)   ;;defalt  region selected->C-x:cut C-c:copy
-;(setq cua-enable-cua-keys nil)
 (cua-mode t)
 
-;; ;; <C-return>  start cua set rectangle mark
-;; (global-set-key (kbd "C-x SPC") 'cua-set-rectangle-mark)
-
-;; Alternate keybind of cua-rect for org-mode. 
-(global-set-key (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
+;; <C-return>  start cua set rectangle mark
+;; C-c C-SPC   start cua set rectangle mark
 
 ;; C-x SPC     start emacs24 rectangle mark mode
 
@@ -770,34 +777,41 @@ Set cursor at end of 1line/2buffer.(shift)"
 ;; 上から選択したか、下から選択したかを切り替え。
 ;; 矩形選択時は、文字挿入が矩形の前/後に変わる。
 
-;;====================================
-;;;; Page Down/Page Up  =  M-v M-u
-;;====================================
-(if (boundp 'cua--cua-keys-keymap)
-    (progn
-      (define-key cua--cua-keys-keymap (kbd "M-v") 'ak-cua-scroll-up)
-      (define-key cua--cua-keys-keymap (kbd "M-V") 'cua-scroll-down)
-      ;;(define-key cua--cua-keys-keymap (kbd "M-u") 'cua-scroll-down) ;;was upcase-word
-      ))
-(defun ak-cua-scroll-up (&optional arg)
-  (interactive "^P")
-  (cua-scroll-up arg)
-  (forward-line 1))
-
-;;;; org-mode 
-;; see org-mode-hook
-
-(defun cua-set-rectangle-mark2 (&optional reopen)
-  "Set mark and start in CUA rectangle mode.
+(when (boundp 'cua-global-keymap)
+  ;; Alternate keybind of cua-rect for org-mode. 
+  (define-key cua-global-keymap (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
+  (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2)
+  (defun cua-set-rectangle-mark2 (&optional reopen)
+    "Set mark and start in CUA rectangle mode.
 With prefix argument, activate previous rectangle if possible."
-  (interactive "P")
-  (if (string= major-mode "org-mode")
-      (org-insert-heading-respect-content)
-    ;; else
-    (cua-set-rectangle-mark reopen)))
+    (interactive "P")
+    (if (string= major-mode "org-mode")
+	(org-insert-heading-respect-content)
+      ;; else
+      (cua-set-rectangle-mark reopen)))
+  )
 
-(if (boundp 'cua-global-keymap)
-    (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2))
+(when (boundp 'cua--cua-keys-keymap)
+  ;; Page Down/Page Up  =  M-v M-u
+  (define-key cua--cua-keys-keymap (kbd "M-v") 'ak-cua-scroll-up) ;;was delete-selection-repeat-replace-region.
+  (define-key cua--cua-keys-keymap (kbd "M-V") 'cua-scroll-down)
+  ;;(define-key cua--cua-keys-keymap (kbd "M-u") 'cua-scroll-down) ;;was upcase-word
+  (defun ak-cua-scroll-up (&optional arg)
+    (interactive "^P")
+    (cua-scroll-up arg)
+    (forward-line 1))
+  )
+
+;; cua-mode の on/off をするなら、キーバインド設定後にoffにする。
+;;(cua-mode 'toggle) ;; nil)* -1)
+;;(cua-mode -1)
+
+;;  X C V initial choice here.
+;; t    : default  region selected->C-x:cut C-c:copy, C-v:paste
+;; nil  : thankyou       use legacy C-w:cut M-w:copy, C-y:paste
+;;'shift: bug?
+;;(setq cua-enable-cua-keys 'shift) ;; t)* nil)
+;;(setq cua-enable-cua-keys nil)
 
 
 

@@ -20,10 +20,11 @@
 (message "init.el loading")
 
 
+
 ;; Package init
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (defun ak-package-init()
   (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   ;; M-x package-refresh-contents RET
   (package-refresh-contents))
 
@@ -40,7 +41,7 @@
 ;; Pre install packages
 (setq myPackage
       '(
-	markdown-mode
+	s
 	))
 ;;Scans the list
 ;; If the package listed is not already installed, install it

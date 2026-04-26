@@ -341,3 +341,13 @@
 (define-key input-decode-map (kbd "M-ね") (kbd "M-,"))	;;xref-go-back
 (define-key input-decode-map (kbd "M-る") (kbd "M-."))	;;xref-find-definitions
 (define-key input-decode-map (kbd "M-・") (kbd "M-?"))	;;xref-find-references
+
+;;====================================
+;;;; ignore IM change key C-S-l (Ａ), C-S-j (ち), C-+ (A)
+;;====================================
+(global-set-key (kbd "C-S-j") 'ignore)
+(global-set-key (kbd "C-S-l") 'ignore)
+(global-set-key (kbd "C-+") 'ignore)
+;; ignore IM cyclic change key command-[, command-{  (ex C-M-SPC, C-SPC)
+;;lobal-set-key (kbd "s-[") 'ignore)
+;;lobal-set-key (kbd "s-{") 'ignore)

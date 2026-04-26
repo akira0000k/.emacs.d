@@ -94,14 +94,6 @@
 ;; like C-S-<backspace>
 (global-set-key (kbd "C-S-<delete>") 'kill-whole-line)
 
-;; ignore IM change key C-S-l (Ａ), C-S-j (ち), C-+ (A)
-(global-set-key (kbd "C-S-j") 'ignore)
-(global-set-key (kbd "C-S-l") 'ignore)
-(global-set-key (kbd "C-+") 'ignore)
-;; ignore IM cyclic change key command-[, command-{  (ex C-M-SPC, C-SPC)
-;;lobal-set-key (kbd "s-[") 'ignore)
-;;lobal-set-key (kbd "s-{") 'ignore)
-
 ;;====================================
 ;;;; kill region or kill line. (MAC OSX style)
 ;;====================================

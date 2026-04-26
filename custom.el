@@ -4,13 +4,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ak-dired-view-on-right-arrow nil)
- '(ak-fast-scroll-lines 10)
- '(ak-lr-scroll-chars 40)
+ '(ak-fast-scroll-lines 4)
+ '(ak-lr-scroll-chars 20)
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
- '(package-selected-packages '(markdown-mode))
+ '(package-selected-packages '(s))
  '(skk-large-jisyo "~/.emacs.d/SKK-DIC/SKK-JISYO.L")
  '(skk-user-directory "~/.emacs.d/.ddskk/"))
 (custom-set-faces
