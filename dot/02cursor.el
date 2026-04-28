@@ -13,8 +13,8 @@
 (global-set-key [C-down] 'ak-scroll-up1)
 (global-set-key [C-s-up]   'ak-scroll-down2)
 (global-set-key [C-s-down] 'ak-scroll-up2)
-(global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
-(global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
+;; (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
+;; (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
 (global-set-key (kbd "C-s-p") 'ak-line-up-fast)
 (global-set-key (kbd "C-s-n") 'ak-line-down-fast)
 (global-set-key [C-M-prior] 'backward-list)
@@ -259,3 +259,41 @@ Set cursor at end of 1line/2buffer.(shift)"
   )
 (global-set-key [remap scroll-right] 'ak-scroll-right)
 (global-set-key [remap scroll-left] 'ak-scroll-left)
+
+;;====================================
+;;;; NEW! extend region in next/prev screen.
+;;====================================
+;; mark whole sentence or extend to next.
+(defun ak-mark-sentence ()
+  (interactive)
+  ;;(message "ak-mark-s")
+  (if (region-active-p)
+      ;; expanding region
+      (if this-command-keys-shift-translated
+	  (backward-sentence)
+	(forward-sentence))
+    ;; define region
+    (unless (bobp) (backward-sentence))
+    (mark-end-of-sentence 1)
+    (unless this-command-keys-shift-translated
+      (exchange-point-and-mark))))
+;;was (global-set-key (kbd "M-h") 'mark-paragraph)
+(global-set-key (kbd "M-h") 'ak-mark-sentence)
+
+;; mark whole paragraph or extend to next.
+(defun ak-mark-paragraph ()
+  (interactive)
+  ;;(message "ak-mark-p")
+  (if (region-active-p)
+      ;; expanding region
+      (if this-command-keys-shift-translated
+	  (backward-paragraph)
+	(forward-paragraph))
+    ;; define region
+    (mark-paragraph)
+    (unless this-command-keys-shift-translated
+      (exchange-point-and-mark))))
+(global-set-key (kbd "M-{") 'forward-paragraph)  ;;was back
+(global-set-key (kbd "M-}") 'backward-paragraph) ;;was for
+(global-set-key (kbd "M-]") 'ak-mark-paragraph)
+;;(define-key key-translation-map (kbd "M-}") (kbd "M-S-]"))

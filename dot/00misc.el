@@ -84,12 +84,11 @@
 ;;;;  (global-set-key (kbd "C-v") 'yank) ;; C-y
 (global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
 
-;;                    M-f10       'toggle-frame-maximized
-;;                    M-f11       'toggle-frame-fullscreen  ;; <- f11
 ;;                    C-x C-c     'save-buffers-kill-terminal
 ;;                    C-x C-z     'suspend-frame            ;; <- C-z
-;;                    C-x 5 2     'make-frame-command
-;;                    s-n         'make-frame
+
+;; alternate keybind for pos<--ex-->mark (was C-x C-x)
+(global-set-key (kbd "M-s M-j") 'exchange-point-and-mark)
 
 ;; like C-S-<backspace>
 (global-set-key (kbd "C-S-<delete>") 'kill-whole-line)

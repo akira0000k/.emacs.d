@@ -39,18 +39,18 @@
     | コマンド  | 押し方                        | 機能                 |
     |-----------+-------------------------------+----------------------|
     | C-g       | Control + g                   | 動作のキャンセル     |
-    | C-x d     | Control + x  (放して) d       | dired ファイラー表示 |
+    | C-x d     | Control + x  (放して) d       | ディレクトリ表示　　 |
     | C-x C-b   | Controlを押したまま x b       | バッファリスト表示   |
     | s-a       | command + a                   | 全選択    (Mac)      |
     | M-x shell | Alt + x (Altを放して) "shell" | 内部shell 起動       |
     | /         | <                             | <                    |
 
 
-** dired ファイラー表示
+** ディレクトリ表示 (dired)
 
     | 標準  | 代替キー |     |                                     |
     |-------+----------+-----+-------------------------------------|
-    | C-x d |          | s-D | ディレクトリリスト表示              |
+    | C-x d |          | s-D | ディレクトリ表示                    |
     |       | f5       |     | カレントディレクトを別画面表示      |
     | g     | f5       | s-u | ディレクトリ表示更新                |
     | p     | up       | k   | 前の行                              |
@@ -145,41 +145,33 @@
     | C-n     | down      |          | 一行下                             |
     | C-p     | up        |          | 一行上                             |
     | C-f     | right     |          | 一文字右                           |
-    | C-b     | left      |          | 一文字左(先頭ではファイルを閉じる) |
-    | C-a     | (S-home)  |          | 行頭と先頭文字のトグル　(選択時)   |
-    | C-e     | (S-end)   |          | 行末　　　　　　　　　　(選択時)   |
+    | C-b     | left      |          | 一文字左。先頭ではファイルを閉じる |
+    | M-f     | C-right   |          | 一語右 forward-word                |
+    | M-b     | C-left    |          | 一語左 backward-word               |
+    | C-a     | (S-home)  |          | 行頭と先頭文字のトグル(選択時1回)  |
+    | C-e     | (S-end)　 |          | 行末　　　　　　　　　(選択時1回)  |
     |         |           | s-left   | 行頭                               |
     |         |           | s-right  | 行末                               |
-    |         | next      | M-v      | 下画面     (PageDown)              |
-    |         | prior     | M-V      | 上画面     (PageUp)                |
+    |         | next      | M-v      | 下画面 PageDown                    |
+    |         | prior     | M-V      | 上画面 PageUp                      |
     | (C-v)   | M-n       |          | 半画面下　　(org-mode)             |
     | (M-v)   | M-p       | C-^      | 半画面上　　(org-mode)             |
-    | (home)  | C-home    |          | バッファ先頭　　　　　(非選択時)   |
-    | (end)   | C-end     |          | バッファ末尾　　　　　(非選択時)   |
+    | home    | C-home    |          | バッファ先頭                       |
+    | end     | C-end     |          | バッファ末尾                       |
     | M-<     | C-,       | s-up     | バッファ先頭                       |
     | M->     | C-.       | s-down   | バッファ末尾                       |
     |         | C-<       |          | バッファ先頭まで選択               |
     |         | C->       |          | バッファ末尾まで選択               |
-    | M-f     | C-right   |          | 一語右                             |
-    | M-b     | C-left    |          | 一語左                             |
-    | M-}     |           |          | 次の段落　　(C-down廃止)           |
-    | M-{     |           |          | 前の段落　　(C-up廃止)             |
-    |         | C-M-n     | C-down   | １行下スクロール                   |
-    |         | C-M-p     | C-up     | １行上スクロール                   |
-    |         | C-s-n     | C-s-down | Ｎ行下高速スクロール               |
-    |         | C-s-p     | C-s-up   | Ｎ行上高速スクロール               |
+    |         | C-down    |          | １行下スクロール                   |
+    |         | C-up      |          | １行上スクロール                   |
+    |         |           | C-s-down | ２行下スクロール                   |
+    |         |           | C-s-up   | ２行上スクロール                   |
+    |         |           | C-s-n    | Ｎ行下高速スクロール               |
+    |         |           | C-s-p    | Ｎ行上高速スクロール               |
     | M-r     |           |          | カーソルを画面の中、上、下         |
     |         | M-right   |          | カーソルを画面の中、下、下画面     |
     |         | M-left    |          | カーソルを画面の中、上、上画面     |
     | M-g M-g |           | s-l      | 行番号を入力してその行に移動       |
-    | C-M-a   | C-M-home  |          | beginning-of-defun                 |
-    | C-M-e   | C-M-end   |          | end-of-defun                       |
-    | C-M-f   | C-M-right |          | forward-sexp                       |
-    | C-M-b   | C-M-left  |          | backward-sexp                      |
-    | C-M-d   | C-M-down  |          | down-list                          |
-    | C-M-u   | C-M-up    |          | backward-up-list                   |
-    |         | C-M-next  |          | forward-list　(C-M-n廃止)          |
-    |         | C-M-prior |          | backward-list (C-M-p廃止)          |
     | /       | <         |          |                                    |
     高速スクロール行数は ak-fast-scroll-lines で設定する。\\
 \\
@@ -227,6 +219,7 @@
     | C-o     |          |      | カーソルを残して改行                      |
     | C-M-o   |          |      | カーソルを残して真下に改行                |
     | C-t     |          |      | カーソルの前の文字を後ろに移動            |
+    | M-t     |          |      | カーソルの前の一語を後ろに移動            |
     | C-x u   | C-z      | s-z  | undo　　(C-z:suspendは、C-x C-z)          |
     | C-_     | C-/      |      | undo　　(使えないかも)                    |
     | C-g     |          |      | undo の中断。次から undo は redo          |
@@ -268,10 +261,11 @@
     | C-RET          | C-c C-SPC |      | (Control+Return) cua矩形選択開始   |
     |                |           |      | 以後カーソル移動で 矩形領域が拡大  |
     | C-M-mouse1drag |           |      | マウスで矩形選択                   |
-    | C-x h          |           | s-a  | バッファ全選択                     |
     | C-g            |           |      | 選択解除                           |
     | C-d            | delete    |      | 選択領域の削除                     |
-    |                |           | s-j  | 領域の開始点と終了点を逆にする     |
+    |                | M-s M-j   | s-j  | 領域の開始点と終了点を逆にする     |
+    | M-@            |           |      | mark-word                          |
+    | C-x h          |           | s-a  | mark-whole-buffer                  |
     | /              | <         |      |                                    |
 
 *** コピー&ペースト
@@ -288,16 +282,55 @@
     |         |          |      | C-y M-y M-y..　(kill-ringからpop)          |
     | C-k     |          |      | カーソルより後(又は選択領域)を cut (Mac風) |
     |         | C-S-k    |      | カーソルより後(又は選択領域)を copy        |
-    | C-S-DEL |          |      | 一行 cut                                   |
-    | M-d     |          |      | 一語 cut                                   |
-    | M-DEL   |          |      | 一語前を cut                               |
-    | M-k     |          |      | 一文 cut                                   |
-    | C-M-k   |          |      | 一lisp要素 cut                             |
+    | C-S-DEL |          |      | kill-whole-line                            |
+    | M-d     |          |      | kill-word                                  |
+    | M-DEL   |          |      | backword-kill-word                         |
     | /       | <        |      |                                            |
 
     copy 後、領域選択は解除、\\
     paste 時、領域が選択されていれば上書き、\\
     選択領域がない時は、C-x と C-c は複数キーのコマンドを構成する。
+
+*** 領域の扱いまとめ
+
+    | 標準    | 代替キー  | 　　 |                            |
+    |---------+-----------+------+----------------------------|
+    | M-f     | C-right   |      | forward-word               |
+    | M-b     | C-left    |      | backward-word              |
+    | M-@     |           |      | mark-word                  |
+    | M-d     |           |      | kill-word                  |
+    | M-DEL   |           |      | backword-kill-word         |
+    |         |           |      |                            |
+    | M-a     |           |      | backward-sentence          |
+    | M-e     |           |      | forward-sentence           |
+    |         | M-h       |      | ak-mark-sentence 後方拡大  |
+    |         | M-H       |      | ak-mark-sentence 前方拡大  |
+    |         |           |      | mark-end-of-sentence       |
+    | M-k     |           |      | kill-sentence              |
+    | C-x DEL |           |      | backward-kill-sentence     |
+    |         |           |      |                            |
+    |         | M-{       |      | forward-paragraph  (逆)    |
+    |         | M-}       |      | backward-paragraph (逆)    |
+    |         | M-]       |      | ak-mark-paragraph 後方拡大 |
+    |         |           |      | mark-paragraph             |
+    |         |           |      | kill-paragraph             |
+    |         |           |      |                            |
+    | C-x h   |           | s-a  | mark-whole-buffer          |
+    | C-S-DEL |           |      | kill-whole-line            |
+    |         |           |      |                            |
+    | C-M-a   | C-M-home  |      | beginning-of-defun         |
+    | C-M-e   | C-M-end   |      | end-of-defun               |
+    | C-M-h   |           |      | mark-defun                 |
+    | C-M-f   | C-M-right |      | forward-sexp               |
+    | C-M-b   | C-M-left  |      | backward-sexp              |
+    | C-M-@   |           |      | mark-sexp                  |
+    | C-M-k   |           |      | kill-sexp                  |
+    | C-M-DEL |           |      | backward-kill-sexp         |
+    | C-M-d   | C-M-down  |      | down-list                  |
+    | C-M-u   | C-M-up    |      | backward-up-list           |
+    | C-M-n   | C-M-next  |      | forward-list               |
+    | C-M-p   | C-M-prior |      | backward-list              |
+    | /       | <         |      |                            |
 
 ** View モード (read only)
 
@@ -365,8 +398,8 @@
     | C-x 1       | f2       |     | 分割解除 (選択中の画面だけ残す)       |
     | C-x o       | S-f1     |     | 次の画面へ移動                        |
     |             | S-f2     |     | 前の画面へ移動 (分割時)               |
-    |             | C-TAB    |     | 次の画面へ移動 (1フレームの時)        |
-    |             | C-S-TAB  |     | 前の画面へ移動 (1フレームの時)        |
+    |             | C-TAB    |     | 次の画面へ移動 (フレームまたがり)     |
+    |             | C-S-TAB  |     | 前の画面へ移動 (フレームまたがり)     |
     | C-x k       | f4       | s-k | バッファの削除。修正中なら確認        |
     | C-x 0       | S-f4     |     | 分割解除 (選択中の画面を閉じる)       |
     | C-x C-left  | C-next   |     | バッファ切替 奥へ (Ctrl + PageDown)   |
@@ -433,7 +466,7 @@
 *** 文字コード表示
 
     改行と文字コードの指定方法
-    | 改行 \ 文字    | UTF-8      | S-JISC    | EUC         | JIS        | 改行表示 |
+    | 改行 \ 文字    | UTF-8      | S-JIS     | EUC         | JIS        | 改行表示 |
     |----------------+------------+-----------+-------------+------------+----------|
     | lf             | utf-8-unix | sjis-unix | euc-jp-unix | junet-unix | :        |
     | crlf           | utf-8-dos  | sjis-dos  | euc-jp-dos  | junet-dos  | (DOS)    |
@@ -458,8 +491,7 @@
     EUC+cr で上書き保存\\
               ~f6 euc-jp-unix Enter C-x C-s~
 
-
-** 文字サイズの変更
+*** 文字サイズの変更
 
     画面が細かい時、文字サイズを大きくしたりできる。
     
@@ -471,8 +503,24 @@
     | /       | <        |     |                      |
 
 
+** lisp式の評価 (実行)
 
-** いろいろなコマンド
+    lispモード又は ＊scratch＊バッファでlisp式を実行する。
+    設定の一時的な変更や、関数の置き換えにも使える。
+
+    | 標準    | 代替キー |                                                    |
+    |---------+----------+----------------------------------------------------|
+    | C-x C-e |          | 直前のlisp式を評価する eval-last-sexp              |
+    | C-M-x   |          | 関数定義を評価する eval-defun                      |
+    |         | M-x ev-r | 選択したlisp式を評価する eval-region               |
+    |         | M-x ev-b | バッファ全体を評価する eval-buffer                 |
+    | C-j     |          | *scratch*で直前のlisp式を評価 eval-print-last-sexp |
+    |         |          | して結果をバッファ内に出力する                     |
+    | M-:     |          | ミニバッファで評価する eval-expression             |
+    | /       | <        |                                                    |
+
+
+** UNIXコマンドとの連携
 
     | M-x diff                    |           |           | ファイル比較           |
     | M-x compile                 |           |           | メーク実行             |
