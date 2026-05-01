@@ -96,7 +96,9 @@
 (define-key input-decode-map "\e[27;8;126~" (kbd "C-M-~"))
 ;; 9: super
 (define-key input-decode-map "\e[27;9;39~" (kbd "s-'"))
+(define-key input-decode-map "\e[27;9;93~" (kbd "s-]"))
 (define-key input-decode-map "\e[27;9;94~" (kbd "s-^"))
+(define-key input-decode-map "\e[27;9;125~" (kbd "s-}"))
 ;; 10: Shift + super
 (define-key input-decode-map "\e[27;10;58~" (kbd "s-:"))
 (define-key input-decode-map "\e[27;10;63~" (kbd "s-?"))
@@ -235,6 +237,7 @@
 (global-set-key (kbd "s-?") 'info)
 (global-set-key (kbd "s-:") 'ispell)
 (global-set-key (kbd "s-E") 'edit-abbrevs)
+(global-unset-key (kbd "s-p")) ;;ns-print-buffer
 
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-x") 'kill-region)

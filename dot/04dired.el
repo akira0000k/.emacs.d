@@ -56,13 +56,13 @@
   (define-key dired-mode-map "\C-n" 'ak-dired-next-line)
   (define-key dired-mode-map "\C-p" 'ak-dired-previous-line)
 
-  ;; line scroll and keep cursor on file name
-  (define-key dired-mode-map [C-up]   'ak-dired-line-up       )
-  (define-key dired-mode-map [C-down] 'ak-dired-line-down     )
-  (define-key dired-mode-map [C-s-up]   'ak-dired-line-up-fast  )
-  (define-key dired-mode-map [C-s-down] 'ak-dired-line-down-fast)
-  (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
-  (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
+  ;; ;; line scroll and keep cursor on file name
+  ;; (define-key dired-mode-map [C-up]   'ak-dired-line-up       )
+  ;; (define-key dired-mode-map [C-down] 'ak-dired-line-down     )
+  ;; (define-key dired-mode-map [C-s-up]   'ak-dired-line-up-fast  )
+  ;; (define-key dired-mode-map [C-s-down] 'ak-dired-line-down-fast)
+  ;; (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
+  ;; (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
 
   ;; skip files
   (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
@@ -75,10 +75,10 @@
   (define-key dired-mode-map (kbd "C-h") 'dired-unmark-backward) ;;like backspace
 
   ;; Vi-like
-  (define-key dired-mode-map "j" 'next-line)
-  (define-key dired-mode-map "k" 'previous-line)
-  (define-key dired-mode-map "J" 'ak-dired-line-down)
-  (define-key dired-mode-map "K" 'ak-dired-line-up)
+  (define-key dired-mode-map "j" 'ak-dired-line-down)
+  (define-key dired-mode-map "k" 'ak-dired-line-up)
+  (define-key dired-mode-map "J" 'ak-dired-line-down-fast)
+  (define-key dired-mode-map "K" 'ak-dired-line-up-fast)
   ;;(message "eval-after-load 'dired done.")
   )
 
@@ -167,20 +167,20 @@
     (dired-next-line 1))
   )
 
-(defun ak-dired-line-up()        (interactive "^")
+(defun ak-dired-line-up()        (interactive)
        (let ( (pos0 (current-window-line)) )
 	 (if (ak-first-page-p)
 	     (dired-next-line -1)
 	   (scroll-down 1)(move-to-window-line pos0)(dired-next-line 0))))
-(defun ak-dired-line-down()      (interactive "^")
+(defun ak-dired-line-down()      (interactive)
        (let ( (pos0 (current-window-line)) )
 	 (scroll-up   1)(move-to-window-line pos0)(dired-next-line 0)))
-(defun ak-dired-line-up-fast()   (interactive "^")
+(defun ak-dired-line-up-fast()   (interactive)
        (let ( (pos0 (current-window-line)) )
 	 (if (ak-first-page-p)
 	     (dired-next-line (- ak-fast-scroll-lines))
 	   (scroll-down ak-fast-scroll-lines)(move-to-window-line pos0)(dired-next-line 0))))
-(defun ak-dired-line-down-fast() (interactive "^")
+(defun ak-dired-line-down-fast() (interactive)
        (let ( (pos0 (current-window-line)) )
 	 (if (ak-last-page-p)
 	     (dired-next-line ak-fast-scroll-lines)
@@ -257,7 +257,7 @@
   "kill this buffer and show current directory."
   ;;(interactive)
   (unless (minibuffer-prompt)
-    (if (string= major-mode "dired-mode")
-	(kill-buffer nil)
+    (if (string-match "^\\*scratch\\*" (buffer-name))
+	(dired ".")
       (find-alternate-file ".")))
   )

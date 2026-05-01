@@ -231,7 +231,9 @@
 (define-key input-decode-map "\e[27;8;126~" (kbd "C-M-~"))
 ;; 9: super
 (define-key input-decode-map "\e[27;9;39~" (kbd "s-'"))
+(define-key input-decode-map "\e[27;9;93~" (kbd "s-]"))
 (define-key input-decode-map "\e[27;9;94~" (kbd "s-^"))
+(define-key input-decode-map "\e[27;9;125~" (kbd "s-}"))
 ;; 10: Shift + super
 (define-key input-decode-map "\e[27;10;58~" (kbd "s-:"))
 (define-key input-decode-map "\e[27;10;63~" (kbd "s-?"))
@@ -370,6 +372,7 @@
 (global-set-key (kbd "s-?") 'info)
 (global-set-key (kbd "s-:") 'ispell)
 (global-set-key (kbd "s-E") 'edit-abbrevs)
+(global-unset-key (kbd "s-p")) ;;ns-print-buffer
 
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-x") 'kill-region)
@@ -497,12 +500,12 @@
 
 ;;              [C-up]                    ;; Start Mission Control @ MAC OSX
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key [C-up]   'ak-scroll-down1)
-(global-set-key [C-down] 'ak-scroll-up1)
-(global-set-key [C-s-up]   'ak-scroll-down2)
-(global-set-key [C-s-down] 'ak-scroll-up2)
-;; (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
-;; (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
+(global-set-key [C-up]   'ak-scroll-down1)       ;;was backward-paragraph
+(global-set-key [C-down] 'ak-scroll-up1)         ;;was forward-paragraph
+(global-set-key [C-S-up]   'ak-scroll-down2)
+(global-set-key [C-S-down] 'ak-scroll-up2)
+(global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
+(global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
 (global-set-key (kbd "C-s-p") 'ak-line-up-fast)
 (global-set-key (kbd "C-s-n") 'ak-line-down-fast)
 (global-set-key [C-M-prior] 'backward-list)
@@ -572,7 +575,7 @@
   (interactive)(scroll-other-window (- ak-fast-scroll-lines)))
 
 ;;====================================
-;;;; go to top or end by page down/up
+;;;; Page Down/Up. Shift select cover page first.
 ;;====================================
 (global-set-key (kbd "<next>")  'ak-scroll-up)   ;;PageDown
 (global-set-key (kbd "<prior>") 'ak-scroll-down) ;;PageUp
@@ -584,16 +587,12 @@
     (if (ak-first-page-p)
         (goto-char (point-min))
       (if (not this-command-keys-shift-translated)
-          (scroll-down )
+          (scroll-down)
         ;;else
         (if (= (window-start) (point))
-            (scroll-down ))
-        
-        (goto-char (window-start))
-        )
-      )
-    )
-  )
+            (scroll-down))
+        (goto-char (window-start)))
+      )))
 (defun ak-scroll-up ()
   "scroll up = Page Down"
   (interactive "^")
@@ -603,22 +602,17 @@
     (if (ak-last-page-p)
         (goto-char (point-max))
       ;;else
-      (if (not this-command-keys-shift-translated)
-	  (progn (scroll-up )
-		 (forward-line 1))
+      (if this-command-keys-shift-translated
+          (let ((po (point)))
+            (move-to-window-line -1)      ;move cursor to window end
+            (when (= po (point))          ;cursor didnot move
+              (scroll-up)                 ;try again
+              (move-to-window-line -1)
+	      ))
         ;;else
-        (let ((po (point)))
-          (move-to-window-line -1)      ;move cursor to window end
-          (if (= po (point))            ;cursor really moved?
-              (progn
-                (scroll-up )        ;try again
-                (move-to-window-line -1)
-		))
-          )
-        )
-      )
-    )
-  )
+	(scroll-up)
+	(forward-line 1))
+      )))
 
 
 ;;====================================
@@ -640,14 +634,10 @@
           (scroll-down)
           )
       (let ( (pos0 (current-window-line)) )
-        (move-to-window-line nil)
+        (move-to-window-line nil) ;; try to move center
         (if (>= (current-window-line) pos0)
-            (move-to-window-line 0)
-          )
-        )
-      )
-    )
-  )
+            (move-to-window-line 0))) ;; move to first line
+      )))
 (defun ak-cursor-bottom ()
   "move cursor to middle or bottom of screen or scroll up(Page Down)"
   (interactive "^")
@@ -655,19 +645,15 @@
   (if (= (point-max) (point))
       (message "End of buffer@")
     (let ( (pos0 (current-window-line)) )
-      (move-to-window-line nil)
+      (move-to-window-line nil) ;; try to move center
       (if (> (current-window-line) pos0)
           nil ;; ok
-        (move-to-window-line -1)
+        (move-to-window-line -1) ;; try to move bottom
         (if (> (current-window-line) pos0)
             nil ;; ok
           (message "scroll up")
-          (scroll-up)
-          )
-        )
-      )
-    )
-  )
+          (scroll-up))
+        ))))
 ;;====================================
 ;;;; scroll half screen でらうま倶楽部
 ;;====================================
@@ -757,16 +743,26 @@ Set cursor at end of 1line/2buffer.(shift)"
   ;;(message "ak-mark-s")
   (if (region-active-p)
       ;; expanding region
-      (if this-command-keys-shift-translated
-	  (backward-sentence)
-	(forward-sentence))
+      (forward-sentence)
+    ;; define region
+    (forward-sentence)
+    (backward-sentence)
+    (set-mark (point))
+    (forward-sentence)
+    ))
+(defun ak-mark-sentence-backward ()
+  (interactive)
+  ;;(message "ak-mark-s-b")
+  (if (region-active-p)
+      ;; expanding region
+      (unless (bobp) (backward-sentence))
     ;; define region
     (unless (bobp) (backward-sentence))
     (mark-end-of-sentence 1)
-    (unless this-command-keys-shift-translated
-      (exchange-point-and-mark))))
-;;was (global-set-key (kbd "M-h") 'mark-paragraph)
-(global-set-key (kbd "M-h") 'ak-mark-sentence)
+    ))
+(global-set-key (kbd "s-]") 'ak-mark-sentence)
+(global-set-key (kbd "s-}") 'ak-mark-sentence-backward)
+;; M-e, M-a is for/backward-sentence
 
 ;; mark whole paragraph or extend to next.
 (defun ak-mark-paragraph ()
@@ -774,17 +770,30 @@ Set cursor at end of 1line/2buffer.(shift)"
   ;;(message "ak-mark-p")
   (if (region-active-p)
       ;; expanding region
-      (if this-command-keys-shift-translated
-	  (backward-paragraph)
-	(forward-paragraph))
+      (forward-paragraph)
     ;; define region
     (mark-paragraph)
-    (unless this-command-keys-shift-translated
-      (exchange-point-and-mark))))
-(global-set-key (kbd "M-{") 'forward-paragraph)  ;;was back
-(global-set-key (kbd "M-}") 'backward-paragraph) ;;was for
-(global-set-key (kbd "M-]") 'ak-mark-paragraph)
-;;(define-key key-translation-map (kbd "M-}") (kbd "M-S-]"))
+    (exchange-point-and-mark)))
+(defun ak-mark-paragraph-backward ()
+  (interactive)
+  ;;(message "ak-mark-p")
+  (if (region-active-p)
+      ;; expanding region
+      (unless (bobp) (backward-paragraph))
+    ;; define region
+    (mark-paragraph)
+    ))
+(defun ak-forward-paragraph ()
+  (interactive) ;;"^p"
+  (forward-paragraph))
+(defun ak-backward-paragraph ()
+  (interactive) ;;"^p"
+  (backward-paragraph))
+(global-set-key (kbd "M-}") 'ak-forward-paragraph)
+(global-set-key (kbd "M-{") 'ak-backward-paragraph)
+(global-set-key (kbd "M-h") 'ak-mark-paragraph)
+(global-set-key (kbd "M-H") 'ak-mark-paragraph-backward)
+;; C-down, C-up was for/backward-paragraph
 
 
 
@@ -907,13 +916,13 @@ With prefix argument, activate previous rectangle if possible."
   (define-key dired-mode-map "\C-n" 'ak-dired-next-line)
   (define-key dired-mode-map "\C-p" 'ak-dired-previous-line)
 
-  ;; line scroll and keep cursor on file name
-  (define-key dired-mode-map [C-up]   'ak-dired-line-up       )
-  (define-key dired-mode-map [C-down] 'ak-dired-line-down     )
-  (define-key dired-mode-map [C-s-up]   'ak-dired-line-up-fast  )
-  (define-key dired-mode-map [C-s-down] 'ak-dired-line-down-fast)
-  (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
-  (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
+  ;; ;; line scroll and keep cursor on file name
+  ;; (define-key dired-mode-map [C-up]   'ak-dired-line-up       )
+  ;; (define-key dired-mode-map [C-down] 'ak-dired-line-down     )
+  ;; (define-key dired-mode-map [C-s-up]   'ak-dired-line-up-fast  )
+  ;; (define-key dired-mode-map [C-s-down] 'ak-dired-line-down-fast)
+  ;; (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
+  ;; (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
 
   ;; skip files
   (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
@@ -926,10 +935,10 @@ With prefix argument, activate previous rectangle if possible."
   (define-key dired-mode-map (kbd "C-h") 'dired-unmark-backward) ;;like backspace
 
   ;; Vi-like
-  (define-key dired-mode-map "j" 'next-line)
-  (define-key dired-mode-map "k" 'previous-line)
-  (define-key dired-mode-map "J" 'ak-dired-line-down)
-  (define-key dired-mode-map "K" 'ak-dired-line-up)
+  (define-key dired-mode-map "j" 'ak-dired-line-down)
+  (define-key dired-mode-map "k" 'ak-dired-line-up)
+  (define-key dired-mode-map "J" 'ak-dired-line-down-fast)
+  (define-key dired-mode-map "K" 'ak-dired-line-up-fast)
   ;;(message "eval-after-load 'dired done.")
   )
 
@@ -1018,20 +1027,20 @@ With prefix argument, activate previous rectangle if possible."
     (dired-next-line 1))
   )
 
-(defun ak-dired-line-up()        (interactive "^")
+(defun ak-dired-line-up()        (interactive)
        (let ( (pos0 (current-window-line)) )
 	 (if (ak-first-page-p)
 	     (dired-next-line -1)
 	   (scroll-down 1)(move-to-window-line pos0)(dired-next-line 0))))
-(defun ak-dired-line-down()      (interactive "^")
+(defun ak-dired-line-down()      (interactive)
        (let ( (pos0 (current-window-line)) )
 	 (scroll-up   1)(move-to-window-line pos0)(dired-next-line 0)))
-(defun ak-dired-line-up-fast()   (interactive "^")
+(defun ak-dired-line-up-fast()   (interactive)
        (let ( (pos0 (current-window-line)) )
 	 (if (ak-first-page-p)
 	     (dired-next-line (- ak-fast-scroll-lines))
 	   (scroll-down ak-fast-scroll-lines)(move-to-window-line pos0)(dired-next-line 0))))
-(defun ak-dired-line-down-fast() (interactive "^")
+(defun ak-dired-line-down-fast() (interactive)
        (let ( (pos0 (current-window-line)) )
 	 (if (ak-last-page-p)
 	     (dired-next-line ak-fast-scroll-lines)
@@ -1108,8 +1117,8 @@ With prefix argument, activate previous rectangle if possible."
   "kill this buffer and show current directory."
   ;;(interactive)
   (unless (minibuffer-prompt)
-    (if (string= major-mode "dired-mode")
-	(kill-buffer nil)
+    (if (string-match "^\\*scratch\\*" (buffer-name))
+	(dired ".")
       (find-alternate-file ".")))
   )
 
@@ -1120,8 +1129,8 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;;; function keys
 ;;====================================
-;;was                 help-command
-(global-set-key [f1] 'help-for-help)
+
+;;(global-set-key [f1] 'help-for-help) ;;was help-command
 (global-set-key [S-f1] 'other-window)
 
 ;;        C-x 6 2		2C-two-columns
@@ -2078,7 +2087,7 @@ With prefix argument, activate previous rectangle if possible."
 ;; Line scroll
 (defun ak-scroll-down1()
   "1 line scroll down, move cursor to top."
-  (interactive "^")
+  (interactive)
   (if (ak-first-page-p)
       (if (= 0 (current-window-line))
 	  (move-beginning-of-line nil)
@@ -2087,7 +2096,7 @@ With prefix argument, activate previous rectangle if possible."
   )
 (defun ak-scroll-up1()
   "1 line scroll up, at lease show 1 line."
-  (interactive "^")
+  (interactive)
   (if (and (ak-first-page-p)
 	   (= 0 (current-window-line)))
       (next-line)
@@ -2098,7 +2107,7 @@ With prefix argument, activate previous rectangle if possible."
   )
 (defun ak-scroll-down2()
   "1 line scroll down, move cursor to top."
-  (interactive "^")
+  (interactive)
   (if (ak-first-page-p)
       (if (= 0 (current-window-line))
 	  (move-beginning-of-line nil)
@@ -2107,7 +2116,7 @@ With prefix argument, activate previous rectangle if possible."
   )
 (defun ak-scroll-up2()
   "1 line scroll up, at lease show 1 line."
-  (interactive "^")
+  (interactive)
   (if (and (ak-first-page-p)
 	   (= 0 (current-window-line)))
       (next-line 2)

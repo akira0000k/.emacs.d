@@ -51,14 +51,16 @@
     | 標準  | 代替キー |     |                                     |
     |-------+----------+-----+-------------------------------------|
     | C-x d |          | s-D | ディレクトリ表示                    |
-    |       | f5       |     | カレントディレクトを別画面表示      |
-    | g     | f5       | s-u | ディレクトリ表示更新                |
-    | p     | up       | k   | 前の行                              |
-    | n     | down     | j   | 次の行                              |
-    |       | C-up     | K   | １行上スクロール                    |
-    |       | C-down   | J   | １行下スクロール                    |
-    | <     | P        |     | 前のdirectory行                     |
+    |       | f5       |     | カレントディレクトリを別画面表示    |
+    | g     | f5       | s-u | 表示更新                            |
+    | SPC   | n        |     | 次の行 (Space)                      |
+    | S-SPC | p        |     | 前の行 (Shift+Space)                |
+    |       | j        |     | １行下スクロール                    |
+    |       | k        |     | １行上スクロール                    |
+    |       | J        |     | Ｎ行下スクロール                    |
+    |       | K        |     | Ｎ行上スクロール                    |
     | >     | N        |     | 次のdirectory行                     |
+    | <     | P        |     | 前のdirectory行                     |
     |       | home     | ,   | 先頭行へ                            |
     |       | end      | .   | 最終行へ                            |
     | f     | right    |     | directory降下 または ファイルを開く |
@@ -68,6 +70,11 @@
     | +     |          |     | ディレクトリ作成                    |
     | s     |          |     | 日付順ソート toggle                 |
     |       | E        |     | ファイル名直接編集 (C-c C-c で終了) |
+    | y     |          |     | ファイルタイプ表示                  |
+    |       | C-s str  |     | file/dirを検索(一般的な検索は s-f)  |
+    | i     |          |     | 下位directoryを次に表示             |
+    | C-M-n |          |     | 次に表示したdirectoryへ             |
+    | C-M-p |          |     | 上に表示したdirectoryへ             |
     |       | a        |     | A_DIRECTORY へ移動 (.dirrc で定義)  |
     |       | b        |     | B_DIRECTORY へ移動                  |
     |       | c        |     | C_DIRECTORY へ移動                  |
@@ -75,7 +82,6 @@
     |       | h        |     | ホームディレクトリ ~ へ移動         |
     |       | r        |     | ルートディレクトリ / へ移動         |
     |       | z        |     | emacs 起動ディレクトリへ移動        |
-    |       | C-s str  |     | file/dirを検索(一般的な検索は s-f)  |
     | /     | <        |     |                                     |
 \\
     単独ファイルに対して (大文字)
@@ -162,10 +168,10 @@
     | M->     | C-.       | s-down   | バッファ末尾                       |
     |         | C-<       |          | バッファ先頭まで選択               |
     |         | C->       |          | バッファ末尾まで選択               |
-    |         | C-down    |          | １行下スクロール                   |
-    |         | C-up      |          | １行上スクロール                   |
-    |         |           | C-s-down | ２行下スクロール                   |
-    |         |           | C-s-up   | ２行上スクロール                   |
+    |         | C-M-n     | C-down   | １行下スクロール                   |
+    |         | C-M-p     | C-up     | １行上スクロール                   |
+    |         |           | C-S-down | ２行下スクロール                   |
+    |         |           | C-S-up   | ２行上スクロール                   |
     |         |           | C-s-n    | Ｎ行下高速スクロール               |
     |         |           | C-s-p    | Ｎ行上高速スクロール               |
     | M-r     |           |          | カーソルを画面の中、上、下         |
@@ -293,44 +299,46 @@
 
 *** 領域の扱いまとめ
 
-    | 標準    | 代替キー  | 　　 |                            |
-    |---------+-----------+------+----------------------------|
-    | M-f     | C-right   |      | forward-word               |
-    | M-b     | C-left    |      | backward-word              |
-    | M-@     |           |      | mark-word                  |
-    | M-d     |           |      | kill-word                  |
-    | M-DEL   |           |      | backword-kill-word         |
-    |         |           |      |                            |
-    | M-a     |           |      | backward-sentence          |
-    | M-e     |           |      | forward-sentence           |
-    |         | M-h       |      | ak-mark-sentence 後方拡大  |
-    |         | M-H       |      | ak-mark-sentence 前方拡大  |
-    |         |           |      | mark-end-of-sentence       |
-    | M-k     |           |      | kill-sentence              |
-    | C-x DEL |           |      | backward-kill-sentence     |
-    |         |           |      |                            |
-    |         | M-{       |      | forward-paragraph  (逆)    |
-    |         | M-}       |      | backward-paragraph (逆)    |
-    |         | M-]       |      | ak-mark-paragraph 後方拡大 |
-    |         |           |      | mark-paragraph             |
-    |         |           |      | kill-paragraph             |
-    |         |           |      |                            |
-    | C-x h   |           | s-a  | mark-whole-buffer          |
-    | C-S-DEL |           |      | kill-whole-line            |
-    |         |           |      |                            |
-    | C-M-a   | C-M-home  |      | beginning-of-defun         |
-    | C-M-e   | C-M-end   |      | end-of-defun               |
-    | C-M-h   |           |      | mark-defun                 |
-    | C-M-f   | C-M-right |      | forward-sexp               |
-    | C-M-b   | C-M-left  |      | backward-sexp              |
-    | C-M-@   |           |      | mark-sexp                  |
-    | C-M-k   |           |      | kill-sexp                  |
-    | C-M-DEL |           |      | backward-kill-sexp         |
-    | C-M-d   | C-M-down  |      | down-list                  |
-    | C-M-u   | C-M-up    |      | backward-up-list           |
-    | C-M-n   | C-M-next  |      | forward-list               |
-    | C-M-p   | C-M-prior |      | backward-list              |
-    | /       | <         |      |                            |
+    | 標準      | 代替キー    | 　　 |                               |
+    |-----------+-------------+------+-------------------------------|
+    | M-f       | C-right     |      | forward-word                  |
+    | M-b       | C-left      |      | backward-word                 |
+    | M-@       |             |      | mark-word                     |
+    | M-d       | C-delete    |      | kill-word                     |
+    | M-DEL     |             |      | backword-kill-word            |
+    |           |             |      |                               |
+    | M-a       |             |      | backward-sentence             |
+    | M-e       |             |      | forward-sentence              |
+    |           |             | s-]  | ak-mark-sentence              |
+    |           |             | s-}  | ak-mark-sentence-backward     |
+    |           |             |      | mark-end-of-sentence          |
+    | M-k       |             |      | kill-sentence                 |
+    | C-x DEL   |             |      | backward-kill-sentence        |
+    |           |             |      |                               |
+    | M-}       | {+C-down+}  |      | ak-forward-paragraph　 {廃止} |
+    | M-{       | {+C-up+}    |      | ak-backward-paragraph {廃止}  |
+    | M-h       |             |      | ak-mark-paragraph             |
+    |           | M-H         |      | ak-mark-paragraph-backward    |
+    | M-q       |             |      | fill-paragraph                |
+    |           |             |      | mark-paragraph                |
+    |           |             |      | kill-paragraph                |
+    |           |             |      |                               |
+    | C-x h     |             | s-a  | mark-whole-buffer             |
+    | C-S-DEL   |             |      | kill-whole-line               |
+    |           |             |      |                               |
+    | C-M-a     | C-M-home    |      | beginning-of-defun            |
+    | C-M-e     | C-M-end     |      | end-of-defun                  |
+    | C-M-h     |             |      | mark-defun                    |
+    | C-M-f     | C-M-right   |      | forward-sexp                  |
+    | C-M-b     | C-M-left    |      | backward-sexp                 |
+    | C-M-@     |             |      | mark-sexp                     |
+    | C-M-k     |             |      | kill-sexp                     |
+    | C-M-DEL   |             |      | backward-kill-sexp            |
+    | C-M-d     | C-M-down    |      | down-list                     |
+    | C-M-u     | C-M-up      |      | backward-up-list              |
+    | {+C-M-n+} | [C-M-next]  |      | forward-list　 {廃止}[追加]   |
+    | {+C-M-p+} | [C-M-prior] |      | backward-list {廃止}[追加]    |
+    | /         | <           |      |                               |
 
 ** View モード (read only)
 
@@ -614,7 +622,7 @@
 
     | 標準      | 代替キー |     |                                       |
     |-----------+----------+-----+---------------------------------------|
-    | f1        |          |     | ヘルプメニューで選択                  |
+    | f1 f1     |          |     | ヘルプメニューで選択                  |
     | f1 a      |          |     | command-apropos : 似たコマンド名表示  |
     | f1 b      |          |     | describe-bindings : キーバインド一覧  |
     | f1 f      |          |     | describe-function : 関数説明          |
@@ -623,85 +631,117 @@
     | f1 m      |          |     | describe-mode : モード説明            |
     | f1 v      |          |     | describe-variable : 変数説明          |
     | f1 w      |          |     | where-is : 関数の割り当てキー表示     |
+    | M-.       |          |     | シンボル定義箇所のソースを表示        |
+    | M-,       |          |     | 戻る                                  |
+    | M-?       |          |     | シンボル使用状況を検索                |
     | /         | <        |     |                                       |
 
 *** ヘルプ画面集
 **** メニュー
-    f1
+    f1 f1\\
+    スペースでスクロール、バックスペースで逆スクロール
     
     #+Begin_example
-    You have typed , the help character.  Type a Help option:
-    (Use SPC or DEL to scroll through this text.  Type q to exit the Help command.)
+    Commands, Keys and Functions
      
-    a PATTERN   Show commands whose name matches the PATTERN (a list of words
-                  or a regexp).  See also the ‘apropos’ command.
-    b           Display all key bindings.
-    c KEYS      Display the command name run by the given key sequence.
-    C CODING    Describe the given coding system, or RET for current ones.
-    d PATTERN   Show a list of functions, variables, and other items whose
-                  documentation matches the PATTERN (a list of words or a regexp).
-    e           Go to the *Messages* buffer which logs echo-area messages.
-    f FUNCTION  Display documentation for the given function.
-    F COMMAND   Show the Emacs manual’s section that describes the command.
-    g           Display information about the GNU project.
-    h           Display the HELLO file which illustrates various scripts.
-    i           Start the Info documentation reader: read included manuals.
-    I METHOD    Describe a specific input method, or RET for current.
-    k KEYS      Display the full documentation for the key sequence.
-    K KEYS      Show the Emacs manual’s section for the command bound to KEYS.
-    l           Show last 300 input keystrokes (lossage).
-    L LANG-ENV  Describe a specific language environment, or RET for current.
-    m           Display documentation of current minor modes and current major mode,
-                  including their special commands.
-    n           Display news of recent Emacs changes.
-    o SYMBOL    Display the given function or variable’s documentation and value.
-    p TOPIC     Find packages matching a given topic keyword.
-    P PACKAGE   Describe the given Emacs Lisp package.
-    r           Display the Emacs manual in Info mode.
-    s           Display contents of current syntax table, plus explanations.
-    S SYMBOL    Show the section for the given symbol in the Info manual
-                  for the programming language used in this buffer.
-    t           Start the Emacs learn-by-doing tutorial.
-    v VARIABLE  Display the given variable’s documentation and value.
-    w COMMAND   Display which keystrokes invoke the given command (where-is).
-    .           Display any available local help at point in the echo area.
+       m 	Show help for current major and minor modes and their commands
+       b 	Show all key bindings
+       k 	Show help for key
+       c 	Show help for key briefly
+       w 	Show which key runs a specific command
      
-    C-a         Information about Emacs.
-    C-c         Emacs copying permission (GNU General Public License).
-    C-d         Instructions for debugging GNU Emacs.
-    C-e         External packages and information about Emacs.
-    C-f         Emacs FAQ.
-    C-m         How to order printed Emacs manuals.
-    C-n         News of recent Emacs changes.
-    C-o         Emacs ordering and distribution information.
-    C-p         Info about known Emacs problems.
-    C-s         Search forward "help window".
-    C-t         Emacs TODO list.
-    C-w         Information on absence of warranty for GNU Emacs.
+       a 	Search for commands (see also M-x apropos)
+       d 	Search documentation of functions, variables, and other items
+       x 	Show help for command
+       f 	Show help for function
+       v 	Show help for variable
+       o 	Show help for function or variable
+     
+    Manuals
+     
+       r 	Show Emacs manual
+       F 	Show Emacs manual section for command
+       K 	Show Emacs manual section for a key sequence
+       i 	Show all installed manuals
+       R 	Show a specific manual
+       S 	Show description of symbol in pertinent manual
+     
+    Other Help Commands
+     
+       C-e 	Extending Emacs with external packages
+       p 	Search for Emacs packages (see also M-x list-packages)
+       P 	Describe a specific Emacs package
+     
+       t 	Start the Emacs tutorial
+       C-q 	Display the quick help buffer.
+       e 	Show recent messages (from echo area)
+       l 	Show last 300 input keystrokes (lossage)
+       . 	Show local help at point
+     
+    Miscellaneous
+     
+       C-a 	About Emacs
+       C-f 	Emacs FAQ
+       C-n 	News of recent changes
+       C-p 	Known problems
+       C-d 	Debugging Emacs
+     
+       g 	About the GNU project
+       C-c 	Emacs copying permission (GNU General Public License)
+       C-o 	Emacs ordering and distribution information
+       C-m 	Order printed manuals
+       C-t 	Emacs TODO
+       C-w 	Information on absence of warranty
+     
+    Internationalization and Coding Systems
+     
+       I 	Describe input method
+       C 	Describe coding system
+       L 	Describe language environment
+       s 	Show current syntax table
+       h 	Display the HELLO file illustrating various scripts
+    #+end_example
+
+**** quick help
+    f1 C-q\\
+    若干修正
+    
+    #+begin_example
+    File           Buffer             Window              Mark & Kill
+    C-x C-c exit   C-x k   kill       C-x 0 only other    C-SPC   mark
+    C-x C-f find   C-x C-b list       C-x 1 only this     C-k     kill line
+    C-x C-w write  C-x b   switch     C-x 2 split vert.   C-w     kill region
+    C-x C-s save   M-g g   goto line  C-x 3 split horiz.  C-y     yank
+    C-x s   all    C-x C-q read only  C-x o other window  M-s M-j swap
+     
+    Projects                  Misc.
+    C-x p p switch            C-x u   undo
+    C-x p f find file         C-s     search
+    C-x p g search            C-s C-r reverse search
+    C-x p r search & replace  C-r     search & replace
+    C-x p c compile           M-q     reformat
     #+end_example
 
 **** tutorial
+    $ emacs -q -nw\\
     f1 t
     
     #+begin_example
     --------------------Tutorial  画面の例---------------------------------
-    Copyright (c) 1985 Free Software Foundation, Inc;  ファイル最後を参照のこと
-     	   あなたが現在見ているのは Emacs 入門ガイドです。
+    Emacs 入門ガイド.  本ファイルの著作権については最後を御覧下さい。
      
     Emacs のコマンドを入力するには、一般にコントロールキー（キートップに
-    CTRL とか CTL と書いてある）やメタキー（キートップに META とか ALT と
-    書いてある）を使います。そこで、CONTROL とか META とか書く代わりに、次
-    のような記号を使うことにします。
+    CONTROL とか CTRL とか CTL と書いてある）やメタキー（キートップに META
+    とか ALT とか EDIT と書いてある）を使います。そこで、CONTROL とか META
+    とかを書く代わりに、次のような記法を使うことにします。
      
      C-<文字>   コントロールキーを押したまま、<文字>キーを押します。例えば、
      	    C-f はコントロールキーを押しながら f のキーを押すことです。
-     
      M-<文字>   メタキーを押したまま、<文字>キーを押します。もしメタキーがな
      	    い場合は、エスケープキーを押してから離し、それから<文字>キー
      	    を押します。以降エスケープキーのことを <ESC> と書きます。
      
     ！重要！: Emacsを終了するには、C-x C-c をタイプします。
-     
     ">>" で始まる行は、その時何をすべきかを指示しています。例えば、
     ........
     #+end_example
@@ -710,34 +750,30 @@
     f1 i
     #+begin_example
     --------------------Info 画面の例--------------------------------------
-    File: dir,	Node: Top	This is the top of the INFO tree
+    No next, prev or up links  --  This is the top of the INFO tree
+    (dir)Top
      
-    The Info Directory
-    ******************
+      This (the Directory node) gives a menu of major topics.
+      Typing "q" exits, "H" lists all Info commands, "d" returns here,
+      "h" gives a primer for first-timers,
+      "mEmacs<Return>" visits the Emacs manual, etc.
      
-      The Info Directory is the top-level menu of major Info topics.
-      Type "d" in Info to return to the Info Directory.  Type "q" to exit Info.
-      Type "?" for a list of Info commands, or "h" to visit an Info tutorial.
-      Type "m" to choose a menu item--for instance,
-        "mEmacs<Return>" visits the Emacs manual.
-      In Emacs Info, you can click mouse button 2 on a menu item
-      or cross reference to follow it to its target.
-      Each menu line that starts with a * is a topic you can select with "m".
-      You can also select a topic by typing its ordinal number.
-      Every third topic has a red * to help pick the right number to type.
+      In Emacs, you can click mouse button 2 on a menu item or cross reference
+      to select it.
      
     * Menu:
      
-    Texinfo documentation system
-    * Info: (info).                 How to use the documentation browsing system.
-     
     Emacs
-    * Emacs: (emacs).               The extensible self-documenting text editor.
-    * Emacs FAQ: (efaq).            Frequently Asked Questions about Emacs.
-    * Elisp: (elisp).               The Emacs Lisp Reference Manual.
-    * Emacs Lisp Intro: (eintr).    A simple introduction to Emacs Lisp programming.
-    * CC Mode: (ccmode).            Emacs mode for editing C, C++, Objective-C,
-                                      Java, Pike, AWK, and CORBA IDL code.
+    * SKK                   Simple Kana to Kanji conversion program.
+    * Emacs                 The extensible self-documenting text editor.
+    * Emacs FAQ             Frequently Asked Questions about Emacs.
+    * Elisp                 The Emacs Lisp Reference Manual.
+    * Emacs Lisp Intro      A simple introduction to Emacs Lisp programming.
+    * CC Mode               Emacs mode for editing C, C++, Objective-C,
+                              Java, Pike, AWK, and CORBA IDL code.
+    * IDLWAVE               Major mode and shell for IDL files.
+    * Octave mode           Emacs mode for editing GNU Octave files.
+    * Org Mode              Outline-based notes management and organizer.
     .............
     #+end_example
 
@@ -747,50 +783,50 @@
     #+begin_example
     Welcome to GNU Emacs, a part of the GNU operating system.
      
-    Get help           C-h  (Hold down CTRL and press h)
-    Emacs manual       C-h r        Browse manuals     C-h i
-    Emacs tutorial     C-h t        Undo changes       C-x u
-    Buy manuals        C-h RET      Exit Emacs         C-x C-c
+    Get help	   <f1>
+    Emacs manual	   <f1> r	Browse manuals	   s-?
+    Emacs tutorial	   <f1> t	Undo changes	   C-x u
+    Buy manuals	   <f1> RET	Exit Emacs	   C-x C-c
     Activate menubar   M-`
     (‘C-’ means use the CTRL key.  ‘M-’ means use the Meta (or Alt) key.
     If you have no Meta key, you may instead type ESC followed by the character.)
     Useful tasks:
-    Visit New File                  Open Home Directory
-    Customize Startup               Open *scratch* buffer
+    Visit New File			Open Home Directory
+    Customize Startup		Open *scratch* buffer
      
-    GNU Emacs 27.2 (build 1, x86_64-apple-darwin18.7.0, NS appkit-1671.60 Version 10.14.6 (Build 18G95))
-     of 2021-03-28
-    Copyright (C) 2021 Free Software Foundation, Inc.
+    GNU Emacs 29.4 (build 1, x86_64-apple-darwin18.7.0, NS appkit-1671.60
+     Version 10.14.6 (Build 18G9323)) of 2024-08-03
+    Copyright (C) 2024 Free Software Foundation, Inc.
      
-    GNU Emacs comes with ABSOLUTELY NO WARRANTY; type C-h C-w for full details.
+    GNU Emacs comes with ABSOLUTELY NO WARRANTY; type <f1> C-w for full details.
     Emacs is Free Software--Free as in Freedom--so you can redistribute copies
-    of Emacs and modify it; type C-h C-c to see the conditions.
-    Type C-h C-o for information on getting the latest version.
+    of Emacs and modify it; type <f1> C-c to see the conditions.
+    Type <f1> C-o for information on getting the latest version.
      
     If an Emacs session crashed recently, type M-x recover-session RET
     to recover the files you were editing.
-    (C-h は f1 と読み替えてください)
     #+end_example
   
 
 ** コンソール起動する時の設定
 *** iTerm2 設定 (Mac OSX)
 
-    ~.emacs.d/doc/iTerm2/Iterm2-default.itermkeymap~ を
-    
+    ~.emacs.d/doc/iTerm2/Iterm2-default.itermkeymap~ を\\
     iTerm2 > Preferences > Profiles > Keys > Presets > Import\\
     から読み込ませる。
     
-    fn キーを押さなくても f1..f12が使えるようにする。
+    キーボードショートカットキーのファンクションキーで\\
+    F1、F2などのキーを標準のファンクションキーとして使用 を on
     
-    macの ¥ キーは \ に変更し、fn + ¥ で ¥ にする。\\
+    ¥キーで "\"、fn+¥ で "¥"\\
+    日本語入力の "¥"キーで入力する文字: を "\ (バックスラッシュ)"にする。\\
     (Mac OSX では "¥" は2バイトUTF-8で "\" が本来の1バイト文字)
     
-    C-up C-down などの Mission Controlキーとの競合問題を解決する。
+    C-up C-down などを Mission Controlに使われないようにする。
     
-    C-TAB C-S-TAB は iTerm2のタブ切り替えに使っても良い。
+    C-SPC を入力ソース切り替えに使われないようにする。
 
-    M-C- はmagnet で使うのでemacsでは使わず、s-up などを M-C-up に読み替えて戻している。
+    iTerm2 ショートカットキーは、emacs用キー設定が優先するので使えなくなる。
     
 
 *** teraterm 設定 (Windows)

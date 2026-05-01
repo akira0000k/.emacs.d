@@ -9,12 +9,12 @@
 
 ;;              [C-up]                    ;; Start Mission Control @ MAC OSX
 ;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key [C-up]   'ak-scroll-down1)
-(global-set-key [C-down] 'ak-scroll-up1)
-(global-set-key [C-s-up]   'ak-scroll-down2)
-(global-set-key [C-s-down] 'ak-scroll-up2)
-;; (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
-;; (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
+(global-set-key [C-up]   'ak-scroll-down1)       ;;was backward-paragraph
+(global-set-key [C-down] 'ak-scroll-up1)         ;;was forward-paragraph
+(global-set-key [C-S-up]   'ak-scroll-down2)
+(global-set-key [C-S-down] 'ak-scroll-up2)
+(global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
+(global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
 (global-set-key (kbd "C-s-p") 'ak-line-up-fast)
 (global-set-key (kbd "C-s-n") 'ak-line-down-fast)
 (global-set-key [C-M-prior] 'backward-list)
@@ -84,7 +84,7 @@
   (interactive)(scroll-other-window (- ak-fast-scroll-lines)))
 
 ;;====================================
-;;;; go to top or end by page down/up
+;;;; Page Down/Up. Shift select cover page first.
 ;;====================================
 (global-set-key (kbd "<next>")  'ak-scroll-up)   ;;PageDown
 (global-set-key (kbd "<prior>") 'ak-scroll-down) ;;PageUp
@@ -96,16 +96,12 @@
     (if (ak-first-page-p)
         (goto-char (point-min))
       (if (not this-command-keys-shift-translated)
-          (scroll-down )
+          (scroll-down)
         ;;else
         (if (= (window-start) (point))
-            (scroll-down ))
-        
-        (goto-char (window-start))
-        )
-      )
-    )
-  )
+            (scroll-down))
+        (goto-char (window-start)))
+      )))
 (defun ak-scroll-up ()
   "scroll up = Page Down"
   (interactive "^")
@@ -115,22 +111,17 @@
     (if (ak-last-page-p)
         (goto-char (point-max))
       ;;else
-      (if (not this-command-keys-shift-translated)
-	  (progn (scroll-up )
-		 (forward-line 1))
+      (if this-command-keys-shift-translated
+          (let ((po (point)))
+            (move-to-window-line -1)      ;move cursor to window end
+            (when (= po (point))          ;cursor didnot move
+              (scroll-up)                 ;try again
+              (move-to-window-line -1)
+	      ))
         ;;else
-        (let ((po (point)))
-          (move-to-window-line -1)      ;move cursor to window end
-          (if (= po (point))            ;cursor really moved?
-              (progn
-                (scroll-up )        ;try again
-                (move-to-window-line -1)
-		))
-          )
-        )
-      )
-    )
-  )
+	(scroll-up)
+	(forward-line 1))
+      )))
 
 
 ;;====================================
@@ -152,14 +143,10 @@
           (scroll-down)
           )
       (let ( (pos0 (current-window-line)) )
-        (move-to-window-line nil)
+        (move-to-window-line nil) ;; try to move center
         (if (>= (current-window-line) pos0)
-            (move-to-window-line 0)
-          )
-        )
-      )
-    )
-  )
+            (move-to-window-line 0))) ;; move to first line
+      )))
 (defun ak-cursor-bottom ()
   "move cursor to middle or bottom of screen or scroll up(Page Down)"
   (interactive "^")
@@ -167,19 +154,15 @@
   (if (= (point-max) (point))
       (message "End of buffer@")
     (let ( (pos0 (current-window-line)) )
-      (move-to-window-line nil)
+      (move-to-window-line nil) ;; try to move center
       (if (> (current-window-line) pos0)
           nil ;; ok
-        (move-to-window-line -1)
+        (move-to-window-line -1) ;; try to move bottom
         (if (> (current-window-line) pos0)
             nil ;; ok
           (message "scroll up")
-          (scroll-up)
-          )
-        )
-      )
-    )
-  )
+          (scroll-up))
+        ))))
 ;;====================================
 ;;;; scroll half screen でらうま倶楽部
 ;;====================================
@@ -269,16 +252,26 @@ Set cursor at end of 1line/2buffer.(shift)"
   ;;(message "ak-mark-s")
   (if (region-active-p)
       ;; expanding region
-      (if this-command-keys-shift-translated
-	  (backward-sentence)
-	(forward-sentence))
+      (forward-sentence)
+    ;; define region
+    (forward-sentence)
+    (backward-sentence)
+    (set-mark (point))
+    (forward-sentence)
+    ))
+(defun ak-mark-sentence-backward ()
+  (interactive)
+  ;;(message "ak-mark-s-b")
+  (if (region-active-p)
+      ;; expanding region
+      (unless (bobp) (backward-sentence))
     ;; define region
     (unless (bobp) (backward-sentence))
     (mark-end-of-sentence 1)
-    (unless this-command-keys-shift-translated
-      (exchange-point-and-mark))))
-;;was (global-set-key (kbd "M-h") 'mark-paragraph)
-(global-set-key (kbd "M-h") 'ak-mark-sentence)
+    ))
+(global-set-key (kbd "s-]") 'ak-mark-sentence)
+(global-set-key (kbd "s-}") 'ak-mark-sentence-backward)
+;; M-e, M-a is for/backward-sentence
 
 ;; mark whole paragraph or extend to next.
 (defun ak-mark-paragraph ()
@@ -286,14 +279,27 @@ Set cursor at end of 1line/2buffer.(shift)"
   ;;(message "ak-mark-p")
   (if (region-active-p)
       ;; expanding region
-      (if this-command-keys-shift-translated
-	  (backward-paragraph)
-	(forward-paragraph))
+      (forward-paragraph)
     ;; define region
     (mark-paragraph)
-    (unless this-command-keys-shift-translated
-      (exchange-point-and-mark))))
-(global-set-key (kbd "M-{") 'forward-paragraph)  ;;was back
-(global-set-key (kbd "M-}") 'backward-paragraph) ;;was for
-(global-set-key (kbd "M-]") 'ak-mark-paragraph)
-;;(define-key key-translation-map (kbd "M-}") (kbd "M-S-]"))
+    (exchange-point-and-mark)))
+(defun ak-mark-paragraph-backward ()
+  (interactive)
+  ;;(message "ak-mark-p")
+  (if (region-active-p)
+      ;; expanding region
+      (unless (bobp) (backward-paragraph))
+    ;; define region
+    (mark-paragraph)
+    ))
+(defun ak-forward-paragraph ()
+  (interactive) ;;"^p"
+  (forward-paragraph))
+(defun ak-backward-paragraph ()
+  (interactive) ;;"^p"
+  (backward-paragraph))
+(global-set-key (kbd "M-}") 'ak-forward-paragraph)
+(global-set-key (kbd "M-{") 'ak-backward-paragraph)
+(global-set-key (kbd "M-h") 'ak-mark-paragraph)
+(global-set-key (kbd "M-H") 'ak-mark-paragraph-backward)
+;; C-down, C-up was for/backward-paragraph

@@ -6,8 +6,8 @@
 ;;====================================
 ;;;; function keys
 ;;====================================
-;;was                 help-command
-(global-set-key [f1] 'help-for-help)
+
+;;(global-set-key [f1] 'help-for-help) ;;was help-command
 (global-set-key [S-f1] 'other-window)
 
 ;;        C-x 6 2		2C-two-columns

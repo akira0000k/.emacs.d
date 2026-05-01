@@ -64,7 +64,7 @@
 ;; Line scroll
 (defun ak-scroll-down1()
   "1 line scroll down, move cursor to top."
-  (interactive "^")
+  (interactive)
   (if (ak-first-page-p)
       (if (= 0 (current-window-line))
 	  (move-beginning-of-line nil)
@@ -73,7 +73,7 @@
   )
 (defun ak-scroll-up1()
   "1 line scroll up, at lease show 1 line."
-  (interactive "^")
+  (interactive)
   (if (and (ak-first-page-p)
 	   (= 0 (current-window-line)))
       (next-line)
@@ -84,7 +84,7 @@
   )
 (defun ak-scroll-down2()
   "1 line scroll down, move cursor to top."
-  (interactive "^")
+  (interactive)
   (if (ak-first-page-p)
       (if (= 0 (current-window-line))
 	  (move-beginning-of-line nil)
@@ -93,7 +93,7 @@
   )
 (defun ak-scroll-up2()
   "1 line scroll up, at lease show 1 line."
-  (interactive "^")
+  (interactive)
   (if (and (ak-first-page-p)
 	   (= 0 (current-window-line)))
       (next-line 2)
