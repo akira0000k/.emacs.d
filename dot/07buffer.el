@@ -7,8 +7,8 @@
 ;;;;circular buffer change
 ;;====================================
 ;;C-PageUp C-PageDown .. Excel:change tab
-(global-set-key [C-prior] 'ak-last-buffer)
-(global-set-key [C-next]  'ak-next-buffer)
+(global-set-key (kbd "C-<prior>") 'ak-last-buffer)
+(global-set-key (kbd "C-<next>")  'ak-next-buffer)
 
 (defun ak-last-buffer()
   "Popup last buffer from list, and show it"

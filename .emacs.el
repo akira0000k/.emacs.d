@@ -54,8 +54,8 @@
 ;;====================================
 ;;;; keybinding while Isearch.  ex. C-s C-w ..yank word
 ;;====================================
-(define-key isearch-mode-map "\C-k" 'isearch-edit-string)
-(define-key isearch-mode-map "\C-h" 'isearch-delete-char)
+(define-key isearch-mode-map (kbd "C-k") 'isearch-edit-string)
+(define-key isearch-mode-map (kbd "C-h") 'isearch-delete-char)
 ;; ;; incremental search 中に C-j を改行にマッチさせる。(default動作)
 ;; (define-key isearch-mode-map (kbd "C-j") 'isearch-printing-char) ;;default
 ;; isearch-edit-string と replace の minibuffer内で C-j を単純改行挿入にする
@@ -141,9 +141,9 @@
 ;;====================================
 ;;;; Teraterm End key = <select>
 ;;====================================
-(define-key input-decode-map "\e[1~" [home])   ;;<find> to <home>  (screen)
-(define-key input-decode-map "\e[4~" [end])    ;;<select> to <end>  (NumLock-off 1)
-(define-key input-decode-map "\e[3~" [deletechar])   ;;vscode delete key was DEL
+(define-key input-decode-map "\e[1~" (kbd "<home>"))   ;;<find> to <home>  (screen)
+(define-key input-decode-map "\e[4~" (kbd "<end>"))    ;;<select> to <end>  (NumLock-off 1)
+(define-key input-decode-map "\e[3~" (kbd "<deletechar>"))   ;;vscode delete key was DEL
 
 ;;  MAC OSX  default reversed by kbd setting   ¥-->\   fn ¥-->¥
 ;;      but C-\  M-\  ...ng
@@ -256,12 +256,12 @@
 ;; (define-key function-key-map [?\C-x ?@ ?S] 'event-apply-shift-modifier)
 ;; (define-key function-key-map [?\C-x ?@ ?s] 'event-apply-super-modifier)
 
-(define-key function-key-map [?\M-s ?@ ?S] 'event-apply-shift-modifier)
-(define-key function-key-map [?\M-s ?@ ?s] 'event-apply-super-modifier)
+(define-key function-key-map (kbd "M-s @ S") 'event-apply-shift-modifier)
+(define-key function-key-map (kbd "M-s @ s") 'event-apply-super-modifier)
 
-;;;; Esc Esc s @ S ^A   C-M-S-a   Shift + beginning-of-defun
-;;;; Esc Esc s @ s f	M-s-f     isearch-forward-regexp
-;;;; Esc Esc s @ s F	M-s-F     isearch-backward-regexp
+;;;; Esc M-s @ S ^A   C-M-S-a	  Shift + beginning-of-defun
+;;;; Esc M-s @ s f	M-s-f	  isearch-forward-regexp
+;;;; Esc M-s @ s F	M-s-F	  isearch-backward-regexp
 
 
 ;;====================================
@@ -358,10 +358,10 @@
 ;;;; MAC OSX command keys
 ;;====================================
 ;;;; MAC OSX command key + up down left right
-(global-set-key [s-up]    'beginning-of-buffer)
-(global-set-key [s-down]  'end-of-buffer)
-(global-set-key [s-left]  'move-beginning-of-line)
-(global-set-key [s-right] 'move-end-of-line)
+(global-set-key (kbd "s-<up>")    'beginning-of-buffer)
+(global-set-key (kbd "s-<down>")  'end-of-buffer)
+(global-set-key (kbd "s-<left>")  'move-beginning-of-line)
+(global-set-key (kbd "s-<right>") 'move-end-of-line)
 ;;     same as default
 (global-set-key (kbd "s-a") 'mark-whole-buffer)
 (global-set-key (kbd "s-l") 'goto-line)
@@ -498,18 +498,18 @@
 ;;;; control keys
 ;;====================================
 
-;;              [C-up]                    ;; Start Mission Control @ MAC OSX
-;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key [C-up]   'ak-scroll-down1)       ;;was backward-paragraph
-(global-set-key [C-down] 'ak-scroll-up1)         ;;was forward-paragraph
-(global-set-key [C-S-up]   'ak-scroll-down2)
-(global-set-key [C-S-down] 'ak-scroll-up2)
+;;              (kbd "C-<up>")        ;; Start Mission Control @ MAC OSX
+;;              (kbd "C-<down>")      ;; Application Window (Mission Control @ MAC OSX)
+(global-set-key (kbd "C-<up>")   'ak-scroll-down1)   ;;was backward-paragraph
+(global-set-key (kbd "C-<down>") 'ak-scroll-up1)     ;;was forward-paragraph
+(global-set-key (kbd "C-S-<up>")   'ak-scroll-down2)
+(global-set-key (kbd "C-S-<down>") 'ak-scroll-up2)
 (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
 (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
 (global-set-key (kbd "C-s-p") 'ak-line-up-fast)
 (global-set-key (kbd "C-s-n") 'ak-line-down-fast)
-(global-set-key [C-M-prior] 'backward-list)
-(global-set-key [C-M-next]  'forward-list)
+(global-set-key (kbd "C-M-<prior>") 'backward-list)
+(global-set-key (kbd "C-M-<next>")  'forward-list)
 (global-set-key (kbd "ESC C-<prior>") 'backward-list)
 (global-set-key (kbd "ESC C-<next>")  'forward-list)
 
@@ -520,11 +520,11 @@
 (global-set-key (kbd "C-<wheel-down>") 'ak-line-down-fast)
 
 
-;;;; iTerm2 use move tab function by C-tab
-;;(global-set-key [C-tab] 'other-window)
-;;(global-set-key [C-S-tab] 'ak-prev-window)
-(global-set-key [C-tab] 'next-window-any-frame)
-(global-set-key [C-S-tab] 'previous-window-any-frame)
+;;;; iTerm2 use move tab function by C-<tab>
+;;(global-set-key (kbd "C-<tab>") 'other-window)
+;;(global-set-key (kbd "C-S-<tab>") 'ak-prev-window)
+(global-set-key (kbd "C-<tab>") 'next-window-any-frame)
+(global-set-key (kbd "C-S-<tab>") 'previous-window-any-frame)
 
 ;; Control-Comma,   go to filetop
 ;; Control-Period.  go to fileend
@@ -539,12 +539,12 @@
 
 
 ;; ;; MAC OSX option key + up down left right
-;; ;;;; [M-right]   ;; previous word
-;; ;;;; [M-left]    ;; next word
-;; (global-set-key (kbd "<M-down>") #'(lambda()(interactive "^")
+;; ;;;; (kbd "M-<right>")   ;; previous word
+;; ;;;; (kbd "M-<left>")    ;; next word
+;; (global-set-key (kbd "M-<down>") #'(lambda()(interactive "^")
 ;;                             (if (eolp) (forward-line))
 ;;                             (end-of-line)))
-;; (global-set-key (kbd "<M-up>")   #'(lambda()(interactive "^")
+;; (global-set-key (kbd "M-<up>")   #'(lambda()(interactive "^")
 ;;                             (if (bolp) (forward-line -1))
 ;;                             (beginning-of-line)))
 
@@ -672,10 +672,10 @@
 ;;====================================
 ;;;; begining/end of buffer/line(shift)
 ;;====================================
-(global-set-key [C-home]  'beginning-of-buffer)
-(global-set-key [C-end]   'end-of-buffer)
-(global-set-key [home]  'ak-beginning-of-buffer)
-(global-set-key [end]   'ak-end-of-buffer)
+(global-set-key (kbd "C-<home>")  'beginning-of-buffer)
+(global-set-key (kbd "C-<end>")   'end-of-buffer)
+(global-set-key (kbd "<home>")  'ak-beginning-of-buffer)
+(global-set-key (kbd "<end>")   'ak-end-of-buffer)
 (defun ak-beginning-of-buffer()
   "Set cursor at beginning of buffer.(unshift)
 Set cursor at beginning of 1line/2buffer.(shift)"
@@ -793,7 +793,7 @@ Set cursor at end of 1line/2buffer.(shift)"
 (global-set-key (kbd "M-{") 'ak-backward-paragraph)
 (global-set-key (kbd "M-h") 'ak-mark-paragraph)
 (global-set-key (kbd "M-H") 'ak-mark-paragraph-backward)
-;; C-down, C-up was for/backward-paragraph
+;; C-<down>, C-<up> was for/backward-paragraph
 
 
 
@@ -870,7 +870,7 @@ With prefix argument, activate previous rectangle if possible."
 (setq dired-clean-up-buffers-too nil)
 ;; Save Z directory
 (defvar dired-default-directory default-directory)
-;; t = Open like Vi by [right]
+;; t = Open View mode by <right>
 (defcustom ak-dired-view-on-right-arrow nil
   "Non-nil means open in view mode by right arrow in dired."
   :type 'boolean
@@ -882,14 +882,14 @@ With prefix argument, activate previous rectangle if possible."
 (with-eval-after-load 'dired
   (require 'dired-x)
   ;;(require 'wdired)
-  (define-key dired-mode-map [right]   'ak-dired-right-char)      ;; -> f, v
-  (define-key dired-mode-map [left]    'ak-dired-left-char)       ;; <- ^
-  (define-key dired-mode-map [home]    'ak-dired-home)
-  (define-key dired-mode-map [end]     'ak-dired-end)
-  (define-key dired-mode-map [prior]   'ak-dired-scroll-down)
-  (define-key dired-mode-map [next]    'ak-dired-scroll-up)
-  (define-key dired-mode-map [f5]      'revert-buffer)               ;; g
-  (define-key dired-mode-map [S-f5]    'revert-buffer)               ;; g
+  (define-key dired-mode-map (kbd "<right>")   'ak-dired-right-char)      ;; -> f, v
+  (define-key dired-mode-map (kbd "<left>")    'ak-dired-left-char)       ;; <- ^
+  (define-key dired-mode-map (kbd "<home>")    'ak-dired-home)
+  (define-key dired-mode-map (kbd "<end>")     'ak-dired-end)
+  (define-key dired-mode-map (kbd "<prior>")   'ak-dired-scroll-down)
+  (define-key dired-mode-map (kbd "<next>")    'ak-dired-scroll-up)
+  (define-key dired-mode-map (kbd "<f5>")      'revert-buffer)               ;; g
+  (define-key dired-mode-map (kbd "S-<f5>")    'revert-buffer)               ;; g
   (define-key dired-mode-map "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
   ;; S            dired-do-symlink
   ;; Y            dired-do-relsymlink  dired-x.el
@@ -913,14 +913,14 @@ With prefix argument, activate previous rectangle if possible."
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
   (defalias 'ak-dired-previous-line 'previous-line)
-  (define-key dired-mode-map "\C-n" 'ak-dired-next-line)
-  (define-key dired-mode-map "\C-p" 'ak-dired-previous-line)
+  (define-key dired-mode-map (kbd "C-n") 'ak-dired-next-line)
+  (define-key dired-mode-map (kbd "C-p") 'ak-dired-previous-line)
 
   ;; ;; line scroll and keep cursor on file name
-  ;; (define-key dired-mode-map [C-up]   'ak-dired-line-up       )
-  ;; (define-key dired-mode-map [C-down] 'ak-dired-line-down     )
-  ;; (define-key dired-mode-map [C-s-up]   'ak-dired-line-up-fast  )
-  ;; (define-key dired-mode-map [C-s-down] 'ak-dired-line-down-fast)
+  ;; (define-key dired-mode-map (kbd "C-<up>")   'ak-dired-line-up       )
+  ;; (define-key dired-mode-map (kbd "C-<down>") 'ak-dired-line-down     )
+  ;; (define-key dired-mode-map (kbd "C-s-<up>")   'ak-dired-line-up-fast  )
+  ;; (define-key dired-mode-map (kbd "C-s-<down>") 'ak-dired-line-down-fast)
   ;; (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
   ;; (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
 
@@ -1059,12 +1059,12 @@ With prefix argument, activate previous rectangle if possible."
 
 ;; ;; Cursor L, R move always logical order, backward and forward,
 ;; ;; even at R2L text and visual-order-cursor-movement is t
-;; (global-set-key [left] 'ak-backward-char)
-;; (global-set-key [right] 'forward-char)
+;; (global-set-key (kbd "<left>") 'ak-backward-char)
+;; (global-set-key (kbd "<right>") 'forward-char)
 
 ;; cursor move L R naturally at R2L text.
-(global-set-key [left] 'ak-left-char)
-(global-set-key [right] 'ak-right-char)
+(global-set-key (kbd "<left>") 'ak-left-char)
+(global-set-key (kbd "<right>") 'ak-right-char)
 (if (boundp 'cua--rectangle-keymap)
     (progn
       (define-key cua--rectangle-keymap [remap ak-right-char]          #'cua-resize-rectangle-right)
@@ -1130,44 +1130,44 @@ With prefix argument, activate previous rectangle if possible."
 ;;;; function keys
 ;;====================================
 
-;;(global-set-key [f1] 'help-for-help) ;;was help-command
-(global-set-key [S-f1] 'other-window)
+;;(global-set-key (kbd "<f1>") 'help-for-help) ;;was help-command
+(global-set-key (kbd "S-<f1>") 'other-window)
 
 ;;        C-x 6 2		2C-two-columns
 ;;        C-x 6 b		2C-associate-buffer
 ;;        C-x 6 s		2C-split
 ;;was                 2C-command
-(global-set-key [f2] 'ak-divide-screen-toggle)
-;;(global-set-key [S-f2] 'ak-divide-screen-or-other)
-(global-set-key [S-f2] 'ak-divide-screen3-or-other)
+(global-set-key (kbd "<f2>") 'ak-divide-screen-toggle)
+;;(global-set-key (kbd "S-<f2>") 'ak-divide-screen-or-other)
+(global-set-key (kbd "S-<f2>") 'ak-divide-screen3-or-other)
 
 ;;was                 kmacro-start-macro-or-insert-counter
-(global-set-key [f3] 'isearch-repeat-forward)
-(global-set-key [S-f3] 'isearch-repeat-backward)
+(global-set-key (kbd "<f3>") 'isearch-repeat-forward)
+(global-set-key (kbd "S-<f3>") 'isearch-repeat-backward)
 
 ;;was                    kmacro-end-or-call-macro
-(global-set-key [f4]    'kill-current-buffer)
-(global-set-key [S-f4] 'delete-window)
+(global-set-key (kbd "<f4>")    'kill-current-buffer)
+(global-set-key (kbd "S-<f4>") 'delete-window)
 
-(global-set-key [S-f5] 'recenter)
-(global-set-key [f5] 'ak-dired-current-dir-other-window)
+(global-set-key (kbd "S-<f5>") 'recenter)
+(global-set-key (kbd "<f5>") 'ak-dired-current-dir-other-window)
 (defun ak-dired-current-dir-other-window()
   "Dired current directory other window." (interactive)
   (dired-other-window "."))
 
-(global-set-key [f6]   'universal-coding-system-argument)       ;;   C-x RET-c
-(global-set-key [S-f6]   'electric-indent-mode)
+(global-set-key (kbd "<f6>")   'universal-coding-system-argument)       ;;   C-x RET-c
+(global-set-key (kbd "S-<f6>")   'electric-indent-mode)
 ;;test macro
 (global-set-key (kbd "ESC <f6>")  'kmacro-start-macro-or-insert-counter)  ;; <f3>
-(global-set-key [C-f6]  'kmacro-end-or-call-macro)  ;; <f4>
+(global-set-key (kbd "C-<f6>")  'kmacro-end-or-call-macro)  ;; <f4>
 
-(global-set-key [f7]   'ak-shrink-window)
-(global-set-key [S-f7] 'ak-shrink-window2)
-(global-set-key [f8]   'ak-enlarge-window)
-(global-set-key [S-f8] 'ak-enlarge-window2)
+(global-set-key (kbd "<f7>")   'ak-shrink-window)
+(global-set-key (kbd "S-<f7>") 'ak-shrink-window2)
+(global-set-key (kbd "<f8>")   'ak-enlarge-window)
+(global-set-key (kbd "S-<f8>") 'ak-enlarge-window2)
 
-(global-set-key [f9]  'describe-key-briefly)
-(global-set-key [S-f9] 'ak-toggle-case-fold-search)
+(global-set-key (kbd "<f9>")  'describe-key-briefly)
+(global-set-key (kbd "S-<f9>") 'ak-toggle-case-fold-search)
 (defun ak-toggle-case-fold-search()
   "Toggle search case." (interactive)
   (if case-fold-search
@@ -1177,23 +1177,23 @@ With prefix argument, activate previous rectangle if possible."
     (message "ignore case Search mode")))
 
 ;;was  menu-bar-open
-(global-set-key [f10] 'ak-window-swap-split)
-;; (global-set-key [S-f10] 'ak-window-vh-split)
-;; (global-set-key [f10] 'ak-window-rotate-split)
-(global-set-key [S-f10] 'ak-window-rotate-split-reverse)
+(global-set-key (kbd "<f10>") 'ak-window-swap-split)
+;; (global-set-key (kbd "<S-f10>") 'ak-window-vh-split)
+;; (global-set-key (kbd "<f10>") 'ak-window-rotate-split)
+(global-set-key (kbd "S-<f10>") 'ak-window-rotate-split-reverse)
 ;;               M-f10   toggle-frame-maximized  =  "ESC <f10>"
 
 (global-set-key (kbd "M-<f11>")   'toggle-frame-fullscreen)  ;; <f11>
 (global-set-key (kbd "ESC <f11>") 'toggle-frame-fullscreen)  ;; <f11>
 
 ;;was                 'toggle-frame-fullscreen  ==> "ESC <f11>"
-(global-set-key [f11] 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
+(global-set-key (kbd "<f11>") 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
 ;; (require 'linum)                            ;; obsolete (emacs29)
-;; (global-set-key [f12] 'global-linum-mode)
-(global-set-key [f12] 'global-display-line-numbers-mode)
-;;(global-set-key [f12] 'display-line-numbers-mode)
-(global-set-key [S-f11] 'scroll-right)
-(global-set-key [S-f12] 'scroll-left)
+;; (global-set-key (kbd "<f12>") 'global-linum-mode)
+(global-set-key (kbd "<f12>") 'global-display-line-numbers-mode)
+;;(global-set-key (kbd "<f12>") 'display-line-numbers-mode)
+(global-set-key (kbd "S-<f11>") 'scroll-right)
+(global-set-key (kbd "S-<f12>") 'scroll-left)
 
 
 ;;======================================
@@ -1350,7 +1350,7 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;;; jump matching paren (<--->)
 ;;====================================
-(global-set-key "\C-]" 'match-paren)
+(global-set-key (kbd "C-]") 'match-paren)
 (defun match-paren (arg)
   "Go to the matching parenthesis if on parenthesis"
   (interactive "p")
@@ -1449,13 +1449,13 @@ With prefix argument, activate previous rectangle if possible."
   (setq comint-scroll-to-bottom-on-input t)
   ;;(setq comint-scroll-to-bottom-on-output t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-  (define-key shell-mode-map  [S-f5]     'ak-do-resync-dirs)
-  (define-key comint-mode-map [home]   'beginning-of-buffer)
-  (define-key comint-mode-map [end]    'end-of-buffer)
-  (define-key comint-mode-map [C-up]   'ak-scroll-down1)
-  (define-key comint-mode-map [C-down] 'ak-scroll-up1)
-  (define-key comint-mode-map [up]     'ak-shell-up)
-  (define-key comint-mode-map [down]   'ak-shell-down)
+  (define-key shell-mode-map  (kbd "S-<f5>")     'ak-do-resync-dirs)
+  (define-key comint-mode-map (kbd "<home>")   'beginning-of-buffer)
+  (define-key comint-mode-map (kbd "<end>")    'end-of-buffer)
+  (define-key comint-mode-map (kbd "C-<up>")   'ak-scroll-down1)
+  (define-key comint-mode-map (kbd "C-<down>") 'ak-scroll-up1)
+  (define-key comint-mode-map (kbd "<up>")     'ak-shell-up)
+  (define-key comint-mode-map (kbd "<down>")   'ak-shell-down)
   )
 
 (add-hook 'shell-mode-hook
@@ -1504,8 +1504,8 @@ With prefix argument, activate previous rectangle if possible."
 ;;;;circular buffer change
 ;;====================================
 ;;C-PageUp C-PageDown .. Excel:change tab
-(global-set-key [C-prior] 'ak-last-buffer)
-(global-set-key [C-next]  'ak-next-buffer)
+(global-set-key (kbd "C-<prior>") 'ak-last-buffer)
+(global-set-key (kbd "C-<next>")  'ak-next-buffer)
 
 (defun ak-last-buffer()
   "Popup last buffer from list, and show it"
@@ -1736,7 +1736,7 @@ With prefix argument, activate previous rectangle if possible."
 (require 'package)       ;;for package-installed-p
 (when (package-installed-p 'ddskk)
   ;;(setq default-input-method "japanese-skk") ;;C-\ toggle
-  (global-set-key "\C-x\C-j" 'skk-mode)
+  (global-set-key (kbd "C-x C-j") 'skk-mode)
   )
 
 (with-eval-after-load "skk"
@@ -1802,7 +1802,7 @@ With prefix argument, activate previous rectangle if possible."
 	   )))
 
 (with-eval-after-load 'view
-  (define-key view-mode-map [S-f5] 'ak-revert-buffer-noconfirm)
+  (define-key view-mode-map (kbd "S-<f5>") 'ak-revert-buffer-noconfirm)
   (define-key view-mode-map "i" 'ak-View-exit)
   (define-key view-mode-map "h" 'left-char)
   (define-key view-mode-map "j" 'next-line)
@@ -2091,7 +2091,7 @@ With prefix argument, activate previous rectangle if possible."
   (if (ak-first-page-p)
       (if (= 0 (current-window-line))
 	  (move-beginning-of-line nil)
-	(previous-line))
+	(forward-line -1))
     (scroll-down 1))
   )
 (defun ak-scroll-up1()
@@ -2099,11 +2099,11 @@ With prefix argument, activate previous rectangle if possible."
   (interactive)
   (if (and (ak-first-page-p)
 	   (= 0 (current-window-line)))
-      (next-line)
+      (forward-line)
     ;;else
     (scroll-up   1)
     (if (= 0 (current-window-line))
-	(next-line)))
+	(forward-line)))
   )
 (defun ak-scroll-down2()
   "1 line scroll down, move cursor to top."
@@ -2111,7 +2111,7 @@ With prefix argument, activate previous rectangle if possible."
   (if (ak-first-page-p)
       (if (= 0 (current-window-line))
 	  (move-beginning-of-line nil)
-	(previous-line 2))
+	(forward-line -2))
     (scroll-down 2))
   )
 (defun ak-scroll-up2()
@@ -2119,11 +2119,11 @@ With prefix argument, activate previous rectangle if possible."
   (interactive)
   (if (and (ak-first-page-p)
 	   (= 0 (current-window-line)))
-      (next-line 2)
+      (forward-line 2)
     ;;else
     (scroll-up   2)
     (if (= 0 (current-window-line))
-	(next-line 2)))
+	(forward-line 2)))
   )
 ;;(defun ak-scroll-down1() (interactive) (scroll-down 1))
 ;;(defun ak-scroll-down2() (interactive) (scroll-down 2))
@@ -2240,9 +2240,7 @@ With prefix argument, activate previous rectangle if possible."
     (if (ak-first-page-p)
         (goto-char (point-min))
       (scroll-down arg)
-      )
-    )
-  )
+      )))
 ;; basic scroll-up
 (defun ak-scroll-page-forward (&optional arg)
   "scroll up = Page Down"
@@ -2255,6 +2253,4 @@ With prefix argument, activate previous rectangle if possible."
       ;;else
       (scroll-up arg)
       (forward-line 1)
-      )
-    )
-  )
+      )))

@@ -47,7 +47,7 @@
 (require 'package)       ;;for package-installed-p
 (when (package-installed-p 'ddskk)
   ;;(setq default-input-method "japanese-skk") ;;C-\ toggle
-  (global-set-key "\C-x\C-j" 'skk-mode)
+  (global-set-key (kbd "C-x C-j") 'skk-mode)
   )
 
 (with-eval-after-load "skk"
@@ -113,7 +113,7 @@
 	   )))
 
 (with-eval-after-load 'view
-  (define-key view-mode-map [S-f5] 'ak-revert-buffer-noconfirm)
+  (define-key view-mode-map (kbd "S-<f5>") 'ak-revert-buffer-noconfirm)
   (define-key view-mode-map "i" 'ak-View-exit)
   (define-key view-mode-map "h" 'left-char)
   (define-key view-mode-map "j" 'next-line)

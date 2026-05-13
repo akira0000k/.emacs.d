@@ -6,9 +6,9 @@
 ;;====================================
 ;;;; Teraterm End key = <select>
 ;;====================================
-(define-key input-decode-map "\e[1~" [home])   ;;<find> to <home>  (screen)
-(define-key input-decode-map "\e[4~" [end])    ;;<select> to <end>  (NumLock-off 1)
-(define-key input-decode-map "\e[3~" [deletechar])   ;;vscode delete key was DEL
+(define-key input-decode-map "\e[1~" (kbd "<home>"))   ;;<find> to <home>  (screen)
+(define-key input-decode-map "\e[4~" (kbd "<end>"))    ;;<select> to <end>  (NumLock-off 1)
+(define-key input-decode-map "\e[3~" (kbd "<deletechar>"))   ;;vscode delete key was DEL
 
 ;;  MAC OSX  default reversed by kbd setting   ¥-->\   fn ¥-->¥
 ;;      but C-\  M-\  ...ng
@@ -121,12 +121,12 @@
 ;; (define-key function-key-map [?\C-x ?@ ?S] 'event-apply-shift-modifier)
 ;; (define-key function-key-map [?\C-x ?@ ?s] 'event-apply-super-modifier)
 
-(define-key function-key-map [?\M-s ?@ ?S] 'event-apply-shift-modifier)
-(define-key function-key-map [?\M-s ?@ ?s] 'event-apply-super-modifier)
+(define-key function-key-map (kbd "M-s @ S") 'event-apply-shift-modifier)
+(define-key function-key-map (kbd "M-s @ s") 'event-apply-super-modifier)
 
-;;;; Esc Esc s @ S ^A   C-M-S-a   Shift + beginning-of-defun
-;;;; Esc Esc s @ s f	M-s-f     isearch-forward-regexp
-;;;; Esc Esc s @ s F	M-s-F     isearch-backward-regexp
+;;;; Esc M-s @ S ^A   C-M-S-a	  Shift + beginning-of-defun
+;;;; Esc M-s @ s f	M-s-f	  isearch-forward-regexp
+;;;; Esc M-s @ s F	M-s-F	  isearch-backward-regexp
 
 
 ;;====================================
@@ -223,10 +223,10 @@
 ;;;; MAC OSX command keys
 ;;====================================
 ;;;; MAC OSX command key + up down left right
-(global-set-key [s-up]    'beginning-of-buffer)
-(global-set-key [s-down]  'end-of-buffer)
-(global-set-key [s-left]  'move-beginning-of-line)
-(global-set-key [s-right] 'move-end-of-line)
+(global-set-key (kbd "s-<up>")    'beginning-of-buffer)
+(global-set-key (kbd "s-<down>")  'end-of-buffer)
+(global-set-key (kbd "s-<left>")  'move-beginning-of-line)
+(global-set-key (kbd "s-<right>") 'move-end-of-line)
 ;;     same as default
 (global-set-key (kbd "s-a") 'mark-whole-buffer)
 (global-set-key (kbd "s-l") 'goto-line)

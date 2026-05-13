@@ -7,18 +7,18 @@
 ;;;; control keys
 ;;====================================
 
-;;              [C-up]                    ;; Start Mission Control @ MAC OSX
-;;              [C-down]                  ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key [C-up]   'ak-scroll-down1)       ;;was backward-paragraph
-(global-set-key [C-down] 'ak-scroll-up1)         ;;was forward-paragraph
-(global-set-key [C-S-up]   'ak-scroll-down2)
-(global-set-key [C-S-down] 'ak-scroll-up2)
+;;              (kbd "C-<up>")        ;; Start Mission Control @ MAC OSX
+;;              (kbd "C-<down>")      ;; Application Window (Mission Control @ MAC OSX)
+(global-set-key (kbd "C-<up>")   'ak-scroll-down1)   ;;was backward-paragraph
+(global-set-key (kbd "C-<down>") 'ak-scroll-up1)     ;;was forward-paragraph
+(global-set-key (kbd "C-S-<up>")   'ak-scroll-down2)
+(global-set-key (kbd "C-S-<down>") 'ak-scroll-up2)
 (global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
 (global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
 (global-set-key (kbd "C-s-p") 'ak-line-up-fast)
 (global-set-key (kbd "C-s-n") 'ak-line-down-fast)
-(global-set-key [C-M-prior] 'backward-list)
-(global-set-key [C-M-next]  'forward-list)
+(global-set-key (kbd "C-M-<prior>") 'backward-list)
+(global-set-key (kbd "C-M-<next>")  'forward-list)
 (global-set-key (kbd "ESC C-<prior>") 'backward-list)
 (global-set-key (kbd "ESC C-<next>")  'forward-list)
 
@@ -29,11 +29,11 @@
 (global-set-key (kbd "C-<wheel-down>") 'ak-line-down-fast)
 
 
-;;;; iTerm2 use move tab function by C-tab
-;;(global-set-key [C-tab] 'other-window)
-;;(global-set-key [C-S-tab] 'ak-prev-window)
-(global-set-key [C-tab] 'next-window-any-frame)
-(global-set-key [C-S-tab] 'previous-window-any-frame)
+;;;; iTerm2 use move tab function by C-<tab>
+;;(global-set-key (kbd "C-<tab>") 'other-window)
+;;(global-set-key (kbd "C-S-<tab>") 'ak-prev-window)
+(global-set-key (kbd "C-<tab>") 'next-window-any-frame)
+(global-set-key (kbd "C-S-<tab>") 'previous-window-any-frame)
 
 ;; Control-Comma,   go to filetop
 ;; Control-Period.  go to fileend
@@ -48,12 +48,12 @@
 
 
 ;; ;; MAC OSX option key + up down left right
-;; ;;;; [M-right]   ;; previous word
-;; ;;;; [M-left]    ;; next word
-;; (global-set-key (kbd "<M-down>") #'(lambda()(interactive "^")
+;; ;;;; (kbd "M-<right>")   ;; previous word
+;; ;;;; (kbd "M-<left>")    ;; next word
+;; (global-set-key (kbd "M-<down>") #'(lambda()(interactive "^")
 ;;                             (if (eolp) (forward-line))
 ;;                             (end-of-line)))
-;; (global-set-key (kbd "<M-up>")   #'(lambda()(interactive "^")
+;; (global-set-key (kbd "M-<up>")   #'(lambda()(interactive "^")
 ;;                             (if (bolp) (forward-line -1))
 ;;                             (beginning-of-line)))
 
@@ -181,10 +181,10 @@
 ;;====================================
 ;;;; begining/end of buffer/line(shift)
 ;;====================================
-(global-set-key [C-home]  'beginning-of-buffer)
-(global-set-key [C-end]   'end-of-buffer)
-(global-set-key [home]  'ak-beginning-of-buffer)
-(global-set-key [end]   'ak-end-of-buffer)
+(global-set-key (kbd "C-<home>")  'beginning-of-buffer)
+(global-set-key (kbd "C-<end>")   'end-of-buffer)
+(global-set-key (kbd "<home>")  'ak-beginning-of-buffer)
+(global-set-key (kbd "<end>")   'ak-end-of-buffer)
 (defun ak-beginning-of-buffer()
   "Set cursor at beginning of buffer.(unshift)
 Set cursor at beginning of 1line/2buffer.(shift)"
@@ -302,4 +302,4 @@ Set cursor at end of 1line/2buffer.(shift)"
 (global-set-key (kbd "M-{") 'ak-backward-paragraph)
 (global-set-key (kbd "M-h") 'ak-mark-paragraph)
 (global-set-key (kbd "M-H") 'ak-mark-paragraph-backward)
-;; C-down, C-up was for/backward-paragraph
+;; C-<down>, C-<up> was for/backward-paragraph

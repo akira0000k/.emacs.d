@@ -10,7 +10,7 @@
 (setq dired-clean-up-buffers-too nil)
 ;; Save Z directory
 (defvar dired-default-directory default-directory)
-;; t = Open like Vi by [right]
+;; t = Open View mode by <right>
 (defcustom ak-dired-view-on-right-arrow nil
   "Non-nil means open in view mode by right arrow in dired."
   :type 'boolean
@@ -22,14 +22,14 @@
 (with-eval-after-load 'dired
   (require 'dired-x)
   ;;(require 'wdired)
-  (define-key dired-mode-map [right]   'ak-dired-right-char)      ;; -> f, v
-  (define-key dired-mode-map [left]    'ak-dired-left-char)       ;; <- ^
-  (define-key dired-mode-map [home]    'ak-dired-home)
-  (define-key dired-mode-map [end]     'ak-dired-end)
-  (define-key dired-mode-map [prior]   'ak-dired-scroll-down)
-  (define-key dired-mode-map [next]    'ak-dired-scroll-up)
-  (define-key dired-mode-map [f5]      'revert-buffer)               ;; g
-  (define-key dired-mode-map [S-f5]    'revert-buffer)               ;; g
+  (define-key dired-mode-map (kbd "<right>")   'ak-dired-right-char)      ;; -> f, v
+  (define-key dired-mode-map (kbd "<left>")    'ak-dired-left-char)       ;; <- ^
+  (define-key dired-mode-map (kbd "<home>")    'ak-dired-home)
+  (define-key dired-mode-map (kbd "<end>")     'ak-dired-end)
+  (define-key dired-mode-map (kbd "<prior>")   'ak-dired-scroll-down)
+  (define-key dired-mode-map (kbd "<next>")    'ak-dired-scroll-up)
+  (define-key dired-mode-map (kbd "<f5>")      'revert-buffer)               ;; g
+  (define-key dired-mode-map (kbd "S-<f5>")    'revert-buffer)               ;; g
   (define-key dired-mode-map "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
   ;; S            dired-do-symlink
   ;; Y            dired-do-relsymlink  dired-x.el
@@ -53,14 +53,14 @@
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
   (defalias 'ak-dired-previous-line 'previous-line)
-  (define-key dired-mode-map "\C-n" 'ak-dired-next-line)
-  (define-key dired-mode-map "\C-p" 'ak-dired-previous-line)
+  (define-key dired-mode-map (kbd "C-n") 'ak-dired-next-line)
+  (define-key dired-mode-map (kbd "C-p") 'ak-dired-previous-line)
 
   ;; ;; line scroll and keep cursor on file name
-  ;; (define-key dired-mode-map [C-up]   'ak-dired-line-up       )
-  ;; (define-key dired-mode-map [C-down] 'ak-dired-line-down     )
-  ;; (define-key dired-mode-map [C-s-up]   'ak-dired-line-up-fast  )
-  ;; (define-key dired-mode-map [C-s-down] 'ak-dired-line-down-fast)
+  ;; (define-key dired-mode-map (kbd "C-<up>")   'ak-dired-line-up       )
+  ;; (define-key dired-mode-map (kbd "C-<down>") 'ak-dired-line-down     )
+  ;; (define-key dired-mode-map (kbd "C-s-<up>")   'ak-dired-line-up-fast  )
+  ;; (define-key dired-mode-map (kbd "C-s-<down>") 'ak-dired-line-down-fast)
   ;; (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
   ;; (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
 
@@ -199,12 +199,12 @@
 
 ;; ;; Cursor L, R move always logical order, backward and forward,
 ;; ;; even at R2L text and visual-order-cursor-movement is t
-;; (global-set-key [left] 'ak-backward-char)
-;; (global-set-key [right] 'forward-char)
+;; (global-set-key (kbd "<left>") 'ak-backward-char)
+;; (global-set-key (kbd "<right>") 'forward-char)
 
 ;; cursor move L R naturally at R2L text.
-(global-set-key [left] 'ak-left-char)
-(global-set-key [right] 'ak-right-char)
+(global-set-key (kbd "<left>") 'ak-left-char)
+(global-set-key (kbd "<right>") 'ak-right-char)
 (if (boundp 'cua--rectangle-keymap)
     (progn
       (define-key cua--rectangle-keymap [remap ak-right-char]          #'cua-resize-rectangle-right)

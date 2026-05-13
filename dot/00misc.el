@@ -33,8 +33,8 @@
 ;;====================================
 ;;;; keybinding while Isearch.  ex. C-s C-w ..yank word
 ;;====================================
-(define-key isearch-mode-map "\C-k" 'isearch-edit-string)
-(define-key isearch-mode-map "\C-h" 'isearch-delete-char)
+(define-key isearch-mode-map (kbd "C-k") 'isearch-edit-string)
+(define-key isearch-mode-map (kbd "C-h") 'isearch-delete-char)
 ;; ;; incremental search 中に C-j を改行にマッチさせる。(default動作)
 ;; (define-key isearch-mode-map (kbd "C-j") 'isearch-printing-char) ;;default
 ;; isearch-edit-string と replace の minibuffer内で C-j を単純改行挿入にする
