@@ -12,10 +12,8 @@
 (setq global-auto-revert-non-file-buffers t) ;;default: nil
 (setq auto-revert-verbose nil) ;;default: t
 
-;;;; polling interval second
 ;;(setq auto-revert-interval 5) ;;default: 5
 
-;;;; use notification from file system immediately.
 ;;(setq auto-revert-use-notify t) ;;default: t
 
 ;;====================================
@@ -24,6 +22,20 @@
 ;; string valid?
 (defun ak-validstrp(str)
   (and str (> (length str) 0)))
+
+(unless (fboundp 'keymap-set)
+  (defun keymap-set (keymap key command)
+    (if (stringp command)
+	(define-key keymap (kbd key) (kbd command))
+      (define-key keymap (kbd key) command)
+      ))
+  (defun keymap-global-set (key command)
+    (global-set-key (kbd key) command))
+  (defun keymap-local-set (key command)
+    (local-set-key (kbd key) command))
+  )
+(defun ak-input-decode-set (sequence key)
+  (define-key input-decode-map sequence (kbd key)))
 
 (load "~/.emacs.d/dot/00misc")
 (load "~/.emacs.d/dot/01keys")

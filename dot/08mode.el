@@ -47,7 +47,7 @@
 (require 'package)       ;;for package-installed-p
 (when (package-installed-p 'ddskk)
   ;;(setq default-input-method "japanese-skk") ;;C-\ toggle
-  (global-set-key (kbd "C-x C-j") 'skk-mode)
+  (keymap-global-set "C-x C-j" 'skk-mode)
   )
 
 (with-eval-after-load "skk"
@@ -55,15 +55,15 @@
   ;; isearch と統合。
   (load "~/.emacs.d/site-lisp/skk-setup")
   ;; 確定を戻す
-  (define-key skk-j-mode-map (kbd "C-/") 'skk-undo-kakutei)
+  (keymap-set skk-j-mode-map "C-/" 'skk-undo-kakutei)
   ;; x 以外でも前候補。
-  (define-key skk-j-mode-map (kbd "S-SPC") 'skk-previous-candidate)
-  (define-key skk-j-mode-map (kbd "M-DEL") 'skk-previous-candidate)
-  (define-key skk-j-mode-map (kbd "C-<backspace>") 'skk-previous-candidate)
-  (define-key skk-j-mode-map (kbd "<up>") 'skk-previous-candidate) ;;test
+  (keymap-set skk-j-mode-map "S-SPC" 'skk-previous-candidate)
+  (keymap-set skk-j-mode-map "M-DEL" 'skk-previous-candidate)
+  (keymap-set skk-j-mode-map "C-<backspace>" 'skk-previous-candidate)
+  (keymap-set skk-j-mode-map "<up>" 'skk-previous-candidate) ;;test
   ;; 辞書登録ミニバッファから、前候補(S-SPC,M-DEL,etc)で抜ける
   (load "~/.emacs.d/site-lisp/ak-skk-patch")
-  (define-key minibuffer-local-skk-map (kbd "S-SPC") 'backward-kill-word)
+  (keymap-set minibuffer-local-skk-map "S-SPC" 'backward-kill-word)
   
   ;; BS(DEL, C-h) でミニバッファから抜けるように関数変更。
   (defun skk-delete-backward-char-with-quit (oldfnc &rest arg)
@@ -93,7 +93,7 @@
 ;;;;view-mode
 ;;====================================
 ;;  "ESC f1"  view mode
-(global-set-key (kbd "ESC <f1>") 'ak-View-mode)
+(keymap-global-set "ESC <f1>" 'ak-View-mode)
 (defun ak-View-mode()
   "make current file view mode." (interactive)
   (view-mode t))
@@ -113,41 +113,41 @@
 	   )))
 
 (with-eval-after-load 'view
-  (define-key view-mode-map (kbd "S-<f5>") 'ak-revert-buffer-noconfirm)
-  (define-key view-mode-map "i" 'ak-View-exit)
-  (define-key view-mode-map "h" 'left-char)
-  (define-key view-mode-map "j" 'next-line)
-  (define-key view-mode-map "k" 'previous-line)
-  (define-key view-mode-map "l" 'right-char)
-  (define-key view-mode-map "b" 'backward-char)
-  (define-key view-mode-map "f" 'forward-char)
-  (define-key view-mode-map "a" 'beginning-of-visual-line)
-  (define-key view-mode-map "e" 'ak-end-of-visual-line)
-  (define-key view-mode-map "0" 'beginning-of-line)
-  (define-key view-mode-map "$" 'end-of-line)
-  (define-key view-mode-map "H" 'ak-goto-top-screen)   
-  (define-key view-mode-map "M" 'ak-goto-mid-screen)   
-  (define-key view-mode-map "L" 'ak-goto-bottom-screen)
-  (define-key view-mode-map "y"	'ak-line-up)
-  (define-key view-mode-map (kbd "RET") 'ak-line-down)
-  (define-key view-mode-map "K" 'ak-line-up)
-  (define-key view-mode-map "J" 'ak-line-down)
-  (define-key view-mode-map "u" 'half-page-down)
-  (define-key view-mode-map "d" 'half-page-up)
-  (define-key view-mode-map "^" 'half-page-down)
-  (define-key view-mode-map "v" 'half-page-up)
-  (define-key view-mode-map [remap View-scroll-page-backward] #'ak-scroll-page-backward);; DEL, S-SPC
-  (define-key view-mode-map [remap View-scroll-page-forward]  #'ak-scroll-page-forward) ;; SPC
-  (define-key view-mode-map "　" 'ak-scroll-page-forward)
-  (define-key view-mode-map "G" 'end-of-buffer)
-  (define-key view-mode-map "o" 'ak-View-scroll-to-buffer-end)
-  (define-key view-mode-map "/" 'isearch-forward-regexp)
-  (define-key view-mode-map "\\" 'isearch-backward-regexp)
-  (define-key view-mode-map "n" 'isearch-repeat-forward)
-  (define-key view-mode-map "N" 'isearch-repeat-backward)
-  (define-key view-mode-map "p" 'isearch-repeat-backward)
-  (define-key view-mode-map (kbd ": w") 'save-buffer)
-  (define-key view-mode-map (kbd ": q") 'kill-current-buffer)
+  (keymap-set view-mode-map "S-<f5>" 'ak-revert-buffer-noconfirm)
+  (keymap-set view-mode-map "i" 'ak-View-exit)
+  (keymap-set view-mode-map "h" 'left-char)
+  (keymap-set view-mode-map "j" 'next-line)
+  (keymap-set view-mode-map "k" 'previous-line)
+  (keymap-set view-mode-map "l" 'right-char)
+  (keymap-set view-mode-map "b" 'backward-char)
+  (keymap-set view-mode-map "f" 'forward-char)
+  (keymap-set view-mode-map "a" 'beginning-of-visual-line)
+  (keymap-set view-mode-map "e" 'ak-end-of-visual-line)
+  (keymap-set view-mode-map "0" 'beginning-of-line)
+  (keymap-set view-mode-map "$" 'end-of-line)
+  (keymap-set view-mode-map "H" 'ak-goto-top-screen)   
+  (keymap-set view-mode-map "M" 'ak-goto-mid-screen)   
+  (keymap-set view-mode-map "L" 'ak-goto-bottom-screen)
+  (keymap-set view-mode-map "y"	'ak-line-up)
+  (keymap-set view-mode-map "RET" 'ak-line-down)
+  (keymap-set view-mode-map "K" 'ak-line-up)
+  (keymap-set view-mode-map "J" 'ak-line-down)
+  (keymap-set view-mode-map "u" 'half-page-down)
+  (keymap-set view-mode-map "d" 'half-page-up)
+  (keymap-set view-mode-map "^" 'half-page-down)
+  (keymap-set view-mode-map "v" 'half-page-up)
+  (keymap-set view-mode-map "<remap> <View-scroll-page-backward>" #'ak-scroll-page-backward);; DEL, S-SPC
+  (keymap-set view-mode-map "<remap> <View-scroll-page-forward>"  #'ak-scroll-page-forward) ;; SPC
+  (keymap-set view-mode-map "　" 'ak-scroll-page-forward)
+  (keymap-set view-mode-map "G" 'end-of-buffer)
+  (keymap-set view-mode-map "o" 'ak-View-scroll-to-buffer-end)
+  (keymap-set view-mode-map "/" 'isearch-forward-regexp)
+  (keymap-set view-mode-map "\\" 'isearch-backward-regexp)
+  (keymap-set view-mode-map "n" 'isearch-repeat-forward)
+  (keymap-set view-mode-map "N" 'isearch-repeat-backward)
+  (keymap-set view-mode-map "p" 'isearch-repeat-backward)
+  (keymap-set view-mode-map ": w" 'save-buffer)
+  (keymap-set view-mode-map ": q" 'kill-current-buffer)
   )
 ;;  "E"     #'View-exit-and-edit
 ;;  "q"     #'View-quit
@@ -198,7 +198,7 @@
 ;; s-E  edit-abbrevs
 ;;(setq save-abbrevs 'silently)
 (setq save-abbrevs t)
-(global-set-key (kbd "C-'") 'expand-abbrev)
+(keymap-global-set "C-'" 'expand-abbrev)
 ;; 1. from in-file words.
 ;; M-/    dabbrev-expand        autoM-/ M-/ M-/..
 ;; C-M-/  dabbrev-completion    too short: "Selecting deleted buffer" message(bug?)
@@ -261,7 +261,7 @@
 		    )
 	      ;; markdown preview mode
 	      ;; M-x markdown-preview-mode
-	      (local-set-key (kbd "C-c p") 'markdown-preview-mode)
+	      (keymap-local-set "C-c p" 'markdown-preview-mode)
 	      )))
 
 ;;====================================
@@ -309,5 +309,5 @@
 	    (buffer-focus-in-callback 'ak-org-focus-in)
 	    (buffer-focus-out-callback 'ak-org-focus-out)
 	    (add-hook 'kill-buffer-hook 'ak-org-focus-out nil 'local)
-	    (local-set-key (kbd "C-y") 'org-yank)
+	    (keymap-local-set "C-y" 'org-yank)
 	    ))

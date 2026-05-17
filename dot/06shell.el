@@ -9,7 +9,7 @@
 ;; M-x shell  ==>  M-x s
 (defalias 's 'shell)
 ;;            ==>  M-s M-s
-(global-set-key (kbd "M-s M-s") 'shell)
+(keymap-global-set "M-s M-s" 'shell)
 
 (with-eval-after-load 'shell
   (load "~/.emacs.d/site-lisp/tails-comint-history")
@@ -21,13 +21,13 @@
   (setq comint-scroll-to-bottom-on-input t)
   ;;(setq comint-scroll-to-bottom-on-output t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-  (define-key shell-mode-map  (kbd "S-<f5>")     'ak-do-resync-dirs)
-  (define-key comint-mode-map (kbd "<home>")   'beginning-of-buffer)
-  (define-key comint-mode-map (kbd "<end>")    'end-of-buffer)
-  (define-key comint-mode-map (kbd "C-<up>")   'ak-scroll-down1)
-  (define-key comint-mode-map (kbd "C-<down>") 'ak-scroll-up1)
-  (define-key comint-mode-map (kbd "<up>")     'ak-shell-up)
-  (define-key comint-mode-map (kbd "<down>")   'ak-shell-down)
+  (keymap-set shell-mode-map  "S-<f5>"     'ak-do-resync-dirs)
+  (keymap-set comint-mode-map "<home>"   'beginning-of-buffer)
+  (keymap-set comint-mode-map "<end>"    'end-of-buffer)
+  (keymap-set comint-mode-map "C-<up>"   'ak-scroll-down1)
+  (keymap-set comint-mode-map "C-<down>" 'ak-scroll-up1)
+  (keymap-set comint-mode-map "<up>"     'ak-shell-up)
+  (keymap-set comint-mode-map "<down>"   'ak-shell-down)
   )
 
 (add-hook 'shell-mode-hook

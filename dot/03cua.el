@@ -29,8 +29,8 @@
 
 (when (boundp 'cua-global-keymap)
   ;; Alternate keybind of cua-rect for org-mode. 
-  (define-key cua-global-keymap (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
-  (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2)
+  (keymap-set cua-global-keymap "C-c C-SPC" 'cua-set-rectangle-mark)
+  (keymap-set cua-global-keymap "C-<return>" 'cua-set-rectangle-mark2)
   (defun cua-set-rectangle-mark2 (&optional reopen)
     "Set mark and start in CUA rectangle mode.
 With prefix argument, activate previous rectangle if possible."
@@ -43,9 +43,9 @@ With prefix argument, activate previous rectangle if possible."
 
 (when (boundp 'cua--cua-keys-keymap)
   ;; Page Down/Page Up  =  M-v M-u
-  (define-key cua--cua-keys-keymap (kbd "M-v") 'ak-cua-scroll-up) ;;was delete-selection-repeat-replace-region.
-  (define-key cua--cua-keys-keymap (kbd "M-V") 'cua-scroll-down)
-  ;;(define-key cua--cua-keys-keymap (kbd "M-u") 'cua-scroll-down) ;;was upcase-word
+  (keymap-set cua--cua-keys-keymap "M-v" 'ak-cua-scroll-up) ;;was delete-selection-repeat-replace-region.
+  (keymap-set cua--cua-keys-keymap "M-V" 'cua-scroll-down)
+  ;;(keymap-set cua--cua-keys-keymap "M-u" 'cua-scroll-down) ;;was upcase-word
   (defun ak-cua-scroll-up (&optional arg)
     (interactive "^P")
     (cua-scroll-up arg)

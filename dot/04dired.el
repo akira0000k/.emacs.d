@@ -22,63 +22,63 @@
 (with-eval-after-load 'dired
   (require 'dired-x)
   ;;(require 'wdired)
-  (define-key dired-mode-map (kbd "<right>")   'ak-dired-right-char)      ;; -> f, v
-  (define-key dired-mode-map (kbd "<left>")    'ak-dired-left-char)       ;; <- ^
-  (define-key dired-mode-map (kbd "<home>")    'ak-dired-home)
-  (define-key dired-mode-map (kbd "<end>")     'ak-dired-end)
-  (define-key dired-mode-map (kbd "<prior>")   'ak-dired-scroll-down)
-  (define-key dired-mode-map (kbd "<next>")    'ak-dired-scroll-up)
-  (define-key dired-mode-map (kbd "<f5>")      'revert-buffer)               ;; g
-  (define-key dired-mode-map (kbd "S-<f5>")    'revert-buffer)               ;; g
-  (define-key dired-mode-map "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
+  (keymap-set dired-mode-map "<right>"   'ak-dired-right-char)      ;; -> f, v
+  (keymap-set dired-mode-map "<left>"    'ak-dired-left-char)       ;; <- ^
+  (keymap-set dired-mode-map "<home>"    'ak-dired-home)
+  (keymap-set dired-mode-map "<end>"     'ak-dired-end)
+  (keymap-set dired-mode-map "<prior>"   'ak-dired-scroll-down)
+  (keymap-set dired-mode-map "<next>"    'ak-dired-scroll-up)
+  (keymap-set dired-mode-map "<f5>"      'revert-buffer)               ;; g
+  (keymap-set dired-mode-map "S-<f5>"    'revert-buffer)               ;; g
+  (keymap-set dired-mode-map "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
   ;; S            dired-do-symlink
   ;; Y            dired-do-relsymlink  dired-x.el
   ;; edit filename in wdired mode      autoload wdired.el
-  (define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)
+  (keymap-set dired-mode-map "E" 'wdired-change-to-wdired-mode)
 
-  (define-key dired-mode-map "h" 'ak-dired-home-dir)
-  (define-key dired-mode-map "r" 'ak-dired-root-dir)
-  (define-key dired-mode-map "z" 'ak-dired-defo-dir)
-  (and (getenv "A_DIRECTORY") (define-key dired-mode-map "a" 'ak-dired-a-dir))
-  (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" 'ak-dired-b-dir))
-  (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" 'ak-dired-c-dir))
-  (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" 'ak-dired-e-dir))
-  (define-key dired-mode-map (kbd "C-b") 'ak-dired-left-char)
+  (keymap-set dired-mode-map "h" 'ak-dired-home-dir)
+  (keymap-set dired-mode-map "r" 'ak-dired-root-dir)
+  (keymap-set dired-mode-map "z" 'ak-dired-defo-dir)
+  (and (getenv "A_DIRECTORY") (keymap-set dired-mode-map "a" 'ak-dired-a-dir))
+  (and (getenv "B_DIRECTORY") (keymap-set dired-mode-map "b" 'ak-dired-b-dir))
+  (and (getenv "C_DIRECTORY") (keymap-set dired-mode-map "c" 'ak-dired-c-dir))
+  (and (getenv "E_DIRECTORY") (keymap-set dired-mode-map "e" 'ak-dired-e-dir))
+  (keymap-set dired-mode-map "C-b" 'ak-dired-left-char)
 
   ;; search only filename
   ;;;;(setq dired-isearch-filenames t) ;;turns isearch-forward to search filename only
-  (define-key dired-mode-map (kbd "C-s") 'dired-isearch-filenames)
-  ;;01keys.el(global-set-key (kbd "s-f") 'isearch-forward) ;;command s = search username
+  (keymap-set dired-mode-map "C-s" 'dired-isearch-filenames)
+  ;;01keys.el(keymap-global-set "s-f" 'isearch-forward) ;;command s = search username
 
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
   (defalias 'ak-dired-previous-line 'previous-line)
-  (define-key dired-mode-map (kbd "C-n") 'ak-dired-next-line)
-  (define-key dired-mode-map (kbd "C-p") 'ak-dired-previous-line)
+  (keymap-set dired-mode-map "C-n" 'ak-dired-next-line)
+  (keymap-set dired-mode-map "C-p" 'ak-dired-previous-line)
 
   ;; ;; line scroll and keep cursor on file name
-  ;; (define-key dired-mode-map (kbd "C-<up>")   'ak-dired-line-up       )
-  ;; (define-key dired-mode-map (kbd "C-<down>") 'ak-dired-line-down     )
-  ;; (define-key dired-mode-map (kbd "C-s-<up>")   'ak-dired-line-up-fast  )
-  ;; (define-key dired-mode-map (kbd "C-s-<down>") 'ak-dired-line-down-fast)
-  ;; (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
-  ;; (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
+  ;; (keymap-set dired-mode-map "C-<up>"   'ak-dired-line-up       )
+  ;; (keymap-set dired-mode-map "C-<down>" 'ak-dired-line-down     )
+  ;; (keymap-set dired-mode-map "C-s-<up>"   'ak-dired-line-up-fast  )
+  ;; (keymap-set dired-mode-map "C-s-<down>" 'ak-dired-line-down-fast)
+  ;; (keymap-set dired-mode-map "C-M-p" 'ak-dired-line-up  ) ;;was dired-prev-subdir
+  ;; (keymap-set dired-mode-map "C-M-n" 'ak-dired-line-down) ;;was dired-next-subdir
 
   ;; skip files
-  (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
-  (define-key dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
-  (define-key dired-mode-map (kbd "C-,") 'ak-dired-beginning-of-buffer)
-  (define-key dired-mode-map (kbd "C-.") 'ak-dired-end-of-buffer)
-  (define-key dired-mode-map (kbd ",") 'ak-dired-beginning-of-buffer)
-  (define-key dired-mode-map (kbd ".") 'ak-dired-end-of-buffer)  ;;was dired-clean-directory
-  (define-key dired-mode-map (kbd "M-.") 'dired-clean-directory) ;;was xref-find-definitions
-  (define-key dired-mode-map (kbd "C-h") 'dired-unmark-backward) ;;like backspace
+  (keymap-set dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
+  (keymap-set dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
+  (keymap-set dired-mode-map "C-," 'ak-dired-beginning-of-buffer)
+  (keymap-set dired-mode-map "C-." 'ak-dired-end-of-buffer)
+  (keymap-set dired-mode-map "," 'ak-dired-beginning-of-buffer)
+  (keymap-set dired-mode-map "." 'ak-dired-end-of-buffer)  ;;was dired-clean-directory
+  (keymap-set dired-mode-map "M-." 'dired-clean-directory) ;;was xref-find-definitions
+  (keymap-set dired-mode-map "C-h" 'dired-unmark-backward) ;;like backspace
 
   ;; Vi-like
-  (define-key dired-mode-map "j" 'ak-dired-line-down)
-  (define-key dired-mode-map "k" 'ak-dired-line-up)
-  (define-key dired-mode-map "J" 'ak-dired-line-down-fast)
-  (define-key dired-mode-map "K" 'ak-dired-line-up-fast)
+  (keymap-set dired-mode-map "j" 'ak-dired-line-down)
+  (keymap-set dired-mode-map "k" 'ak-dired-line-up)
+  (keymap-set dired-mode-map "J" 'ak-dired-line-down-fast)
+  (keymap-set dired-mode-map "K" 'ak-dired-line-up-fast)
   ;;(message "eval-after-load 'dired done.")
   )
 
@@ -195,21 +195,21 @@
 ;;====================================
 ;;;; press left at top of window then kill buffer and show dired
 ;;====================================
-(global-set-key (kbd "C-b") 'ak-backward-char)
+(keymap-global-set "C-b" 'ak-backward-char)
 
 ;; ;; Cursor L, R move always logical order, backward and forward,
 ;; ;; even at R2L text and visual-order-cursor-movement is t
-;; (global-set-key (kbd "<left>") 'ak-backward-char)
-;; (global-set-key (kbd "<right>") 'forward-char)
+;; (keymap-global-set "<left>" 'ak-backward-char)
+;; (keymap-global-set "<right>" 'forward-char)
 
 ;; cursor move L R naturally at R2L text.
-(global-set-key (kbd "<left>") 'ak-left-char)
-(global-set-key (kbd "<right>") 'ak-right-char)
+(keymap-global-set "<left>" 'ak-left-char)
+(keymap-global-set "<right>" 'ak-right-char)
 (if (boundp 'cua--rectangle-keymap)
     (progn
-      (define-key cua--rectangle-keymap [remap ak-right-char]          #'cua-resize-rectangle-right)
-      (define-key cua--rectangle-keymap [remap ak-left-char]           #'cua-resize-rectangle-left)
-      (define-key cua--rectangle-keymap [remap ak-backward-char]       #'cua-resize-rectangle-left)
+      (keymap-set cua--rectangle-keymap "<remap> <ak-right-char>"    #'cua-resize-rectangle-right)
+      (keymap-set cua--rectangle-keymap "<remap> <ak-left-char>"     #'cua-resize-rectangle-left)
+      (keymap-set cua--rectangle-keymap "<remap> <ak-backward-char>" #'cua-resize-rectangle-left)
       ))
 
 (setq visual-order-cursor-movement t)

@@ -1,11 +1,11 @@
 
 ;; ------ 09org.el ------
 
-(global-set-key (kbd "C-c l") 'org-store-link)
+(keymap-global-set "C-c l" 'org-store-link)
 ;; (setq org-startup-with-inline-images t)
 
-(global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c a") 'org-agenda)
+(keymap-global-set "C-c c" 'org-capture)
+(keymap-global-set "C-c a" 'org-agenda)
 
 (eval-after-load "org"
   '(require 'ox-md nil t))

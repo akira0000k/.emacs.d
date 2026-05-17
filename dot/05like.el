@@ -7,44 +7,44 @@
 ;;;; function keys
 ;;====================================
 
-;;(global-set-key (kbd "<f1>") 'help-for-help) ;;was help-command
-(global-set-key (kbd "S-<f1>") 'other-window)
+;;(keymap-global-set "<f1>" 'help-for-help) ;;was help-command
+(keymap-global-set "S-<f1>" 'other-window)
 
 ;;        C-x 6 2		2C-two-columns
 ;;        C-x 6 b		2C-associate-buffer
 ;;        C-x 6 s		2C-split
 ;;was                 2C-command
-(global-set-key (kbd "<f2>") 'ak-divide-screen-toggle)
-;;(global-set-key (kbd "S-<f2>") 'ak-divide-screen-or-other)
-(global-set-key (kbd "S-<f2>") 'ak-divide-screen3-or-other)
+(keymap-global-set "<f2>" 'ak-divide-screen-toggle)
+;;(keymap-global-set "S-<f2>" 'ak-divide-screen-or-other)
+(keymap-global-set "S-<f2>" 'ak-divide-screen3-or-other)
 
 ;;was                 kmacro-start-macro-or-insert-counter
-(global-set-key (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "S-<f3>") 'isearch-repeat-backward)
+(keymap-global-set "<f3>" 'isearch-repeat-forward)
+(keymap-global-set "S-<f3>" 'isearch-repeat-backward)
 
 ;;was                    kmacro-end-or-call-macro
-(global-set-key (kbd "<f4>")    'kill-current-buffer)
-(global-set-key (kbd "S-<f4>") 'delete-window)
+(keymap-global-set "<f4>"    'kill-current-buffer)
+(keymap-global-set "S-<f4>" 'delete-window)
 
-(global-set-key (kbd "S-<f5>") 'recenter)
-(global-set-key (kbd "<f5>") 'ak-dired-current-dir-other-window)
+(keymap-global-set "S-<f5>" 'recenter)
+(keymap-global-set "<f5>" 'ak-dired-current-dir-other-window)
 (defun ak-dired-current-dir-other-window()
   "Dired current directory other window." (interactive)
   (dired-other-window "."))
 
-(global-set-key (kbd "<f6>")   'universal-coding-system-argument)       ;;   C-x RET-c
-(global-set-key (kbd "S-<f6>")   'electric-indent-mode)
+(keymap-global-set "<f6>"   'universal-coding-system-argument)       ;;   C-x RET-c
+(keymap-global-set "S-<f6>"   'electric-indent-mode)
 ;;test macro
-(global-set-key (kbd "ESC <f6>")  'kmacro-start-macro-or-insert-counter)  ;; <f3>
-(global-set-key (kbd "C-<f6>")  'kmacro-end-or-call-macro)  ;; <f4>
+(keymap-global-set "ESC <f6>"  'kmacro-start-macro-or-insert-counter)  ;; <f3>
+(keymap-global-set "C-<f6>"  'kmacro-end-or-call-macro)  ;; <f4>
 
-(global-set-key (kbd "<f7>")   'ak-shrink-window)
-(global-set-key (kbd "S-<f7>") 'ak-shrink-window2)
-(global-set-key (kbd "<f8>")   'ak-enlarge-window)
-(global-set-key (kbd "S-<f8>") 'ak-enlarge-window2)
+(keymap-global-set "<f7>"   'ak-shrink-window)
+(keymap-global-set "S-<f7>" 'ak-shrink-window2)
+(keymap-global-set "<f8>"   'ak-enlarge-window)
+(keymap-global-set "S-<f8>" 'ak-enlarge-window2)
 
-(global-set-key (kbd "<f9>")  'describe-key-briefly)
-(global-set-key (kbd "S-<f9>") 'ak-toggle-case-fold-search)
+(keymap-global-set "<f9>"  'describe-key-briefly)
+(keymap-global-set "S-<f9>" 'ak-toggle-case-fold-search)
 (defun ak-toggle-case-fold-search()
   "Toggle search case." (interactive)
   (if case-fold-search
@@ -54,23 +54,23 @@
     (message "ignore case Search mode")))
 
 ;;was  menu-bar-open
-(global-set-key (kbd "<f10>") 'ak-window-swap-split)
-;; (global-set-key (kbd "<S-f10>") 'ak-window-vh-split)
-;; (global-set-key (kbd "<f10>") 'ak-window-rotate-split)
-(global-set-key (kbd "S-<f10>") 'ak-window-rotate-split-reverse)
+(keymap-global-set "<f10>" 'ak-window-swap-split)
+;; (keymap-global-set "<S-f10>" 'ak-window-vh-split)
+;; (keymap-global-set "<f10>" 'ak-window-rotate-split)
+(keymap-global-set "S-<f10>" 'ak-window-rotate-split-reverse)
 ;;               M-f10   toggle-frame-maximized  =  "ESC <f10>"
 
-(global-set-key (kbd "M-<f11>")   'toggle-frame-fullscreen)  ;; <f11>
-(global-set-key (kbd "ESC <f11>") 'toggle-frame-fullscreen)  ;; <f11>
+(keymap-global-set "M-<f11>"   'toggle-frame-fullscreen)  ;; <f11>
+(keymap-global-set "ESC <f11>" 'toggle-frame-fullscreen)  ;; <f11>
 
 ;;was                 'toggle-frame-fullscreen  ==> "ESC <f11>"
-(global-set-key (kbd "<f11>") 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
+(keymap-global-set "<f11>" 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
 ;; (require 'linum)                            ;; obsolete (emacs29)
-;; (global-set-key (kbd "<f12>") 'global-linum-mode)
-(global-set-key (kbd "<f12>") 'global-display-line-numbers-mode)
-;;(global-set-key (kbd "<f12>") 'display-line-numbers-mode)
-(global-set-key (kbd "S-<f11>") 'scroll-right)
-(global-set-key (kbd "S-<f12>") 'scroll-left)
+;; (keymap-global-set "<f12>" 'global-linum-mode)
+(keymap-global-set "<f12>" 'global-display-line-numbers-mode)
+;;(keymap-global-set "<f12>" 'display-line-numbers-mode)
+(keymap-global-set "S-<f11>" 'scroll-right)
+(keymap-global-set "S-<f12>" 'scroll-left)
 
 
 ;;======================================
@@ -227,7 +227,7 @@
 ;;====================================
 ;;;; jump matching paren (<--->)
 ;;====================================
-(global-set-key (kbd "C-]") 'match-paren)
+(keymap-global-set "C-]" 'match-paren)
 (defun match-paren (arg)
   "Go to the matching parenthesis if on parenthesis"
   (interactive "p")

@@ -33,18 +33,18 @@
 ;;====================================
 ;;;; keybinding while Isearch.  ex. C-s C-w ..yank word
 ;;====================================
-(define-key isearch-mode-map (kbd "C-k") 'isearch-edit-string)
-(define-key isearch-mode-map (kbd "C-h") 'isearch-delete-char)
+(keymap-set isearch-mode-map "C-k" 'isearch-edit-string)
+(keymap-set isearch-mode-map "C-h" 'isearch-delete-char)
 ;; ;; incremental search 中に C-j を改行にマッチさせる。(default動作)
-;; (define-key isearch-mode-map (kbd "C-j") 'isearch-printing-char) ;;default
+;; (keymap-set isearch-mode-map "C-j" 'isearch-printing-char) ;;default
 ;; isearch-edit-string と replace の minibuffer内で C-j を単純改行挿入にする
-(define-key minibuffer-local-isearch-map (kbd "C-j") 'electric-indent-just-newline)
+(keymap-set minibuffer-local-isearch-map "C-j" 'electric-indent-just-newline)
 (with-eval-after-load "replace"
   (load "~/.emacs.d/site-lisp/replace-patch")
-  (define-key minibuffer-local-replace-map (kbd "C-j") 'electric-indent-just-newline)
+  (keymap-set minibuffer-local-replace-map "C-j" 'electric-indent-just-newline)
   )
 ;;                                                  C-h を単純バックスペースにする
-(define-key minibuffer-local-isearch-map (kbd "C-h") 'delete-backward-char)
+(keymap-set minibuffer-local-isearch-map "C-h" 'delete-backward-char)
 ;;   frequently used
 ;;   C-k                isearch-edit-string       ex. C-s C-k
 ;;   M-e                isearch-edit-string
@@ -63,42 +63,42 @@
 (setq isearch-lax-whitespace nil)  ;;off
 ;;(setq isearch-lax-whitespace t)  ;;on (default)
 
-(global-set-key (kbd "C-r") 'query-replace) ;; M-% aaa bbb
-(global-set-key (kbd "C-M-r") 'query-replace-regexp) ;; C-M-% aaa bbb
+(keymap-global-set "C-r" 'query-replace) ;; M-% aaa bbb
+(keymap-global-set "C-M-r" 'query-replace-regexp) ;; C-M-% aaa bbb
 
 ;; Insert key .. toggle overwrite-mode
-(global-set-key (kbd "M-o") 'overwrite-mode)
+(keymap-global-set "M-o" 'overwrite-mode)
 
 ;; no cua-mode  cut/copy/paste=C-w C-S-w C-y
-(global-set-key (kbd "C-S-w") 'kill-ring-save) ;; M-w
-(global-set-key (kbd "C-x r W") 'copy-rectangle-as-kill)  ;; C-x r M-w
+(keymap-global-set "C-S-w" 'kill-ring-save) ;; M-w
+(keymap-global-set "C-x r W" 'copy-rectangle-as-kill)  ;; C-x r M-w
 
 ;; for MAC OSX
-(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
-;;(global-set-key (kbd "C-h") 'delete-backward-char)
+(keymap-global-set "C-h" 'backward-delete-char-untabify)
+;;(keymap-global-set "C-h" 'delete-backward-char)
 
 
 ;; overwridden by cua-mode
 ;;;;  ;; no cua-mode  cut/paste=C-w C-v  copy/paste=M-w M-v
-;;;;  (global-set-key (kbd "M-v") 'yank) ;; C-y
-;;;;  (global-set-key (kbd "C-v") 'yank) ;; C-y
-(global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
+;;;;  (keymap-global-set "M-v" 'yank) ;; C-y
+;;;;  (keymap-global-set "C-v" 'yank) ;; C-y
+(keymap-global-set "C-z" 'undo) ;; C-x C-z  ^Z ..fg
 
 ;;                    C-x C-c     'save-buffers-kill-terminal
 ;;                    C-x C-z     'suspend-frame            ;; <- C-z
 
 ;; alternate keybind for pos<--ex-->mark (was C-x C-x)
-(global-set-key (kbd "M-s M-j") 'exchange-point-and-mark)
+(keymap-global-set "M-s M-j" 'exchange-point-and-mark)
 
 ;; like C-S-<backspace>
-(global-set-key (kbd "C-S-<delete>") 'kill-whole-line)
+(keymap-global-set "C-S-<delete>" 'kill-whole-line)
 
 ;;====================================
 ;;;; kill region or kill line. (MAC OSX style)
 ;;====================================
-(global-set-key (kbd "C-k") 'ak-kill-line)
+(keymap-global-set "C-k" 'ak-kill-line)
 ;;  copy
-(global-set-key (kbd "C-S-k") 'ak-copy-line)
+(keymap-global-set "C-S-k" 'ak-copy-line)
 ;; kill active region or kill line
 ;; active region may have length 0
 (defun ak-kill-line (&optional arg)

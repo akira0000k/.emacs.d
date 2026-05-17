@@ -7,69 +7,69 @@
 ;;;; control keys
 ;;====================================
 
-;;              (kbd "C-<up>")        ;; Start Mission Control @ MAC OSX
-;;              (kbd "C-<down>")      ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key (kbd "C-<up>")   'ak-scroll-down1)   ;;was backward-paragraph
-(global-set-key (kbd "C-<down>") 'ak-scroll-up1)     ;;was forward-paragraph
-(global-set-key (kbd "C-S-<up>")   'ak-scroll-down2)
-(global-set-key (kbd "C-S-<down>") 'ak-scroll-up2)
-(global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
-(global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
-(global-set-key (kbd "C-s-p") 'ak-line-up-fast)
-(global-set-key (kbd "C-s-n") 'ak-line-down-fast)
-(global-set-key (kbd "C-M-<prior>") 'backward-list)
-(global-set-key (kbd "C-M-<next>")  'forward-list)
-(global-set-key (kbd "ESC C-<prior>") 'backward-list)
-(global-set-key (kbd "ESC C-<next>")  'forward-list)
+;;                 "C-<up>"	  ;; Start Mission Control @ MAC OSX
+;;		   "C-<down>"	  ;; Application Window (Mission Control @ MAC OSX)
+(keymap-global-set "C-<up>"   'ak-scroll-down1)   ;;was backward-paragraph
+(keymap-global-set "C-<down>" 'ak-scroll-up1)     ;;was forward-paragraph
+(keymap-global-set "C-S-<up>"   'ak-scroll-down2)
+(keymap-global-set "C-S-<down>" 'ak-scroll-up2)
+(keymap-global-set "C-M-p" 'ak-line-up)       ;;was backward-list
+(keymap-global-set "C-M-n" 'ak-line-down)     ;;was forward-list
+(keymap-global-set "C-s-p" 'ak-line-up-fast)
+(keymap-global-set "C-s-n" 'ak-line-down-fast)
+(keymap-global-set "C-M-<prior>" 'backward-list)
+(keymap-global-set "C-M-<next>"  'forward-list)
+(keymap-global-set "ESC C-<prior>" 'backward-list)
+(keymap-global-set "ESC C-<next>"  'forward-list)
 
 
-(global-set-key (kbd "<wheel-up>")   'ak-scroll-down2)
-(global-set-key (kbd "<wheel-down>") 'ak-scroll-up2)
-(global-set-key (kbd "C-<wheel-up>")   'ak-line-up-fast)
-(global-set-key (kbd "C-<wheel-down>") 'ak-line-down-fast)
+(keymap-global-set "<wheel-up>"   'ak-scroll-down2)
+(keymap-global-set "<wheel-down>" 'ak-scroll-up2)
+(keymap-global-set "C-<wheel-up>"   'ak-line-up-fast)
+(keymap-global-set "C-<wheel-down>" 'ak-line-down-fast)
 
 
 ;;;; iTerm2 use move tab function by C-<tab>
-;;(global-set-key (kbd "C-<tab>") 'other-window)
-;;(global-set-key (kbd "C-S-<tab>") 'ak-prev-window)
-(global-set-key (kbd "C-<tab>") 'next-window-any-frame)
-(global-set-key (kbd "C-S-<tab>") 'previous-window-any-frame)
+;;(keymap-global-set "C-<tab>" 'other-window)
+;;(keymap-global-set "C-S-<tab>" 'ak-prev-window)
+(keymap-global-set "C-<tab>" 'next-window-any-frame)
+(keymap-global-set "C-S-<tab>" 'previous-window-any-frame)
 
 ;; Control-Comma,   go to filetop
 ;; Control-Period.  go to fileend
-(global-set-key (kbd "C-,") 'beginning-of-buffer)
-(global-set-key (kbd "C-.") 'end-of-buffer)
+(keymap-global-set "C-," 'beginning-of-buffer)
+(keymap-global-set "C-." 'end-of-buffer)
 ;; Shift-Control-Comma,   select to filetop
 ;; Shift-Control-Period.  select to fileend
-(define-key key-translation-map (kbd "C-<") (kbd "C-S-,"))
-(define-key key-translation-map (kbd "C->") (kbd "C-S-."))
+(keymap-set key-translation-map "C-<" "C-S-,")
+(keymap-set key-translation-map "C->" "C-S-.")
 ;; Shift-Control-^,       select to previous page
-(define-key key-translation-map (kbd "C-~") (kbd "C-S-^"))
+(keymap-set key-translation-map "C-~" "C-S-^")
 
 
 ;; ;; MAC OSX option key + up down left right
-;; ;;;; (kbd "M-<right>")   ;; previous word
-;; ;;;; (kbd "M-<left>")    ;; next word
-;; (global-set-key (kbd "M-<down>") #'(lambda()(interactive "^")
+;; ;;;; "M-<right>"   ;; previous word
+;; ;;;; "M-<left>"    ;; next word
+;; (keymap-global-set "M-<down>" #'(lambda()(interactive "^")
 ;;                             (if (eolp) (forward-line))
 ;;                             (end-of-line)))
-;; (global-set-key (kbd "M-<up>")   #'(lambda()(interactive "^")
+;; (keymap-global-set "M-<up>"   #'(lambda()(interactive "^")
 ;;                             (if (bolp) (forward-line -1))
 ;;                             (beginning-of-line)))
 
 ;; scroll other window
-;;   'beginning-of-buffer-other-window  M-<home>
-;;   'end-of-buffer-other-window        M-<end>
-;;   'scroll-other-window-down  M-<prior>
-;;   'scroll-other-window       M-<next>
-(global-set-key (kbd "M-<down>")     'ak-scroll-other-window1)
-(global-set-key (kbd "ESC <down>")   'ak-scroll-other-window1)
-(global-set-key (kbd "M-<up>")       'ak-scroll-other-window-1)
-(global-set-key (kbd "ESC <up>")     'ak-scroll-other-window-1)
-(global-set-key (kbd "M-S-<down>")   'ak-scroll-other-windowN)
-(global-set-key (kbd "ESC S-<down>") 'ak-scroll-other-windowN)
-(global-set-key (kbd "M-S-<up>")     'ak-scroll-other-window-N)
-(global-set-key (kbd "ESC S-<up>")   'ak-scroll-other-window-N)
+;;     M-<home>  'beginning-of-buffer-other-window
+;;     M-<end>   'end-of-buffer-other-window      
+;;     M-<prior> 'scroll-other-window-down
+;;     M-<next>  'scroll-other-window     
+(keymap-global-set "M-<down>"     'ak-scroll-other-window1)
+(keymap-global-set "ESC <down>"   'ak-scroll-other-window1)
+(keymap-global-set "M-<up>"       'ak-scroll-other-window-1)
+(keymap-global-set "ESC <up>"     'ak-scroll-other-window-1)
+(keymap-global-set "M-S-<down>"   'ak-scroll-other-windowN)
+(keymap-global-set "ESC S-<down>" 'ak-scroll-other-windowN)
+(keymap-global-set "M-S-<up>"     'ak-scroll-other-window-N)
+(keymap-global-set "ESC S-<up>"   'ak-scroll-other-window-N)
 (defun ak-scroll-other-window1()
   "1 line scroll other window."
   (interactive)(scroll-other-window  1))
@@ -86,8 +86,8 @@
 ;;====================================
 ;;;; Page Down/Up. Shift select cover page first.
 ;;====================================
-(global-set-key (kbd "<next>")  'ak-scroll-up)   ;;PageDown
-(global-set-key (kbd "<prior>") 'ak-scroll-down) ;;PageUp
+(keymap-global-set "<next>"  'ak-scroll-up)   ;;PageDown
+(keymap-global-set "<prior>" 'ak-scroll-down) ;;PageUp
 (defun ak-scroll-down ()
   "scroll down = Page Up"
   (interactive "^")
@@ -127,10 +127,10 @@
 ;;====================================
 ;;;; goto top, mid, bottom
 ;;====================================
-;; (global-set-key (kbd "s-<left>")  'ak-cursor-top)
-;; (global-set-key (kbd "s-<right>") 'ak-cursor-bottom)
-(global-set-key (kbd "M-<left>")  'ak-cursor-top)
-(global-set-key (kbd "M-<right>") 'ak-cursor-bottom)
+;; (keymap-global-set "s-<left>"  'ak-cursor-top)
+;; (keymap-global-set "s-<right>" 'ak-cursor-bottom)
+(keymap-global-set "M-<left>"  'ak-cursor-top)
+(keymap-global-set "M-<right>" 'ak-cursor-bottom)
 (defun ak-cursor-top ()
   "move cursor to middle or top of screen or scroll down(Page Up)"
   (interactive "^")
@@ -166,25 +166,25 @@
 ;;====================================
 ;;;; scroll half screen でらうま倶楽部
 ;;====================================
-(global-set-key (kbd "M-p") 'half-page-down)
-(global-set-key (kbd "M-n") 'half-page-up)
+(keymap-global-set "M-p" 'half-page-down)
+(keymap-global-set "M-n" 'half-page-up)
 ;; overwridden by cua mode
-(global-set-key (kbd "C-v") 'half-page-up)
-(global-set-key (kbd "M-v") 'half-page-down)
-(global-set-key (kbd "C-^") 'half-page-down)
+(keymap-global-set "C-v" 'half-page-up)
+(keymap-global-set "M-v" 'half-page-down)
+(keymap-global-set "C-^" 'half-page-down)
 
 ;;====================================
 ;;;; Home Toggle like Visual Studio
 ;;====================================
-(global-set-key (kbd "C-a") 'ak-home-toggle)
+(keymap-global-set "C-a" 'ak-home-toggle)
 
 ;;====================================
 ;;;; begining/end of buffer/line(shift)
 ;;====================================
-(global-set-key (kbd "C-<home>")  'beginning-of-buffer)
-(global-set-key (kbd "C-<end>")   'end-of-buffer)
-(global-set-key (kbd "<home>")  'ak-beginning-of-buffer)
-(global-set-key (kbd "<end>")   'ak-end-of-buffer)
+(keymap-global-set "C-<home>"  'beginning-of-buffer)
+(keymap-global-set "C-<end>"   'end-of-buffer)
+(keymap-global-set "<home>"  'ak-beginning-of-buffer)
+(keymap-global-set "<end>"   'ak-end-of-buffer)
 (defun ak-beginning-of-buffer()
   "Set cursor at beginning of buffer.(unshift)
 Set cursor at beginning of 1line/2buffer.(shift)"
@@ -240,8 +240,8 @@ Set cursor at end of 1line/2buffer.(shift)"
   ;;(message "==> %s %s" arg ak-lr)
   (scroll-left ak-lr)
   )
-(global-set-key [remap scroll-right] 'ak-scroll-right)
-(global-set-key [remap scroll-left] 'ak-scroll-left)
+(keymap-global-set "<remap> <scroll-right>" 'ak-scroll-right)
+(keymap-global-set "<remap> <scroll-left>" 'ak-scroll-left)
 
 ;;====================================
 ;;;; NEW! extend region in next/prev screen.
@@ -269,8 +269,8 @@ Set cursor at end of 1line/2buffer.(shift)"
     (unless (bobp) (backward-sentence))
     (mark-end-of-sentence 1)
     ))
-(global-set-key (kbd "s-]") 'ak-mark-sentence)
-(global-set-key (kbd "s-}") 'ak-mark-sentence-backward)
+(keymap-global-set "s-]" 'ak-mark-sentence)
+(keymap-global-set "s-}" 'ak-mark-sentence-backward)
 ;; M-e, M-a is for/backward-sentence
 
 ;; mark whole paragraph or extend to next.
@@ -298,8 +298,8 @@ Set cursor at end of 1line/2buffer.(shift)"
 (defun ak-backward-paragraph ()
   (interactive) ;;"^p"
   (backward-paragraph))
-(global-set-key (kbd "M-}") 'ak-forward-paragraph)
-(global-set-key (kbd "M-{") 'ak-backward-paragraph)
-(global-set-key (kbd "M-h") 'ak-mark-paragraph)
-(global-set-key (kbd "M-H") 'ak-mark-paragraph-backward)
+(keymap-global-set "M-}" 'ak-forward-paragraph)
+(keymap-global-set "M-{" 'ak-backward-paragraph)
+(keymap-global-set "M-h" 'ak-mark-paragraph)
+(keymap-global-set "M-H" 'ak-mark-paragraph-backward)
 ;; C-<down>, C-<up> was for/backward-paragraph

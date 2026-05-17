@@ -7,8 +7,8 @@
 ;;;;circular buffer change
 ;;====================================
 ;;C-PageUp C-PageDown .. Excel:change tab
-(global-set-key (kbd "C-<prior>") 'ak-last-buffer)
-(global-set-key (kbd "C-<next>")  'ak-next-buffer)
+(keymap-global-set "C-<prior>" 'ak-last-buffer)
+(keymap-global-set "C-<next>"  'ak-next-buffer)
 
 (defun ak-last-buffer()
   "Popup last buffer from list, and show it"
@@ -100,8 +100,8 @@
 	(ak-last-buffer)
 	(kill-buffer cb)
 	(list-buffers-if-exist)))))
-(global-set-key [remap kill-current-buffer] 'ak-kill-current-buffer)
-(global-set-key [remap kill-buffer] 'ak-kill-current-buffer)
+(keymap-global-set "<remap> <kill-current-buffer>" 'ak-kill-current-buffer)
+(keymap-global-set "<remap> <kill-buffer>" 'ak-kill-current-buffer)
 
 ;; kill buffer from menu, Close.
 (defun ak-kill-this-buffer ()

@@ -19,6 +19,20 @@
 (defun ak-validstrp(str)
   (and str (> (length str) 0)))
 
+(unless (fboundp 'keymap-set)
+  (defun keymap-set (keymap key command)
+    (if (stringp command)
+	(define-key keymap (kbd key) (kbd command))
+      (define-key keymap (kbd key) command)
+      ))
+  (defun keymap-global-set (key command)
+    (global-set-key (kbd key) command))
+  (defun keymap-local-set (key command)
+    (local-set-key (kbd key) command))
+  )
+(defun ak-input-decode-set (sequence key)
+  (define-key input-decode-map sequence (kbd key)))
+
 ;; ------ 00misc.el ------
 
 ;; Erase Menu bar
@@ -54,18 +68,18 @@
 ;;====================================
 ;;;; keybinding while Isearch.  ex. C-s C-w ..yank word
 ;;====================================
-(define-key isearch-mode-map (kbd "C-k") 'isearch-edit-string)
-(define-key isearch-mode-map (kbd "C-h") 'isearch-delete-char)
+(keymap-set isearch-mode-map "C-k" 'isearch-edit-string)
+(keymap-set isearch-mode-map "C-h" 'isearch-delete-char)
 ;; ;; incremental search 中に C-j を改行にマッチさせる。(default動作)
-;; (define-key isearch-mode-map (kbd "C-j") 'isearch-printing-char) ;;default
+;; (keymap-set isearch-mode-map "C-j" 'isearch-printing-char) ;;default
 ;; isearch-edit-string と replace の minibuffer内で C-j を単純改行挿入にする
-(define-key minibuffer-local-isearch-map (kbd "C-j") 'electric-indent-just-newline)
+(keymap-set minibuffer-local-isearch-map "C-j" 'electric-indent-just-newline)
 (with-eval-after-load "replace"
   (load "~/.emacs.d/site-lisp/replace-patch")
-  (define-key minibuffer-local-replace-map (kbd "C-j") 'electric-indent-just-newline)
+  (keymap-set minibuffer-local-replace-map "C-j" 'electric-indent-just-newline)
   )
 ;;                                                  C-h を単純バックスペースにする
-(define-key minibuffer-local-isearch-map (kbd "C-h") 'delete-backward-char)
+(keymap-set minibuffer-local-isearch-map "C-h" 'delete-backward-char)
 ;;   frequently used
 ;;   C-k                isearch-edit-string       ex. C-s C-k
 ;;   M-e                isearch-edit-string
@@ -84,42 +98,42 @@
 (setq isearch-lax-whitespace nil)  ;;off
 ;;(setq isearch-lax-whitespace t)  ;;on (default)
 
-(global-set-key (kbd "C-r") 'query-replace) ;; M-% aaa bbb
-(global-set-key (kbd "C-M-r") 'query-replace-regexp) ;; C-M-% aaa bbb
+(keymap-global-set "C-r" 'query-replace) ;; M-% aaa bbb
+(keymap-global-set "C-M-r" 'query-replace-regexp) ;; C-M-% aaa bbb
 
 ;; Insert key .. toggle overwrite-mode
-(global-set-key (kbd "M-o") 'overwrite-mode)
+(keymap-global-set "M-o" 'overwrite-mode)
 
 ;; no cua-mode  cut/copy/paste=C-w C-S-w C-y
-(global-set-key (kbd "C-S-w") 'kill-ring-save) ;; M-w
-(global-set-key (kbd "C-x r W") 'copy-rectangle-as-kill)  ;; C-x r M-w
+(keymap-global-set "C-S-w" 'kill-ring-save) ;; M-w
+(keymap-global-set "C-x r W" 'copy-rectangle-as-kill)  ;; C-x r M-w
 
 ;; for MAC OSX
-(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
-;;(global-set-key (kbd "C-h") 'delete-backward-char)
+(keymap-global-set "C-h" 'backward-delete-char-untabify)
+;;(keymap-global-set "C-h" 'delete-backward-char)
 
 
 ;; overwridden by cua-mode
 ;;;;  ;; no cua-mode  cut/paste=C-w C-v  copy/paste=M-w M-v
-;;;;  (global-set-key (kbd "M-v") 'yank) ;; C-y
-;;;;  (global-set-key (kbd "C-v") 'yank) ;; C-y
-(global-set-key (kbd "C-z") 'undo) ;; C-x C-z  ^Z ..fg
+;;;;  (keymap-global-set "M-v" 'yank) ;; C-y
+;;;;  (keymap-global-set "C-v" 'yank) ;; C-y
+(keymap-global-set "C-z" 'undo) ;; C-x C-z  ^Z ..fg
 
 ;;                    C-x C-c     'save-buffers-kill-terminal
 ;;                    C-x C-z     'suspend-frame            ;; <- C-z
 
 ;; alternate keybind for pos<--ex-->mark (was C-x C-x)
-(global-set-key (kbd "M-s M-j") 'exchange-point-and-mark)
+(keymap-global-set "M-s M-j" 'exchange-point-and-mark)
 
 ;; like C-S-<backspace>
-(global-set-key (kbd "C-S-<delete>") 'kill-whole-line)
+(keymap-global-set "C-S-<delete>" 'kill-whole-line)
 
 ;;====================================
 ;;;; kill region or kill line. (MAC OSX style)
 ;;====================================
-(global-set-key (kbd "C-k") 'ak-kill-line)
+(keymap-global-set "C-k" 'ak-kill-line)
 ;;  copy
-(global-set-key (kbd "C-S-k") 'ak-copy-line)
+(keymap-global-set "C-S-k" 'ak-copy-line)
 ;; kill active region or kill line
 ;; active region may have length 0
 (defun ak-kill-line (&optional arg)
@@ -141,105 +155,105 @@
 ;;====================================
 ;;;; Teraterm End key = <select>
 ;;====================================
-(define-key input-decode-map "\e[1~" (kbd "<home>"))   ;;<find> to <home>  (screen)
-(define-key input-decode-map "\e[4~" (kbd "<end>"))    ;;<select> to <end>  (NumLock-off 1)
-(define-key input-decode-map "\e[3~" (kbd "<deletechar>"))   ;;vscode delete key was DEL
+(keymap-set input-decode-map "ESC [ 1 ~" "<home>")   ;;<find> to <home>  (screen)
+(keymap-set input-decode-map "ESC [ 4 ~" "<end>")    ;;<select> to <end>  (NumLock-off 1)
+(keymap-set input-decode-map "ESC [ 3 ~" "<deletechar>")   ;;vscode delete key was DEL
 
 ;;  MAC OSX  default reversed by kbd setting   ¥-->\   fn ¥-->¥
 ;;      but C-\  M-\  ...ng
-(define-key input-decode-map (kbd "M-¥") (kbd "M-\\"))
+(keymap-set input-decode-map "M-¥" "M-\\")
 ;;      for emacs.app    terminal->no need
-(define-key input-decode-map (kbd "C-¥") (kbd "C-\\"))
-(define-key input-decode-map (kbd "s-¥") (kbd "s-\\"))
+(keymap-set input-decode-map "C-¥" "C-\\")
+(keymap-set input-decode-map "s-¥" "s-\\")
 
 ;;;; delete key sequence is...
-;;(define-key input-decode-map "\e[3~" (kbd "<deletechar>")) ;;delete-forward-char
-;;(define-key input-decode-map "\e[3;2~" (kbd "S-<delete>")) ;;kill-region
-;;(define-key input-decode-map "\e[3;3~" (kbd "M-<delete>"))
-;;(define-key input-decode-map "\e[3;4~" (kbd "M-S-<delete>"))
-;;(define-key input-decode-map "\e[3;5~" (kbd "C-<delete>")) ;;kill-word
-;;(define-key input-decode-map "\e[3;6~" (kbd "C-S-<delete>")) ;;kill-whole-line(me)
-;;(define-key input-decode-map "\e[3;7~" (kbd "C-M-<delete>")) ;;backword-kill-sexp
-;;(define-key input-decode-map "\e[3;8~" (kbd "C-M-S-<delete>"))
+;;(ak-input-decode-set "\e[3~" "<deletechar>") ;;delete-forward-char
+;;(ak-input-decode-set "\e[3;2~" "S-<delete>") ;;kill-region
+;;(ak-input-decode-set "\e[3;3~" "M-<delete>")
+;;(ak-input-decode-set "\e[3;4~" "M-S-<delete>")
+;;(ak-input-decode-set "\e[3;5~" "C-<delete>") ;;kill-word
+;;(ak-input-decode-set "\e[3;6~" "C-S-<delete>") ;;kill-whole-line(me)
+;;(ak-input-decode-set "\e[3;7~" "C-M-<delete>") ;;backword-kill-sexp
+;;(ak-input-decode-set "\e[3;8~" "C-M-S-<delete>")
 
 ;;;; new BackSpace key sequence.
 ;; DEL (127) backward-delete-char-untabify
-(define-key input-decode-map "\e[27;2;127~" (kbd "S-<backspace>"))
+(ak-input-decode-set "\e[27;2;127~" "S-<backspace>")
 ;; M-DEL (255) backward-kill-word
-(define-key input-decode-map "\e[27;4;127~" (kbd "M-S-DEL"))
-(define-key input-decode-map "\e[27;5;127~" (kbd "C-<backspace>")) ;;backword-kill-word
-(define-key input-decode-map "\e[27;6;127~" (kbd "C-S-<backspace>")) ;;kill-whole-line
-(define-key input-decode-map "\e[27;7;127~" (kbd "C-M-<backspace>")) ;;backword-kill-sexp
-(define-key input-decode-map "\e[27;8;127~" (kbd "C-M-S-<backspace>"))
+(ak-input-decode-set "\e[27;4;127~" "M-S-DEL")
+(ak-input-decode-set "\e[27;5;127~" "C-<backspace>") ;;backword-kill-word
+(ak-input-decode-set "\e[27;6;127~" "C-S-<backspace>") ;;kill-whole-line
+(ak-input-decode-set "\e[27;7;127~" "C-M-<backspace>") ;;backword-kill-sexp
+(ak-input-decode-set "\e[27;8;127~" "C-M-S-<backspace>")
 
-;;(define-key input-decode-map "\xff" (kbd "M-DEL")) ;; M-DEL (255) backward-kill-word
-;;(define-key input-decode-map "\x09" "T")TT
+;;(ak-input-decode-set "\xff" "M-DEL") ;; M-DEL (255) backward-kill-word
+;;(ak-input-decode-set "\x09" "T")TT
 
 ;;;; TAB
 ;; TAB (9)             indent-for-tab-command              ;;magit-section-toggle
 ;; S-TAB     M-[ Z     <backtab>                           ;;magit-section-cycle-global
-(define-key input-decode-map "\e[27;3;9~" (kbd "M-<tab>")) ;;magit-section-cycle-diffs
-(define-key input-decode-map "\e[27;4;9~" (kbd "M-S-<tab>"))
-;;efine-key input-decode-map "\e[27;5;9~" (kbd "C-<tab>")) ;;magit-section-cycle
-;;efine-key input-decode-map "\e[27;6;9~" (kbd "C-S-<tab>")) ;;previous-window-any-frame(me)
-;;efine-key input-decode-map "\e[27;7;9~" (kbd "C-M-<tab>"))
-(define-key input-decode-map "\e[27;8;9~" (kbd "C-M-S-<tab>"))
+(ak-input-decode-set "\e[27;3;9~" "M-<tab>") ;;magit-section-cycle-diffs
+(ak-input-decode-set "\e[27;4;9~" "M-S-<tab>")
+;;(ak-input-decode-set "\e[27;5;9~" "C-<tab>") ;;magit-section-cycle
+;;(ak-input-decode-set "\e[27;6;9~" "C-S-<tab>") ;;previous-window-any-frame(me)
+;;(ak-input-decode-set "\e[27;7;9~" "C-M-<tab>")
+(ak-input-decode-set "\e[27;8;9~" "C-M-S-<tab>")
 
 ;;;; RET
 ;; RET (13)       newline
-;;efine-key input-decode-map "\e[27;2;13~" (kbd "S-<return>"))
+;;(ak-input-decode-set "\e[27;2;13~" "S-<return>")
 ;; M-RET (141)
-(define-key input-decode-map "\e[27;4;13~" (kbd "M-S-RET"))
-;;efine-key input-decode-map "\e[27;5;13~" (kbd "C-<return>")) ;;cua-set-rectangle-mark~
-;;efine-key input-decode-map "\e[27;6;13~" (kbd "C-S-<return>"))
-;;efine-key input-decode-map "\e[27;7;13~" (kbd "C-M-<return>"))
-(define-key input-decode-map "\e[27;8;13~" (kbd "C-M-S-<return>"))
+(ak-input-decode-set "\e[27;4;13~" "M-S-RET")
+;;(ak-input-decode-set "\e[27;5;13~" "C-<return>") ;;cua-set-rectangle-mark~
+;;(ak-input-decode-set "\e[27;6;13~" "C-S-<return>")
+;;(ak-input-decode-set "\e[27;7;13~" "C-M-<return>")
+(ak-input-decode-set "\e[27;8;13~" "C-M-S-<return>")
 
 ;;  S-SPC is backward SPC.
 ;; SPC (32)
-(define-key input-decode-map "\e[27;2;32~" (kbd "S-SPC")) ;;ak-scroll-page-backward(view)
+(ak-input-decode-set "\e[27;2;32~" "S-SPC") ;;ak-scroll-page-backward(view)
 ;; M-SPC (160)
-(define-key input-decode-map "\e[27;4;32~" (kbd "M-S-SPC"))
+(ak-input-decode-set "\e[27;4;32~" "M-S-SPC")
 ;; C-SPC    C-@ (0)                                         ;;set-mark
-(define-key input-decode-map "\e[27;6;32~" (kbd "C-S-SPC")) ;;cua-toggle-global-mark
-;;efine-key input-decode-map "\e[27;7;32~" (kbd "C-M-SPC")) ;;mark-sexp
-(define-key input-decode-map "\e[27;8;32~" (kbd "C-M-S-SPC"))
+(ak-input-decode-set "\e[27;6;32~" "C-S-SPC") ;;cua-toggle-global-mark
+;;(ak-input-decode-set "\e[27;7;32~" "C-M-SPC") ;;mark-sexp
+(ak-input-decode-set "\e[27;8;32~" "C-M-S-SPC")
 
 ;;  MAC OSX iTerm2
 ;;  C-SPC:0x00 C-@:M-[27;5;64~ for set-mark
 ;;  C-7:0x1f   C-_:M-[27;5;95~ for undo
 
 ;; 5: Control
-(define-key input-decode-map "\e[27;5;64~" (kbd "C-@"))
-(define-key input-decode-map "\e[27;5;94~" (kbd "C-^"))
-(define-key input-decode-map "\e[27;5;95~" (kbd "C-_"))
+(ak-input-decode-set "\e[27;5;64~" "C-@")
+(ak-input-decode-set "\e[27;5;94~" "C-^")
+(ak-input-decode-set "\e[27;5;95~" "C-_")
 ;; 6: Control + shift
-(define-key input-decode-map "\e[27;6;96~" (kbd "C-`"))
-(define-key input-decode-map "\e[27;6;123~" (kbd "C-{"))
-(define-key input-decode-map "\e[27;6;124~" (kbd "C-|"))
-(define-key input-decode-map "\e[27;6;125~" (kbd "C-}"))
-(define-key input-decode-map "\e[27;6;126~" (kbd "C-~"))
+(ak-input-decode-set "\e[27;6;96~" "C-`")
+(ak-input-decode-set "\e[27;6;123~" "C-{")
+(ak-input-decode-set "\e[27;6;124~" "C-|")
+(ak-input-decode-set "\e[27;6;125~" "C-}")
+(ak-input-decode-set "\e[27;6;126~" "C-~")
 ;; 7: Control + Meta
-(define-key input-decode-map "\e[27;7;64~" (kbd "C-M-@"))
-(define-key input-decode-map "\e[27;7;94~" (kbd "C-M-^"))
-(define-key input-decode-map "\e[27;7;95~" (kbd "C-M-_"))
+(ak-input-decode-set "\e[27;7;64~" "C-M-@")
+(ak-input-decode-set "\e[27;7;94~" "C-M-^")
+(ak-input-decode-set "\e[27;7;95~" "C-M-_")
 ;; 8: Control + Meta + Shift
-(define-key input-decode-map "\e[27;8;96~" (kbd "C-M-`"))
-(define-key input-decode-map "\e[27;8;123~" (kbd "C-M-{"))
-(define-key input-decode-map "\e[27;8;124~" (kbd "C-M-|"))
-(define-key input-decode-map "\e[27;8;125~" (kbd "C-M-}"))
-(define-key input-decode-map "\e[27;8;126~" (kbd "C-M-~"))
+(ak-input-decode-set "\e[27;8;96~" "C-M-`")
+(ak-input-decode-set "\e[27;8;123~" "C-M-{")
+(ak-input-decode-set "\e[27;8;124~" "C-M-|")
+(ak-input-decode-set "\e[27;8;125~" "C-M-}")
+(ak-input-decode-set "\e[27;8;126~" "C-M-~")
 ;; 9: super
-(define-key input-decode-map "\e[27;9;39~" (kbd "s-'"))
-(define-key input-decode-map "\e[27;9;93~" (kbd "s-]"))
-(define-key input-decode-map "\e[27;9;94~" (kbd "s-^"))
-(define-key input-decode-map "\e[27;9;125~" (kbd "s-}"))
+(ak-input-decode-set "\e[27;9;39~" "s-'")
+(ak-input-decode-set "\e[27;9;93~" "s-]")
+(ak-input-decode-set "\e[27;9;94~" "s-^")
+(ak-input-decode-set "\e[27;9;125~" "s-}")
 ;; 10: Shift + super
-(define-key input-decode-map "\e[27;10;58~" (kbd "s-:"))
-(define-key input-decode-map "\e[27;10;63~" (kbd "s-?"))
-(define-key input-decode-map "\e[27;10;96~" (kbd "s-`"))
-(define-key input-decode-map "\e[27;10;124~" (kbd "s-|"))
-(define-key input-decode-map "\e[27;10;126~" (kbd "s-~"))
+(ak-input-decode-set "\e[27;10;58~" "s-:")
+(ak-input-decode-set "\e[27;10;63~" "s-?")
+(ak-input-decode-set "\e[27;10;96~" "s-`")
+(ak-input-decode-set "\e[27;10;124~" "s-|")
+(ak-input-decode-set "\e[27;10;126~" "s-~")
 ;; 11: Meta + super
 ;; 12: Meta + Shift + super
 ;; 13: Control + super
@@ -256,8 +270,8 @@
 ;; (define-key function-key-map [?\C-x ?@ ?S] 'event-apply-shift-modifier)
 ;; (define-key function-key-map [?\C-x ?@ ?s] 'event-apply-super-modifier)
 
-(define-key function-key-map (kbd "M-s @ S") 'event-apply-shift-modifier)
-(define-key function-key-map (kbd "M-s @ s") 'event-apply-super-modifier)
+(keymap-set function-key-map "M-s @ S" 'event-apply-shift-modifier)
+(keymap-set function-key-map "M-s @ s" 'event-apply-super-modifier)
 
 ;;;; Esc M-s @ S ^A   C-M-S-a	  Shift + beginning-of-defun
 ;;;; Esc M-s @ s f	M-s-f	  isearch-forward-regexp
@@ -272,223 +286,223 @@
 ;; M-n      (238 0xee)                  half-page-up(me)
 ;; M-N      (206 0xce)                  shifted
 ;; C-n      (14  0x0e)   ^N             next-line
-;; (define-key input-decode-map "\e[27;6;110~" (kbd "C-S-n"))
+;; (ak-input-decode-set "\e[27;6;110~" "C-S-n")
 ;; C-M-n    (142  0x8e)  ^M-N           ak-line-down(me)
-;; (define-key input-decode-map "\e[27;8;110~" (kbd "C-M-S-n"))
-;; (define-key input-decode-map "\e[27;9;110~" (kbd "s-n"))
-;; (define-key input-decode-map "\e[27;10;102~" (kbd "s-F"))
-;; (define-key input-decode-map "\e[27;11;102~" (kbd "M-s-f"))
-;; (define-key input-decode-map "\e[27;12;102~" (kbd "M-s-F"))
-;; (define-key input-decode-map "\e[27;13;110~" (kbd "C-s-n"))
-;; (define-key input-decode-map "\e[27;14;110~" (kbd "C-S-s-n"))
-;;                              "\e[27;15;110~" (kbd "C-M-s-n")
-;;                              "\e[27;16;110~" (kbd "C-M-S-s-n")
+;; (ak-input-decode-set "\e[27;8;110~" "C-M-S-n")
+;; (ak-input-decode-set "\e[27;9;110~" "s-n")
+;; (ak-input-decode-set "\e[27;10;102~" "s-F")
+;; (ak-input-decode-set "\e[27;11;102~" "M-s-f")
+;; (ak-input-decode-set "\e[27;12;102~" "M-s-F")
+;; (ak-input-decode-set "\e[27;13;110~" "C-s-n")
+;; (ak-input-decode-set "\e[27;14;110~" "C-S-s-n")
+;;                      "\e[27;15;110~" "C-M-s-n"
+;;			"\e[27;16;110~" "C-M-S-s-n"
 ;;;;;;;;;;;;;;;;;;;;;; all alphabet ;;;;;;;;;;;;;;;;;;;;;;;
-(define-key input-decode-map "\e[27;6;97~" (kbd "C-S-a"))
-(define-key input-decode-map "\e[27;8;97~" (kbd "C-M-S-a"))
-(define-key input-decode-map "\e[27;9;97~" (kbd "s-a"))
-(define-key input-decode-map "\e[27;6;98~" (kbd "C-S-b"))
-(define-key input-decode-map "\e[27;8;98~" (kbd "C-M-S-b"))
-(define-key input-decode-map "\e[27;9;99~" (kbd "s-c"))
-(define-key input-decode-map "\e[27;8;100~" (kbd "C-M-S-d"))
-(define-key input-decode-map "\e[27;9;100~" (kbd "s-d"))
-(define-key input-decode-map "\e[27;10;100~" (kbd "s-D"))
-(define-key input-decode-map "\e[27;6;101~" (kbd "C-S-e"))
-(define-key input-decode-map "\e[27;8;101~" (kbd "C-M-S-e"))
-(define-key input-decode-map "\e[27;9;101~" (kbd "s-e"))
-(define-key input-decode-map "\e[27;10;101~" (kbd "s-E"))
-(define-key input-decode-map "\e[27;6;102~" (kbd "C-S-f"))
-(define-key input-decode-map "\e[27;8;102~" (kbd "C-M-S-f"))
-(define-key input-decode-map "\e[27;9;102~" (kbd "s-f"))
-(define-key input-decode-map "\e[27;10;102~" (kbd "s-F"))
-(define-key input-decode-map "\e[27;11;102~" (kbd "M-s-f"))
-(define-key input-decode-map "\e[27;12;102~" (kbd "M-s-F"))
-(define-key input-decode-map "\e[27;9;103~" (kbd "s-g"))
-;;efine-key input-decode-map "\e[27;9;104~" (kbd "s-h"));;no
-;;efine-key input-decode-map "\e[27;9;105~" (kbd "s-i"));;no
-(define-key input-decode-map "\e[27;9;106~" (kbd "s-j"))
-(define-key input-decode-map "\e[27;6;107~" (kbd "C-S-k"))
-(define-key input-decode-map "\e[27;9;107~" (kbd "s-k"))
-(define-key input-decode-map "\e[27;8;108~" (kbd "C-M-S-l"))
-(define-key input-decode-map "\e[27;9;108~" (kbd "s-l"))
-(define-key input-decode-map "\e[27;10;108~" (kbd "s-L"))
-(define-key input-decode-map "\e[27;10;109~" (kbd "s-M"))
-(define-key input-decode-map "\e[27;6;110~" (kbd "C-S-n"))
-(define-key input-decode-map "\e[27;8;110~" (kbd "C-M-S-n"))
-(define-key input-decode-map "\e[27;9;110~" (kbd "s-n"))
-(define-key input-decode-map "\e[27;13;110~" (kbd "C-s-n"))
-(define-key input-decode-map "\e[27;14;110~" (kbd "C-S-s-n"))
-;;efine-key input-decode-map "\e[27;9;111~" (kbd "s-o"));;no
-(define-key input-decode-map "\e[27;6;112~" (kbd "C-S-p"))
-(define-key input-decode-map "\e[27;8;112~" (kbd "C-M-S-p"))
-(define-key input-decode-map "\e[27;13;112~" (kbd "C-s-p"))
-(define-key input-decode-map "\e[27;14;112~" (kbd "C-S-s-p"))
-;;efine-key input-decode-map "\e[27;9;113~" (kbd "s-q"));;no
-;;efine-key input-decode-map "\e[27;9;114~" (kbd "s-r"));;ignore
-(define-key input-decode-map "\e[27;9;115~" (kbd "s-s"))
-;;efine-key input-decode-map "\e[27;9;116~" (kbd "s-t"));;no
-(define-key input-decode-map "\e[27;8;117~" (kbd "C-M-S-u"))
-(define-key input-decode-map "\e[27;9;117~" (kbd "s-u"))
-(define-key input-decode-map "\e[27;6;118~" (kbd "C-S-v"))
-(define-key input-decode-map "\e[27;8;118~" (kbd "C-M-S-v"))
-(define-key input-decode-map "\e[27;9;118~" (kbd "s-v"))
-(define-key input-decode-map "\e[27;6;119~" (kbd "C-S-w"))
-(define-key input-decode-map "\e[27;9;119~" (kbd "s-w"))
-(define-key input-decode-map "\e[27;9;120~" (kbd "s-x"))
-;;efine-key input-decode-map "\e[27;9;121~" (kbd "s-y"));;ignore
-(define-key input-decode-map "\e[27;9;122~" (kbd "s-z"))
+(ak-input-decode-set "\e[27;6;97~" "C-S-a")
+(ak-input-decode-set "\e[27;8;97~" "C-M-S-a")
+(ak-input-decode-set "\e[27;9;97~" "s-a")
+(ak-input-decode-set "\e[27;6;98~" "C-S-b")
+(ak-input-decode-set "\e[27;8;98~" "C-M-S-b")
+(ak-input-decode-set "\e[27;9;99~" "s-c")
+(ak-input-decode-set "\e[27;8;100~" "C-M-S-d")
+(ak-input-decode-set "\e[27;9;100~" "s-d")
+(ak-input-decode-set "\e[27;10;100~" "s-D")
+(ak-input-decode-set "\e[27;6;101~" "C-S-e")
+(ak-input-decode-set "\e[27;8;101~" "C-M-S-e")
+(ak-input-decode-set "\e[27;9;101~" "s-e")
+(ak-input-decode-set "\e[27;10;101~" "s-E")
+(ak-input-decode-set "\e[27;6;102~" "C-S-f")
+(ak-input-decode-set "\e[27;8;102~" "C-M-S-f")
+(ak-input-decode-set "\e[27;9;102~" "s-f")
+(ak-input-decode-set "\e[27;10;102~" "s-F")
+(ak-input-decode-set "\e[27;11;102~" "M-s-f")
+(ak-input-decode-set "\e[27;12;102~" "M-s-F")
+(ak-input-decode-set "\e[27;9;103~" "s-g")
+;;(ak-input-decode-set "\e[27;9;104~" "s-h");;no
+;;(ak-input-decode-set "\e[27;9;105~" "s-i");;no
+(ak-input-decode-set "\e[27;9;106~" "s-j")
+(ak-input-decode-set "\e[27;6;107~" "C-S-k")
+(ak-input-decode-set "\e[27;9;107~" "s-k")
+(ak-input-decode-set "\e[27;8;108~" "C-M-S-l")
+(ak-input-decode-set "\e[27;9;108~" "s-l")
+(ak-input-decode-set "\e[27;10;108~" "s-L")
+(ak-input-decode-set "\e[27;10;109~" "s-M")
+(ak-input-decode-set "\e[27;6;110~" "C-S-n")
+(ak-input-decode-set "\e[27;8;110~" "C-M-S-n")
+(ak-input-decode-set "\e[27;9;110~" "s-n")
+(ak-input-decode-set "\e[27;13;110~" "C-s-n")
+(ak-input-decode-set "\e[27;14;110~" "C-S-s-n")
+;;(ak-input-decode-set "\e[27;9;111~" "s-o");;no
+(ak-input-decode-set "\e[27;6;112~" "C-S-p")
+(ak-input-decode-set "\e[27;8;112~" "C-M-S-p")
+(ak-input-decode-set "\e[27;13;112~" "C-s-p")
+(ak-input-decode-set "\e[27;14;112~" "C-S-s-p")
+;;(ak-input-decode-set "\e[27;9;113~" "s-q");;no
+;;(ak-input-decode-set "\e[27;9;114~" "s-r");;ignore
+(ak-input-decode-set "\e[27;9;115~" "s-s")
+;;(ak-input-decode-set "\e[27;9;116~" "s-t");;no
+(ak-input-decode-set "\e[27;8;117~" "C-M-S-u")
+(ak-input-decode-set "\e[27;9;117~" "s-u")
+(ak-input-decode-set "\e[27;6;118~" "C-S-v")
+(ak-input-decode-set "\e[27;8;118~" "C-M-S-v")
+(ak-input-decode-set "\e[27;9;118~" "s-v")
+(ak-input-decode-set "\e[27;6;119~" "C-S-w")
+(ak-input-decode-set "\e[27;9;119~" "s-w")
+(ak-input-decode-set "\e[27;9;120~" "s-x")
+;;(ak-input-decode-set "\e[27;9;121~" "s-y");;ignore
+(ak-input-decode-set "\e[27;9;122~" "s-z")
 
 ;;====================================
 ;;;; MAC OSX command key for iTerm2
 ;;====================================
-(define-key input-decode-map "\e[1;9A" (kbd "s-<up>"))
-(define-key input-decode-map "\e[1;9B" (kbd "s-<down>"))
-(define-key input-decode-map "\e[1;9C" (kbd "s-<right>"))
-(define-key input-decode-map "\e[1;9D" (kbd "s-<left>"))
-(define-key input-decode-map "\e[1;10A" (kbd "S-s-<up>"))
-(define-key input-decode-map "\e[1;10B" (kbd "S-s-<down>"))
-(define-key input-decode-map "\e[1;10C" (kbd "S-s-<right>"))
-(define-key input-decode-map "\e[1;10D" (kbd "S-s-<left>"))
-(define-key input-decode-map "\e[1;13A" (kbd "C-s-<up>"))
-(define-key input-decode-map "\e[1;13B" (kbd "C-s-<down>"))
-(define-key input-decode-map "\e[1;14A" (kbd "C-S-s-<up>"))
-(define-key input-decode-map "\e[1;14B" (kbd "C-S-s-<down>"))
+(ak-input-decode-set "\e[1;9A" "s-<up>")
+(ak-input-decode-set "\e[1;9B" "s-<down>")
+(ak-input-decode-set "\e[1;9C" "s-<right>")
+(ak-input-decode-set "\e[1;9D" "s-<left>")
+(ak-input-decode-set "\e[1;10A" "S-s-<up>")
+(ak-input-decode-set "\e[1;10B" "S-s-<down>")
+(ak-input-decode-set "\e[1;10C" "S-s-<right>")
+(ak-input-decode-set "\e[1;10D" "S-s-<left>")
+(ak-input-decode-set "\e[1;13A" "C-s-<up>")
+(ak-input-decode-set "\e[1;13B" "C-s-<down>")
+(ak-input-decode-set "\e[1;14A" "C-S-s-<up>")
+(ak-input-decode-set "\e[1;14B" "C-S-s-<down>")
 
 ;;====================================
 ;;;; MAC OSX command keys
 ;;====================================
 ;;;; MAC OSX command key + up down left right
-(global-set-key (kbd "s-<up>")    'beginning-of-buffer)
-(global-set-key (kbd "s-<down>")  'end-of-buffer)
-(global-set-key (kbd "s-<left>")  'move-beginning-of-line)
-(global-set-key (kbd "s-<right>") 'move-end-of-line)
+(keymap-global-set "s-<up>"    'beginning-of-buffer)
+(keymap-global-set "s-<down>"  'end-of-buffer)
+(keymap-global-set "s-<left>"  'move-beginning-of-line)
+(keymap-global-set "s-<right>" 'move-end-of-line)
 ;;     same as default
-(global-set-key (kbd "s-a") 'mark-whole-buffer)
-(global-set-key (kbd "s-l") 'goto-line)
-(global-set-key (kbd "s-D") 'dired)
-(global-set-key (kbd "s-M") 'manual-entry)
-(global-set-key (kbd "s-L") 'shell-command)
-(global-set-key (kbd "s-|") 'shell-command-on-region)
-(global-set-key (kbd "s-?") 'info)
-(global-set-key (kbd "s-:") 'ispell)
-(global-set-key (kbd "s-E") 'edit-abbrevs)
-(global-unset-key (kbd "s-p")) ;;ns-print-buffer
+(keymap-global-set "s-a" 'mark-whole-buffer)
+(keymap-global-set "s-l" 'goto-line)
+(keymap-global-set "s-D" 'dired)
+(keymap-global-set "s-M" 'manual-entry)
+(keymap-global-set "s-L" 'shell-command)
+(keymap-global-set "s-|" 'shell-command-on-region)
+(keymap-global-set "s-?" 'info)
+(keymap-global-set "s-:" 'ispell)
+(keymap-global-set "s-E" 'edit-abbrevs)
+(keymap-global-set "s-p" nil) ;;ns-print-buffer
 
-(global-set-key (kbd "s-z") 'undo)
-(global-set-key (kbd "s-x") 'kill-region)
+(keymap-global-set "s-z" 'undo)
+(keymap-global-set "s-x" 'kill-region)
 (if (equal (framep-on-display) 'ns)
-    (global-set-key (kbd "s-c") 'ns-copy-including-secondary) ;;Xwindow
-  (global-set-key (kbd "s-c") 'kill-ring-save)) ;;Terminal
-(global-set-key (kbd "s-v") 'yank)
+    (keymap-global-set "s-c" 'ns-copy-including-secondary) ;;Xwindow
+  (keymap-global-set "s-c" 'kill-ring-save)) ;;Terminal
+(keymap-global-set "s-v" 'yank)
 (if (equal (framep-on-display) 'ns)
-    (global-set-key (kbd "s-y") 'ns-paste-secondary)) ;;Xwindow
+    (keymap-global-set "s-y" 'ns-paste-secondary)) ;;Xwindow
 
-(global-set-key (kbd "s-k") 'kill-current-buffer)
-(global-set-key (kbd "s-s") 'save-buffer)
-(global-set-key (kbd "s-u") 'revert-buffer)
-(global-set-key (kbd "s-^") 'kill-some-buffers)
+(keymap-global-set "s-k" 'kill-current-buffer)
+(keymap-global-set "s-s" 'save-buffer)
+(keymap-global-set "s-u" 'revert-buffer)
+(keymap-global-set "s-^" 'kill-some-buffers)
 
-(global-set-key (kbd "s-n") 'make-frame)
-(global-set-key (kbd "s-w") 'delete-frame)
-(global-set-key (kbd "s-'") 'next-window-any-frame) ;; 0x27 '
-(global-set-key (kbd "s-`") 'other-frame)           ;; 0x60 `
-;;(global-set-key (kbd "s-~") 'ns-prev-frame)       ;; 0x7E ~
-(global-set-key (kbd "s-~") 'ak-prev-frame)
+(keymap-global-set "s-n" 'make-frame)
+(keymap-global-set "s-w" 'delete-frame)
+(keymap-global-set "s-'" 'next-window-any-frame) ;; 0x27 '
+(keymap-global-set "s-`" 'other-frame)           ;; 0x60 `
+;;(keymap-global-set "s-~" 'ns-prev-frame)       ;; 0x7E ~
+(keymap-global-set "s-~" 'ak-prev-frame)
 
-(global-set-key (kbd "s-d") 'isearch-repeat-backward)
-(global-set-key (kbd "s-f") 'isearch-forward)
-(global-set-key (kbd "s-F") 'isearch-backward)
-(global-set-key (kbd "M-s-f") 'isearch-forward-regexp)
-(global-set-key (kbd "M-s-F") 'isearch-backward-regexp)
-(global-set-key (kbd "s-g") 'isearch-repeat-forward)
-(global-set-key (kbd "s-e") 'isearch-yank-kill)
-(global-set-key (kbd "s-j") 'exchange-point-and-mark)
+(keymap-global-set "s-d" 'isearch-repeat-backward)
+(keymap-global-set "s-f" 'isearch-forward)
+(keymap-global-set "s-F" 'isearch-backward)
+(keymap-global-set "M-s-f" 'isearch-forward-regexp)
+(keymap-global-set "M-s-F" 'isearch-backward-regexp)
+(keymap-global-set "s-g" 'isearch-repeat-forward)
+(keymap-global-set "s-e" 'isearch-yank-kill)
+(keymap-global-set "s-j" 'exchange-point-and-mark)
 ;;      HIRAGANA key
-(define-key input-decode-map (kbd "s-ち") (kbd "s-a"))	    ;;mark-whole-buffer
-(define-key input-decode-map (kbd "s-り") (kbd "s-l"))	    ;;goto-line
-(define-key input-decode-map (kbd "s-ー") (kbd "s-|"))	    ;;shell-command-on-region
-(define-key input-decode-map (kbd "s-・") (kbd "s-?"))	    ;;info
-(define-key input-decode-map (kbd "s-け") (kbd "s-:"))	    ;;ispell
-(define-key input-decode-map (kbd "s-ぃ") (kbd "s-E"))	    ;;edit-abbrevs
-							     
-(define-key input-decode-map (kbd "s-つ") (kbd "s-z"))	    ;;undo
-(define-key input-decode-map (kbd "s-さ") (kbd "s-x"))	    ;;kill-region
-(define-key input-decode-map (kbd "s-そ") (kbd "s-c"))	    ;;ns-copy-including-secondary / kill-ring-save
-(define-key input-decode-map (kbd "s-ひ") (kbd "s-v"))	    ;;yank
-(define-key input-decode-map (kbd "s-ん") (kbd "s-y"))	    ;;ns-paste-secondary
-							     
-(define-key input-decode-map (kbd "s-の") (kbd "s-k"))	    ;;kill-current-buffer
-(define-key input-decode-map (kbd "s-と") (kbd "s-s"))	    ;;save-buffer
-(define-key input-decode-map (kbd "s-な") (kbd "s-u"))	    ;;revert-buffer
-(define-key input-decode-map (kbd "s-へ") (kbd "s-^"))	    ;;kill-some-buffers
-							     
-(define-key input-decode-map (kbd "s-み") (kbd "s-n"))	    ;;make-frame
-(define-key input-decode-map (kbd "s-て") (kbd "s-w"))	    ;;delete-frame
-(define-key input-decode-map (kbd "s-ゃ") (kbd "s-'"))	    ;;next-window-any-frame
-(define-key input-decode-map (kbd "s-゛") (kbd "s-`"))	    ;;other-frame
+(keymap-set input-decode-map "s-ち" "s-a")	    ;;mark-whole-buffer
+(keymap-set input-decode-map "s-り" "s-l")	    ;;goto-line
+(keymap-set input-decode-map "s-ー" "s-|")	    ;;shell-command-on-region
+(keymap-set input-decode-map "s-・" "s-?")	    ;;info
+(keymap-set input-decode-map "s-け" "s-:")	    ;;ispell
+(keymap-set input-decode-map "s-ぃ" "s-E")	    ;;edit-abbrevs
+					    
+(keymap-set input-decode-map "s-つ" "s-z")	    ;;undo
+(keymap-set input-decode-map "s-さ" "s-x")	    ;;kill-region
+(keymap-set input-decode-map "s-そ" "s-c")	    ;;ns-copy-including-secondary / kill-ring-save
+(keymap-set input-decode-map "s-ひ" "s-v")	    ;;yank
+(keymap-set input-decode-map "s-ん" "s-y")	    ;;ns-paste-secondary
+					    
+(keymap-set input-decode-map "s-の" "s-k")	    ;;kill-current-buffer
+(keymap-set input-decode-map "s-と" "s-s")	    ;;save-buffer
+(keymap-set input-decode-map "s-な" "s-u")	    ;;revert-buffer
+(keymap-set input-decode-map "s-へ" "s-^")	    ;;kill-some-buffers
+					    
+(keymap-set input-decode-map "s-み" "s-n")	    ;;make-frame
+(keymap-set input-decode-map "s-て" "s-w")	    ;;delete-frame
+(keymap-set input-decode-map "s-ゃ" "s-'")	    ;;next-window-any-frame
+(keymap-set input-decode-map "s-゛" "s-`")	    ;;other-frame
 
-(define-key input-decode-map (kbd "s-し")   (kbd "s-d"))    ;;isearch-repeat-backward
-(define-key input-decode-map (kbd "s-は")   (kbd "s-f"))    ;;isearch-forward
-(define-key input-decode-map (kbd "M-s-は") (kbd "M-s-f"))  ;;isearch-forward-regexp
-(define-key input-decode-map (kbd "s-き")   (kbd "s-g"))    ;;isearch-repeat-forward
-(define-key input-decode-map (kbd "s-い")   (kbd "s-e"))    ;;isearch-yank-kill
-(define-key input-decode-map (kbd "s-ま")   (kbd "s-j"))    ;;exchange-point-and-mark
+(keymap-set input-decode-map "s-し" "s-d")	    ;;isearch-repeat-backward
+(keymap-set input-decode-map "s-は" "s-f")	    ;;isearch-forward
+(keymap-set input-decode-map "M-s-は" "M-s-f")	    ;;isearch-forward-regexp
+(keymap-set input-decode-map "s-き" "s-g")	    ;;isearch-repeat-forward
+(keymap-set input-decode-map "s-い" "s-e")	    ;;isearch-yank-kill
+(keymap-set input-decode-map "s-ま" "s-j")	    ;;exchange-point-and-mark
 
 ;; like iTerm M-s-q ==> send <C-x><C-c>
-(define-key input-decode-map (kbd "M-s-q") (kbd "C-x C-c"))
-(define-key input-decode-map (kbd "M-s-た") (kbd "C-x C-c"))
+(keymap-set input-decode-map "M-s-q" "C-x C-c")
+(keymap-set input-decode-map "M-s-た" "C-x C-c")
 
 ;;====================================
 ;;;; Allow Meta key in Kana mode.
 ;;====================================
-(define-key input-decode-map (kbd "M-ち") (kbd "M-a"))  ;;backward-sentence
-(define-key input-decode-map (kbd "M-こ") (kbd "M-b"))	;;backward-word
-(define-key input-decode-map (kbd "M-そ") (kbd "M-c"))	;;capitalize-word
-(define-key input-decode-map (kbd "M-し") (kbd "M-d"))	;;kill-word
-(define-key input-decode-map (kbd "M-い") (kbd "M-e"))	;;forward-sentence
-(define-key input-decode-map (kbd "M-は") (kbd "M-f"))	;;forward-word
-(define-key input-decode-map (kbd "M-く") (kbd "M-h"))	;;mark-paragraph
-(define-key input-decode-map (kbd "M-に") (kbd "M-i"))	;;tab-to-tab-stop
-(define-key input-decode-map (kbd "M-ま") (kbd "M-j"))	;;default-indent-new-line
-(define-key input-decode-map (kbd "M-の") (kbd "M-k"))	;;kill-sentence
-(define-key input-decode-map (kbd "M-り") (kbd "M-l"))	;;downcase-word
-(define-key input-decode-map (kbd "M-も") (kbd "M-m"))	;;back-to-indentation
-(define-key input-decode-map (kbd "M-み") (kbd "M-n"))	;;half-page-up
-(define-key input-decode-map (kbd "M-ら") (kbd "M-o"))	;;overwrite-mode (keybind-ver2)new
-(define-key input-decode-map (kbd "M-せ") (kbd "M-p"))	;;half-page-down
-(define-key input-decode-map (kbd "M-た") (kbd "M-q"))	;;fill-paragraph
-(define-key input-decode-map (kbd "M-す") (kbd "M-r"))	;;move-to-window-line-top-bottom
-(define-key input-decode-map (kbd "M-か") (kbd "M-t"))	;;transpose-words
-(define-key input-decode-map (kbd "M-な") (kbd "M-u"))	;;upcase-word
-(define-key input-decode-map (kbd "M-ひ") (kbd "M-v"))	;;ak-cua-scroll-up
-(define-key input-decode-map (kbd "M-て") (kbd "M-w"))	;;kill-ring-save
-(define-key input-decode-map (kbd "M-さ") (kbd "M-x"))	;;execute-extended-command
-(define-key input-decode-map (kbd "M-ん") (kbd "M-y"))	;;yank-pop
-(define-key input-decode-map (kbd "M-つ") (kbd "M-z"))	;;zap-to-char
-(define-key input-decode-map (kbd "M-め") (kbd "M-/"))	;;dabbrev-expand
-(define-key input-decode-map (kbd "M-へ") (kbd "M-^"))	;;delete-indentation
-(define-key input-decode-map (kbd "M-ー") (kbd "M-\\")) ;;delete-horizontal-space
-(define-key input-decode-map (kbd "M-ゅ") (kbd "M-("))	;;insert-parentheses
-(define-key input-decode-map (kbd "M-れ") (kbd "M-;"))	;;comment-dwim
-(define-key input-decode-map (kbd "M-け") (kbd "M-:"))	;;eval-expression
-(define-key input-decode-map (kbd "M-゛") (kbd "M-@"))	;;mark-word
-(define-key input-decode-map (kbd "M-「") (kbd "M-{"))	;;backward-paragraph
-(define-key input-decode-map (kbd "M-」") (kbd "M-}"))	;;forward-paragraph
-(define-key input-decode-map (kbd "M-、") (kbd "M-<"))	;;beginning-of-buffer
-(define-key input-decode-map (kbd "M-。") (kbd "M->"))	;;end-of-buffer
-(define-key input-decode-map (kbd "M-ね") (kbd "M-,"))	;;xref-go-back
-(define-key input-decode-map (kbd "M-る") (kbd "M-."))	;;xref-find-definitions
-(define-key input-decode-map (kbd "M-・") (kbd "M-?"))	;;xref-find-references
+(keymap-set input-decode-map "M-ち" "M-a")	;;backward-sentence
+(keymap-set input-decode-map "M-こ" "M-b")	;;backward-word
+(keymap-set input-decode-map "M-そ" "M-c")	;;capitalize-word
+(keymap-set input-decode-map "M-し" "M-d")	;;kill-word
+(keymap-set input-decode-map "M-い" "M-e")	;;forward-sentence
+(keymap-set input-decode-map "M-は" "M-f")	;;forward-word
+(keymap-set input-decode-map "M-く" "M-h")	;;mark-paragraph
+(keymap-set input-decode-map "M-に" "M-i")	;;tab-to-tab-stop
+(keymap-set input-decode-map "M-ま" "M-j")	;;default-indent-new-line
+(keymap-set input-decode-map "M-の" "M-k")	;;kill-sentence
+(keymap-set input-decode-map "M-り" "M-l")	;;downcase-word
+(keymap-set input-decode-map "M-も" "M-m")	;;back-to-indentation
+(keymap-set input-decode-map "M-み" "M-n")	;;half-page-up
+(keymap-set input-decode-map "M-ら" "M-o")	;;overwrite-mode (keybind-ver2)new
+(keymap-set input-decode-map "M-せ" "M-p")	;;half-page-down
+(keymap-set input-decode-map "M-た" "M-q")	;;fill-paragraph
+(keymap-set input-decode-map "M-す" "M-r")	;;move-to-window-line-top-bottom
+(keymap-set input-decode-map "M-か" "M-t")	;;transpose-words
+(keymap-set input-decode-map "M-な" "M-u")	;;upcase-word
+(keymap-set input-decode-map "M-ひ" "M-v")	;;ak-cua-scroll-up
+(keymap-set input-decode-map "M-て" "M-w")	;;kill-ring-save
+(keymap-set input-decode-map "M-さ" "M-x")	;;execute-extended-command
+(keymap-set input-decode-map "M-ん" "M-y")	;;yank-pop
+(keymap-set input-decode-map "M-つ" "M-z")	;;zap-to-char
+(keymap-set input-decode-map "M-め" "M-/")	;;dabbrev-expand
+(keymap-set input-decode-map "M-へ" "M-^")	;;delete-indentation
+(keymap-set input-decode-map "M-ー" "M-\\")	;;delete-horizontal-space
+(keymap-set input-decode-map "M-ゅ" "M-(")	;;insert-parentheses
+(keymap-set input-decode-map "M-れ" "M-;")	;;comment-dwim
+(keymap-set input-decode-map "M-け" "M-:")	;;eval-expression
+(keymap-set input-decode-map "M-゛" "M-@")	;;mark-word
+(keymap-set input-decode-map "M-「" "M-{")	;;backward-paragraph
+(keymap-set input-decode-map "M-」" "M-}")	;;forward-paragraph
+(keymap-set input-decode-map "M-、" "M-<")	;;beginning-of-buffer
+(keymap-set input-decode-map "M-。" "M->")	;;end-of-buffer
+(keymap-set input-decode-map "M-ね" "M-,")	;;xref-go-back
+(keymap-set input-decode-map "M-る" "M-.")	;;xref-find-definitions
+(keymap-set input-decode-map "M-・" "M-?")	;;xref-find-references
 
 ;;====================================
 ;;;; ignore IM change key C-S-l (Ａ), C-S-j (ち), C-+ (A)
 ;;====================================
-(global-set-key (kbd "C-S-j") 'ignore)
-(global-set-key (kbd "C-S-l") 'ignore)
-(global-set-key (kbd "C-+") 'ignore)
+(keymap-global-set "C-S-j" 'ignore)
+(keymap-global-set "C-S-l" 'ignore)
+(keymap-global-set "C-+" 'ignore)
 ;; ignore IM cyclic change key command-[, command-{  (ex C-M-SPC, C-SPC)
-;;lobal-set-key (kbd "s-[") 'ignore)
-;;lobal-set-key (kbd "s-{") 'ignore)
+;;(keymap-global-set "s-[" 'ignore)
+;;(keymap-global-set "s-{" 'ignore)
 
 
 
@@ -498,69 +512,69 @@
 ;;;; control keys
 ;;====================================
 
-;;              (kbd "C-<up>")        ;; Start Mission Control @ MAC OSX
-;;              (kbd "C-<down>")      ;; Application Window (Mission Control @ MAC OSX)
-(global-set-key (kbd "C-<up>")   'ak-scroll-down1)   ;;was backward-paragraph
-(global-set-key (kbd "C-<down>") 'ak-scroll-up1)     ;;was forward-paragraph
-(global-set-key (kbd "C-S-<up>")   'ak-scroll-down2)
-(global-set-key (kbd "C-S-<down>") 'ak-scroll-up2)
-(global-set-key (kbd "C-M-p") 'ak-line-up)       ;;was backward-list
-(global-set-key (kbd "C-M-n") 'ak-line-down)     ;;was forward-list
-(global-set-key (kbd "C-s-p") 'ak-line-up-fast)
-(global-set-key (kbd "C-s-n") 'ak-line-down-fast)
-(global-set-key (kbd "C-M-<prior>") 'backward-list)
-(global-set-key (kbd "C-M-<next>")  'forward-list)
-(global-set-key (kbd "ESC C-<prior>") 'backward-list)
-(global-set-key (kbd "ESC C-<next>")  'forward-list)
+;;                 "C-<up>"	  ;; Start Mission Control @ MAC OSX
+;;		   "C-<down>"	  ;; Application Window (Mission Control @ MAC OSX)
+(keymap-global-set "C-<up>"   'ak-scroll-down1)   ;;was backward-paragraph
+(keymap-global-set "C-<down>" 'ak-scroll-up1)     ;;was forward-paragraph
+(keymap-global-set "C-S-<up>"   'ak-scroll-down2)
+(keymap-global-set "C-S-<down>" 'ak-scroll-up2)
+(keymap-global-set "C-M-p" 'ak-line-up)       ;;was backward-list
+(keymap-global-set "C-M-n" 'ak-line-down)     ;;was forward-list
+(keymap-global-set "C-s-p" 'ak-line-up-fast)
+(keymap-global-set "C-s-n" 'ak-line-down-fast)
+(keymap-global-set "C-M-<prior>" 'backward-list)
+(keymap-global-set "C-M-<next>"  'forward-list)
+(keymap-global-set "ESC C-<prior>" 'backward-list)
+(keymap-global-set "ESC C-<next>"  'forward-list)
 
 
-(global-set-key (kbd "<wheel-up>")   'ak-scroll-down2)
-(global-set-key (kbd "<wheel-down>") 'ak-scroll-up2)
-(global-set-key (kbd "C-<wheel-up>")   'ak-line-up-fast)
-(global-set-key (kbd "C-<wheel-down>") 'ak-line-down-fast)
+(keymap-global-set "<wheel-up>"   'ak-scroll-down2)
+(keymap-global-set "<wheel-down>" 'ak-scroll-up2)
+(keymap-global-set "C-<wheel-up>"   'ak-line-up-fast)
+(keymap-global-set "C-<wheel-down>" 'ak-line-down-fast)
 
 
 ;;;; iTerm2 use move tab function by C-<tab>
-;;(global-set-key (kbd "C-<tab>") 'other-window)
-;;(global-set-key (kbd "C-S-<tab>") 'ak-prev-window)
-(global-set-key (kbd "C-<tab>") 'next-window-any-frame)
-(global-set-key (kbd "C-S-<tab>") 'previous-window-any-frame)
+;;(keymap-global-set "C-<tab>" 'other-window)
+;;(keymap-global-set "C-S-<tab>" 'ak-prev-window)
+(keymap-global-set "C-<tab>" 'next-window-any-frame)
+(keymap-global-set "C-S-<tab>" 'previous-window-any-frame)
 
 ;; Control-Comma,   go to filetop
 ;; Control-Period.  go to fileend
-(global-set-key (kbd "C-,") 'beginning-of-buffer)
-(global-set-key (kbd "C-.") 'end-of-buffer)
+(keymap-global-set "C-," 'beginning-of-buffer)
+(keymap-global-set "C-." 'end-of-buffer)
 ;; Shift-Control-Comma,   select to filetop
 ;; Shift-Control-Period.  select to fileend
-(define-key key-translation-map (kbd "C-<") (kbd "C-S-,"))
-(define-key key-translation-map (kbd "C->") (kbd "C-S-."))
+(keymap-set key-translation-map "C-<" "C-S-,")
+(keymap-set key-translation-map "C->" "C-S-.")
 ;; Shift-Control-^,       select to previous page
-(define-key key-translation-map (kbd "C-~") (kbd "C-S-^"))
+(keymap-set key-translation-map "C-~" "C-S-^")
 
 
 ;; ;; MAC OSX option key + up down left right
-;; ;;;; (kbd "M-<right>")   ;; previous word
-;; ;;;; (kbd "M-<left>")    ;; next word
-;; (global-set-key (kbd "M-<down>") #'(lambda()(interactive "^")
+;; ;;;; "M-<right>"   ;; previous word
+;; ;;;; "M-<left>"    ;; next word
+;; (keymap-global-set "M-<down>" #'(lambda()(interactive "^")
 ;;                             (if (eolp) (forward-line))
 ;;                             (end-of-line)))
-;; (global-set-key (kbd "M-<up>")   #'(lambda()(interactive "^")
+;; (keymap-global-set "M-<up>"   #'(lambda()(interactive "^")
 ;;                             (if (bolp) (forward-line -1))
 ;;                             (beginning-of-line)))
 
 ;; scroll other window
-;;   'beginning-of-buffer-other-window  M-<home>
-;;   'end-of-buffer-other-window        M-<end>
-;;   'scroll-other-window-down  M-<prior>
-;;   'scroll-other-window       M-<next>
-(global-set-key (kbd "M-<down>")     'ak-scroll-other-window1)
-(global-set-key (kbd "ESC <down>")   'ak-scroll-other-window1)
-(global-set-key (kbd "M-<up>")       'ak-scroll-other-window-1)
-(global-set-key (kbd "ESC <up>")     'ak-scroll-other-window-1)
-(global-set-key (kbd "M-S-<down>")   'ak-scroll-other-windowN)
-(global-set-key (kbd "ESC S-<down>") 'ak-scroll-other-windowN)
-(global-set-key (kbd "M-S-<up>")     'ak-scroll-other-window-N)
-(global-set-key (kbd "ESC S-<up>")   'ak-scroll-other-window-N)
+;;     M-<home>  'beginning-of-buffer-other-window
+;;     M-<end>   'end-of-buffer-other-window      
+;;     M-<prior> 'scroll-other-window-down
+;;     M-<next>  'scroll-other-window     
+(keymap-global-set "M-<down>"     'ak-scroll-other-window1)
+(keymap-global-set "ESC <down>"   'ak-scroll-other-window1)
+(keymap-global-set "M-<up>"       'ak-scroll-other-window-1)
+(keymap-global-set "ESC <up>"     'ak-scroll-other-window-1)
+(keymap-global-set "M-S-<down>"   'ak-scroll-other-windowN)
+(keymap-global-set "ESC S-<down>" 'ak-scroll-other-windowN)
+(keymap-global-set "M-S-<up>"     'ak-scroll-other-window-N)
+(keymap-global-set "ESC S-<up>"   'ak-scroll-other-window-N)
 (defun ak-scroll-other-window1()
   "1 line scroll other window."
   (interactive)(scroll-other-window  1))
@@ -577,8 +591,8 @@
 ;;====================================
 ;;;; Page Down/Up. Shift select cover page first.
 ;;====================================
-(global-set-key (kbd "<next>")  'ak-scroll-up)   ;;PageDown
-(global-set-key (kbd "<prior>") 'ak-scroll-down) ;;PageUp
+(keymap-global-set "<next>"  'ak-scroll-up)   ;;PageDown
+(keymap-global-set "<prior>" 'ak-scroll-down) ;;PageUp
 (defun ak-scroll-down ()
   "scroll down = Page Up"
   (interactive "^")
@@ -618,10 +632,10 @@
 ;;====================================
 ;;;; goto top, mid, bottom
 ;;====================================
-;; (global-set-key (kbd "s-<left>")  'ak-cursor-top)
-;; (global-set-key (kbd "s-<right>") 'ak-cursor-bottom)
-(global-set-key (kbd "M-<left>")  'ak-cursor-top)
-(global-set-key (kbd "M-<right>") 'ak-cursor-bottom)
+;; (keymap-global-set "s-<left>"  'ak-cursor-top)
+;; (keymap-global-set "s-<right>" 'ak-cursor-bottom)
+(keymap-global-set "M-<left>"  'ak-cursor-top)
+(keymap-global-set "M-<right>" 'ak-cursor-bottom)
 (defun ak-cursor-top ()
   "move cursor to middle or top of screen or scroll down(Page Up)"
   (interactive "^")
@@ -657,25 +671,25 @@
 ;;====================================
 ;;;; scroll half screen でらうま倶楽部
 ;;====================================
-(global-set-key (kbd "M-p") 'half-page-down)
-(global-set-key (kbd "M-n") 'half-page-up)
+(keymap-global-set "M-p" 'half-page-down)
+(keymap-global-set "M-n" 'half-page-up)
 ;; overwridden by cua mode
-(global-set-key (kbd "C-v") 'half-page-up)
-(global-set-key (kbd "M-v") 'half-page-down)
-(global-set-key (kbd "C-^") 'half-page-down)
+(keymap-global-set "C-v" 'half-page-up)
+(keymap-global-set "M-v" 'half-page-down)
+(keymap-global-set "C-^" 'half-page-down)
 
 ;;====================================
 ;;;; Home Toggle like Visual Studio
 ;;====================================
-(global-set-key (kbd "C-a") 'ak-home-toggle)
+(keymap-global-set "C-a" 'ak-home-toggle)
 
 ;;====================================
 ;;;; begining/end of buffer/line(shift)
 ;;====================================
-(global-set-key (kbd "C-<home>")  'beginning-of-buffer)
-(global-set-key (kbd "C-<end>")   'end-of-buffer)
-(global-set-key (kbd "<home>")  'ak-beginning-of-buffer)
-(global-set-key (kbd "<end>")   'ak-end-of-buffer)
+(keymap-global-set "C-<home>"  'beginning-of-buffer)
+(keymap-global-set "C-<end>"   'end-of-buffer)
+(keymap-global-set "<home>"  'ak-beginning-of-buffer)
+(keymap-global-set "<end>"   'ak-end-of-buffer)
 (defun ak-beginning-of-buffer()
   "Set cursor at beginning of buffer.(unshift)
 Set cursor at beginning of 1line/2buffer.(shift)"
@@ -731,8 +745,8 @@ Set cursor at end of 1line/2buffer.(shift)"
   ;;(message "==> %s %s" arg ak-lr)
   (scroll-left ak-lr)
   )
-(global-set-key [remap scroll-right] 'ak-scroll-right)
-(global-set-key [remap scroll-left] 'ak-scroll-left)
+(keymap-global-set "<remap> <scroll-right>" 'ak-scroll-right)
+(keymap-global-set "<remap> <scroll-left>" 'ak-scroll-left)
 
 ;;====================================
 ;;;; NEW! extend region in next/prev screen.
@@ -760,8 +774,8 @@ Set cursor at end of 1line/2buffer.(shift)"
     (unless (bobp) (backward-sentence))
     (mark-end-of-sentence 1)
     ))
-(global-set-key (kbd "s-]") 'ak-mark-sentence)
-(global-set-key (kbd "s-}") 'ak-mark-sentence-backward)
+(keymap-global-set "s-]" 'ak-mark-sentence)
+(keymap-global-set "s-}" 'ak-mark-sentence-backward)
 ;; M-e, M-a is for/backward-sentence
 
 ;; mark whole paragraph or extend to next.
@@ -789,10 +803,10 @@ Set cursor at end of 1line/2buffer.(shift)"
 (defun ak-backward-paragraph ()
   (interactive) ;;"^p"
   (backward-paragraph))
-(global-set-key (kbd "M-}") 'ak-forward-paragraph)
-(global-set-key (kbd "M-{") 'ak-backward-paragraph)
-(global-set-key (kbd "M-h") 'ak-mark-paragraph)
-(global-set-key (kbd "M-H") 'ak-mark-paragraph-backward)
+(keymap-global-set "M-}" 'ak-forward-paragraph)
+(keymap-global-set "M-{" 'ak-backward-paragraph)
+(keymap-global-set "M-h" 'ak-mark-paragraph)
+(keymap-global-set "M-H" 'ak-mark-paragraph-backward)
 ;; C-<down>, C-<up> was for/backward-paragraph
 
 
@@ -825,8 +839,8 @@ Set cursor at end of 1line/2buffer.(shift)"
 
 (when (boundp 'cua-global-keymap)
   ;; Alternate keybind of cua-rect for org-mode. 
-  (define-key cua-global-keymap (kbd "C-c C-SPC") 'cua-set-rectangle-mark)
-  (define-key cua-global-keymap (kbd "C-<return>") 'cua-set-rectangle-mark2)
+  (keymap-set cua-global-keymap "C-c C-SPC" 'cua-set-rectangle-mark)
+  (keymap-set cua-global-keymap "C-<return>" 'cua-set-rectangle-mark2)
   (defun cua-set-rectangle-mark2 (&optional reopen)
     "Set mark and start in CUA rectangle mode.
 With prefix argument, activate previous rectangle if possible."
@@ -839,9 +853,9 @@ With prefix argument, activate previous rectangle if possible."
 
 (when (boundp 'cua--cua-keys-keymap)
   ;; Page Down/Page Up  =  M-v M-u
-  (define-key cua--cua-keys-keymap (kbd "M-v") 'ak-cua-scroll-up) ;;was delete-selection-repeat-replace-region.
-  (define-key cua--cua-keys-keymap (kbd "M-V") 'cua-scroll-down)
-  ;;(define-key cua--cua-keys-keymap (kbd "M-u") 'cua-scroll-down) ;;was upcase-word
+  (keymap-set cua--cua-keys-keymap "M-v" 'ak-cua-scroll-up) ;;was delete-selection-repeat-replace-region.
+  (keymap-set cua--cua-keys-keymap "M-V" 'cua-scroll-down)
+  ;;(keymap-set cua--cua-keys-keymap "M-u" 'cua-scroll-down) ;;was upcase-word
   (defun ak-cua-scroll-up (&optional arg)
     (interactive "^P")
     (cua-scroll-up arg)
@@ -882,63 +896,63 @@ With prefix argument, activate previous rectangle if possible."
 (with-eval-after-load 'dired
   (require 'dired-x)
   ;;(require 'wdired)
-  (define-key dired-mode-map (kbd "<right>")   'ak-dired-right-char)      ;; -> f, v
-  (define-key dired-mode-map (kbd "<left>")    'ak-dired-left-char)       ;; <- ^
-  (define-key dired-mode-map (kbd "<home>")    'ak-dired-home)
-  (define-key dired-mode-map (kbd "<end>")     'ak-dired-end)
-  (define-key dired-mode-map (kbd "<prior>")   'ak-dired-scroll-down)
-  (define-key dired-mode-map (kbd "<next>")    'ak-dired-scroll-up)
-  (define-key dired-mode-map (kbd "<f5>")      'revert-buffer)               ;; g
-  (define-key dired-mode-map (kbd "S-<f5>")    'revert-buffer)               ;; g
-  (define-key dired-mode-map "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
+  (keymap-set dired-mode-map "<right>"   'ak-dired-right-char)      ;; -> f, v
+  (keymap-set dired-mode-map "<left>"    'ak-dired-left-char)       ;; <- ^
+  (keymap-set dired-mode-map "<home>"    'ak-dired-home)
+  (keymap-set dired-mode-map "<end>"     'ak-dired-end)
+  (keymap-set dired-mode-map "<prior>"   'ak-dired-scroll-down)
+  (keymap-set dired-mode-map "<next>"    'ak-dired-scroll-up)
+  (keymap-set dired-mode-map "<f5>"      'revert-buffer)               ;; g
+  (keymap-set dired-mode-map "S-<f5>"    'revert-buffer)               ;; g
+  (keymap-set dired-mode-map "H"    'ak-dired-find-file-hexl)        ;;originally make Hard link
   ;; S            dired-do-symlink
   ;; Y            dired-do-relsymlink  dired-x.el
   ;; edit filename in wdired mode      autoload wdired.el
-  (define-key dired-mode-map "E" 'wdired-change-to-wdired-mode)
+  (keymap-set dired-mode-map "E" 'wdired-change-to-wdired-mode)
 
-  (define-key dired-mode-map "h" 'ak-dired-home-dir)
-  (define-key dired-mode-map "r" 'ak-dired-root-dir)
-  (define-key dired-mode-map "z" 'ak-dired-defo-dir)
-  (and (getenv "A_DIRECTORY") (define-key dired-mode-map "a" 'ak-dired-a-dir))
-  (and (getenv "B_DIRECTORY") (define-key dired-mode-map "b" 'ak-dired-b-dir))
-  (and (getenv "C_DIRECTORY") (define-key dired-mode-map "c" 'ak-dired-c-dir))
-  (and (getenv "E_DIRECTORY") (define-key dired-mode-map "e" 'ak-dired-e-dir))
-  (define-key dired-mode-map (kbd "C-b") 'ak-dired-left-char)
+  (keymap-set dired-mode-map "h" 'ak-dired-home-dir)
+  (keymap-set dired-mode-map "r" 'ak-dired-root-dir)
+  (keymap-set dired-mode-map "z" 'ak-dired-defo-dir)
+  (and (getenv "A_DIRECTORY") (keymap-set dired-mode-map "a" 'ak-dired-a-dir))
+  (and (getenv "B_DIRECTORY") (keymap-set dired-mode-map "b" 'ak-dired-b-dir))
+  (and (getenv "C_DIRECTORY") (keymap-set dired-mode-map "c" 'ak-dired-c-dir))
+  (and (getenv "E_DIRECTORY") (keymap-set dired-mode-map "e" 'ak-dired-e-dir))
+  (keymap-set dired-mode-map "C-b" 'ak-dired-left-char)
 
   ;; search only filename
   ;;;;(setq dired-isearch-filenames t) ;;turns isearch-forward to search filename only
-  (define-key dired-mode-map (kbd "C-s") 'dired-isearch-filenames)
-  ;;01keys.el(global-set-key (kbd "s-f") 'isearch-forward) ;;command s = search username
+  (keymap-set dired-mode-map "C-s" 'dired-isearch-filenames)
+  ;;01keys.el(keymap-global-set "s-f" 'isearch-forward) ;;command s = search username
 
   ;; avoid remapping to dired-next(previous)-line
   (defalias 'ak-dired-next-line 'next-line)
   (defalias 'ak-dired-previous-line 'previous-line)
-  (define-key dired-mode-map (kbd "C-n") 'ak-dired-next-line)
-  (define-key dired-mode-map (kbd "C-p") 'ak-dired-previous-line)
+  (keymap-set dired-mode-map "C-n" 'ak-dired-next-line)
+  (keymap-set dired-mode-map "C-p" 'ak-dired-previous-line)
 
   ;; ;; line scroll and keep cursor on file name
-  ;; (define-key dired-mode-map (kbd "C-<up>")   'ak-dired-line-up       )
-  ;; (define-key dired-mode-map (kbd "C-<down>") 'ak-dired-line-down     )
-  ;; (define-key dired-mode-map (kbd "C-s-<up>")   'ak-dired-line-up-fast  )
-  ;; (define-key dired-mode-map (kbd "C-s-<down>") 'ak-dired-line-down-fast)
-  ;; (define-key dired-mode-map (kbd "C-M-p") 'ak-dired-line-up  ) ;;was dired-prev-subdir
-  ;; (define-key dired-mode-map (kbd "C-M-n") 'ak-dired-line-down) ;;was dired-next-subdir
+  ;; (keymap-set dired-mode-map "C-<up>"   'ak-dired-line-up       )
+  ;; (keymap-set dired-mode-map "C-<down>" 'ak-dired-line-down     )
+  ;; (keymap-set dired-mode-map "C-s-<up>"   'ak-dired-line-up-fast  )
+  ;; (keymap-set dired-mode-map "C-s-<down>" 'ak-dired-line-down-fast)
+  ;; (keymap-set dired-mode-map "C-M-p" 'ak-dired-line-up  ) ;;was dired-prev-subdir
+  ;; (keymap-set dired-mode-map "C-M-n" 'ak-dired-line-down) ;;was dired-next-subdir
 
   ;; skip files
-  (define-key dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
-  (define-key dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
-  (define-key dired-mode-map (kbd "C-,") 'ak-dired-beginning-of-buffer)
-  (define-key dired-mode-map (kbd "C-.") 'ak-dired-end-of-buffer)
-  (define-key dired-mode-map (kbd ",") 'ak-dired-beginning-of-buffer)
-  (define-key dired-mode-map (kbd ".") 'ak-dired-end-of-buffer)  ;;was dired-clean-directory
-  (define-key dired-mode-map (kbd "M-.") 'dired-clean-directory) ;;was xref-find-definitions
-  (define-key dired-mode-map (kbd "C-h") 'dired-unmark-backward) ;;like backspace
+  (keymap-set dired-mode-map "N" 'dired-next-dirline)     ;;was dired-do-man    ">"
+  (keymap-set dired-mode-map "P" 'dired-prev-dirline)     ;;was dired-do-print  "<"
+  (keymap-set dired-mode-map "C-," 'ak-dired-beginning-of-buffer)
+  (keymap-set dired-mode-map "C-." 'ak-dired-end-of-buffer)
+  (keymap-set dired-mode-map "," 'ak-dired-beginning-of-buffer)
+  (keymap-set dired-mode-map "." 'ak-dired-end-of-buffer)  ;;was dired-clean-directory
+  (keymap-set dired-mode-map "M-." 'dired-clean-directory) ;;was xref-find-definitions
+  (keymap-set dired-mode-map "C-h" 'dired-unmark-backward) ;;like backspace
 
   ;; Vi-like
-  (define-key dired-mode-map "j" 'ak-dired-line-down)
-  (define-key dired-mode-map "k" 'ak-dired-line-up)
-  (define-key dired-mode-map "J" 'ak-dired-line-down-fast)
-  (define-key dired-mode-map "K" 'ak-dired-line-up-fast)
+  (keymap-set dired-mode-map "j" 'ak-dired-line-down)
+  (keymap-set dired-mode-map "k" 'ak-dired-line-up)
+  (keymap-set dired-mode-map "J" 'ak-dired-line-down-fast)
+  (keymap-set dired-mode-map "K" 'ak-dired-line-up-fast)
   ;;(message "eval-after-load 'dired done.")
   )
 
@@ -1055,21 +1069,21 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;;; press left at top of window then kill buffer and show dired
 ;;====================================
-(global-set-key (kbd "C-b") 'ak-backward-char)
+(keymap-global-set "C-b" 'ak-backward-char)
 
 ;; ;; Cursor L, R move always logical order, backward and forward,
 ;; ;; even at R2L text and visual-order-cursor-movement is t
-;; (global-set-key (kbd "<left>") 'ak-backward-char)
-;; (global-set-key (kbd "<right>") 'forward-char)
+;; (keymap-global-set "<left>" 'ak-backward-char)
+;; (keymap-global-set "<right>" 'forward-char)
 
 ;; cursor move L R naturally at R2L text.
-(global-set-key (kbd "<left>") 'ak-left-char)
-(global-set-key (kbd "<right>") 'ak-right-char)
+(keymap-global-set "<left>" 'ak-left-char)
+(keymap-global-set "<right>" 'ak-right-char)
 (if (boundp 'cua--rectangle-keymap)
     (progn
-      (define-key cua--rectangle-keymap [remap ak-right-char]          #'cua-resize-rectangle-right)
-      (define-key cua--rectangle-keymap [remap ak-left-char]           #'cua-resize-rectangle-left)
-      (define-key cua--rectangle-keymap [remap ak-backward-char]       #'cua-resize-rectangle-left)
+      (keymap-set cua--rectangle-keymap "<remap> <ak-right-char>"    #'cua-resize-rectangle-right)
+      (keymap-set cua--rectangle-keymap "<remap> <ak-left-char>"     #'cua-resize-rectangle-left)
+      (keymap-set cua--rectangle-keymap "<remap> <ak-backward-char>" #'cua-resize-rectangle-left)
       ))
 
 (setq visual-order-cursor-movement t)
@@ -1130,44 +1144,44 @@ With prefix argument, activate previous rectangle if possible."
 ;;;; function keys
 ;;====================================
 
-;;(global-set-key (kbd "<f1>") 'help-for-help) ;;was help-command
-(global-set-key (kbd "S-<f1>") 'other-window)
+;;(keymap-global-set "<f1>" 'help-for-help) ;;was help-command
+(keymap-global-set "S-<f1>" 'other-window)
 
 ;;        C-x 6 2		2C-two-columns
 ;;        C-x 6 b		2C-associate-buffer
 ;;        C-x 6 s		2C-split
 ;;was                 2C-command
-(global-set-key (kbd "<f2>") 'ak-divide-screen-toggle)
-;;(global-set-key (kbd "S-<f2>") 'ak-divide-screen-or-other)
-(global-set-key (kbd "S-<f2>") 'ak-divide-screen3-or-other)
+(keymap-global-set "<f2>" 'ak-divide-screen-toggle)
+;;(keymap-global-set "S-<f2>" 'ak-divide-screen-or-other)
+(keymap-global-set "S-<f2>" 'ak-divide-screen3-or-other)
 
 ;;was                 kmacro-start-macro-or-insert-counter
-(global-set-key (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "S-<f3>") 'isearch-repeat-backward)
+(keymap-global-set "<f3>" 'isearch-repeat-forward)
+(keymap-global-set "S-<f3>" 'isearch-repeat-backward)
 
 ;;was                    kmacro-end-or-call-macro
-(global-set-key (kbd "<f4>")    'kill-current-buffer)
-(global-set-key (kbd "S-<f4>") 'delete-window)
+(keymap-global-set "<f4>"    'kill-current-buffer)
+(keymap-global-set "S-<f4>" 'delete-window)
 
-(global-set-key (kbd "S-<f5>") 'recenter)
-(global-set-key (kbd "<f5>") 'ak-dired-current-dir-other-window)
+(keymap-global-set "S-<f5>" 'recenter)
+(keymap-global-set "<f5>" 'ak-dired-current-dir-other-window)
 (defun ak-dired-current-dir-other-window()
   "Dired current directory other window." (interactive)
   (dired-other-window "."))
 
-(global-set-key (kbd "<f6>")   'universal-coding-system-argument)       ;;   C-x RET-c
-(global-set-key (kbd "S-<f6>")   'electric-indent-mode)
+(keymap-global-set "<f6>"   'universal-coding-system-argument)       ;;   C-x RET-c
+(keymap-global-set "S-<f6>"   'electric-indent-mode)
 ;;test macro
-(global-set-key (kbd "ESC <f6>")  'kmacro-start-macro-or-insert-counter)  ;; <f3>
-(global-set-key (kbd "C-<f6>")  'kmacro-end-or-call-macro)  ;; <f4>
+(keymap-global-set "ESC <f6>"  'kmacro-start-macro-or-insert-counter)  ;; <f3>
+(keymap-global-set "C-<f6>"  'kmacro-end-or-call-macro)  ;; <f4>
 
-(global-set-key (kbd "<f7>")   'ak-shrink-window)
-(global-set-key (kbd "S-<f7>") 'ak-shrink-window2)
-(global-set-key (kbd "<f8>")   'ak-enlarge-window)
-(global-set-key (kbd "S-<f8>") 'ak-enlarge-window2)
+(keymap-global-set "<f7>"   'ak-shrink-window)
+(keymap-global-set "S-<f7>" 'ak-shrink-window2)
+(keymap-global-set "<f8>"   'ak-enlarge-window)
+(keymap-global-set "S-<f8>" 'ak-enlarge-window2)
 
-(global-set-key (kbd "<f9>")  'describe-key-briefly)
-(global-set-key (kbd "S-<f9>") 'ak-toggle-case-fold-search)
+(keymap-global-set "<f9>"  'describe-key-briefly)
+(keymap-global-set "S-<f9>" 'ak-toggle-case-fold-search)
 (defun ak-toggle-case-fold-search()
   "Toggle search case." (interactive)
   (if case-fold-search
@@ -1177,23 +1191,23 @@ With prefix argument, activate previous rectangle if possible."
     (message "ignore case Search mode")))
 
 ;;was  menu-bar-open
-(global-set-key (kbd "<f10>") 'ak-window-swap-split)
-;; (global-set-key (kbd "<S-f10>") 'ak-window-vh-split)
-;; (global-set-key (kbd "<f10>") 'ak-window-rotate-split)
-(global-set-key (kbd "S-<f10>") 'ak-window-rotate-split-reverse)
+(keymap-global-set "<f10>" 'ak-window-swap-split)
+;; (keymap-global-set "<S-f10>" 'ak-window-vh-split)
+;; (keymap-global-set "<f10>" 'ak-window-rotate-split)
+(keymap-global-set "S-<f10>" 'ak-window-rotate-split-reverse)
 ;;               M-f10   toggle-frame-maximized  =  "ESC <f10>"
 
-(global-set-key (kbd "M-<f11>")   'toggle-frame-fullscreen)  ;; <f11>
-(global-set-key (kbd "ESC <f11>") 'toggle-frame-fullscreen)  ;; <f11>
+(keymap-global-set "M-<f11>"   'toggle-frame-fullscreen)  ;; <f11>
+(keymap-global-set "ESC <f11>" 'toggle-frame-fullscreen)  ;; <f11>
 
 ;;was                 'toggle-frame-fullscreen  ==> "ESC <f11>"
-(global-set-key (kbd "<f11>") 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
+(keymap-global-set "<f11>" 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
 ;; (require 'linum)                            ;; obsolete (emacs29)
-;; (global-set-key (kbd "<f12>") 'global-linum-mode)
-(global-set-key (kbd "<f12>") 'global-display-line-numbers-mode)
-;;(global-set-key (kbd "<f12>") 'display-line-numbers-mode)
-(global-set-key (kbd "S-<f11>") 'scroll-right)
-(global-set-key (kbd "S-<f12>") 'scroll-left)
+;; (keymap-global-set "<f12>" 'global-linum-mode)
+(keymap-global-set "<f12>" 'global-display-line-numbers-mode)
+;;(keymap-global-set "<f12>" 'display-line-numbers-mode)
+(keymap-global-set "S-<f11>" 'scroll-right)
+(keymap-global-set "S-<f12>" 'scroll-left)
 
 
 ;;======================================
@@ -1350,7 +1364,7 @@ With prefix argument, activate previous rectangle if possible."
 ;;====================================
 ;;;; jump matching paren (<--->)
 ;;====================================
-(global-set-key (kbd "C-]") 'match-paren)
+(keymap-global-set "C-]" 'match-paren)
 (defun match-paren (arg)
   "Go to the matching parenthesis if on parenthesis"
   (interactive "p")
@@ -1437,7 +1451,7 @@ With prefix argument, activate previous rectangle if possible."
 ;; M-x shell  ==>  M-x s
 (defalias 's 'shell)
 ;;            ==>  M-s M-s
-(global-set-key (kbd "M-s M-s") 'shell)
+(keymap-global-set "M-s M-s" 'shell)
 
 (with-eval-after-load 'shell
   (load "~/.emacs.d/site-lisp/tails-comint-history")
@@ -1449,13 +1463,13 @@ With prefix argument, activate previous rectangle if possible."
   (setq comint-scroll-to-bottom-on-input t)
   ;;(setq comint-scroll-to-bottom-on-output t)
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-  (define-key shell-mode-map  (kbd "S-<f5>")     'ak-do-resync-dirs)
-  (define-key comint-mode-map (kbd "<home>")   'beginning-of-buffer)
-  (define-key comint-mode-map (kbd "<end>")    'end-of-buffer)
-  (define-key comint-mode-map (kbd "C-<up>")   'ak-scroll-down1)
-  (define-key comint-mode-map (kbd "C-<down>") 'ak-scroll-up1)
-  (define-key comint-mode-map (kbd "<up>")     'ak-shell-up)
-  (define-key comint-mode-map (kbd "<down>")   'ak-shell-down)
+  (keymap-set shell-mode-map  "S-<f5>"     'ak-do-resync-dirs)
+  (keymap-set comint-mode-map "<home>"   'beginning-of-buffer)
+  (keymap-set comint-mode-map "<end>"    'end-of-buffer)
+  (keymap-set comint-mode-map "C-<up>"   'ak-scroll-down1)
+  (keymap-set comint-mode-map "C-<down>" 'ak-scroll-up1)
+  (keymap-set comint-mode-map "<up>"     'ak-shell-up)
+  (keymap-set comint-mode-map "<down>"   'ak-shell-down)
   )
 
 (add-hook 'shell-mode-hook
@@ -1504,8 +1518,8 @@ With prefix argument, activate previous rectangle if possible."
 ;;;;circular buffer change
 ;;====================================
 ;;C-PageUp C-PageDown .. Excel:change tab
-(global-set-key (kbd "C-<prior>") 'ak-last-buffer)
-(global-set-key (kbd "C-<next>")  'ak-next-buffer)
+(keymap-global-set "C-<prior>" 'ak-last-buffer)
+(keymap-global-set "C-<next>"  'ak-next-buffer)
 
 (defun ak-last-buffer()
   "Popup last buffer from list, and show it"
@@ -1597,8 +1611,8 @@ With prefix argument, activate previous rectangle if possible."
 	(ak-last-buffer)
 	(kill-buffer cb)
 	(list-buffers-if-exist)))))
-(global-set-key [remap kill-current-buffer] 'ak-kill-current-buffer)
-(global-set-key [remap kill-buffer] 'ak-kill-current-buffer)
+(keymap-global-set "<remap> <kill-current-buffer>" 'ak-kill-current-buffer)
+(keymap-global-set "<remap> <kill-buffer>" 'ak-kill-current-buffer)
 
 ;; kill buffer from menu, Close.
 (defun ak-kill-this-buffer ()
@@ -1736,7 +1750,7 @@ With prefix argument, activate previous rectangle if possible."
 (require 'package)       ;;for package-installed-p
 (when (package-installed-p 'ddskk)
   ;;(setq default-input-method "japanese-skk") ;;C-\ toggle
-  (global-set-key (kbd "C-x C-j") 'skk-mode)
+  (keymap-global-set "C-x C-j" 'skk-mode)
   )
 
 (with-eval-after-load "skk"
@@ -1744,15 +1758,15 @@ With prefix argument, activate previous rectangle if possible."
   ;; isearch と統合。
   (load "~/.emacs.d/site-lisp/skk-setup")
   ;; 確定を戻す
-  (define-key skk-j-mode-map (kbd "C-/") 'skk-undo-kakutei)
+  (keymap-set skk-j-mode-map "C-/" 'skk-undo-kakutei)
   ;; x 以外でも前候補。
-  (define-key skk-j-mode-map (kbd "S-SPC") 'skk-previous-candidate)
-  (define-key skk-j-mode-map (kbd "M-DEL") 'skk-previous-candidate)
-  (define-key skk-j-mode-map (kbd "C-<backspace>") 'skk-previous-candidate)
-  (define-key skk-j-mode-map (kbd "<up>") 'skk-previous-candidate) ;;test
+  (keymap-set skk-j-mode-map "S-SPC" 'skk-previous-candidate)
+  (keymap-set skk-j-mode-map "M-DEL" 'skk-previous-candidate)
+  (keymap-set skk-j-mode-map "C-<backspace>" 'skk-previous-candidate)
+  (keymap-set skk-j-mode-map "<up>" 'skk-previous-candidate) ;;test
   ;; 辞書登録ミニバッファから、前候補(S-SPC,M-DEL,etc)で抜ける
   (load "~/.emacs.d/site-lisp/ak-skk-patch")
-  (define-key minibuffer-local-skk-map (kbd "S-SPC") 'backward-kill-word)
+  (keymap-set minibuffer-local-skk-map "S-SPC" 'backward-kill-word)
   
   ;; BS(DEL, C-h) でミニバッファから抜けるように関数変更。
   (defun skk-delete-backward-char-with-quit (oldfnc &rest arg)
@@ -1782,7 +1796,7 @@ With prefix argument, activate previous rectangle if possible."
 ;;;;view-mode
 ;;====================================
 ;;  "ESC f1"  view mode
-(global-set-key (kbd "ESC <f1>") 'ak-View-mode)
+(keymap-global-set "ESC <f1>" 'ak-View-mode)
 (defun ak-View-mode()
   "make current file view mode." (interactive)
   (view-mode t))
@@ -1802,41 +1816,41 @@ With prefix argument, activate previous rectangle if possible."
 	   )))
 
 (with-eval-after-load 'view
-  (define-key view-mode-map (kbd "S-<f5>") 'ak-revert-buffer-noconfirm)
-  (define-key view-mode-map "i" 'ak-View-exit)
-  (define-key view-mode-map "h" 'left-char)
-  (define-key view-mode-map "j" 'next-line)
-  (define-key view-mode-map "k" 'previous-line)
-  (define-key view-mode-map "l" 'right-char)
-  (define-key view-mode-map "b" 'backward-char)
-  (define-key view-mode-map "f" 'forward-char)
-  (define-key view-mode-map "a" 'beginning-of-visual-line)
-  (define-key view-mode-map "e" 'ak-end-of-visual-line)
-  (define-key view-mode-map "0" 'beginning-of-line)
-  (define-key view-mode-map "$" 'end-of-line)
-  (define-key view-mode-map "H" 'ak-goto-top-screen)   
-  (define-key view-mode-map "M" 'ak-goto-mid-screen)   
-  (define-key view-mode-map "L" 'ak-goto-bottom-screen)
-  (define-key view-mode-map "y"	'ak-line-up)
-  (define-key view-mode-map (kbd "RET") 'ak-line-down)
-  (define-key view-mode-map "K" 'ak-line-up)
-  (define-key view-mode-map "J" 'ak-line-down)
-  (define-key view-mode-map "u" 'half-page-down)
-  (define-key view-mode-map "d" 'half-page-up)
-  (define-key view-mode-map "^" 'half-page-down)
-  (define-key view-mode-map "v" 'half-page-up)
-  (define-key view-mode-map [remap View-scroll-page-backward] #'ak-scroll-page-backward);; DEL, S-SPC
-  (define-key view-mode-map [remap View-scroll-page-forward]  #'ak-scroll-page-forward) ;; SPC
-  (define-key view-mode-map "　" 'ak-scroll-page-forward)
-  (define-key view-mode-map "G" 'end-of-buffer)
-  (define-key view-mode-map "o" 'ak-View-scroll-to-buffer-end)
-  (define-key view-mode-map "/" 'isearch-forward-regexp)
-  (define-key view-mode-map "\\" 'isearch-backward-regexp)
-  (define-key view-mode-map "n" 'isearch-repeat-forward)
-  (define-key view-mode-map "N" 'isearch-repeat-backward)
-  (define-key view-mode-map "p" 'isearch-repeat-backward)
-  (define-key view-mode-map (kbd ": w") 'save-buffer)
-  (define-key view-mode-map (kbd ": q") 'kill-current-buffer)
+  (keymap-set view-mode-map "S-<f5>" 'ak-revert-buffer-noconfirm)
+  (keymap-set view-mode-map "i" 'ak-View-exit)
+  (keymap-set view-mode-map "h" 'left-char)
+  (keymap-set view-mode-map "j" 'next-line)
+  (keymap-set view-mode-map "k" 'previous-line)
+  (keymap-set view-mode-map "l" 'right-char)
+  (keymap-set view-mode-map "b" 'backward-char)
+  (keymap-set view-mode-map "f" 'forward-char)
+  (keymap-set view-mode-map "a" 'beginning-of-visual-line)
+  (keymap-set view-mode-map "e" 'ak-end-of-visual-line)
+  (keymap-set view-mode-map "0" 'beginning-of-line)
+  (keymap-set view-mode-map "$" 'end-of-line)
+  (keymap-set view-mode-map "H" 'ak-goto-top-screen)   
+  (keymap-set view-mode-map "M" 'ak-goto-mid-screen)   
+  (keymap-set view-mode-map "L" 'ak-goto-bottom-screen)
+  (keymap-set view-mode-map "y"	'ak-line-up)
+  (keymap-set view-mode-map "RET" 'ak-line-down)
+  (keymap-set view-mode-map "K" 'ak-line-up)
+  (keymap-set view-mode-map "J" 'ak-line-down)
+  (keymap-set view-mode-map "u" 'half-page-down)
+  (keymap-set view-mode-map "d" 'half-page-up)
+  (keymap-set view-mode-map "^" 'half-page-down)
+  (keymap-set view-mode-map "v" 'half-page-up)
+  (keymap-set view-mode-map "<remap> <View-scroll-page-backward>" #'ak-scroll-page-backward);; DEL, S-SPC
+  (keymap-set view-mode-map "<remap> <View-scroll-page-forward>"  #'ak-scroll-page-forward) ;; SPC
+  (keymap-set view-mode-map "　" 'ak-scroll-page-forward)
+  (keymap-set view-mode-map "G" 'end-of-buffer)
+  (keymap-set view-mode-map "o" 'ak-View-scroll-to-buffer-end)
+  (keymap-set view-mode-map "/" 'isearch-forward-regexp)
+  (keymap-set view-mode-map "\\" 'isearch-backward-regexp)
+  (keymap-set view-mode-map "n" 'isearch-repeat-forward)
+  (keymap-set view-mode-map "N" 'isearch-repeat-backward)
+  (keymap-set view-mode-map "p" 'isearch-repeat-backward)
+  (keymap-set view-mode-map ": w" 'save-buffer)
+  (keymap-set view-mode-map ": q" 'kill-current-buffer)
   )
 ;;  "E"     #'View-exit-and-edit
 ;;  "q"     #'View-quit
@@ -1887,7 +1901,7 @@ With prefix argument, activate previous rectangle if possible."
 ;; s-E  edit-abbrevs
 ;;(setq save-abbrevs 'silently)
 (setq save-abbrevs t)
-(global-set-key (kbd "C-'") 'expand-abbrev)
+(keymap-global-set "C-'" 'expand-abbrev)
 ;; 1. from in-file words.
 ;; M-/    dabbrev-expand        autoM-/ M-/ M-/..
 ;; C-M-/  dabbrev-completion    too short: "Selecting deleted buffer" message(bug?)
@@ -1950,7 +1964,7 @@ With prefix argument, activate previous rectangle if possible."
 		    )
 	      ;; markdown preview mode
 	      ;; M-x markdown-preview-mode
-	      (local-set-key (kbd "C-c p") 'markdown-preview-mode)
+	      (keymap-local-set "C-c p" 'markdown-preview-mode)
 	      )))
 
 ;;====================================
@@ -1998,16 +2012,16 @@ With prefix argument, activate previous rectangle if possible."
 	    (buffer-focus-in-callback 'ak-org-focus-in)
 	    (buffer-focus-out-callback 'ak-org-focus-out)
 	    (add-hook 'kill-buffer-hook 'ak-org-focus-out nil 'local)
-	    (local-set-key (kbd "C-y") 'org-yank)
+	    (keymap-local-set "C-y" 'org-yank)
 	    ))
 
 ;; ------ 09org.el ------
 
-(global-set-key (kbd "C-c l") 'org-store-link)
+(keymap-global-set "C-c l" 'org-store-link)
 ;; (setq org-startup-with-inline-images t)
 
-(global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c a") 'org-agenda)
+(keymap-global-set "C-c c" 'org-capture)
+(keymap-global-set "C-c a" 'org-agenda)
 
 (eval-after-load "org"
   '(require 'ox-md nil t))
