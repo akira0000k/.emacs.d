@@ -1,7 +1,4 @@
-
-
-
-;; ------ 02cursor.el ------
+;; ------ 02cursor.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;; control keys
@@ -303,3 +300,6 @@ Set cursor at end of 1line/2buffer.(shift)"
 (keymap-global-set "M-h" 'ak-mark-paragraph)
 (keymap-global-set "M-H" 'ak-mark-paragraph-backward)
 ;; C-<down>, C-<up> was for/backward-paragraph
+
+
+

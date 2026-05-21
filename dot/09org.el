@@ -1,5 +1,4 @@
-
-;; ------ 09org.el ------
+;; ------ 09org.el ------ ;;; -*- lexical-binding: t; -*-
 
 (keymap-global-set "C-c l" 'org-store-link)
 ;; (setq org-startup-with-inline-images t)

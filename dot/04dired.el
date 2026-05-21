@@ -1,7 +1,4 @@
-
-
-
-;; ------ 04dired.el ------
+;; ------ 04dired.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;;  dired bindings
@@ -261,3 +258,6 @@
 	(dired ".")
       (find-alternate-file ".")))
   )
+
+
+

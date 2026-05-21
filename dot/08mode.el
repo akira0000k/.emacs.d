@@ -1,7 +1,4 @@
-
-
-
-;; ------ 08mode.el ------
+;; ------ 08mode.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
@@ -311,3 +308,4 @@
 	    (add-hook 'kill-buffer-hook 'ak-org-focus-out nil 'local)
 	    (keymap-local-set "C-y" 'org-yank)
 	    ))
+

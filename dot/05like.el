@@ -1,7 +1,4 @@
-
-
-
-;; ------ 05like.el ------
+;; ------ 05like.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;; function keys
@@ -228,9 +225,9 @@
 ;;;; jump matching paren (<--->)
 ;;====================================
 (keymap-global-set "C-]" 'match-paren)
-(defun match-paren (arg)
+(defun match-paren ()
   "Go to the matching parenthesis if on parenthesis"
-  (interactive "p")
+  (interactive)
   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
         ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
         )
@@ -303,3 +300,6 @@
         (setq e (+ e len))
         (forward-line 1)))))
 ;;;end cite-region
+
+
+

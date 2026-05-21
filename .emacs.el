@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;====================================
 ;;  auto revert setting dired/buffer
 ;;====================================
@@ -33,7 +34,7 @@
 (defun ak-input-decode-set (sequence key)
   (define-key input-decode-map sequence (kbd key)))
 
-;; ------ 00misc.el ------
+;; ------ 00misc.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;; Erase Menu bar
 (unless (display-graphic-p) (menu-bar-mode -1))
@@ -150,7 +151,7 @@
 
 
 
-;; ------ 01keys.el ------
+;; ------ 01keys.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;; Teraterm End key = <select>
@@ -506,7 +507,7 @@
 
 
 
-;; ------ 02cursor.el ------
+;; ------ 02cursor.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;; control keys
@@ -811,7 +812,7 @@ Set cursor at end of 1line/2buffer.(shift)"
 
 
 
-;; ------ 03cua.el ------
+;; ------ 03cua.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;;; Toggle hilighting area after mark(C-SPC) + move(<left>)
 ;;(transient-mark-mode 'toggle) ;; nil)* -1)
@@ -875,7 +876,7 @@ With prefix argument, activate previous rectangle if possible."
 
 
 
-;; ------ 04dired.el ------
+;; ------ 04dired.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;;  dired bindings
@@ -1138,7 +1139,7 @@ With prefix argument, activate previous rectangle if possible."
 
 
 
-;; ------ 05like.el ------
+;; ------ 05like.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;; function keys
@@ -1365,9 +1366,9 @@ With prefix argument, activate previous rectangle if possible."
 ;;;; jump matching paren (<--->)
 ;;====================================
 (keymap-global-set "C-]" 'match-paren)
-(defun match-paren (arg)
+(defun match-paren ()
   "Go to the matching parenthesis if on parenthesis"
-  (interactive "p")
+  (interactive)
   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
         ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
         )
@@ -1443,7 +1444,7 @@ With prefix argument, activate previous rectangle if possible."
 
 
 
-;; ------ 06shell.el ------
+;; ------ 06shell.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;; shell-mode
@@ -1512,7 +1513,7 @@ With prefix argument, activate previous rectangle if possible."
 
 
 
-;; ------ 07buffer.el ------
+;; ------ 07buffer.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;;circular buffer change
@@ -1621,47 +1622,47 @@ With prefix argument, activate previous rectangle if possible."
   (list-buffers-if-exist))
 (advice-add 'kill-this-buffer :after #'ak-kill-this-buffer)
 
-(defun ak-quit-window (&optional kill window)
+(defun ak-quit-window (&optional _kill _window)
   "Quit window and change buffer-list."
   ;;(message "quit window done")
   (list-buffers-if-exist))
 (advice-add 'quit-window :after #'ak-quit-window)
 
-(defun ak-bury-buffer (&optional buffer-or-name)
+(defun ak-bury-buffer (&optional _buffer-or-name)
   "Bury buffer and change buffer-list."
   ;;(message "bury buffer done")
   (list-buffers-if-exist))
 (advice-add 'bury-buffer :after #'ak-bury-buffer)
 
-(defun ak-switch-to-buffer (buffer-or-name &optional norecord force-same-window)
+(defun ak-switch-to-buffer (_buffer-or-name &optional _norecord _force-same-window)
   "Switch window and change buffer-list."
   ;;(message "switch to buffer done")
   (list-buffers-if-exist))
 (advice-add 'switch-to-buffer :after #'ak-switch-to-buffer)
 
-(defun ak-find-file (filename &optional wildcards)
+(defun ak-find-file (_filename &optional _wildcards)
   "Find-File and change buffer-list."
   ;;(message "find file done")
   (list-buffers-if-exist))
 (advice-add 'find-file :after #'ak-find-file)
 
 ;;(setq ad-redefinition-action 'accept)
-(defun ak-shell (&optional buffer file-name)
+(defun ak-shell (&optional _buffer _file-name)
   "M-x shell"
   (list-buffers-if-exist))
 (advice-add 'shell :after #'ak-shell)
 
-(defun ak-dired (dirname &optional switches)
+(defun ak-dired (_dirname &optional _switches)
   "Dired and change buffer-list."
   (list-buffers-if-exist))
 (advice-add 'dired :after #'ak-dired)
 
-(defun ak-dired-other-window (dirname &optional switches)
+(defun ak-dired-other-window (_dirname &optional _switches)
   "Dired other Window and change buffer-list."
   (list-buffers-if-exist))
 (advice-add 'dired-other-window :after #'ak-dired-other-window)
 
-(defun ak-info (&optional file-or-node buffer)
+(defun ak-info (&optional _file-or-node _buffer)
   "Enter Info, the documentation browser."
   (list-buffers-if-exist))
 (advice-add 'info :after #'ak-info)
@@ -1704,7 +1705,7 @@ With prefix argument, activate previous rectangle if possible."
 
 
 
-;; ------ 08mode.el ------
+;; ------ 08mode.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
@@ -2015,7 +2016,7 @@ With prefix argument, activate previous rectangle if possible."
 	    (keymap-local-set "C-y" 'org-yank)
 	    ))
 
-;; ------ 09org.el ------
+;; ------ 09org.el ------ ;;; -*- lexical-binding: t; -*-
 
 (keymap-global-set "C-c l" 'org-store-link)
 ;; (setq org-startup-with-inline-images t)

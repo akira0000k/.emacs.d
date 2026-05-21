@@ -1,4 +1,4 @@
-;; ------ 00misc.el ------
+;; ------ 00misc.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;; Erase Menu bar
 (unless (display-graphic-p) (menu-bar-mode -1))
@@ -112,3 +112,6 @@
       (kill-ring-save 0 0 t)
     (kill-line arg)
     (yank)))
+
+
+

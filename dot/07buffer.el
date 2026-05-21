@@ -1,7 +1,4 @@
-
-
-
-;; ------ 07buffer.el ------
+;; ------ 07buffer.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;;circular buffer change
@@ -110,47 +107,47 @@
   (list-buffers-if-exist))
 (advice-add 'kill-this-buffer :after #'ak-kill-this-buffer)
 
-(defun ak-quit-window (&optional kill window)
+(defun ak-quit-window (&optional _kill _window)
   "Quit window and change buffer-list."
   ;;(message "quit window done")
   (list-buffers-if-exist))
 (advice-add 'quit-window :after #'ak-quit-window)
 
-(defun ak-bury-buffer (&optional buffer-or-name)
+(defun ak-bury-buffer (&optional _buffer-or-name)
   "Bury buffer and change buffer-list."
   ;;(message "bury buffer done")
   (list-buffers-if-exist))
 (advice-add 'bury-buffer :after #'ak-bury-buffer)
 
-(defun ak-switch-to-buffer (buffer-or-name &optional norecord force-same-window)
+(defun ak-switch-to-buffer (_buffer-or-name &optional _norecord _force-same-window)
   "Switch window and change buffer-list."
   ;;(message "switch to buffer done")
   (list-buffers-if-exist))
 (advice-add 'switch-to-buffer :after #'ak-switch-to-buffer)
 
-(defun ak-find-file (filename &optional wildcards)
+(defun ak-find-file (_filename &optional _wildcards)
   "Find-File and change buffer-list."
   ;;(message "find file done")
   (list-buffers-if-exist))
 (advice-add 'find-file :after #'ak-find-file)
 
 ;;(setq ad-redefinition-action 'accept)
-(defun ak-shell (&optional buffer file-name)
+(defun ak-shell (&optional _buffer _file-name)
   "M-x shell"
   (list-buffers-if-exist))
 (advice-add 'shell :after #'ak-shell)
 
-(defun ak-dired (dirname &optional switches)
+(defun ak-dired (_dirname &optional _switches)
   "Dired and change buffer-list."
   (list-buffers-if-exist))
 (advice-add 'dired :after #'ak-dired)
 
-(defun ak-dired-other-window (dirname &optional switches)
+(defun ak-dired-other-window (_dirname &optional _switches)
   "Dired other Window and change buffer-list."
   (list-buffers-if-exist))
 (advice-add 'dired-other-window :after #'ak-dired-other-window)
 
-(defun ak-info (&optional file-or-node buffer)
+(defun ak-info (&optional _file-or-node _buffer)
   "Enter Info, the documentation browser."
   (list-buffers-if-exist))
 (advice-add 'info :after #'ak-info)
@@ -190,3 +187,6 @@
   ;;;;check exact revert timing
   ;;(setq auto-revert-use-notify nil)
 )
+
+
+

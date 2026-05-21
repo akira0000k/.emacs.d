@@ -1,8 +1,9 @@
+;;; -*- lexical-binding: t; -*-
 ;;
 ;; How to add a timestamp to each entry in Emacs' *Messages* buffer?
 ;; https://emacs.stackexchange.com/questions/32150/how-to-add-a-timestamp-to-each-entry-in-emacs-messages-buffer
 ;;
-(defun my/ad-timestamp-message (FORMAT-STRING &rest args)
+(defun my/ad-timestamp-message (_FORMAT-STRING &rest _args)
   "Advice to run before `message\\=' that prepends a timestamp to each message.
 	Activate this advice with:
 	  (advice-add \\='message :before \\='my/ad-timestamp-message)
@@ -134,7 +135,7 @@
 ;; ;;(default-file-modes)  ;;=> #o755
 ;; (set-default-file-modes #o775)
 
-(message "load .emacs.el")
+(message "load .emacs")
 (if (load "~/.emacs.d/.emacs.elc" t t t)
     (message "load .emacs.elc...done")
   (load "~/.emacs.d/dot/.emacs")

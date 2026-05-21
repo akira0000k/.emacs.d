@@ -1,7 +1,4 @@
-
-
-
-;; ------ 06shell.el ------
+;; ------ 06shell.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;; shell-mode
@@ -67,3 +64,6 @@
 	     ;;'("^\\*shell\\*$" . (display-buffer-below-selected))  ;; emacs 25.1
 	     '("^\\*shell\\*$" . (display-buffer-at-bottom))
 	     )
+
+
+

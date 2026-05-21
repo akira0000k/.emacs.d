@@ -1,7 +1,4 @@
-
-
-
-;; ------ 01keys.el ------
+;; ------ 01keys.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;====================================
 ;;;; Teraterm End key = <select>
@@ -354,3 +351,6 @@
 ;; ignore IM cyclic change key command-[, command-{  (ex C-M-SPC, C-SPC)
 ;;(keymap-global-set "s-[" 'ignore)
 ;;(keymap-global-set "s-{" 'ignore)
+
+
+

@@ -1,7 +1,4 @@
-
-
-
-;; ------ 03cua.el ------
+;; ------ 03cua.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;;;; Toggle hilighting area after mark(C-SPC) + move(<left>)
 ;;(transient-mark-mode 'toggle) ;; nil)* -1)
@@ -62,3 +59,6 @@ With prefix argument, activate previous rectangle if possible."
 ;;'shift: bug?
 ;;(setq cua-enable-cua-keys 'shift) ;; t)* nil)
 ;;(setq cua-enable-cua-keys nil)
+
+
+
