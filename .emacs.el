@@ -34,6 +34,10 @@
 (defun ak-input-decode-set (sequence key)
   (define-key input-decode-map sequence (kbd key)))
 
+(unless (fboundp 'use-package)
+  (defmacro use-package (&rest _args) nil)
+  )
+
 ;; ------ 00misc.el ------ ;;; -*- lexical-binding: t; -*-
 
 ;; Erase Menu bar
@@ -65,6 +69,7 @@
 ;;;; grep case insensitive
 ;;====================================
 (setq grep-command "grep --color=auto -nH --null -i -e ")
+;;(setq grep-command "grep --color=auto -nH -i -e ")
 
 ;;====================================
 ;;;; keybinding while Isearch.  ex. C-s C-w ..yank word
@@ -75,7 +80,7 @@
 ;; (keymap-set isearch-mode-map "C-j" 'isearch-printing-char) ;;default
 ;; isearch-edit-string と replace の minibuffer内で C-j を単純改行挿入にする
 (keymap-set minibuffer-local-isearch-map "C-j" 'electric-indent-just-newline)
-(with-eval-after-load "replace"
+(when (fboundp 'defvar-keymap)
   (load "~/.emacs.d/site-lisp/replace-patch")
   (keymap-set minibuffer-local-replace-map "C-j" 'electric-indent-just-newline)
   )
@@ -536,10 +541,11 @@
 
 
 ;;;; iTerm2 use move tab function by C-<tab>
-;;(keymap-global-set "C-<tab>" 'other-window)
-;;(keymap-global-set "C-S-<tab>" 'ak-prev-window)
-(keymap-global-set "C-<tab>" 'next-window-any-frame)
-(keymap-global-set "C-S-<tab>" 'previous-window-any-frame)
+(keymap-global-set "C-<tab>" 'other-window)
+(keymap-global-set "C-S-<tab>" 'ak-prev-window)
+(when (fboundp 'next-window-any-frame)
+  (keymap-global-set "C-<tab>" 'next-window-any-frame)
+  (keymap-global-set "C-S-<tab>" 'previous-window-any-frame))
 
 ;; Control-Comma,   go to filetop
 ;; Control-Period.  go to fileend
@@ -1765,9 +1771,12 @@ With prefix argument, activate previous rectangle if possible."
   (keymap-set skk-j-mode-map "M-DEL" 'skk-previous-candidate)
   (keymap-set skk-j-mode-map "C-<backspace>" 'skk-previous-candidate)
   (keymap-set skk-j-mode-map "<up>" 'skk-previous-candidate) ;;test
+
   ;; 辞書登録ミニバッファから、前候補(S-SPC,M-DEL,etc)で抜ける
   (load "~/.emacs.d/site-lisp/ak-skk-patch")
   (keymap-set minibuffer-local-skk-map "S-SPC" 'backward-kill-word)
+  ;; 辞書登録不要のときメッセージを出さずに終了。
+  (setq skk-save-jisyo-function 'skk-save-jisyo-original2)
   
   ;; BS(DEL, C-h) でミニバッファから抜けるように関数変更。
   (defun skk-delete-backward-char-with-quit (oldfnc &rest arg)
@@ -1784,8 +1793,6 @@ With prefix argument, activate previous rectangle if possible."
   ;; (when (and (package-installed-p 'ddskk-posframe) (display-graphic-p))
   ;;   (ddskk-posframe-mode t))
   
-  ;; 辞書登録不要のときメッセージを出さずに終了。
-  (setq skk-save-jisyo-function 'skk-save-jisyo-original2)
   ;;; Customize dictionary path. example: "~/.emacs.d/SKK-DIC/SKK-DIC.L". see.custom.el
   (if (and skk-large-jisyo (file-exists-p skk-large-jisyo))
       (message "skk dictionary: %s" skk-large-jisyo)

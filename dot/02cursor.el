@@ -27,10 +27,11 @@
 
 
 ;;;; iTerm2 use move tab function by C-<tab>
-;;(keymap-global-set "C-<tab>" 'other-window)
-;;(keymap-global-set "C-S-<tab>" 'ak-prev-window)
-(keymap-global-set "C-<tab>" 'next-window-any-frame)
-(keymap-global-set "C-S-<tab>" 'previous-window-any-frame)
+(keymap-global-set "C-<tab>" 'other-window)
+(keymap-global-set "C-S-<tab>" 'ak-prev-window)
+(when (fboundp 'next-window-any-frame)
+  (keymap-global-set "C-<tab>" 'next-window-any-frame)
+  (keymap-global-set "C-S-<tab>" 'previous-window-any-frame))
 
 ;; Control-Comma,   go to filetop
 ;; Control-Period.  go to fileend

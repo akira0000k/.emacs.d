@@ -1,8 +1,14 @@
-(defvar-keymap minibuffer-local-skk-map
-  :doc "Keymap for editting kanji in the minibuffer."
-  :parent minibuffer-local-map
-  ;;"S-SPC"   #'backward-kill-word
-  )
+(defvar minibuffer-local-skk-map
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map minibuffer-local-map)
+    ;;(define-key map (kbd "S-SPC") 'backward-kill-word)
+    map)
+  "Keymap for editting kanji in the minibuffer.")
+;; (defvar-keymap minibuffer-local-skk-map
+;;   :doc "Keymap for editting kanji in the minibuffer."
+;;   :parent minibuffer-local-map
+;;   ;;"S-SPC"   #'backward-kill-word
+;;   )
 
 ;;436
 ;;;; C-j skk-kakutei remains in minibuffer keybind... deleted.

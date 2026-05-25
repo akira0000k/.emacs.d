@@ -29,6 +29,7 @@
 ;;;; grep case insensitive
 ;;====================================
 (setq grep-command "grep --color=auto -nH --null -i -e ")
+;;(setq grep-command "grep --color=auto -nH -i -e ")
 
 ;;====================================
 ;;;; keybinding while Isearch.  ex. C-s C-w ..yank word
@@ -39,7 +40,7 @@
 ;; (keymap-set isearch-mode-map "C-j" 'isearch-printing-char) ;;default
 ;; isearch-edit-string と replace の minibuffer内で C-j を単純改行挿入にする
 (keymap-set minibuffer-local-isearch-map "C-j" 'electric-indent-just-newline)
-(with-eval-after-load "replace"
+(when (fboundp 'defvar-keymap)
   (load "~/.emacs.d/site-lisp/replace-patch")
   (keymap-set minibuffer-local-replace-map "C-j" 'electric-indent-just-newline)
   )

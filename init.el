@@ -23,9 +23,13 @@
 
 
 ;; Package init
+(require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(if (version< emacs-version "27")
+    (package-initialize))
 (defun ak-package-init()
-  (package-initialize)
+  (if (version<= "27" emacs-version)
+      (package-initialize))
   ;; M-x package-refresh-contents RET
   (package-refresh-contents))
 
@@ -42,7 +46,7 @@
 ;; Pre install packages
 (setq myPackage
       '(
-	s
+	;;s
 	))
 ;;Scans the list
 ;; If the package listed is not already installed, install it
@@ -330,26 +334,28 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load-file custom-file))
-;; package-selected-packages contains a list of packages installed manually. see ./custom.el
-;; Update package-selected-packages. If empty, add non-dependent packages.
-(let ((need-save nil))
-  (unless package-selected-packages
-    (setq package-selected-packages (package--find-non-dependencies))
-    (when package-selected-packages
-      (setq need-save t)
-      (message "non dependent package list was made."))
-    )
-  ;; myPackage member is added as manually installed.
-  (dolist (pk myPackage)
-    (unless (member pk package-selected-packages)
-      (setq need-save t)
-      (push pk package-selected-packages)
-      (message "%s added to selected package list." (symbol-name pk))
-      ))
-  (when need-save
-    (customize-save-variable 'package-selected-packages package-selected-packages)
-    )
-)
+
+(when (version<= "25.1" emacs-version)
+  ;; package-selected-packages contains a list of packages installed manually. see ./custom.el
+  ;; Update package-selected-packages. If empty, add non-dependent packages.
+  (let ((need-save nil))
+    (unless package-selected-packages
+      (setq package-selected-packages (package--find-non-dependencies))
+      (when package-selected-packages
+	(setq need-save t)
+	(message "non dependent package list was made."))
+      )
+    ;; myPackage member is added as manually installed.
+    (dolist (pk myPackage)
+      (unless (member pk package-selected-packages)
+	(setq need-save t)
+	(push pk package-selected-packages)
+	(message "%s added to selected package list." (symbol-name pk))
+	))
+    (when need-save
+      (customize-save-variable 'package-selected-packages package-selected-packages)
+      )
+    ))
 
 (message "init.el ...done")
 (advice-remove 'message 'my/ad-timestamp-message)

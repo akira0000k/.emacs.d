@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;;; comment out with ;; if some function not necessary.
 ;;;; like
 ;;;; ;;(load "~/.emacs.d/dot/03cua")
@@ -36,6 +37,10 @@
   )
 (defun ak-input-decode-set (sequence key)
   (define-key input-decode-map sequence (kbd key)))
+
+(unless (fboundp 'use-package)
+  (defmacro use-package (&rest _args) nil)
+  )
 
 (load "~/.emacs.d/dot/00misc")
 (load "~/.emacs.d/dot/01keys")

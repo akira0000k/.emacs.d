@@ -58,9 +58,12 @@
   (keymap-set skk-j-mode-map "M-DEL" 'skk-previous-candidate)
   (keymap-set skk-j-mode-map "C-<backspace>" 'skk-previous-candidate)
   (keymap-set skk-j-mode-map "<up>" 'skk-previous-candidate) ;;test
+
   ;; 辞書登録ミニバッファから、前候補(S-SPC,M-DEL,etc)で抜ける
   (load "~/.emacs.d/site-lisp/ak-skk-patch")
   (keymap-set minibuffer-local-skk-map "S-SPC" 'backward-kill-word)
+  ;; 辞書登録不要のときメッセージを出さずに終了。
+  (setq skk-save-jisyo-function 'skk-save-jisyo-original2)
   
   ;; BS(DEL, C-h) でミニバッファから抜けるように関数変更。
   (defun skk-delete-backward-char-with-quit (oldfnc &rest arg)
@@ -77,8 +80,6 @@
   ;; (when (and (package-installed-p 'ddskk-posframe) (display-graphic-p))
   ;;   (ddskk-posframe-mode t))
   
-  ;; 辞書登録不要のときメッセージを出さずに終了。
-  (setq skk-save-jisyo-function 'skk-save-jisyo-original2)
   ;;; Customize dictionary path. example: "~/.emacs.d/SKK-DIC/SKK-DIC.L". see.custom.el
   (if (and skk-large-jisyo (file-exists-p skk-large-jisyo))
       (message "skk dictionary: %s" skk-large-jisyo)
