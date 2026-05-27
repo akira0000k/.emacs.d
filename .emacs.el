@@ -377,52 +377,56 @@
 ;;====================================
 ;;;; MAC OSX command keys
 ;;====================================
-;;;; MAC OSX command key + up down left right
+;; MAC OSX command key + up down left right
 (keymap-global-set "s-<up>"    'beginning-of-buffer)
 (keymap-global-set "s-<down>"  'end-of-buffer)
 (keymap-global-set "s-<left>"  'move-beginning-of-line)
 (keymap-global-set "s-<right>" 'move-end-of-line)
-;;     same as default
-(keymap-global-set "s-a" 'mark-whole-buffer)
-(keymap-global-set "s-l" 'goto-line)
-(keymap-global-set "s-D" 'dired)
-(keymap-global-set "s-M" 'manual-entry)
-(keymap-global-set "s-L" 'shell-command)
-(keymap-global-set "s-|" 'shell-command-on-region)
-(keymap-global-set "s-?" 'info)
-(keymap-global-set "s-:" 'ispell)
-(keymap-global-set "s-E" 'edit-abbrevs)
 (keymap-global-set "s-p" nil) ;;ns-print-buffer
-
-(keymap-global-set "s-z" 'undo)
-(keymap-global-set "s-x" 'kill-region)
-(if (equal (framep-on-display) 'ns)
-    (keymap-global-set "s-c" 'ns-copy-including-secondary) ;;Xwindow
+(unless (equal (framep-on-display) 'ns)
   (keymap-global-set "s-c" 'kill-ring-save)) ;;Terminal
-(keymap-global-set "s-v" 'yank)
-(if (equal (framep-on-display) 'ns)
-    (keymap-global-set "s-y" 'ns-paste-secondary)) ;;Xwindow
 
-(keymap-global-set "s-k" 'kill-current-buffer)
-(keymap-global-set "s-s" 'save-buffer)
-(keymap-global-set "s-u" 'revert-buffer)
-(keymap-global-set "s-^" 'kill-some-buffers)
+(unless (lookup-key global-map (kbd "s-a"))
+  (message "global-set ns keys.")
+  ;;     same as default
+  (keymap-global-set "s-a" 'mark-whole-buffer)
+  (keymap-global-set "s-l" 'goto-line)
+  (keymap-global-set "s-D" 'dired)
+  (keymap-global-set "s-M" 'manual-entry)
+  (keymap-global-set "s-L" 'shell-command)
+  (keymap-global-set "s-|" 'shell-command-on-region)
+  (keymap-global-set "s-?" 'info)
+  (keymap-global-set "s-:" 'ispell)
+  (keymap-global-set "s-E" 'edit-abbrevs)
 
-(keymap-global-set "s-n" 'make-frame)
-(keymap-global-set "s-w" 'delete-frame)
-(keymap-global-set "s-'" 'next-window-any-frame) ;; 0x27 '
-(keymap-global-set "s-`" 'other-frame)           ;; 0x60 `
-;;(keymap-global-set "s-~" 'ns-prev-frame)       ;; 0x7E ~
-(keymap-global-set "s-~" 'ak-prev-frame)
+  (keymap-global-set "s-z" 'undo)
+  (keymap-global-set "s-x" 'kill-region)
+  (keymap-global-set "s-c" 'kill-ring-save) ;;Terminal
+  (keymap-global-set "s-v" 'yank)
+  ;;(keymap-global-set "s-c" 'ns-copy-including-secondary) ;;Xwindow
+  ;;(keymap-global-set "s-y" 'ns-paste-secondary)) ;;Xwindow
 
-(keymap-global-set "s-d" 'isearch-repeat-backward)
-(keymap-global-set "s-f" 'isearch-forward)
-(keymap-global-set "s-F" 'isearch-backward)
-(keymap-global-set "M-s-f" 'isearch-forward-regexp)
-(keymap-global-set "M-s-F" 'isearch-backward-regexp)
-(keymap-global-set "s-g" 'isearch-repeat-forward)
-(keymap-global-set "s-e" 'isearch-yank-kill)
-(keymap-global-set "s-j" 'exchange-point-and-mark)
+  (keymap-global-set "s-k" 'kill-current-buffer)
+  (keymap-global-set "s-s" 'save-buffer)
+  (keymap-global-set "s-u" 'revert-buffer)
+  (keymap-global-set "s-^" 'kill-some-buffers)
+
+  (keymap-global-set "s-n" 'make-frame)
+  (keymap-global-set "s-w" 'delete-frame)
+  (keymap-global-set "s-'" 'next-window-any-frame) ;; 0x27 '
+  (keymap-global-set "s-`" 'other-frame)	   ;; 0x60 `
+  ;;(keymap-global-set "s-~" 'ns-prev-frame)	   ;; 0x7E ~
+  (keymap-global-set "s-~" 'ak-prev-frame)
+
+  (keymap-global-set "s-d" 'isearch-repeat-backward)
+  (keymap-global-set "s-f" 'isearch-forward)
+  (keymap-global-set "s-F" 'isearch-backward)
+  (keymap-global-set "M-s-f" 'isearch-forward-regexp)
+  (keymap-global-set "M-s-F" 'isearch-backward-regexp)
+  (keymap-global-set "s-g" 'isearch-repeat-forward)
+  (keymap-global-set "s-e" 'isearch-yank-kill)
+  (keymap-global-set "s-j" 'exchange-point-and-mark)
+  )
 ;;      HIRAGANA key
 (keymap-set input-decode-map "s-ち" "s-a")	    ;;mark-whole-buffer
 (keymap-set input-decode-map "s-り" "s-l")	    ;;goto-line
