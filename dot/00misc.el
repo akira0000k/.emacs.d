@@ -41,7 +41,7 @@
 ;; isearch-edit-string と replace の minibuffer内で C-j を単純改行挿入にする
 (keymap-set minibuffer-local-isearch-map "C-j" 'electric-indent-just-newline)
 (when (fboundp 'defvar-keymap)
-  (load "~/.emacs.d/site-lisp/replace-patch")
+  (load (_emacs_d/ "site-lisp/replace-patch"))
   (keymap-set minibuffer-local-replace-map "C-j" 'electric-indent-just-newline)
   )
 ;;                                                  C-h を単純バックスペースにする

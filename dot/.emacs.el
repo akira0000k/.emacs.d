@@ -20,6 +20,9 @@
 ;;====================================
 ;;  common functions
 ;;====================================
+;; file name relative to .emacs.d/
+(defalias '_emacs_d/ 'locate-user-emacs-file)
+
 ;; string valid?
 (defun ak-validstrp(str)
   (and str (> (length str) 0)))
@@ -42,16 +45,16 @@
   (defmacro use-package (&rest _args) nil)
   )
 
-(load "~/.emacs.d/dot/00misc")
-(load "~/.emacs.d/dot/01keys")
-(load "~/.emacs.d/dot/02cursor")
-(load "~/.emacs.d/dot/03cua")
-(load "~/.emacs.d/dot/04dired")
-(load "~/.emacs.d/dot/05like")
-(load "~/.emacs.d/dot/06shell")
-(load "~/.emacs.d/dot/07buffer")
-(load "~/.emacs.d/dot/08mode")
-(load "~/.emacs.d/dot/09org")
+(load (_emacs_d/ "dot/00misc"))
+(load (_emacs_d/ "dot/01keys"))
+(load (_emacs_d/ "dot/02cursor"))
+(load (_emacs_d/ "dot/03cua"))
+(load (_emacs_d/ "dot/04dired"))
+(load (_emacs_d/ "dot/05like"))
+(load (_emacs_d/ "dot/06shell"))
+(load (_emacs_d/ "dot/07buffer"))
+(load (_emacs_d/ "dot/08mode"))
+(load (_emacs_d/ "dot/09org"))
 
 
 

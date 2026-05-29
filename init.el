@@ -20,16 +20,24 @@
 (advice-add 'message :before 'my/ad-timestamp-message)
 (message "init.el loading")
 
-
+;;; emacs -q -lした時に、user-emacs-directoryが変わるように
+(when load-file-name
+  (message "load file = %s" load-file-name)
+  (setq user-emacs-directory (file-name-directory load-file-name))
+  (message "user-emacs-directory = %s" user-emacs-directory)
+  )
+(defalias '_emacs_d/ 'locate-user-emacs-file)
 
 ;; Package init
 (require 'package)
+(let ((pudr (_emacs_d/ "elpa")))
+  (unless (string= pudr package-user-dir)
+    (message "package dir is changed %s -> %s" package-user-dir pudr)
+    (setq package-user-dir pudr)))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(if (version< emacs-version "27")
-    (package-initialize))
+(package-initialize)
+
 (defun ak-package-init()
-  (if (version<= "27" emacs-version)
-      (package-initialize))
   ;; M-x package-refresh-contents RET
   (package-refresh-contents))
 
@@ -50,7 +58,6 @@
 	))
 ;;Scans the list
 ;; If the package listed is not already installed, install it
-(require 'package)
 (let ((package-initp nil))
   (dolist (pk myPackage)
     (if (package-installed-p pk)
@@ -98,7 +105,7 @@
 ;;  exec-path
 ;;====================================
 (defun ak-setenv()
-    (load "~/.emacs.d/site-lisp/exec-path-from-shell")
+    (load (_emacs_d/ "site-lisp/exec-path-from-shell"))
     (add-to-list 'exec-path-from-shell-variables "A_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "B_DIRECTORY")
     (add-to-list 'exec-path-from-shell-variables "C_DIRECTORY")
@@ -130,8 +137,8 @@
 ;;  (message "LANG was set to ja_JP.UTF-8"))
 
 
+(or (ak-validstrp (getenv "B_DIRECTORY")) (setenv "B_DIRECTORY" (expand-file-name (_emacs_d/ "dot"))))
 (or (getenv "A_DIRECTORY") (setenv "A_DIRECTORY" (concat (getenv "HOME") "/Downloads")))
-(or (getenv "B_DIRECTORY") (setenv "B_DIRECTORY" (concat (getenv "HOME") "/bin")))
 (or (getenv "C_DIRECTORY") (setenv "C_DIRECTORY" (concat (getenv "HOME") "/Documents")))
 (or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" (concat (getenv "HOME") "/Desktop")))
 
@@ -140,12 +147,15 @@
 ;; (set-default-file-modes #o775)
 
 (message "load .emacs")
-(if (load "~/.emacs.d/.emacs.elc" t t t)
+(if (load (_emacs_d/ ".emacs.elc") t t t)
     (message "load .emacs.elc...done")
-  (load "~/.emacs.d/dot/.emacs")
+  (load (_emacs_d/ "dot/.emacs"))
   (message "load dot/.emacs...done")
   (if (eq 1 (length command-line-args))
-      (setq initial-buffer-choice "~/.emacs.d/dot"))
+      (setq initial-buffer-choice (_emacs_d/  "dot")))
+  (if (and (eq 3 (length command-line-args))
+	   (string= (cadr command-line-args) "-l"))
+      (setq initial-buffer-choice (_emacs_d/  "dot")))
   )
 
 ;; Tramp
@@ -331,7 +341,7 @@
     ))
 
 ;; Read custom file
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq custom-file (_emacs_d/ "custom.el"))
 (when (file-exists-p custom-file)
   (load-file custom-file))
 

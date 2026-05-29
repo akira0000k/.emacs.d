@@ -177,7 +177,7 @@
     (auto-revert-set-timer)
     t)
 
-  (autoload 'buffer-focus-in-callback  "~/.emacs.d/site-lisp/buffer-focus-hook")
+  (autoload 'buffer-focus-in-callback (_emacs_d/ "site-lisp/buffer-focus-hook"))
   (add-hook 'Buffer-menu-mode-hook
 	    (lambda()
 	      (buffer-focus-in-callback 'ak-buffer-menu-focus-in)

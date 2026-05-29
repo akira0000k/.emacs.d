@@ -1,6 +1,6 @@
 ;; ------ 08mode.el ------ ;;; -*- lexical-binding: t; -*-
 
-;; (add-to-list 'load-path "~/.emacs.d/site-lisp/")
+;; (add-to-list 'load-path (_emacs_d/ "site-lisp/"))
 
 
 ;;====================================
@@ -29,8 +29,8 @@
 	("S-SPC" . kkc-prev)
 	("<f1>" . kkc-help))
   :config
-  (setq kkc-init-file-name "~/.emacs.d/.kkc/kkcrc")
-  ;; (unless (load "~/.emacs.d/LEIM/ja-dic/ja-dic.elc" t nil t)
+  (setq kkc-init-file-name (_emacs_d/ ".kkc/kkcrc"))
+  ;; (unless (load (_emacs_d/ "LEIM/ja-dic/ja-dic.elc" t nil t))
   ;;   (message "load personal ja-dic failed."))
   :load-path "LEIM"
   )
@@ -45,12 +45,15 @@
 (when (package-installed-p 'ddskk)
   ;;(setq default-input-method "japanese-skk") ;;C-\ toggle
   (keymap-global-set "C-x C-j" 'skk-mode)
+  ;;; Customize .skk cash directory
+  (unless (and (boundp 'skk-user-directory) skk-user-directory)
+    (setq skk-user-directory (_emacs_d/ ".ddskk")))
   )
 
 (with-eval-after-load "skk"
   (message "skk loaded")
   ;; isearch と統合。
-  (load "~/.emacs.d/site-lisp/skk-setup")
+  (load (_emacs_d/ "site-lisp/skk-setup"))
   ;; 確定を戻す
   (keymap-set skk-j-mode-map "C-/" 'skk-undo-kakutei)
   ;; x 以外でも前候補。
@@ -60,7 +63,7 @@
   (keymap-set skk-j-mode-map "<up>" 'skk-previous-candidate) ;;test
 
   ;; 辞書登録ミニバッファから、前候補(S-SPC,M-DEL,etc)で抜ける
-  (load "~/.emacs.d/site-lisp/ak-skk-patch")
+  (load (_emacs_d/ "site-lisp/ak-skk-patch"))
   (keymap-set minibuffer-local-skk-map "S-SPC" 'backward-kill-word)
   ;; 辞書登録不要のときメッセージを出さずに終了。
   (setq skk-save-jisyo-function 'skk-save-jisyo-original2)
@@ -80,8 +83,11 @@
   ;; (when (and (package-installed-p 'ddskk-posframe) (display-graphic-p))
   ;;   (ddskk-posframe-mode t))
   
-  ;;; Customize dictionary path. example: "~/.emacs.d/SKK-DIC/SKK-DIC.L". see.custom.el
-  (if (and skk-large-jisyo (file-exists-p skk-large-jisyo))
+  ;;; Customize dictionary path in custom.el.
+  (unless skk-large-jisyo
+    (setq skk-large-jisyo (_emacs_d/ "SKK-DIC/SKK-JISYO.L")))
+
+  (if (file-exists-p skk-large-jisyo)
       (message "skk dictionary: %s" skk-large-jisyo)
     (setq skk-large-jisyo nil)  
     (message "no skk dictionary. use lisp/leim/ja-dic/ja-dic.el instead"))
@@ -182,7 +188,7 @@
 
 (or (ak-validstrp (getenv "DICTIONARY")) (setenv "DICTIONARY" "en_US")) ;;default dictionary
 (or (ak-validstrp (getenv "DICPATH"))
-   (setenv "DICPATH" (concat (getenv "HOME") "/.emacs.d/Spelling")))
+   (setenv "DICPATH" (expand-file-name (_emacs_d/ "Spelling"))))
 
 (with-eval-after-load "ispell"
   (setq ispell-dictionary (getenv "DICTIONARY"))
@@ -219,7 +225,7 @@
 ;;====================================
 ;;;;go-mode
 ;;====================================
-;; (autoload 'go-mode "~/.emacs.d/site-lisp/go-mode.el" nil t)
+;; (autoload 'go-mode (_emacs_d/ "site-lisp/go-mode.el") nil t)
 ;; ;;   
 ;; (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
@@ -227,7 +233,7 @@
 ;;====================================
 ;;;;yaml-mode
 ;;====================================
-;; (autoload 'yaml-mode "~/.emacs.d/site-lisp/yaml-mode.el" nil t)
+;; (autoload 'yaml-mode (_emacs_d/ "site-lisp/yaml-mode.el") nil t)
 ;; ;;
 ;; (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
 
@@ -252,9 +258,9 @@
 	      ;;(setq markdown-command "markdown")  ;;default legacy command
 	      ;;(setq markdown-command-needs-filename nil) ;;default=nil:stdin t:filename
 	      (setq markdown-preview-stylesheets
-		    (list "~/.emacs.d/css/md.css")
-		    ;;(list "~/.emacs.d/markdown/Clearness.css")
-		    ;;(list "~/.emacs.d/markdown/Solarized(Dark).css")
+		    (list (_emacs_d/ "css/md.css"))
+		    ;;(list (_emacs_d/ "markdown/Clearness.css"))
+		    ;;(list (_emacs_d/ "markdown/Solarized(Dark).css"))
 		    ;;(list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css")
 		    )
 	      ;; markdown preview mode
@@ -292,7 +298,7 @@
 ;; "always" : except on timestamp
 (setq org-support-shift-select t)
 
-(autoload 'buffer-focus-in-callback  "~/.emacs.d/site-lisp/buffer-focus-hook")
+(autoload 'buffer-focus-in-callback  (_emacs_d/ "site-lisp/buffer-focus-hook"))
 
 (defun ak-org-focus-in ()
   (message "no xcv."))

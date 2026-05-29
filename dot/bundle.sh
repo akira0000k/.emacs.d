@@ -5,11 +5,12 @@ awk '
     next
 }
 
-/^\(load ".*"\)/ {
+/^\(load \(_emacs_d\/ ".*"\)/ {
     match($0, /".*"/);
     file=substr($0, RSTART+1, RLENGTH-2)
-    comd = "cat " file ".el"
+    comd = "cat ../" file ".el"
     system(comd)
+    #print comd
     next
 }
 
