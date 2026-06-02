@@ -20,13 +20,18 @@
 (advice-add 'message :before 'my/ad-timestamp-message)
 (message "init.el loading")
 
+;; common functions
+(defun ak-validstrp(str)
+  (and str (> (length str) 0)))
+
+(defalias '_emacs_d/ 'locate-user-emacs-file)
+
 ;;; emacs -q -lした時に、user-emacs-directoryが変わるように
 (when load-file-name
   (message "load file = %s" load-file-name)
   (setq user-emacs-directory (file-name-directory load-file-name))
   (message "user-emacs-directory = %s" user-emacs-directory)
   )
-(defalias '_emacs_d/ 'locate-user-emacs-file)
 
 ;; Package init
 (require 'package)
@@ -117,16 +122,20 @@
     (add-to-list 'exec-path-from-shell-variables "DICPATH")
     (exec-path-from-shell-initialize)
     )
-(defun ak-validstrp(str)
-  (and str (> (length str) 0)))
-;; emacs.app?  shell emacs?
+
+;; shell emacs?
 (if (getenv "PWD")
-    (message "started in diretory %s" (getenv "PWD"))
-  (message "launch app")
+    (progn
+      (message "started in diretory %s" (getenv "PWD")) ;;ターミナルから起動
+      (setenv "Z_DIRECTORY" (expand-file-name default-directory))
+      )
+  ;;else
+  (message "launch app") ;;アイコンから起動
+  ;;;; exec-path-from-shell.el を使う前はPATHを加工していた。
   ;;(setenv  "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
   (ak-setenv)
-  (and (ak-validstrp (getenv "Z_DIRECTORY"))
-       (setq dired-default-directory (getenv "Z_DIRECTORY")))
+  (when (ak-validstrp (getenv "Z_DIRECTORY"))
+       (setq ak-dired-default-directory (getenv "Z_DIRECTORY")))
   )
 ;;;; ls sort order error
 ;;(setenv "LC_COLLATE" "C")
@@ -136,8 +145,8 @@
 ;;  (setenv "LANG" "ja_JP.UTF-8")
 ;;  (message "LANG was set to ja_JP.UTF-8"))
 
-
-(or (ak-validstrp (getenv "B_DIRECTORY")) (setenv "B_DIRECTORY" (expand-file-name (_emacs_d/ "dot"))))
+(setenv "EMACS" (car command-line-args))
+(setenv "B_DIRECTORY" (expand-file-name (_emacs_d/ "dot")))
 (or (getenv "A_DIRECTORY") (setenv "A_DIRECTORY" (concat (getenv "HOME") "/Downloads")))
 (or (getenv "C_DIRECTORY") (setenv "C_DIRECTORY" (concat (getenv "HOME") "/Documents")))
 (or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" (concat (getenv "HOME") "/Desktop")))
@@ -146,9 +155,11 @@
 ;; ;;(default-file-modes)  ;;=> #o755
 ;; (set-default-file-modes #o775)
 
+;; load emacs common settings .emacs.elc
 (message "load .emacs")
 (if (load (_emacs_d/ ".emacs.elc") t t t)
     (message "load .emacs.elc...done")
+  ;;else
   (load (_emacs_d/ "dot/.emacs"))
   (message "load dot/.emacs...done")
   (if (eq 1 (length command-line-args))
@@ -166,13 +177,11 @@
 
 ;;;; ;; Mac OSX  lsを GNU coreutil gls に変える
 ;;;; (setq insert-directory-program "/usr/local/bin/gls")
-;;;; ;; .zshrc  export PS1="%n@%m %~ %# "
-;;;; (setq dirtrack-list '(" \\(.*\\) % " 1))
 
-;;;; ;; linux in Docker
-;;;; ;; .bashrc  PS1='$0@\u:\w\$ '
-;;;; (setq shell-file-name "/bin/bash")
-;;;; (setq dirtrack-list '(":\\(.*\\)[#\\$]" 1))
+;; M-x shell (bash)
+;; .bashrc  PS1='$0@\u:\w\$ '
+(setq shell-file-name "/bin/bash")
+(setq dirtrack-list '(":\\(.*\\)[#\\$]" 1))
 
 ;;;; ;; lsでなく lisp 版を使う
 ;;;; (setq ls-lisp-use-insert-directory-program nil)
@@ -258,6 +267,7 @@
   (set-face-attribute 'region nil :extend t :background "dark red")  ;;selected region
   )
 
+;; emacs.app?
 (message "window check")
 ;;;; (if (not (string= window-system "ns"))
 (if (not (display-graphic-p))

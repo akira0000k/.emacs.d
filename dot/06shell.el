@@ -7,6 +7,7 @@
 (defalias 's 'shell)
 ;;            ==>  M-s M-s
 (keymap-global-set "M-s M-s" 'shell)
+(keymap-global-set "M-s s" 'eshell)
 
 (with-eval-after-load 'shell
   (load (_emacs_d/ "site-lisp/tails-comint-history"))
@@ -29,6 +30,7 @@
 
 (add-hook 'shell-mode-hook
 	  (lambda ()
+	    ;;(shell-dirtrack-mode 0)
 	    (dirtrack-mode)
 	    (setq shell-dirstack-query "pwd")
             ))

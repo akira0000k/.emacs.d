@@ -1,0 +1,38 @@
+#  .emchoice
+#
+echo ".emchoice ***"
+
+export EMA24=/Users/Akira/Applications/24.5/Emacs.app/Contents/MacOS/Emacs
+export EMA26=/Users/Akira/Applications/26.3/Emacs.app/Contents/MacOS/Emacs
+export EMA29=/Users/Akira/Applications/29.4/Emacs.app/Contents/MacOS/Emacs
+export EMA30=/Applications/Emacs.app/Contents/MacOS/Emacs
+#export EMACS=$EMA30
+
+alias ema24=$EMA24
+alias ema26=$EMA26
+alias ema29=$EMA29
+alias ema30=$EMA30
+[ $EMACS ] && alias emacs=$EMACS
+
+alias emax='emacs &!'     #!disown zsh
+alias emax24='ema24 &!'
+alias emax26='ema26 &!'
+alias emax29='ema29 &!'
+alias emax30='ema30 &!'
+
+alias em='emacs -nw'
+alias em24='ema24 -nw'
+alias em26='ema26 -nw'
+alias em29='ema29 -nw'
+alias em30='ema30 -nw'
+
+alias emx='TERM=xterm emacs -nw'
+alias emt='TERM=vt100 VT100=yes emacs -nw'
+alias emv='TERM_PROGRAM=vscode emacs -nw'
+alias empu='PUTTY=yes emacs -nw'
+alias emd='emacs -nw --debug-init'
+
+alias emah='HOME=. emacs'
+ 
+alias emal='emacs -q -l .emacs24.d/init.el'
+

@@ -1,8 +1,8 @@
 [core]
 	symlinks = true
 [user]
-	name = akira0000k
-	email = 95961660+akira0000k@users.noreply.github.com
+	name = "My Name"
+	email = myname@example.com
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f

@@ -6,7 +6,7 @@
 
 (setq dired-clean-up-buffers-too nil)
 ;; Save Z directory
-(defvar dired-default-directory default-directory)
+(defvar ak-dired-default-directory default-directory)
 ;; t = Open View mode by <right>
 (defcustom ak-dired-view-on-right-arrow nil
   "Non-nil means open in view mode by right arrow in dired."
@@ -81,7 +81,7 @@
 
 (defun ak-dired-home-dir()(interactive)(dired "~"))
 (defun ak-dired-root-dir()(interactive)(dired "/"))
-(defun ak-dired-defo-dir()(interactive)(dired dired-default-directory))
+(defun ak-dired-defo-dir()(interactive)(dired ak-dired-default-directory))
 (defun ak-dired-a-dir()(interactive)(dired (getenv "A_DIRECTORY")))
 (defun ak-dired-b-dir()(interactive)(dired (getenv "B_DIRECTORY")))
 (defun ak-dired-c-dir()(interactive)(dired (getenv "C_DIRECTORY")))

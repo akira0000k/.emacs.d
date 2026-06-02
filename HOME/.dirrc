@@ -2,21 +2,21 @@
 #
 
 export A_DIRECTORY=~/Documents
-export B_DIRECTORY=~/.emacs.d
-export C_DIRECTORY=~/DOCKER
+export B_DIRECTORY=~/.emacs.d/dot
+export C_DIRECTORY=~/src
 export E_DIRECTORY=~/Desktop
 export Z_DIRECTORY=~/Downloads
 
 
-alias cda="cd '$A_DIRECTORY'"
-alias cdb="cd '$B_DIRECTORY'"
-alias cdc="cd '$C_DIRECTORY'"
-alias cde="cd '$E_DIRECTORY'"
-alias cdz="cd '$Z_DIRECTORY'"
+alias cda='cd "$A_DIRECTORY"'
+alias cdb='cd "$B_DIRECTORY"'
+alias cdc='cd "$C_DIRECTORY"'
+alias cde='cd "$E_DIRECTORY"'
+alias cdz='cd "$Z_DIRECTORY"'
 
 
-# cda() { cd $A_DIRECTORY; }
-# cda() { cd "$A_DIRECTORY"; }
-# alias cda='cd $A_DIRECTORY' 
-# alias cda="cd '$A_DIRECTORY'"
-
+# cda() { cd $A_DIRECTORY; }    #ng: cd a b
+# cda() { cd "$A_DIRECTORY"; }  #OK
+# alias cda='cd $A_DIRECTORY'   #ng: cd a b
+# alias cda="cd '$A_DIRECTORY'" #mmm: fixed
+# alias cda='cd "$A_DIRECTORY"' #OK

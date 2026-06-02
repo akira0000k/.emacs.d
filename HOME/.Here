@@ -1,0 +1,8 @@
+#ここがHOMEだ
+
+HOME=$PWD
+source .zshrc
+
+# HOME=$PWD
+# exec $SHELL
+

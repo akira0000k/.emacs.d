@@ -1,0 +1,10 @@
+alias ls /bin/ls -laF $*
+alias ] cd ..
+alias ]] cd ../..
+alias ]]] cd ../../..
+alias ]]]] cd ../../../..
+alias cda cd $A_DIRECTORY
+alias cdb cd $B_DIRECTORY
+alias cdc cd $C_DIRECTORY
+alias cde cd $E_DIRECTORY
+alias cdz cd $Z_DIRECTORY
