@@ -4,6 +4,19 @@
 
 
 ;;====================================
+;;;; startup.el
+;;====================================
+(defun my/fancy-startup-screen (oldfunc &optional concise)
+  "Display fancy startup screen.
+If CONCISE is non-nil, do nothing."
+  ;;(message "my/fancy enter concise=%s" concise)
+  (unless concise
+    (apply oldfunc concise)
+    ))
+(advice-add 'fancy-startup-screen :around #'my/fancy-startup-screen)
+
+
+;;====================================
 ;;;; defaultの quail japanese かな漢字変換
 ;; にゃおみん さん 雑記帳
 ;; PCの日本語入力について個人的メモ より
