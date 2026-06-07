@@ -1,6 +1,6 @@
 #  .emchoice
 #
-echo ".emchoice ***"
+#echo ".emchoice ***"
 
 export EMA24=/Users/Akira/Applications/24.5/Emacs.app/Contents/MacOS/Emacs
 export EMA26=/Users/Akira/Applications/26.3/Emacs.app/Contents/MacOS/Emacs
@@ -32,7 +32,7 @@ alias emv='TERM_PROGRAM=vscode emacs -nw'
 alias empu='PUTTY=yes emacs -nw'
 alias emd='emacs -nw --debug-init'
 
-alias emah='HOME=. emacs'
+alias emah='HOME=$PWD emacs'
  
-alias emal='emacs -q -l .emacs24.d/init.el'
+alias emal='emacs -q -l .emacs.d/init.el'
 

@@ -1,6 +1,6 @@
 #  .zshrc
 #
-echo ".zshrc arg=" "${(%):-%N}"
+#echo ".zshrc arg=" "${(%):-%N}"
 currentdir=$(dirname "${(%):-%N}")
 
 #locale
@@ -16,8 +16,8 @@ typeset -U path PATH
 
 alias ls='ls -laF'
 
-# emacs version choice
-echo source "$currentdir/.emchoice"
+## emacs version choice
+#echo source "$currentdir/.emchoice"
 source "$currentdir/.emchoice"
 
 alias profd="printf '\033]1337;SetProfile=Default\a'"
@@ -30,8 +30,8 @@ alias pip=pip3
 
 alias tar=/usr/local/bin/gtar
 
-#. ~/.dirrc
-echo source "$currentdir/.dirrc"
+## My favorite directories A, B, C, E(, Z)
+#echo source "$currentdir/.dirrc"
 source "$currentdir/.dirrc"
 
 alias "]"='cd ..'
