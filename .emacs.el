@@ -750,14 +750,14 @@ Set cursor at end of 1line/2buffer.(shift)"
   (interactive "P")
   (ak-set-scroll-value arg)
   ;;(message "<== %s %s" arg ak-lr)
-  (scroll-right ak-lr)
+  (scroll-right ak-lr 0) ;;emacs24 needs set-minimum=0
   )
 (defun ak-scroll-left(&optional arg)
   "Scroll-left (move right) ak-lr-scroll-chars coloms."
   (interactive "P")
   (ak-set-scroll-value arg)
   ;;(message "==> %s %s" arg ak-lr)
-  (scroll-left ak-lr)
+  (scroll-left ak-lr 0) ;;emacs24 needs set-minimum=0
   )
 (keymap-global-set "<remap> <scroll-right>" 'ak-scroll-right)
 (keymap-global-set "<remap> <scroll-left>" 'ak-scroll-left)
@@ -1216,10 +1216,11 @@ With prefix argument, activate previous rectangle if possible."
 
 ;;was                 'toggle-frame-fullscreen  ==> "ESC <f11>"
 (keymap-global-set "<f11>" 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
-;; (require 'linum)                            ;; obsolete (emacs29)
-;; (keymap-global-set "<f12>" 'global-linum-mode)
-(keymap-global-set "<f12>" 'global-display-line-numbers-mode)
-;;(keymap-global-set "<f12>" 'display-line-numbers-mode)
+
+(if (version<= "26.1" emacs-version)
+    (keymap-global-set "<f12>" 'global-display-line-numbers-mode)
+  ;; (require 'linum)                            ;; obsolete (emacs29)
+  (keymap-global-set "<f12>" 'global-linum-mode))
 (keymap-global-set "S-<f11>" 'scroll-right)
 (keymap-global-set "S-<f12>" 'scroll-left)
 

@@ -62,10 +62,11 @@
 
 ;;was                 'toggle-frame-fullscreen  ==> "ESC <f11>"
 (keymap-global-set "<f11>" 'toggle-truncate-lines)  ;; Show Desktop (MAC OSX)
-;; (require 'linum)                            ;; obsolete (emacs29)
-;; (keymap-global-set "<f12>" 'global-linum-mode)
-(keymap-global-set "<f12>" 'global-display-line-numbers-mode)
-;;(keymap-global-set "<f12>" 'display-line-numbers-mode)
+
+(if (version<= "26.1" emacs-version)
+    (keymap-global-set "<f12>" 'global-display-line-numbers-mode)
+  ;; (require 'linum)                            ;; obsolete (emacs29)
+  (keymap-global-set "<f12>" 'global-linum-mode))
 (keymap-global-set "S-<f11>" 'scroll-right)
 (keymap-global-set "S-<f12>" 'scroll-left)
 

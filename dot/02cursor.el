@@ -229,14 +229,14 @@ Set cursor at end of 1line/2buffer.(shift)"
   (interactive "P")
   (ak-set-scroll-value arg)
   ;;(message "<== %s %s" arg ak-lr)
-  (scroll-right ak-lr)
+  (scroll-right ak-lr 0) ;;emacs24 needs set-minimum=0
   )
 (defun ak-scroll-left(&optional arg)
   "Scroll-left (move right) ak-lr-scroll-chars coloms."
   (interactive "P")
   (ak-set-scroll-value arg)
   ;;(message "==> %s %s" arg ak-lr)
-  (scroll-left ak-lr)
+  (scroll-left ak-lr 0) ;;emacs24 needs set-minimum=0
   )
 (keymap-global-set "<remap> <scroll-right>" 'ak-scroll-right)
 (keymap-global-set "<remap> <scroll-left>" 'ak-scroll-left)
