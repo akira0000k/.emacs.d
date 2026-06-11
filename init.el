@@ -40,7 +40,8 @@
     (message "package dir is changed %s -> %s" package-user-dir pudr)
     (setq package-user-dir pudr)))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
+(when (version< emacs-version "27")
+  (package-initialize))
 
 (defun ak-package-init()
   ;; M-x package-refresh-contents RET
@@ -379,6 +380,10 @@
 
 (message "init.el ...done")
 (advice-remove 'message 'my/ad-timestamp-message)
+(setq emacs-startup-hook
+      '(lambda()
+	 (message "%s" (getenv "EMACS"))
+	 ))
 ;;;;;;;;;;;;;;;;;;;;;added by emacs;;;;;;;;;;;;;;;;;;;;;;
 (put 'scroll-left 'disabled nil)
 (put 'upcase-region 'disabled nil)
