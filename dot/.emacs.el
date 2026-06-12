@@ -3,6 +3,13 @@
 ;;;; like
 ;;;; ;;(load "~/.emacs.d/dot/03cua")
 ;;;;
+
+;;====================================
+;;  for emacs27, emacs28
+;;====================================
+(unless (fboundp 'package-installed-p)
+  (autoload 'package-installed-p "package"))
+
 ;;====================================
 ;;  auto revert setting dired/buffer
 ;;====================================

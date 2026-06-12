@@ -146,8 +146,9 @@
 ;;  (setenv "LANG" "ja_JP.UTF-8")
 ;;  (message "LANG was set to ja_JP.UTF-8"))
 
+(defvar ak-em-dot-dir (_emacs_d/ "dot"))
 (setenv "EMACS" (car command-line-args))
-(setenv "B_DIRECTORY" (expand-file-name (_emacs_d/ "dot")))
+(setenv "B_DIRECTORY" (expand-file-name ak-em-dot-dir))
 (or (getenv "A_DIRECTORY") (setenv "A_DIRECTORY" (concat (getenv "HOME") "/Downloads")))
 (or (getenv "C_DIRECTORY") (setenv "C_DIRECTORY" (concat (getenv "HOME") "/Documents")))
 (or (getenv "E_DIRECTORY") (setenv "E_DIRECTORY" (concat (getenv "HOME") "/Desktop")))
@@ -161,13 +162,13 @@
 (if (load (_emacs_d/ ".emacs.elc") t t t)
     (message "load .emacs.elc...done")
   ;;else
-  (load (_emacs_d/ "dot/.emacs"))
+  (load (concat ak-em-dot-dir "/.emacs"))
   (message "load dot/.emacs...done")
   (if (eq 1 (length command-line-args))
-      (setq initial-buffer-choice (_emacs_d/  "dot")))
+      (setq initial-buffer-choice ak-em-dot-dir))
   (if (and (eq 3 (length command-line-args))
 	   (string= (cadr command-line-args) "-l"))
-      (setq initial-buffer-choice (_emacs_d/  "dot")))
+      (setq initial-buffer-choice ak-em-dot-dir))
   )
 
 ;; Tramp

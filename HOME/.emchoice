@@ -2,29 +2,35 @@
 #
 #echo ".emchoice ***"
 
-export EMA24=/Users/Akira/Applications/24.5/Emacs.app/Contents/MacOS/Emacs
-export EMA26=/Users/Akira/Applications/26.3/Emacs.app/Contents/MacOS/Emacs
-export EMA29=/Users/Akira/Applications/29.4/Emacs.app/Contents/MacOS/Emacs
-export EMA30=/Applications/Emacs.app/Contents/MacOS/Emacs
-#export EMACS=$EMA30
+export EMACS24=/Users/Akira/Applications/24.5/Emacs.app/Contents/MacOS/Emacs
+export EMACS25=/Users/Akira/Applications/25.3/Emacs.app/Contents/MacOS/Emacs
+export EMACS26=/Users/Akira/Applications/26.3/Emacs.app/Contents/MacOS/Emacs
+export EMACS27=/Users/Akira/Applications/27.2/Emacs.app/Contents/MacOS/Emacs
+export EMACS28=/Users/Akira/Applications/28.2/Emacs.app/Contents/MacOS/Emacs
+export EMACS29=/Users/Akira/Applications/29.4/Emacs.app/Contents/MacOS/Emacs
+export EMACS30=/Applications/Emacs.app/Contents/MacOS/Emacs
+#export EMACS=$EMACS30
 
-alias ema24=$EMA24
-alias ema26=$EMA26
-alias ema29=$EMA29
-alias ema30=$EMA30
 [ $EMACS ] && alias emacs=$EMACS
-
-alias emax='emacs &!'     #!disown zsh
-alias emax24='ema24 &!'
-alias emax26='ema26 &!'
-alias emax29='ema29 &!'
-alias emax30='ema30 &!'
+alias emacs24=$EMACS24
+alias emacs25=$EMACS25
+alias emacs26=$EMACS26
+alias emacs27=$EMACS27
+alias emacs28=$EMACS28
+alias emacs29=$EMACS29
+alias emacs30=$EMACS30
+##alias emacs=emacs28
 
 alias em='emacs -nw'
-alias em24='ema24 -nw'
-alias em26='ema26 -nw'
-alias em29='ema29 -nw'
-alias em30='ema30 -nw'
+alias em24='emacs24 -nw'
+alias em25='emacs25 -nw'
+alias em26='emacs26 -nw'
+alias em27='emacs27 -nw'
+alias em28='emacs28 -nw'
+alias em29='emacs29 -nw'
+alias em30='emacs30 -nw'
+
+alias emax='emacs &!'     #!disown zsh
 
 alias emx='TERM=xterm emacs -nw'
 alias emt='TERM=vt100 VT100=yes emacs -nw'

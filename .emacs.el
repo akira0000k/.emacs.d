@@ -1,4 +1,11 @@
 ;;; -*- lexical-binding: t; -*-
+
+;;====================================
+;;  for emacs27, emacs28
+;;====================================
+(unless (fboundp 'package-installed-p)
+  (autoload 'package-installed-p "package"))
+
 ;;====================================
 ;;  auto revert setting dired/buffer
 ;;====================================
@@ -1765,11 +1772,11 @@ If CONCISE is non-nil, do nothing."
 	("S-SPC" . kkc-prev)
 	("<f1>" . kkc-help))
   :config
-  (setq kkc-init-file-name (_emacs_d/ ".kkc/kkcrc"))
   ;; (unless (load (_emacs_d/ "LEIM/ja-dic/ja-dic.elc" t nil t))
   ;;   (message "load personal ja-dic failed."))
   :load-path "LEIM"
   )
+(setq kkc-init-file-name (_emacs_d/ ".kkc/kkcrc"))
 
 ;;====================================
 ;;;; skk かな漢字変換
@@ -1777,10 +1784,9 @@ If CONCISE is non-nil, do nothing."
 ;; (ak-package-init-once)
 ;; M-x package-install RET ddskk RET
 ;; M-x package-install RET ddskk-posframe RET
-(require 'package)       ;;for package-installed-p
-(when (package-installed-p 'ddskk)
+(when (fboundp 'skk-mode)
   ;;(setq default-input-method "japanese-skk") ;;C-\ toggle
-  (keymap-global-set "C-x C-j" 'skk-mode)
+  (keymap-global-set "C-x j" 'skk-mode)
   ;;; Customize .skk cash directory
   (unless (and (boundp 'skk-user-directory) skk-user-directory)
     (setq skk-user-directory (_emacs_d/ ".ddskk")))
