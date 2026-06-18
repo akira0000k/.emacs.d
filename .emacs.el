@@ -528,6 +528,19 @@
 
 ;; ------ 02cursor.el ------ ;;; -*- lexical-binding: t; -*-
 
+;; ;;====================================
+;; ;;;; previous line
+;; ;;====================================
+(defun my/previous-line (oldfunc &rest args)
+  "Move cursor as up arrow. If on first line, go to beginning of buffer."
+  (interactive "^p\np")
+  ;;(message "previous-line %s" args)
+  (let ((ok (ignore-errors (apply oldfunc args) t)))
+    (unless ok
+      (goto-char (point-min)))
+    ))
+(advice-add 'previous-line :around #'my/previous-line)
+
 ;;====================================
 ;;;; control keys
 ;;====================================
