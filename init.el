@@ -72,7 +72,10 @@
       (unless package-initp
 	(setq package-initp t)
 	(ak-package-init))
-      (package-install pk)
+      (let ((ok (ignore-errors (package-install pk) t)))
+	(unless ok
+	  (message "package %s install error" (symbol-name pk))
+	  ))
       ))
   )
 

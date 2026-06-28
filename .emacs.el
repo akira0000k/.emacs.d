@@ -785,8 +785,8 @@ Set cursor at end of 1line/2buffer.(shift)"
 ;;====================================
 ;;;; NEW! extend region in next/prev screen.
 ;;====================================
-;; mark whole sentence or extend to next.
 (defun ak-mark-sentence ()
+  "Mark whole sentence or extend to next."
   (interactive)
   ;;(message "ak-mark-s")
   (if (region-active-p)
@@ -799,6 +799,7 @@ Set cursor at end of 1line/2buffer.(shift)"
     (forward-sentence)
     ))
 (defun ak-mark-sentence-backward ()
+  "Mark whole sentence or extend to previous."
   (interactive)
   ;;(message "ak-mark-s-b")
   (if (region-active-p)
@@ -812,8 +813,8 @@ Set cursor at end of 1line/2buffer.(shift)"
 (keymap-global-set "s-}" 'ak-mark-sentence-backward)
 ;; M-e, M-a is for/backward-sentence
 
-;; mark whole paragraph or extend to next.
 (defun ak-mark-paragraph ()
+  "Mark whole paragraph or extend to next."
   (interactive)
   ;;(message "ak-mark-p")
   (if (region-active-p)
@@ -823,6 +824,7 @@ Set cursor at end of 1line/2buffer.(shift)"
     (mark-paragraph)
     (exchange-point-and-mark)))
 (defun ak-mark-paragraph-backward ()
+  "Mark whole paragraph or extend to previous."
   (interactive)
   ;;(message "ak-mark-p")
   (if (region-active-p)
@@ -832,9 +834,11 @@ Set cursor at end of 1line/2buffer.(shift)"
     (mark-paragraph)
     ))
 (defun ak-forward-paragraph ()
+  "Move forward to end of paragraph without shift select."
   (interactive) ;;"^p"
   (forward-paragraph))
 (defun ak-backward-paragraph ()
+  "Move backward to start of paragraph without shift select."
   (interactive) ;;"^p"
   (backward-paragraph))
 (keymap-global-set "M-}" 'ak-forward-paragraph)
@@ -1888,6 +1892,7 @@ If CONCISE is non-nil, do nothing."
   (keymap-set view-mode-map "M" 'ak-goto-mid-screen)   
   (keymap-set view-mode-map "L" 'ak-goto-bottom-screen)
   (keymap-set view-mode-map "y"	'ak-line-up)
+  (keymap-set view-mode-map "Y"	"S-y")
   (keymap-set view-mode-map "RET" 'ak-line-down)
   (keymap-set view-mode-map "K" 'ak-line-up)
   (keymap-set view-mode-map "J" 'ak-line-down)
