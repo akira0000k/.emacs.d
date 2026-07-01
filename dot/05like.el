@@ -16,8 +16,8 @@
 (keymap-global-set "S-<f2>" 'ak-divide-screen3-or-other)
 
 ;;was                 kmacro-start-macro-or-insert-counter
-(keymap-global-set "<f3>" 'isearch-repeat-forward)
-(keymap-global-set "S-<f3>" 'isearch-repeat-backward)
+(keymap-global-set "<f3>" 'ak-isearch-forward) ;; repeat-forward/isearch-forward
+(keymap-global-set "S-<f3>" 'ak-isearch-backward) ;; repeat-backward/isearch-backward
 
 ;;was                    kmacro-end-or-call-macro
 (keymap-global-set "<f4>"    'kill-current-buffer)
@@ -70,6 +70,26 @@
 (keymap-global-set "S-<f11>" 'scroll-right)
 (keymap-global-set "S-<f12>" 'scroll-left)
 
+
+;;====================================
+;;;; f3 research/isearch
+;;====================================
+(defun ak-isearch-forward (&optional regexp-p no-recursive-edit)
+  "Do isearch[-repeat]?-forward, checking search-ring."
+  (interactive "P\np")
+  (if search-ring
+      (isearch-repeat-forward regexp-p)
+    (message "isearch>")
+    (isearch-forward regexp-p no-recursive-edit))
+  )
+(defun ak-isearch-backward (&optional regexp-p no-recursive-edit)
+  "Do isearch[-repeat]?-backward, checking search-ring."
+  (interactive "P\np")
+  (if search-ring
+      (isearch-repeat-backward regexp-p)
+    (message "<isearch")
+    (isearch-backward regexp-p no-recursive-edit))
+  )
 
 ;;======================================
 ;;; shrink / enlarge window automatic_|_
