@@ -528,18 +528,20 @@
 
 ;; ------ 02cursor.el ------ ;;; -*- lexical-binding: t; -*-
 
-;; ;;====================================
-;; ;;;; previous line
-;; ;;====================================
-(defun my/previous-line (oldfunc &rest args)
+;;====================================
+;;;; previous line
+;;====================================
+;; NG minibuffer up
+;; (advice-add 'previous-line :around #'my/previous-line)
+(defun ak-previous-line (&optional arg try-vscroll)
   "Move cursor as up arrow. If on first line, go to beginning of buffer."
   (interactive "^p\np")
-  ;;(message "previous-line %s" args)
-  (let ((ok (ignore-errors (apply oldfunc args) t)))
+  (let ((ok (ignore-errors (previous-line arg try-vscroll) t)))
     (unless ok
       (goto-char (point-min)))
     ))
-(advice-add 'previous-line :around #'my/previous-line)
+;;(keymap-global-set "<remap> <previous-line>" #'ak-previous-line)
+(keymap-global-set "<up>" #'ak-previous-line)
 
 ;;====================================
 ;;;; control keys
