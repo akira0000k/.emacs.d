@@ -1,4 +1,4 @@
-Page.1
+Page. 1
 Send ^[ [27;5;9~                                                ^Tab
 Send ^[ [27;3;9~                                                opt Tab
 Send ^[ [27;7;9~                                                ^ opt Tab
@@ -17,7 +17,7 @@ Send ^[ [27;8;34~                                               ^ opt ⬆️ "
 Send ^[ [27;5;39~                                               ^⬆️ '
 Send ^[ [27;7;39~                                               ^ opt ⬆️ '
 Send ^[ [27;9;39~                                               ⬆️ command '
-Page.2
+Page. 2
 Send ^[ [27;5;44~                                               ^,
 Send ^[ [27;7;45~                                               ^ opt -
 Send ^[ [27;5;46~                                               ^.
@@ -36,7 +36,7 @@ Send ^[ [27;10;58~                                              command :
 Send ^[ [27;6;60~                                               ^⬆️ <
 Send ^[ [27;8;60~                                               ^ opt ⬆️ <
 Send ^[ [27;5;61~                                               ^⬆️ =
-Page.3
+Page. 3
 Send ^[ [27;7;61~                                               ^ opt ⬆️ =
 Send ^[ [27;6;62~                                               ^⬆️ >
 Send ^[ [27;8;62~                                               ^ opt ⬆️ >
@@ -55,7 +55,7 @@ Send ^[ [27;8;102~                                              ^ opt ⬆️ F
 Send ^[ [27;10;102~                                             ⬆️ command F
 Send ^[ [27;12;102~                                             opt ⬆️ command F
 Ignore                                                          ^⬆️ J
-Page.4
+Page. 4
 Send ^[ [27;6;107~                                              ^⬆️ K
 Ignore                                                          ^⬆️ L
 Send ^[ 27;8;108~                                               ^ opt ⬆️ L
@@ -74,7 +74,7 @@ Send ^[ 27;8;118~                                               ^ opt ⬆️ V
 Send ^[ 27;6;119~                                               ^⬆️ W
 Send ^[ 27;9;93~                                                command ]
 Send ^[ 27;9;94~                                                command ^
-Page.5
+Page. 5
 Send ^[ [27;6;96~                                               ^⬆️ `
 Send ^[ [27;8;96~                                               ^ opt ⬆️ `
 Send ^[ [27;10;96~                                              ⬆️ command `
@@ -93,10 +93,9 @@ Send ^[ [27;13;110~                                             ^command n
 Send ^[ [27;13;112~                                             ^command p
 Send: "\<C-x>\<C-c>"                                            opt command q
 Ignore                                                          command r
-Page.6
+Page. 6
 Send ^[ [27;9;115~                                              command s
 Send ^[ [27;9;117~                                              command u
-Send ^[ [27;9;118~                                              command v
 Send ^[ [27;9;119~                                              command w
 Send ^[ [27;9;120~                                              command x
 Ignore                                                          command y
@@ -112,8 +111,8 @@ Send ^[ [27;8;126~                                              ^ opt ⬆️ ~
 Send ^[ [27;10;126~                                             ⬆️ command ~
 Send ^[ [27;2;127~                                              ⬆️ ← delete
 Send ^[ [27;5;127~                                              ^️← delete
-Page.7
 Send ^[ [27;6;127~                                              ^⬆️ ← delete
+Page. 7
 Send ^[ [27;4;127~                                              opt ⬆️ ← delete
 Send ^[ [27;7;127~                                              ^ opt ← delete
 Send ^[ [27;8;127~                                              ^ opt ⬆️ ← delete
@@ -131,8 +130,8 @@ Send ^[ [27;9;99~                                               command そ
 Send: "\<C-x>\<C-c>"                                            opt command た
 Send ^[ A                                                       opt ⬆️ ち
 Send ^[ [27;9;97~                                               command ち
-Page.8
 Send ^[ [27;9;122~                                              command つ
+Page. 8
 Send ^[ [27;9;115~                                              command と
 Send ^[ [27;9;107~                                              command の
 Send ^[ F                                                       opt ⬆️ は
@@ -150,8 +149,8 @@ Send ^[ [1;2A                                                   ⬆️ ↑
 Send ^[ [1;5A                                                   ^↑
 Send ^[ [1;6A                                                   ^⬆️ ↑
 Send ^[ [1;3A                                                   opt ↑
-Page.9
 Send ^[ [1;4A                                                   opt ⬆️ ↑
+Page. 9
 Send ^[ [1;7A                                                   ^opt ↑
 Send ^[ [1;8A                                                   ^opt ⬆️ ↑
 Send ^[ [1;9A                                                   command ↑
@@ -169,8 +168,8 @@ Send ^[ [1;9B                                                   command ↓
 Send ^[ [1;10B                                                  ⬆️ command ↓
 Send ^[ [1;13B                                                  ^command ↓
 Send ^[ [1;14B                                                  ^⬆️ command ↓
-Page.10
 Send ^[ [1;2D                                                   ⬆️ ←
+Page. 10
 Send ^[ [1;5D                                                   ^←
 Send ^[ [1;6D                                                   ^⬆️ ←
 Send ^[ [1;3D                                                   opt ←
@@ -188,8 +187,8 @@ Send ^[ [1;7C                                                   ^opt →
 Send ^[ [1;8C                                                   ^opt ⬆️ →
 Send ^[ [1;9C                                                   command →
 Send ^[ [1;10C                                                  ⬆️ command →
-Page.11
 Send ^[ [1;2P                                                   ⬆️ F1
+Page. 11
 Send Hex Codes: 0x1c 0x09                                       opt F1
 Send Hex Codes: 0x1c 0x6e                                       opt ⬆️ F1
 Send ^[ [1;2Q                                                   ⬆️ F2
@@ -207,8 +206,8 @@ Send ^[ [19;2~                                                  ⬆️ F8
 Send ^[ [20;2~                                                  ⬆️ F9
 Send ^[ [21;2~                                                  ⬆️ F10
 Send ^[ [23;2~                                                  ⬆️ F11
-Page.12
 Send ^[ [24;2~                                                  ⬆️ F12
+Page. 12
 Ignore                                                          F13
 Ignore                                                          F14
 Ignore                                                          F15
@@ -226,8 +225,8 @@ Send ^[ [5;2~                                                   ⬆️ Page Up
 Send ^[ [5;5~                                                   ^Page Up
 Send ^[ [5;3~                                                   opt Page Up
 Send ^[ [5;7~                                                   ^opt Page Up
-Page.13
 Send ^[ [5;8~                                                   ^opt ⬆️ Page Up
+Page. 13
 Send ^[ [6;2~                                                   ⬆️ Page Down
 Send ^[ [6;5~                                                   ^Page Down
 Send ^[ [6;3~                                                   opt Page Down
