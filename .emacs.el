@@ -964,11 +964,23 @@ With prefix argument, activate previous rectangle if possible."
   (keymap-set dired-mode-map "C-s" 'dired-isearch-filenames)
   ;;01keys.el(keymap-global-set "s-f" 'isearch-forward) ;;command s = search username
 
+  ;;  dired.el
+  ;;  "<remap> <next-line>"        #'dired-next-line
+  ;;  "<remap> <previous-line>"    #'dired-previous-line
+  ;;
   ;; avoid remapping to dired-next(previous)-line
-  (defalias 'ak-dired-next-line 'next-line)
-  (defalias 'ak-dired-previous-line 'previous-line)
-  (keymap-set dired-mode-map "C-n" 'ak-dired-next-line)
-  (keymap-set dired-mode-map "C-p" 'ak-dired-previous-line)
+  (defalias 'real-next-line 'next-line)
+  (defalias 'real-previous-line 'previous-line)
+  (keymap-set dired-mode-map "C-n" 'real-next-line)
+  (keymap-set dired-mode-map "C-p" 'real-previous-line)
+  ;;
+  ;;  ./02cursor.el
+  ;;  (keymap-global-set "<up>" #'ak-previous-line) ;;was previous-line
+  ;;
+  ;; global <up> is changed to ak-.., use dired-..
+  (keymap-set dired-mode-map "<up>" 'dired-previous-line)
+  ;;(keymap-set dired-mode-map "<down>" 'dired-next-line)
+  
 
   ;; ;; line scroll and keep cursor on file name
   ;; (keymap-set dired-mode-map "C-<up>"   'ak-dired-line-up       )
