@@ -105,7 +105,7 @@
     (if (not ok)
 	(goto-char (point-max))
       (if (= 0 (current-window-line))
-	  (forward-line)))
+	  (with-no-warnings (next-line))))
     ))
 (defun ak-scroll-down2()
   "Boosted line scroll down, move cursor to top."
@@ -123,7 +123,7 @@
     (if (not ok)
 	(goto-char (point-max))
       (if (= 0 (current-window-line))
-	  (forward-line)))
+	  (with-no-warnings (next-line))))
     ))
 ;;(defun ak-scroll-down1() (interactive) (scroll-down 1))
 ;;(defun ak-scroll-down2() (interactive) (scroll-down 2))
@@ -140,22 +140,19 @@
   (if (equal (current-window-line) 0)
       (progn
 	(or (ak-first-page-p)(scroll-down 1))
-	(call-interactively 'previous-line))
+	(ak-previous-line))
     ;;else
-    (call-interactively 'previous-line)
+    (with-no-warnings (previous-line))
     (or (ak-first-page-p)(scroll-down 1))
     ))
 (defun ak-line-down()
   "1 line scroll up, keeping cursor position."
   (interactive "^")
   (if (equal (current-window-line) 0)
-      (progn
-	(call-interactively 'next-line)
-	;;(scroll-up   1)
-	)
+      (with-no-warnings (next-line))
     ;;else
     (scroll-up   1)
-    (call-interactively 'next-line)
+    (with-no-warnings (next-line))
     ))
 (defun ak-line-up-fast()
   "Boosted line scroll down. customize \\='ak-fast-scroll-lines'"
@@ -252,5 +249,5 @@
         (goto-char (point-max))
       ;;else
       (scroll-up arg)
-      (forward-line 1)
+      (with-no-warnings (next-line))
       )))

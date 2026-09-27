@@ -536,11 +536,14 @@
 (defun ak-previous-line (&optional arg try-vscroll)
   "Move cursor as up arrow. If on first line, go to beginning of buffer."
   (interactive "^p\np")
-  (let ((ok (ignore-errors (previous-line arg try-vscroll) t)))
+  (let ((ok
+	 (ignore-errors
+	   (with-no-warnings (previous-line arg try-vscroll))
+	   t)
+	 ))
     (unless ok
       (goto-char (point-min)))
     ))
-;;(keymap-global-set "<remap> <previous-line>" #'ak-previous-line)
 (keymap-global-set "<up>" #'ak-previous-line)
 
 ;;====================================
@@ -661,7 +664,7 @@
 	      ))
         ;;else
 	(scroll-up)
-	(forward-line 1))
+	(with-no-warnings (next-line)))
       )))
 
 
@@ -899,7 +902,7 @@ With prefix argument, activate previous rectangle if possible."
   (defun ak-cua-scroll-up (&optional arg)
     (interactive "^P")
     (cua-scroll-up arg)
-    (forward-line 1))
+    (with-no-warnings (next-line)))
   )
 
 ;; cua-mode の on/off をするなら、キーバインド設定後にoffにする。
@@ -2210,7 +2213,7 @@ If CONCISE is non-nil, do nothing."
     (if (not ok)
 	(goto-char (point-max))
       (if (= 0 (current-window-line))
-	  (forward-line)))
+	  (with-no-warnings (next-line))))
     ))
 (defun ak-scroll-down2()
   "Boosted line scroll down, move cursor to top."
@@ -2228,7 +2231,7 @@ If CONCISE is non-nil, do nothing."
     (if (not ok)
 	(goto-char (point-max))
       (if (= 0 (current-window-line))
-	  (forward-line)))
+	  (with-no-warnings (next-line))))
     ))
 ;;(defun ak-scroll-down1() (interactive) (scroll-down 1))
 ;;(defun ak-scroll-down2() (interactive) (scroll-down 2))
@@ -2245,22 +2248,19 @@ If CONCISE is non-nil, do nothing."
   (if (equal (current-window-line) 0)
       (progn
 	(or (ak-first-page-p)(scroll-down 1))
-	(call-interactively 'previous-line))
+	(ak-previous-line))
     ;;else
-    (call-interactively 'previous-line)
+    (with-no-warnings (previous-line))
     (or (ak-first-page-p)(scroll-down 1))
     ))
 (defun ak-line-down()
   "1 line scroll up, keeping cursor position."
   (interactive "^")
   (if (equal (current-window-line) 0)
-      (progn
-	(call-interactively 'next-line)
-	;;(scroll-up   1)
-	)
+      (with-no-warnings (next-line))
     ;;else
     (scroll-up   1)
-    (call-interactively 'next-line)
+    (with-no-warnings (next-line))
     ))
 (defun ak-line-up-fast()
   "Boosted line scroll down. customize \\='ak-fast-scroll-lines'"
@@ -2357,5 +2357,5 @@ If CONCISE is non-nil, do nothing."
         (goto-char (point-max))
       ;;else
       (scroll-up arg)
-      (forward-line 1)
+      (with-no-warnings (next-line))
       )))

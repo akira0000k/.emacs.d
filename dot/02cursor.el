@@ -8,11 +8,14 @@
 (defun ak-previous-line (&optional arg try-vscroll)
   "Move cursor as up arrow. If on first line, go to beginning of buffer."
   (interactive "^p\np")
-  (let ((ok (ignore-errors (previous-line arg try-vscroll) t)))
+  (let ((ok
+	 (ignore-errors
+	   (with-no-warnings (previous-line arg try-vscroll))
+	   t)
+	 ))
     (unless ok
       (goto-char (point-min)))
     ))
-;;(keymap-global-set "<remap> <previous-line>" #'ak-previous-line)
 (keymap-global-set "<up>" #'ak-previous-line)
 
 ;;====================================
@@ -133,7 +136,7 @@
 	      ))
         ;;else
 	(scroll-up)
-	(forward-line 1))
+	(with-no-warnings (next-line)))
       )))
 
 

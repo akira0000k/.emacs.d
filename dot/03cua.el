@@ -46,7 +46,7 @@ With prefix argument, activate previous rectangle if possible."
   (defun ak-cua-scroll-up (&optional arg)
     (interactive "^P")
     (cua-scroll-up arg)
-    (forward-line 1))
+    (with-no-warnings (next-line)))
   )
 
 ;; cua-mode の on/off をするなら、キーバインド設定後にoffにする。
