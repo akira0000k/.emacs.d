@@ -383,10 +383,10 @@
     ))
 
 (message "init.el ...done")
-(advice-remove 'message 'my/ad-timestamp-message)
 (setq emacs-startup-hook
       '(lambda()
-	 (message "%s" (getenv "EMACS"))
+	 (message "emacs-version = %s" emacs-version)
+	 (advice-remove 'message 'my/ad-timestamp-message)
 	 ))
 ;;;;;;;;;;;;;;;;;;;;;added by emacs;;;;;;;;;;;;;;;;;;;;;;
 (put 'scroll-left 'disabled nil)
