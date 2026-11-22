@@ -61,8 +61,9 @@
   ;;  (keymap-global-set "<up>" #'ak-previous-line) ;;was previous-line
   ;;
   ;; global <up> is changed to ak-.., use dired-..
+  ;; global <down> is changed to ak-.., use dired-..
   (keymap-set dired-mode-map "<up>" 'dired-previous-line)
-  ;;(keymap-set dired-mode-map "<down>" 'dired-next-line)
+  (keymap-set dired-mode-map "<down>" 'dired-next-line)
   
 
   ;; ;; line scroll and keep cursor on file name

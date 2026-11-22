@@ -6,10 +6,12 @@
  '(ak-dired-view-on-right-arrow nil)
  '(ak-fast-scroll-lines 4)
  '(ak-lr-scroll-chars 20)
+ '(global-auto-revert-mode t)
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-     ("melpa" . "https://melpa.org/packages/"))))
+     ("melpa" . "https://melpa.org/packages/")))
+ '(package-selected-packages '(s)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

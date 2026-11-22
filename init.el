@@ -32,21 +32,26 @@
   (setq user-emacs-directory (file-name-directory load-file-name))
   (message "user-emacs-directory = %s" user-emacs-directory)
   )
+(message "load file check done.")
 
 ;; Package init
 (require 'package)
+(message "require package done.")
 (let ((pudr (_emacs_d/ "elpa")))
   (unless (string= pudr package-user-dir)
     (message "package dir is changed %s -> %s" package-user-dir pudr)
     (setq package-user-dir pudr)))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(when (version< emacs-version "27")
-  (package-initialize))
+(message "elpa directory check done.")
 
+(when (version< emacs-version "27")
+  (message "package-initialize")
+  (package-initialize))
+(message "package-initialize done.")
+ 
 (defun ak-package-init()
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   ;; M-x package-refresh-contents RET
   (package-refresh-contents))
-
 ;; ;; (ak-package-init)
 ;; ;; ;; M-x package-list-packages RET
 ;; ;; (package-list-packages)
@@ -60,7 +65,7 @@
 ;; Pre install packages
 (setq myPackage
       '(
-	;;s
+	s
 	))
 ;;Scans the list
 ;; If the package listed is not already installed, install it
@@ -78,7 +83,7 @@
 	  ))
       ))
   )
-
+(message "package check done")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; フレーム関連
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -90,7 +95,7 @@
       '(width . 120)
       '(height . 40)))
 (setq default-frame-alist initial-frame-alist)
-
+(message "frame set done")
 ;;;    M-x describe-theme    =>tab ..show themes available
 ;;(load-theme 'deeper-blue      t)
 ;;(load-theme 'manoj-dark       t)
@@ -126,7 +131,7 @@
     (add-to-list 'exec-path-from-shell-variables "DICPATH")
     (exec-path-from-shell-initialize)
     )
-
+(message "exec path done")
 ;; shell emacs?
 (if (getenv "PWD")
     (progn
@@ -279,6 +284,11 @@
     ;;; -nw no window emacs
     (progn
       (cond
+       ((string= (getenv "IPADISH") "yes")
+	;; iPad iSH shell
+	(message "load-theme wheatgrass")
+	(load-theme 'wheatgrass t)
+	(load (_emacs_d/ "ex-ish.el")))
        ((string= (getenv "SCREEN") "yes")
 	;; in screen xterm env.  SCREEN=yes emacs -nw
 	;; Selected region IS TRANSPARENT!
@@ -291,7 +301,7 @@
 	;; MacOSX + screen + iTerm2 Transparency: 0%
 	(message "vt100 screen")
 	(ak-theme-manoj-dark)
-	(load "~/.emacs.d/site-lisp/pc-teraconf-21.el"))
+	(load (_emacs_d/ "site-lisp/pc-teraconf-21.el")))
        ((string= (getenv "PUTTY") "yes")
 	;; for PuTTY terminal start like this. PUTTY=yes emacs -nw
 	(message "PuTTY terminal")

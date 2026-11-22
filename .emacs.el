@@ -691,6 +691,18 @@
         (if (>= (current-window-line) pos0)
             (move-to-window-line 0))) ;; move to first line
       )))
+(defun ak-cursor-top2 ()
+  "press left arrow at the top  then kill buffer, or call ak-cursor-top."
+  (interactive "^")
+  (if this-command-keys-shift-translated
+      (ak-cursor-top)
+    ;else
+    (if (not(equal (point) (point-min)))
+        (ak-cursor-top)
+      ;else
+      (kill-buffer-and-dired)
+      ))
+  )
 (defun ak-cursor-bottom ()
   "move cursor to middle or bottom of screen or scroll up(Page Down)"
   (interactive "^")
@@ -981,8 +993,9 @@ With prefix argument, activate previous rectangle if possible."
   ;;  (keymap-global-set "<up>" #'ak-previous-line) ;;was previous-line
   ;;
   ;; global <up> is changed to ak-.., use dired-..
+  ;; global <down> is changed to ak-.., use dired-..
   (keymap-set dired-mode-map "<up>" 'dired-previous-line)
-  ;;(keymap-set dired-mode-map "<down>" 'dired-next-line)
+  (keymap-set dired-mode-map "<down>" 'dired-next-line)
   
 
   ;; ;; line scroll and keep cursor on file name
